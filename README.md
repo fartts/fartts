@@ -8,7 +8,18 @@
 Hmm, this feels weird. I've been thinking about this a lot lately though, so I probably ought to get some of that thinking out of my head to make room for other stuff. Also, it'll be good to get in the habit of documenting stuff like this. Uhh, a list I guess:
 
 1.  This project will be a [monorepo](https://danluu.com/monorepo/) (for [all the reasons outlined by the Babel project](https://github.com/babel/babel/blob/master/doc/design/monorepo.md))
-    - This project will be different in that it will host packages _and_ apps using [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and maybe [Lerna](https://lernajs.io/)
+    - This project will be different from some (most?) monorepos in that it will host packages _and_ apps using [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and maybe [Lerna](https://lernajs.io/). I'm thinking of a structure like this:
+      ```sh
+      .
+      ├── LICENSE
+      ├── README.md
+      ├── apps/
+      │   ├── experiment-001/
+      │   └── fartts.github.io/
+      └── packages/
+          ├── cli/
+          └── configs/
+      ```
 2.  Particle systems
     - with [entity pooling](http://impactjs.com/documentation/entity-pooling)
 3.  A game/physics engine
@@ -27,7 +38,7 @@ Hmm, this feels weird. I've been thinking about this a lot lately though, so I p
     - apps will be published to GitHub Pages (the main app [`fartts.github.io`](https://github.com/fartts/fartts.github.io) being a kind of showcase of other app/experiments)
 8.  A way of documenting my process
     - publishing a new app/experiment will generate a GIF or MPEG or something, publish it to [Tumblr](https://fartts.tumblr.com/), create a release (with notes), etc.
-9.  Documentation by default with [Commitizen](http://commitizen.github.io/cz-cli/)/[conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)/[semantic-release](https://github.com/semantic-release/semantic-release)
+9.  Changelogs, releases, and versioning by default with [Commitizen](http://commitizen.github.io/cz-cli/)/[conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)/[semantic-release](https://github.com/semantic-release/semantic-release)
 10. Something that implements the best parts of the following (but in [TypeScript](http://www.typescriptlang.org/)):
     - [ImpactJS](https://github.com/phoboslab/Impact)
     - [Hype](https://github.com/hype/HYPE_Processing/tree/lib_staging) (something to make [Joshua Davis](https://twitter.com/joshuadavis/) proud/jealous)
@@ -57,4 +68,4 @@ Hmm, this feels weird. I've been thinking about this a lot lately though, so I p
   - ['Owlboy': the Motivational Power of Inspiration](https://www.gdcvault.com/play/1024279/-Owlboy-The-Motivational-Power)
   - ['Owlboy': The Evolving Art of a 10 Year Project](https://www.gdcvault.com/play/1024144/-Owlboy-The-Evolving-Art)
   - ['Hyper Light Drifter': Secrets of Kickstarter, Design, & Pizza](https://www.gdcvault.com/play/1024062/-Hyper-Light-Drifter-Secrets)
-- so many more … networked physics
+  - so many more … that networked physics talk by the guy from the Rocket League team, and all the procedural talks by Squirrel Eiserloh
