@@ -33,7 +33,7 @@ Hmm, this feels weird. I've been thinking about this a lot lately though, so I p
     - matrix math … I'll have to (re)learn it first, lol
 6.  A <abbr title="command line interface">CLI</abbr> for creating new projects, effects, etc. (tests!)
     - maybe [`oclif`](https://oclif.io/)
-7.  An example implementation of CI/CD, dependency management tools ([Circle CI](https://circleci.com/), [Dependabot](https://dependabot.com/))
+7.  An example implementation of CI/CD, dependency management tools ([Circle CI](https://circleci.com/), [Travis CI](https://travis-ci.org/), [Dependabot](https://dependabot.com/), or [Greenkeeper](https://greenkeeper.io/))
     - packages will be published to npm under the [`@fartts`](https://www.npmjs.com/org/fartts) org
     - apps will be published to GitHub Pages (the main app [`fartts.github.io`](https://github.com/fartts/fartts.github.io) being a kind of showcase of other app/experiments)
 8.  A way of documenting my process
