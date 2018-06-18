@@ -69,3 +69,13 @@ Hmm, this feels weird. I've been thinking about this a lot lately though, so I p
   - ['Owlboy': The Evolving Art of a 10 Year Project](https://www.gdcvault.com/play/1024144/-Owlboy-The-Evolving-Art)
   - ['Hyper Light Drifter': Secrets of Kickstarter, Design, & Pizza](https://www.gdcvault.com/play/1024062/-Hyper-Light-Drifter-Secrets)
   - so many more … that networked physics talk by the guy from the Rocket League team, and all the procedural talks by Squirrel Eiserloh
+
+## Notes
+
+> These might get removed or folded up into the main list, idk, just someplace to put things as I learn about them.
+
+- [Touch Designer](https://www.derivative.ca/)
+- [Houdini Engine](https://www.sidefx.com/products/houdini-engine/)
+- [Turbulenz](https://github.com/turbulenz/turbulenz_engine)
+- [List of Game Engines](https://en.wikipedia.org/wiki/List_of_game_engines)
+- [WebRTC](https://codelabs.developers.google.com/codelabs/webrtc-web/#0)
