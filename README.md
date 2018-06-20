@@ -79,3 +79,5 @@ Hmm, this feels weird. I've been thinking about this a lot lately though, so I p
 - [Turbulenz](https://github.com/turbulenz/turbulenz_engine)
 - [List of Game Engines](https://en.wikipedia.org/wiki/List_of_game_engines)
 - [WebRTC](https://codelabs.developers.google.com/codelabs/webrtc-web/#0)
+- [XParticle](https://github.com/antoinefournier/XParticle)
+- [David Lobser](http://www.dlobser.com/) ([GitHub](https://github.com/dlobser))
