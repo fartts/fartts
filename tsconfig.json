@@ -20,8 +20,8 @@
       "*": [
         "node_modules/*"
       ],
-      "@fartts/lib/*": [
-        "src/lib/*"
+      "@fartts/*": [
+        "src/*"
       ]
     },
     "strict": true,
