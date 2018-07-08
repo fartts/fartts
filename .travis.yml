@@ -18,6 +18,7 @@ env:
 deploy:
   provider: pages
   repo: fartts/fartts.github.io
+  target-branch: master
   on:
     branch: master
   github_token: $GITHUB_TOKEN
