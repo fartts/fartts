@@ -3,6 +3,8 @@
 > 𝑓(unctional)Art(-making).ᴛ(ype)ꜱ(cript)<br>
 > an experiment by [Matt Hayes](https://github.com/mysterycommand)
 
+[![Build Status](https://travis-ci.org/fartts/fartts.svg?branch=master)](https://travis-ci.org/fartts/fartts)
+
 ## Goals
 
 Hmm, this feels weird. I've been thinking about this a lot lately though, so I probably ought to get some of that thinking out of my head to make room for other stuff. Also, it'll be good to get in the habit of documenting stuff like this. Uhh, a list I guess:
@@ -82,3 +84,5 @@ Hmm, this feels weird. I've been thinking about this a lot lately though, so I p
 - [XParticle](https://github.com/antoinefournier/XParticle)
 - [David Lobser](http://www.dlobser.com/) ([GitHub](https://github.com/dlobser))
 - [Minim](http://code.compartmental.net/tools/minim/) ([ddf/Minim](https://github.com/ddf/Minim)) - a Java audio library
+- [edwardrowe/LightmapCutout](https://gist.github.com/edwardrowe/bbb73a6c5cc632e3e75667f997da9e90) - based on [this Twitter tutorial](https://twitter.com/edwardlrowe/status/996098712404398081)
+- [Unity's built-in shader helper functions](https://docs.unity3d.com/Manual/SL-BuiltinFunctions.html)
