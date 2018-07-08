@@ -1,0 +1,26 @@
+html,
+body,
+main {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+main {
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}
+
+canvas {
+  background: black;
+  image-rendering: pixelated;
+  width: 800px;
+  height: 450px;
+}

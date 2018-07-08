@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - 'lts/*'
+before_install:
+  - YARN_VERSION=`node -pe "require('./package.json').engines.yarn"`
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+  - export PATH=$HOME/.yarn/bin:$PATH
+cache:
+  yarn: true
+script:
+  - yarn lint
+  - yarn test
+before_deploy:
+  - yarn build
+env:
+  global:
+    secure: UuTuY3ydomE7CErPBLkoBtEacbNMRclx3RSEuzVwvepOprmkAlpCB5YCy9sYi85DOfXX01sDbog6PaCfe25JbmdZh2nfwNOj/yqnP7rnawsikIzNymOdn7cZZ3tcixqVWJSNWLhND9okLVnglJFW2k1/A66NT4WYQNMJ4f+elcNUYl8GsTgLZvQJ8ww/PG7MjwIr+sSr9mPDD3gG/QRleogrVONQcjP8HsDIV0Of5ZoSyeojkWwYl4WArmgnhASzl5Ft9TOXTojcHTRkgFTQ2HQngFw/WbaZn/ZFFJXUKoZvPt83L/BqRbaI9P5Nbve32e/K6fsyOfrYoaN7C9LCPxuEtubw13QAyD3iOZsD+9y5RPsrOkAB4IrqMGEo19r+616ji8tp5aVfgS1R2aIhy84sbMnpGqToJoV85Dkbhp2p89wNvN/pVJYPIvfc2Eeg5cBfOXxsPWCwL7dDrvMiZjk0wAI1P86CWtwvRMUoPU9jt9rZhDzl1dPMh4lrmk/2YkRao3D4z3r2uUbKU7aAcbs42sMxl5o+t/9Zm57SiSa0KQucYfXKEB8j302PXIj24v8lAWS1htdFBR5Uy9/pHgv8j4nIIXovc9ewsc/5l/JVesQGIEtlikrLAOSOIv1dYazAxYQMxhqFYt8XsCKH1TE/w2clTttMnCa1ecm1uW0=
+deploy:
+  provider: pages
+  repo: fartts/fartts.github.io
+  on:
+    branch: master
+  github_token: $GITHUB_TOKEN
+  allow_empty_commit: true
+  keep_history: true
+  skip_cleanup: true
+  local_dir: dist/
