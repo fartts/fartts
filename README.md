@@ -81,3 +81,4 @@ Hmm, this feels weird. I've been thinking about this a lot lately though, so I p
 - [WebRTC](https://codelabs.developers.google.com/codelabs/webrtc-web/#0)
 - [XParticle](https://github.com/antoinefournier/XParticle)
 - [David Lobser](http://www.dlobser.com/) ([GitHub](https://github.com/dlobser))
+- [Minim](http://code.compartmental.net/tools/minim/) ([ddf/Minim](https://github.com/ddf/Minim)) - a Java audio library
