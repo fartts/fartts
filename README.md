@@ -3,7 +3,7 @@
 > 𝑓(unctional)Art(-making).ᴛ(ype)ꜱ(cript)<br>
 > an experiment by [Matt Hayes](https://github.com/mysterycommand)
 
-[![Build Status](https://travis-ci.org/fartts/fartts.svg?branch=master)](https://travis-ci.org/fartts/fartts)
+[![Build Status](https://travis-ci.org/fartts/fartts.svg?branch=master)](https://travis-ci.org/fartts/fartts) [![Greenkeeper badge](https://badges.greenkeeper.io/fartts/fartts.svg)](https://greenkeeper.io/)
 
 deployed to [a **GitHub** Pages organization site repository](https://github.com/fartts/fartts.github.io), visible at [https://fartts.github.io](https://fartts.github.io)
 
