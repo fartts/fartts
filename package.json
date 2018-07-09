@@ -11,7 +11,7 @@
     "build": "parcel build src/app/{index.html,README.md} --public-url ./",
     "start": "parcel src/app/{index.html,README.md}",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "jest"
+    "test": "jest && if [ \"${CI}\" ]; then (cat ./coverage/lcov.info | coveralls) fi"
   },
   "engines": {
     "node": "8.11.3",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/jest": "23.1.4",
     "@types/seedrandom": "2.4.27",
+    "coveralls": "3.0.2",
     "identity-obj-proxy": "3.0.0",
     "jest": "23.3.0",
     "parcel-bundler": "1.9.4",
