@@ -7,19 +7,23 @@ env:
   global:
     secure: "iBe17f2iPiRkFgEOkAjQxlnx0tQvSn1c81nu2+6xLYy7+d4y6yaX4qZrORGZ25ItJfgLZ8B/RD4p9lZXP3WJYPxnrbJz2tmmBOqZENOAFWQfR9W1wYQdn0taZFvUmQ8t+HoabZH20SmzXzp04dBqsV9T2+nTf5i7+vqkc20Z8YOhRTqetFtwo8t+ioXNkXuXXdb52zFG9gUVsIFO4BHoPjUNccNDpKDsN5VcgFCZv+GVXho80F6BYkrIrx1fftNZ+vAHQhGSj7lGA5SLLGBvmCwJrcmMt0TPNkUnyyWgp3x/0xZFTc5KQENQSqLmhEGik9WRSFJyp2UgALA6CItD+117PCDN01jGwqlU1wVSqBK3AOFTLxiTfQte7LfZ7oK8/20m+/74du/F93s5F0k+hkPf36AyI8UG/h8p3+YWoDDWSJ6vOkPMTkMvvSqSsn+fgJa7tDEjD7QbSSlb2pVAib9WmsFieIQ6br5xJRP+lBILO8Yjq7N83/za8+J+UqNLPZrXCSKJiiE/ydqecotC5uYjrzc05ek9pUUc8I+rvnzocUrzSYGUlT9SQuknIK6CV9hFickrOl8C0fPWrdDdz6zR8F43/JqBT3VLpZ9dynP1b+IIkO+Mwx8J3p9pd+CCTMAPoGXOmZgmkFjZBku4INlrfhOh7GxVCGYCJfYetPU="
     secure: "F4dDSqTy00yLQIbrbuCVjeNiLhudAxcjHRViRD+k/nxrmT4vyIpabkOI8BzzOCCtC2hgAjb74b72IJzz4u5dESOBa7VVHnsUWZfrWcp/sjBxGGO0MiNN/GTKCiAU0ILh7M9KDd+QH97rocT1tqMTDe04DuP+tSZEFxEzyj5uqTEwY5I4xQeHRtzNf5kg8uSm8LPJRPQdKETWZI6w6C1psRlVDcxvoaSSluBItLzStarMWIiDezsL2yZIdLSujmIcwshEQsdWzEBqL+PdNbo9aLO9OzxGqy/tZXF6VDqJnSL0Q1nWdhcv0QZpMxJZSOga6fKIiwLg0Ml3LCL+z+zrMsv1OHV5skCZPj8ZtuNPvXbQ8TIg5O/nAcEcus+2sjgJy9Th4DgPDP+eQTcZ2KhdCJkb6nM5Hqaho7xoXuTsXKOUhv6GQd/ckLdwEvWMDPlpArlQoi1kgcfwAyGpPKOS4x+vuLRTDCrNTDczbhYG3MdXnh8cgbaV4bBiiyu1Q9/eMeNb4Ucpn/M+EvJyfFr01dBSfrexSmkbLcHr3twAbJGAgAQBEiGIo74sygpqZEQhMSyo/VnY8KUwkyoc5tp2MpfWfohmqTIOkAn5BYU9HR1elqdXjusAaegrj1riNSrXs7uCJAqNLG+90R8g0fDLaHh1XFm8CjIXZR3MeNqUjv4="
+    secure: "Jb2nPls60EupB/evOgYy0o0k+6SBf2efX35wZUnIhFgm+itINoBGJoTG29OdGGAmJL+q3CF5CvfL7y+MHjLN28XWX+hMzpMNP1oyX/SQC1/XUILov4bOmFRqj+VHrN8jD3VYmsZzM7ZsGCT2fDosFRp8dX9uTutOom/+KjXvNkCWQ0RjgzyoANFsoqzu28mvKn47G9i+g6htw3H2/E0RLj/FIopB4Gq1oVY4PAh+6bdfFudr+MJnXouNFh/YThBk8QlNPzIGKpuLlh+yzcqB9srtrEUkjklkxVDO6Qha5xmReFurWgiKijn+AhF9rct46dup4lmhJhLnayAJXj9DTA0ASTzYunOtXLBfmSofoXq0oC2XO7uOmdW/KqCl5n8LW/QBmldKzayFsOYmFOfGfYBKfUtZ2QExgIbUiRQBh2qPLBnWQ+mpEk+TAegC9RMUJCMT7+QQPIv/TgbvEg8hNLKF+ACL9hpsJ+i4e3C6CXi/FtgihCsBrouWdj864tykoWQsyoHbGLuBTIi6GrG/9A3bUb4Q0LsrNeGmWbl401KmUqK3EAvKmVJ8zTalpP0gcvDoH5PDpzgjekozbWOVLKFamu9OFTo6pWHwSaPSW+Uf5D/bVaIRji2XDwuvvYfQ+aL4mPFFBHl3vUXBkcvePJYcTv6n4eXKyhioIyE/4qY="
 before_install:
   - YARN_VERSION=`node -pe "require('./package.json').engines.yarn"`
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
   - export PATH=$HOME/.yarn/bin:$PATH
+  - yarn global add greenkeeper-lockfile
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - greenkeeper-lockfile-update
 script:
   - yarn lint
   - yarn test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - greenkeeper-lockfile-upload
 before_deploy:
   - yarn build
 deploy:
