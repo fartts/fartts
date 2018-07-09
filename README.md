@@ -3,7 +3,11 @@
 > 𝑓(unctional)Art(-making).ᴛ(ype)ꜱ(cript)<br>
 > an experiment by [Matt Hayes](https://github.com/mysterycommand)
 
-[![Build Status](https://travis-ci.org/fartts/fartts.svg?branch=master)](https://travis-ci.org/fartts/fartts) | [![Maintainability](https://api.codeclimate.com/v1/badges/fcdc1b753d00ada7d241/maintainability)](https://codeclimate.com/github/fartts/fartts/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/fcdc1b753d00ada7d241/test_coverage)](https://codeclimate.com/github/fartts/fartts/test_coverage) | [![Coverage Status](https://coveralls.io/repos/github/fartts/fartts/badge.svg?branch=master)](https://coveralls.io/github/fartts/fartts?branch=master) | [![codecov](https://codecov.io/gh/fartts/fartts/branch/master/graph/badge.svg)](https://codecov.io/gh/fartts/fartts) | [![Greenkeeper badge](https://badges.greenkeeper.io/fartts/fartts.svg)](https://greenkeeper.io/) | [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&identifier=131446158)](https://dependabot.com)
+---
+
+[![Build Status](https://travis-ci.org/fartts/fartts.svg?branch=master)](https://travis-ci.org/fartts/fartts) [![Coverage Status](https://coveralls.io/repos/github/fartts/fartts/badge.svg?branch=master)](https://coveralls.io/github/fartts/fartts?branch=master) [![codecov](https://codecov.io/gh/fartts/fartts/branch/master/graph/badge.svg)](https://codecov.io/gh/fartts/fartts)<br>[![Maintainability](https://api.codeclimate.com/v1/badges/fcdc1b753d00ada7d241/maintainability)](https://codeclimate.com/github/fartts/fartts/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/fcdc1b753d00ada7d241/test_coverage)](https://codeclimate.com/github/fartts/fartts/test_coverage)<br>[![Greenkeeper badge](https://badges.greenkeeper.io/fartts/fartts.svg)](https://greenkeeper.io/) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&identifier=131446158)](https://dependabot.com)
+
+---
 
 deployed to [a **GitHub** Pages organization site repository](https://github.com/fartts/fartts.github.io), visible at [https://fartts.github.io](https://fartts.github.io)
 
