@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "parcel build src/app/{index.html,README.md} --public-url ./",
+    "build": "parcel build src/app/{index.html,README.md} --public-url ./ --experimental-scope-hoisting",
     "start": "parcel src/app/{index.html,README.md}",
     "lint": "tslint 'src/**/*.ts'",
     "test": "jest"
