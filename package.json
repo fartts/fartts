@@ -22,7 +22,7 @@
     "seedrandom": "2.4.3"
   },
   "devDependencies": {
-    "@types/jest": "23.1.5",
+    "@types/jest": "23.1.6",
     "@types/seedrandom": "2.4.27",
     "identity-obj-proxy": "3.0.0",
     "jest": "23.4.0",
