@@ -48,7 +48,7 @@ script:
 after_success:
 - "[[ $TRAVIS_PULL_REQUEST != 'false' ]] && npx semantic-release-github-pr || exit 0"
 
-  before_deploy:
+before_deploy:
 - yarn build
 
 deploy:
