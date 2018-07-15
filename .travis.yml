@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-- lts/*
+- 8.11.3
 
 cache:
   yarn: true
@@ -12,10 +12,17 @@ env:
   - secure: Q0fqtYAW2csrLzJF6Clx6xxhRTLpK0kEpHsmKHaW0RUqif15IkZ+rqopS0aXTF+f3lX15Rpuew8Q1E3ciZj6L1ON99c98Nu8DCahFaYgG+uU3VxTW0Ds4DY5leHjFM7N8Pkpf/6oVQt/rF55CnH/dMVwKIyI845r3IAxW3SPyhJHhtVxcewn3t/aLNAWRAQGRKRyFlzqohnd1uKjaCYgN3isD3olgpkDoVOP8rjKRrT2EojvV2xx4TY4D8PUXnmRbdRBCHMbP+CxDt/p23wxiZkUwPUzt0wwbgQTodN8ap5VExnMrh67fj/cH5KMGpwN5E8ZwodsylgpjF4wGUBOM8MQorNqOWzGHs3h82v8FNpzq3vJfUho0wx/iXHLhATexNhnEj6HDkqbk7eKDapQJJWCm5gZUvjXEN5L9+gIufrPLf4aewTNWGwvM5szrYScQsCGHlM7P66q530e8yo30zXDDJnb6cKilJ8+omZzwMVqDguJXgkH6q3yH9FB+Dl/vIiRHCibFKgbPM/MHUPhzHDIqmugG3F5uEs/jq9fpGH7BvwE2L/CU0+GrsNMgByDnlpBoNq/Ul0L86KldPXVzei5TYoTv5qIRuVIBto0p3yRA0PMk7FhQD9eUHNW4soO8pv5JoXr6O9m4BuyXBXvDhwAN0/eWOR8pkJRPAXZuJg=
 
 before_install:
+# get the right npm version
+- NPM_VERSION=`node -pe "require('./package.json').engines.npm"`
+- if [ `npm --version` != "$NPM_VERSION" ]; then
+    npm install --global npm@${NPM_VERSION}
+  fi
 # get the right yarn version
 - YARN_VERSION=`node -pe "require('./package.json').engines.yarn"`
-- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
-- export PATH=$HOME/.yarn/bin:$PATH
+- if [ `yarn --version` != "$YARN_VERSION" ]; then
+    curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION;
+    export PATH=$HOME/.yarn/bin:$PATH;
+  fi
 # globally add coverage reporters and greenkeeper
 - yarn global add codecov coveralls greenkeeper-lockfile
 
