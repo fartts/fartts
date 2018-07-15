@@ -5,6 +5,9 @@ node_js:
 
 cache:
   yarn: true
+  directories:
+    - node_modules
+    - ~/.npm
 
 env:
   global:
@@ -15,14 +18,16 @@ before_install:
 # get the right npm version
 - NPM_VERSION=`node -pe "require('./package.json').engines.npm"`
 - if [ `npm --version` != "$NPM_VERSION" ]; then
-    npm install --global npm@${NPM_VERSION}
+    npm install --global npm@${NPM_VERSION};
   fi
+
 # get the right yarn version
 - YARN_VERSION=`node -pe "require('./package.json').engines.yarn"`
 - if [ `yarn --version` != "$YARN_VERSION" ]; then
     curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION;
     export PATH=$HOME/.yarn/bin:$PATH;
   fi
+
 # globally add coverage reporters and greenkeeper
 - yarn global add codecov coveralls greenkeeper-lockfile
 
@@ -32,6 +37,7 @@ before_script:
   > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 - "./cc-test-reporter before-build"
+
 # greenkeeper
 - greenkeeper-lockfile-update
 
@@ -67,5 +73,6 @@ after_script:
 - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 - cat ./coverage/lcov.info | coveralls
 - codecov
+
 # validate dependencies
 - greenkeeper-lockfile-upload
