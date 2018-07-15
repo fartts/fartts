@@ -31,12 +31,6 @@ before_script:
 script:
 - yarn lint
 - yarn test
-# report coverage
-- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
-- cat ./coverage/lcov.info | coveralls
-- codecov
-# validate dependencies
-- greenkeeper-lockfile-upload
 
 before_deploy:
 - yarn build
@@ -60,3 +54,11 @@ deploy:
   skip_cleanup: true
   script:
   - npx semantic-release
+
+after_script:
+# report coverage
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+- cat ./coverage/lcov.info | coveralls
+- codecov
+# validate dependencies
+- greenkeeper-lockfile-upload
