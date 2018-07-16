@@ -20,7 +20,7 @@ module.exports = {
         '  hour: "numeric",',
         '  minute: "numeric",',
         '})} [skip ci]\n\n${nextRelease.notes}',
-      ],
+      ].join('\n'),
     },
   ],
   publish: ['@semantic-release/github'],
