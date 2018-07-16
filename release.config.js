@@ -24,4 +24,8 @@ module.exports = {
     },
   ],
   publish: ['@semantic-release/github'],
+  githubPr: {
+    analyzeCommits: '@semantic-release/commit-analyzer',
+    generateNotes: '@semantic-release/release-notes-generator',
+  },
 };
