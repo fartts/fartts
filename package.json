@@ -33,7 +33,7 @@
     "parcel-bundler": "1.9.7",
     "parcel-plugin-typescript": "1.0.0",
     "prettier": "1.13.7",
-    "semantic-release": "15.7.2",
+    "semantic-release": "15.8.0",
     "semantic-release-github-pr": "5.0.5",
     "ts-jest": "23.0.0",
     "tslint": "5.10.0",
