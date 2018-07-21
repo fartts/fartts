@@ -6,3 +6,9 @@ main {
   justify-content: center;
   flex-flow: column;
 }
+
+canvas {
+  background: #000;
+  width: 800px;
+  height: 450px;
+}
