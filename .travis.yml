@@ -3,8 +3,7 @@ language: node_js
 node_js:
 - 8.11.3
 
-cache:
-  yarn: true
+cache: yarn
 
 env:
   global:
@@ -49,24 +48,24 @@ before_deploy:
 - yarn build
 
 deploy:
-  on:
-    branch: master
-
   # deploy the site
-  provider: pages
-  repo: fartts/fartts.github.io
-  target_branch: master
-  github_token: "$GH_TOKEN"
-  allow_empty_commit: true
-  keep_history: true
-  skip_cleanup: true
-  local_dir: dist/
+  - provider: pages
+    repo: fartts/fartts.github.io
+    target_branch: master
+    github_token: "$GH_TOKEN"
+    allow_empty_commit: true
+    skip_cleanup: true
+    keep_history: true
+    local_dir: dist/
+    on:
+      branch: master
 
   # deploy a git tag, and release notes
-  provider: script
-  skip_cleanup: true
-  script:
-  - npx semantic-release
+  - provider: script
+    skip_cleanup: true
+    script: npx semantic-release
+    on:
+      branch: master
 
 after_script:
 # report coverage
