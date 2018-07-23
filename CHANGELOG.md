@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/fartts/fartts/compare/v1.1.0...v1.2.0) (2018-07-23)
+
+
+### Features
+
+* **experiments/webgl:** adds initial setup for working with webgl ([bb70e21](https://github.com/fartts/fartts/commit/bb70e21))
+* **experiments/webgl:** draw a purple-ish triangle ([af1baee](https://github.com/fartts/fartts/commit/af1baee))
+* **experiments/webgl:** render a triangle ([f589d67](https://github.com/fartts/fartts/commit/f589d67))
+
 # [1.1.0](https://github.com/fartts/fartts/compare/v1.0.0...v1.1.0) (2018-07-21)
 
 
