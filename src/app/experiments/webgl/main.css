@@ -11,4 +11,5 @@ canvas {
   background: #000;
   width: 800px;
   height: 450px;
+  image-rendering: pixelated;
 }

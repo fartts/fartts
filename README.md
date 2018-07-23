@@ -92,3 +92,13 @@ hmm, this feels weird. I've been thinking about this a lot lately though, so I p
 - [Minim](http://code.compartmental.net/tools/minim/) ([ddf/Minim](https://github.com/ddf/Minim)) - a Java audio library
 - [edwardrowe/LightmapCutout](https://gist.github.com/edwardrowe/bbb73a6c5cc632e3e75667f997da9e90) - based on [this Twitter tutorial](https://twitter.com/edwardlrowe/status/996098712404398081)
 - [Unity's built-in shader helper functions](https://docs.unity3d.com/Manual/SL-BuiltinFunctions.html)
+
+## even more notes
+
+- [vaneenige/phenomenon](https://github.com/vaneenige/phenomenon)
+- [The Book of Shaders](https://thebookofshaders.com/)
+  - [patriciogonzalezvivo/glslCanvas](https://github.com/patriciogonzalezvivo/glslCanvas)
+- [The WebGL Reference "Card"](https://www.khronos.org/files/webgl/webgl-reference-card-1_0.pdf)
+- [greggman/twgl.js](https://github.com/greggman/twgl.js)
+- [greggman/webgl-fundamentals](https://github.com/greggman/webgl-fundamentals)
+- [WebGLFundamentals API Docs](https://webglfundamentals.org/docs/)
