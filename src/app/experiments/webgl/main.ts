@@ -4,9 +4,11 @@ const DEV = 'development';
 // const PROD = 'production';
 
 const canvas = document.querySelector('canvas') as HTMLCanvasElement;
-const canvasContext = canvas.getContext('webgl') as WebGLRenderingContext;
+const canvasContext = canvas.getContext('webgl', {
+  antialias: false,
+}) as WebGLRenderingContext;
 
-const scale = 5;
+const scale = 10;
 const width = canvas.clientWidth / scale;
 const height = canvas.clientHeight / scale;
 // const centerX = width / 2;
@@ -92,9 +94,11 @@ precision mediump float;
 #endif
 
 attribute vec4 a_position;
+varying vec4 v_color;
 
 void main() {
   gl_Position = a_position;
+  v_color = gl_Position * 0.5 + 0.5;
 }
 `,
 );
@@ -107,8 +111,11 @@ const fragShader = makeShader(
 precision mediump float;
 #endif
 
+varying vec4 v_color;
+
 void main() {
-	gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+
+	gl_FragColor = vec4(v_color.xy, 1.0, 1.0);
 }
 `,
 );
@@ -123,12 +130,9 @@ canvasContext.bufferData(
   canvasContext.ARRAY_BUFFER,
   // prettier-ignore
   new Float32Array([
-    -0.5, -0.5,
-     0.5, -0.5,
-    -0.5,  0.5,
-    // -0.5,  0.5,
-    //  0.5, -0.5,
-    //  0.5,  0.5,
+    -0.4, -0.6,
+     0.4, -0.4,
+    -0.1,  0.7,
   ]),
   canvasContext.DYNAMIC_DRAW,
 );
