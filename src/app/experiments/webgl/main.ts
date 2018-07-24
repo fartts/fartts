@@ -1,5 +1,7 @@
 import './main.css';
 
+import { cos, sin, toRadians } from '@fartts/lib/math';
+
 const DEV = 'development';
 // const PROD = 'production';
 
@@ -121,35 +123,47 @@ void main() {
 );
 
 const prog = makeProgram(canvasContext, vertShader, fragShader);
-
 const aPosition = canvasContext.getAttribLocation(prog, 'a_position');
-
 const buffer = canvasContext.createBuffer();
-canvasContext.bindBuffer(canvasContext.ARRAY_BUFFER, buffer);
-canvasContext.bufferData(
-  canvasContext.ARRAY_BUFFER,
-  // prettier-ignore
-  new Float32Array([
-    -0.4, -0.6,
-     0.4, -0.4,
-    -0.1,  0.7,
-  ]),
-  canvasContext.DYNAMIC_DRAW,
-);
 
 canvasContext.viewport(0, 0, width, height);
-canvasContext.clear(canvasContext.COLOR_BUFFER_BIT);
 canvasContext.useProgram(prog);
 
-canvasContext.enableVertexAttribArray(aPosition);
-canvasContext.bindBuffer(canvasContext.ARRAY_BUFFER, buffer);
-canvasContext.vertexAttribPointer(
-  aPosition,
-  2,
-  canvasContext.FLOAT,
-  false,
-  0,
-  0,
-);
+let a = 0;
 
-canvasContext.drawArrays(canvasContext.TRIANGLES, 0, 3);
+function draw(t: number) {
+  requestAnimationFrame(draw);
+
+  a = (a + 1) % 360;
+  const x = sin(toRadians(a));
+  const y = cos(toRadians(a));
+
+  canvasContext.clear(canvasContext.COLOR_BUFFER_BIT);
+
+  canvasContext.bindBuffer(canvasContext.ARRAY_BUFFER, buffer);
+  canvasContext.bufferData(
+    canvasContext.ARRAY_BUFFER,
+    // prettier-ignore
+    new Float32Array([
+      -0.4 + (x * 0.4), -0.6 + (y * 0.3),
+       0.4 + (x * 0.3), -0.4 + (y * 0.4),
+      -0.1 + (x * 0.2),  0.7 + (y * 0.2),
+    ]),
+    canvasContext.DYNAMIC_DRAW,
+  );
+
+  canvasContext.enableVertexAttribArray(aPosition);
+  canvasContext.bindBuffer(canvasContext.ARRAY_BUFFER, buffer);
+  canvasContext.vertexAttribPointer(
+    aPosition,
+    2,
+    canvasContext.FLOAT,
+    false,
+    0,
+    0,
+  );
+
+  canvasContext.drawArrays(canvasContext.TRIANGLES, 0, 3);
+}
+
+requestAnimationFrame(draw);
