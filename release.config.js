@@ -1,11 +1,13 @@
 module.exports = {
   verifyConditions: [
     '@semantic-release/changelog',
+    '@semantic-release/npm',
     '@semantic-release/git',
     '@semantic-release/github',
   ],
   prepare: [
     '@semantic-release/changelog',
+    '@semantic-release/npm',
     {
       path: '@semantic-release/git',
       message: `\
@@ -22,6 +24,7 @@ module.exports = {
     },
   ],
   publish: ['@semantic-release/github'],
+  npmPublish: false,
   githubPr: {
     analyzeCommits: '@semantic-release/commit-analyzer',
     generateNotes: '@semantic-release/release-notes-generator',
