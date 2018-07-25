@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/fartts/fartts/compare/v1.2.0...v1.2.1) (2018-07-25)
+
+
+### Bug Fixes
+
+* **release:** add npm and git releasers to the publish step ([d13bd38](https://github.com/fartts/fartts/commit/d13bd38))
+* **release:** remove git releaser from publish step ([7794349](https://github.com/fartts/fartts/commit/7794349))
+
 # [1.2.0](https://github.com/fartts/fartts/compare/v1.1.0...v1.2.0) (2018-07-23)
 
 
