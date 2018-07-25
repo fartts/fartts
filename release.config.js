@@ -23,7 +23,11 @@ module.exports = {
 <%=nextRelease.notes%>`,
     },
   ],
-  publish: ['@semantic-release/github'],
+  publish: [
+    '@semantic-release/npm',
+    '@semantic-release/git',
+    '@semantic-release/github',
+  ],
   npmPublish: false,
   githubPr: {
     analyzeCommits: '@semantic-release/commit-analyzer',
