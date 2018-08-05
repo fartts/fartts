@@ -1,3 +1,14 @@
+# [1.3.0](https://github.com/fartts/fartts/compare/v1.2.1...v1.3.0) (2018-08-05)
+
+
+### Features
+
+* **experiments:** add a new experiment ([fd5dca1](https://github.com/fartts/fartts/commit/fd5dca1))
+* **experiments:** add glsl asset handling ([c9b0ebf](https://github.com/fartts/fartts/commit/c9b0ebf))
+* **experiments:** incremental progress is progress ([e69e22b](https://github.com/fartts/fartts/commit/e69e22b))
+* **experiments:** resize the canvas to fit the screen ([9f7510e](https://github.com/fartts/fartts/commit/9f7510e))
+* **lib:** add support for importing json ([210dc1b](https://github.com/fartts/fartts/commit/210dc1b))
+
 ## [1.2.1](https://github.com/fartts/fartts/compare/v1.2.0...v1.2.1) (2018-07-25)
 
 
