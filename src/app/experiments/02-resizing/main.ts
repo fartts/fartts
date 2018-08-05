@@ -6,7 +6,6 @@ import frag from './shader.frag';
 import vert from './shader.vert';
 
 const DEV = 'development';
-// const PROD = 'production';
 
 const c = document.querySelector('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
@@ -16,8 +15,6 @@ const gl = c.getContext('webgl', {
 const scale = 10;
 const width = c.clientWidth / scale;
 const height = c.clientHeight / scale;
-// const centerX = width / 2;
-// const centerY = height / 2;
 
 c.width = width;
 c.height = height;

@@ -1,6 +1,7 @@
 import seedRandom from 'seedrandom';
+import { name } from '../../package.json';
 
-export const random = seedRandom('fart.ts');
+export const random = seedRandom(name);
 export const {
   abs,
   acos,
