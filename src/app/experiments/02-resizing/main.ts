@@ -1,6 +1,6 @@
 import './main.css';
 
-import { cos, sin, toRadians } from '@fartts/lib/math';
+import { ceil, cos, sin, toRadians } from '@fartts/lib/math';
 
 import frag from './shader.frag';
 import vert from './shader.vert';
@@ -12,7 +12,7 @@ const gl = c.getContext('webgl', {
   antialias: false,
 }) as WebGLRenderingContext;
 
-const scale = 20;
+const scale = 10;
 gl.clearColor(0, 0, 0, 1);
 
 enum WebGLShaderType {
@@ -93,17 +93,17 @@ let a = 0;
 let didResize = false;
 
 function draw(t: number) {
-  requestAnimationFrame(draw);
+  // requestAnimationFrame(draw);
 
   if (didResize) {
     const {
       innerHeight: height,
       innerWidth: width,
-      devicePixelRatio: dpr,
+      devicePixelRatio: dpr = 1,
     } = window;
 
-    c.width = (width * dpr) / scale;
-    c.height = (height * dpr) / scale;
+    c.width = ceil((width / scale) * dpr);
+    c.height = ceil((height / scale) * dpr);
     gl.viewport(0, 0, c.width, c.height);
 
     didResize = false;
