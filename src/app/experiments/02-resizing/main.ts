@@ -13,11 +13,6 @@ const gl = c.getContext('webgl', {
 }) as WebGLRenderingContext;
 
 const scale = 20;
-// const width = c.clientWidth / scale;
-// const height = c.clientHeight / scale;
-
-// c.width = width;
-// c.height = height;
 gl.clearColor(0, 0, 0, 1);
 
 enum WebGLShaderType {
@@ -89,13 +84,10 @@ function makeProgram(
 
 const vertShader = makeShader(gl, WebGLShaderType.Vertex, vert);
 const fragShader = makeShader(gl, WebGLShaderType.Fragment, frag);
-
 const prog = makeProgram(gl, vertShader, fragShader);
+
 const aPosition = gl.getAttribLocation(prog, 'a_position');
 const buffer = gl.createBuffer();
-
-// gl.viewport(0, 0, width, height);
-gl.useProgram(prog);
 
 let a = 0;
 let didResize = false;
@@ -123,14 +115,16 @@ function draw(t: number) {
 
   gl.clear(gl.COLOR_BUFFER_BIT);
 
+  gl.useProgram(prog);
+
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(
     gl.ARRAY_BUFFER,
     // prettier-ignore
     new Float32Array([
-      -0.4 + (x * 0.4), -0.6 + (y * 0.3),
-       0.4 + (x * 0.3), -0.4 + (y * 0.4),
-      -0.1 + (x * 0.2),  0.7 + (y * 0.2),
+       0.4 + (x * 0.4),  0.6 + (y * 0.3),
+      -0.4 + (x * 0.3),  0.4 + (y * 0.4),
+       0.1 + (x * 0.2), -0.7 + (y * 0.2),
     ]),
     gl.DYNAMIC_DRAW,
   );
