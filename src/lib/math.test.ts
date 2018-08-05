@@ -18,6 +18,8 @@ test('lerp', () => {
 test('randomBool', () => {
   expect(randomBool()).toBe(false);
   expect(randomBool()).toBe(false);
+  expect(randomBool()).toBe(false);
+  expect(randomBool()).toBe(false);
   expect(randomBool()).toBe(true);
 });
 
