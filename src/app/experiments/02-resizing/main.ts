@@ -2,27 +2,30 @@ import './main.css';
 
 import { cos, sin, toRadians } from '@fartts/lib/math';
 
+import frag from './shader.frag';
+import vert from './shader.vert';
+
 const DEV = 'development';
 // const PROD = 'production';
 
-const canvas = document.querySelector('canvas') as HTMLCanvasElement;
-const canvasContext = canvas.getContext('webgl', {
+const c = document.querySelector('canvas') as HTMLCanvasElement;
+const gl = c.getContext('webgl', {
   antialias: false,
 }) as WebGLRenderingContext;
 
 const scale = 10;
-const width = canvas.clientWidth / scale;
-const height = canvas.clientHeight / scale;
+const width = c.clientWidth / scale;
+const height = c.clientHeight / scale;
 // const centerX = width / 2;
 // const centerY = height / 2;
 
-canvas.width = width;
-canvas.height = height;
-canvasContext.clearColor(1, 1, 1, 1);
+c.width = width;
+c.height = height;
+gl.clearColor(0, 0, 0, 1);
 
 enum WebGLShaderType {
-  Vertex = canvasContext.VERTEX_SHADER,
-  Fragment = canvasContext.FRAGMENT_SHADER,
+  Vertex = gl.VERTEX_SHADER,
+  Fragment = gl.FRAGMENT_SHADER,
 }
 
 function makeShader(
@@ -87,47 +90,15 @@ function makeProgram(
   return program as WebGLProgram;
 }
 
-const vertShader = makeShader(
-  canvasContext,
-  WebGLShaderType.Vertex,
-  `\
-#ifdef GL_ES
-precision mediump float;
-#endif
+const vertShader = makeShader(gl, WebGLShaderType.Vertex, vert);
+const fragShader = makeShader(gl, WebGLShaderType.Fragment, frag);
 
-attribute vec4 a_position;
-varying vec4 v_color;
+const prog = makeProgram(gl, vertShader, fragShader);
+const aPosition = gl.getAttribLocation(prog, 'a_position');
+const buffer = gl.createBuffer();
 
-void main() {
-  gl_Position = a_position;
-  v_color = gl_Position * 0.5 + 0.5;
-}
-`,
-);
-
-const fragShader = makeShader(
-  canvasContext,
-  WebGLShaderType.Fragment,
-  `\
-#ifdef GL_ES
-precision mediump float;
-#endif
-
-varying vec4 v_color;
-
-void main() {
-
-	gl_FragColor = vec4(v_color.xy, 1.0, 1.0);
-}
-`,
-);
-
-const prog = makeProgram(canvasContext, vertShader, fragShader);
-const aPosition = canvasContext.getAttribLocation(prog, 'a_position');
-const buffer = canvasContext.createBuffer();
-
-canvasContext.viewport(0, 0, width, height);
-canvasContext.useProgram(prog);
+gl.viewport(0, 0, width, height);
+gl.useProgram(prog);
 
 let a = 0;
 
@@ -138,32 +109,25 @@ function draw(t: number) {
   const x = sin(toRadians(a));
   const y = cos(toRadians(a));
 
-  canvasContext.clear(canvasContext.COLOR_BUFFER_BIT);
+  gl.clear(gl.COLOR_BUFFER_BIT);
 
-  canvasContext.bindBuffer(canvasContext.ARRAY_BUFFER, buffer);
-  canvasContext.bufferData(
-    canvasContext.ARRAY_BUFFER,
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
     // prettier-ignore
     new Float32Array([
       -0.4 + (x * 0.4), -0.6 + (y * 0.3),
        0.4 + (x * 0.3), -0.4 + (y * 0.4),
       -0.1 + (x * 0.2),  0.7 + (y * 0.2),
     ]),
-    canvasContext.DYNAMIC_DRAW,
+    gl.DYNAMIC_DRAW,
   );
 
-  canvasContext.enableVertexAttribArray(aPosition);
-  canvasContext.bindBuffer(canvasContext.ARRAY_BUFFER, buffer);
-  canvasContext.vertexAttribPointer(
-    aPosition,
-    2,
-    canvasContext.FLOAT,
-    false,
-    0,
-    0,
-  );
+  gl.enableVertexAttribArray(aPosition);
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
 
-  canvasContext.drawArrays(canvasContext.TRIANGLES, 0, 3);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
 
 requestAnimationFrame(draw);
