@@ -12,7 +12,7 @@ const gl = c.getContext('webgl', {
   antialias: false,
 }) as WebGLRenderingContext;
 
-const scale = 10;
+const scale = 20;
 // const width = c.clientWidth / scale;
 // const height = c.clientHeight / scale;
 
@@ -104,10 +104,14 @@ function draw(t: number) {
   requestAnimationFrame(draw);
 
   if (didResize) {
-    const { innerHeight: height, innerWidth: width } = window;
+    const {
+      innerHeight: height,
+      innerWidth: width,
+      devicePixelRatio: dpr,
+    } = window;
 
-    c.width = width / scale;
-    c.height = height / scale;
+    c.width = (width * dpr) / scale;
+    c.height = (height * dpr) / scale;
     gl.viewport(0, 0, c.width, c.height);
 
     didResize = false;
