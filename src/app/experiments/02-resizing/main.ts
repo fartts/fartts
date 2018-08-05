@@ -13,11 +13,11 @@ const gl = c.getContext('webgl', {
 }) as WebGLRenderingContext;
 
 const scale = 10;
-const width = c.clientWidth / scale;
-const height = c.clientHeight / scale;
+// const width = c.clientWidth / scale;
+// const height = c.clientHeight / scale;
 
-c.width = width;
-c.height = height;
+// c.width = width;
+// c.height = height;
 gl.clearColor(0, 0, 0, 1);
 
 enum WebGLShaderType {
@@ -94,13 +94,24 @@ const prog = makeProgram(gl, vertShader, fragShader);
 const aPosition = gl.getAttribLocation(prog, 'a_position');
 const buffer = gl.createBuffer();
 
-gl.viewport(0, 0, width, height);
+// gl.viewport(0, 0, width, height);
 gl.useProgram(prog);
 
 let a = 0;
+let didResize = false;
 
 function draw(t: number) {
   requestAnimationFrame(draw);
+
+  if (didResize) {
+    const { innerHeight: height, innerWidth: width } = window;
+
+    c.width = width / scale;
+    c.height = height / scale;
+    gl.viewport(0, 0, c.width, c.height);
+
+    didResize = false;
+  }
 
   a = (a + 1) % 360;
   const x = sin(toRadians(a));
@@ -126,5 +137,12 @@ function draw(t: number) {
 
   gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
+
+function onResize(/* event: Event */): void {
+  didResize = true;
+}
+
+window.addEventListener('resize', onResize);
+window.dispatchEvent(new Event('resize'));
 
 requestAnimationFrame(draw);
