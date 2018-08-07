@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/fartts/fartts/compare/v1.3.0...v1.3.1) (2018-08-07)
+
+
+### Bug Fixes
+
+* **experiments:** fix css, compute styling, scale canvas ([1ab744d](https://github.com/fartts/fartts/commit/1ab744d))
+
 # [1.3.0](https://github.com/fartts/fartts/compare/v1.2.1...v1.3.0) (2018-08-05)
 
 
