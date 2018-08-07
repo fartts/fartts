@@ -6,6 +6,7 @@ export const {
   abs,
   acos,
   atan2,
+  ceil,
   cos,
   floor,
   hypot,

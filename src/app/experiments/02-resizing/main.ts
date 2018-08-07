@@ -12,7 +12,6 @@ const gl = c.getContext('webgl', {
   antialias: false,
 }) as WebGLRenderingContext;
 
-const scale = 20;
 gl.clearColor(0, 0, 0, 1);
 
 enum WebGLShaderType {
@@ -92,19 +91,26 @@ const buffer = gl.createBuffer();
 let a = 0;
 let didResize = false;
 
+const { isInteger } = Number;
+
 function draw(t: number) {
-  requestAnimationFrame(draw);
+  // requestAnimationFrame(draw);
 
   if (didResize) {
     const {
+      devicePixelRatio: dpr = 1,
       innerHeight: height,
       innerWidth: width,
-      devicePixelRatio: dpr,
     } = window;
 
-    c.width = (width * dpr) / scale;
-    c.height = (height * dpr) / scale;
+    const scale = 0.1;
+
+    c.width = width * scale;
+    c.height = height * scale;
     gl.viewport(0, 0, c.width, c.height);
+
+    c.style.width = `${width}px`;
+    c.style.height = `${height}px`;
 
     didResize = false;
   }
