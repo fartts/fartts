@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "clean": "rm -rf .cache/ coverage/ dist/ node_modules/",
     "build": "parcel build src/app/{index.html,README.md} --public-url / --experimental-scope-hoisting",
     "start": "parcel src/app/{index.html,README.md}",
     "lint": "tslint 'src/**/*.ts'",
