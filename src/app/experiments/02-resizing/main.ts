@@ -91,17 +91,11 @@ const buffer = gl.createBuffer();
 let a = 0;
 let didResize = false;
 
-const { isInteger } = Number;
-
 function draw(t: number) {
-  // requestAnimationFrame(draw);
+  requestAnimationFrame(draw);
 
   if (didResize) {
-    const {
-      devicePixelRatio: dpr = 1,
-      innerHeight: height,
-      innerWidth: width,
-    } = window;
+    const { innerHeight: height, innerWidth: width } = window;
 
     const scale = 0.1;
 
