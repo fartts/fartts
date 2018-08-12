@@ -15,8 +15,8 @@
   },
   "engines": {
     "node": "8.11.3",
-    "npm": "6.2.0",
-    "yarn": "1.9.2"
+    "npm": "6.3.0",
+    "yarn": "1.9.4"
   },
   "dependencies": {
     "seedrandom": "2.4.3"
