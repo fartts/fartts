@@ -5,8 +5,6 @@ import { cos, sin, toRadians } from '@fartts/lib/math';
 import frag from './shader.frag';
 import vert from './shader.vert';
 
-const DEV = 'development';
-
 const c = document.querySelector('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,
@@ -29,7 +27,7 @@ function makeShader(
   context.shaderSource(shader, source);
   context.compileShader(shader);
 
-  if (process.env.NODE_ENV === DEV) {
+  if (process.env.NODE_ENV === 'development') {
     const compileSuccess = context.getShaderParameter(
       shader,
       context.COMPILE_STATUS,
@@ -61,7 +59,7 @@ function makeProgram(
 
   context.linkProgram(program);
 
-  if (process.env.NODE_ENV === DEV) {
+  if (process.env.NODE_ENV === 'development') {
     const linkSuccess = context.getProgramParameter(
       program,
       context.LINK_STATUS,
