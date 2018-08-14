@@ -1,5 +1,8 @@
 import './main.css';
 
+// import { compile } from './shader';
+// import { link } from './program';
+
 const c = document.querySelector('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,
