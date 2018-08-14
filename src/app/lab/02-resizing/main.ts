@@ -67,7 +67,7 @@ function makeProgram(
 
     if (!linkSuccess) {
       throw new Error(
-        `program (${program}) failed to compile:\n${context.getShaderInfoLog(
+        `program (${program}) failed to link:\n${context.getProgramInfoLog(
           program,
         )}`,
       );
