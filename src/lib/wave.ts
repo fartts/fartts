@@ -1,4 +1,4 @@
-import { floor, ππ } from './math';
+import { cos, floor, saw, sin, tri, ππ } from './math';
 
 type TrigFunction = (radians: number) => number;
 type WaveFunction = (timestamp: number) => number;
@@ -46,6 +46,11 @@ export function wave(
   };
 }
 
+export const cosWave = (...args: number[]) => wave(cos, ...args);
+export const sawWave = (...args: number[]) => wave(saw, ...args);
+export const sinWave = (...args: number[]) => wave(sin, ...args);
+export const triWave = (...args: number[]) => wave(tri, ...args);
+
 /**
  * ## step
  * this utility function returns a step function (like a integer-only wave
@@ -74,3 +79,8 @@ export function step(
   const waveFn = wave(fn, p, min, max, o);
   return (t: number) => floor(waveFn(t));
 }
+
+export const cosStep = (...args: number[]) => step(cos, ...args);
+export const sawStep = (...args: number[]) => step(saw, ...args);
+export const sinStep = (...args: number[]) => step(sin, ...args);
+export const triStep = (...args: number[]) => step(tri, ...args);
