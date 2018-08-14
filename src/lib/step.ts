@@ -1,4 +1,4 @@
-import { cos, floor, saw, sin, tri, ππ } from './math';
+import { cos, floor, saw, sin, tri } from './math';
 import { wave, TrigFunction, WaveFunction } from './wave';
 
 /**
