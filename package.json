@@ -19,7 +19,7 @@
     "yarn": "1.9.4"
   },
   "dependencies": {
-    "seedrandom": "2.4.3"
+    "seedrandom": "2.4.4"
   },
   "devDependencies": {
     "@semantic-release/changelog": "2.1.2",
