@@ -9,6 +9,7 @@ const { isInteger } = Number;
 const el = (s: string) => document.querySelector(s);
 const on = (e: string, fn: EventListener) => window.addEventListener(e, fn);
 
+const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,
@@ -29,19 +30,16 @@ function next(a: number, b: number): number {
 function resize() {
   shouldResize = false;
 
-  let {
-    devicePixelRatio: dpr,
-    innerWidth: width,
-    innerHeight: height,
-  } = window;
+  let { devicePixelRatio: dpr } = window;
+  let { clientWidth: width, clientHeight: height } = m;
 
   if (dpr === undefined) {
     dpr = 1;
   }
 
   const scale = 10;
-  width = next(width, 10);
-  height = next(height, 10);
+  width = next(width, scale);
+  height = next(height, scale);
 
   const w = (width * dpr) / scale;
   const h = (height * dpr) / scale;
@@ -60,15 +58,14 @@ on('resize', () => {
 });
 
 function init(): void {
-  console.log('init'); // tslint:disable-line no-console
-
+  // console.log('init'); // tslint:disable-line no-console
   if (shouldResize) {
     resize();
   }
 }
 
 function draw(t: number): void {
-  console.log('draw', t); // tslint:disable-line no-console
+  // console.log('draw', t); // tslint:disable-line no-console
   requestAnimationFrame(draw);
 
   if (shouldResize) {
