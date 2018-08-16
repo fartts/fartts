@@ -3,7 +3,10 @@ import './main.css';
 // import { compile } from './shader';
 // import { link } from './program';
 
-const c = document.querySelector('canvas') as HTMLCanvasElement;
+// const { keys, getPrototypeOf } = Object;
+const el = (s: string) => document.querySelector(s);
+
+const c = el('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,
 }) as WebGLRenderingContext;
@@ -16,7 +19,7 @@ function init(): void {
 
 function draw(t: number): void {
   console.log('draw', t); // tslint:disable-line no-console
-  requestAnimationFrame(draw);
+  // requestAnimationFrame(draw);
 }
 
 init();

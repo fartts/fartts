@@ -2,14 +2,20 @@ export function validate(
   gl: WebGLRenderingContext,
   shader: WebGLShader | null,
 ): void {
-  const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+  const {
+    COMPILE_STATUS,
+    getShaderParameter,
+    getShaderInfoLog,
+    deleteShader,
+  } = gl;
+  const success = getShaderParameter(shader, COMPILE_STATUS);
 
   if (!success) {
     throw new Error(
-      `shader ${shader} failed to compile:\n${gl.getShaderInfoLog(shader)}`,
+      `shader ${shader} failed to compile:\n${getShaderInfoLog(shader)}`,
     );
 
-    gl.deleteShader(shader);
+    deleteShader(shader);
   }
 }
 
@@ -20,10 +26,11 @@ export function compile(
     | WebGLRenderingContext['FRAGMENT_SHADER'],
   source: string,
 ): WebGLShader {
-  const shader = gl.createShader(type);
+  const { createShader, shaderSource, compileShader } = gl;
+  const shader = createShader(type);
 
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
+  shaderSource(shader, source);
+  compileShader(shader);
 
   if (process.env.NODE_ENV === 'development') {
     validate(gl, shader);
