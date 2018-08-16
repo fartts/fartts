@@ -2,20 +2,14 @@ export function validate(
   gl: WebGLRenderingContext,
   program: WebGLProgram | null,
 ): void {
-  const {
-    LINK_STATUS,
-    getProgramParameter,
-    getProgramInfoLog,
-    deleteProgram,
-  } = gl;
-  const success = getProgramParameter(program, LINK_STATUS);
+  const success = gl.getProgramParameter(program, gl.LINK_STATUS);
 
   if (!success) {
     throw new Error(
-      `program (${program}) failed to link:\n${getProgramInfoLog(program)}`,
+      `program (${program}) failed to link:\n${gl.getProgramInfoLog(program)}`,
     );
 
-    deleteProgram(program);
+    gl.deleteProgram(program);
   }
 }
 
@@ -24,12 +18,11 @@ export function link(
   vert: WebGLShader,
   frag: WebGLShader,
 ): WebGLProgram {
-  const { createProgram, attachShader, linkProgram } = gl;
-  const program = createProgram();
+  const program = gl.createProgram();
 
-  attachShader(program, vert);
-  attachShader(program, frag);
-  linkProgram(program);
+  gl.attachShader(program, vert);
+  gl.attachShader(program, frag);
+  gl.linkProgram(program);
 
   if (process.env.NODE_ENV === 'development') {
     validate(gl, program);
