@@ -26,17 +26,15 @@ let program: WebGLProgram;
 let aPositions: number;
 let positions: WebGLBuffer;
 
-// let uTranslation: WebGLUniformLocation;
-// let translation = [0, 0];
+let uTranslation: WebGLUniformLocation;
+let translation = [0, 0];
 
 let uResolution: WebGLUniformLocation;
 let resolution = [0, 0];
 
-const r = 30;
-const d = 8000;
+const r = 50;
+const d = 60000;
 const n = 24;
-let hw: number;
-let hh: number;
 let points: WaveFunction[];
 
 function next(a: number, b: number): number {
@@ -67,22 +65,26 @@ function resize() {
   const w = (width * dpr) / scale;
   const h = (height * dpr) / scale;
 
+  const hw = w / 2;
+  const hh = h / 2;
+
+  translation = [hw, hh];
+  resolution = [w, h];
+
   c.width = w;
   c.height = h;
 
-  resolution = [w, h];
   gl.viewport(0, 0, w, h);
 
-  // this should go in it's own function some where
-  hw = c.width / 2;
-  hh = c.height / 2;
   points = Array(n)
     .fill(0)
-    .map(
-      (v, i) =>
-        i % 2 === 0
-          ? cosWave(d, -r, r, (d / n) * i)
-          : sinWave(d, -r, r, (d / n) * i),
+    .reduce(
+      (p, v, i) =>
+        p.concat([
+          cosWave(d, -r, r, (d / n) * i),
+          sinWave(d, -r, r, (d / n) * i),
+        ]),
+      [],
     );
 }
 
@@ -107,10 +109,10 @@ function init(): void {
   aPositions = gl.getAttribLocation(program, 'aPositions');
   positions = gl.createBuffer() as WebGLBuffer;
 
-  // uTranslation = gl.getUniformLocation(
-  //   program,
-  //   'uTranslation',
-  // ) as WebGLUniformLocation;
+  uTranslation = gl.getUniformLocation(
+    program,
+    'uTranslation',
+  ) as WebGLUniformLocation;
 
   uResolution = gl.getUniformLocation(
     program,
@@ -132,7 +134,7 @@ function draw(t: number): void {
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array(points.map((xy, i) => xy(t) + (i % 2 === 0 ? hw : hh))),
+    new Float32Array(points.map((xy, i) => xy(t))),
     gl.STATIC_DRAW,
   );
 
@@ -140,7 +142,7 @@ function draw(t: number): void {
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
   gl.vertexAttribPointer(aPositions, 2, gl.FLOAT, false, 0, 0);
 
-  // gl.uniform2fv(uTranslation, translation);
+  gl.uniform2fv(uTranslation, translation);
   gl.uniform2fv(uResolution, resolution);
 
   gl.drawArrays(gl.POINTS, 0, points.length / 2);
