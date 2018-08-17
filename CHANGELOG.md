@@ -1,3 +1,28 @@
+# [1.4.0](https://github.com/fartts/fartts/compare/v1.3.1...v1.4.0) (2018-08-17)
+
+
+### Bug Fixes
+
+* **lab:** fix the error message and info log call ([4ae8c7b](https://github.com/fartts/fartts/commit/4ae8c7b))
+
+
+### Features
+
+* **lab:** add a step function ([6999512](https://github.com/fartts/fartts/commit/6999512))
+* **lab:** add a very rough wave demo ([0663762](https://github.com/fartts/fartts/commit/0663762))
+* **lab:** add boilerplate for a waveforms experiment ([404ba49](https://github.com/fartts/fartts/commit/404ba49))
+* **lab:** add convenience wave and step functions for common trig functions ([a375557](https://github.com/fartts/fartts/commit/a375557))
+* **lab:** add experimental shader and program modules ([c44d642](https://github.com/fartts/fartts/commit/c44d642))
+* **lab:** add several circle thingy configs ([26d9973](https://github.com/fartts/fartts/commit/26d9973))
+* **lab:** calculate the canvas' scaled size based on device pixels ([1893944](https://github.com/fartts/fartts/commit/1893944))
+* **lab:** program boilerplate ([366e277](https://github.com/fartts/fartts/commit/366e277))
+* **lib/wave:** add a wave generator function ([84c583c](https://github.com/fartts/fartts/commit/84c583c))
+
+
+### Performance Improvements
+
+* **lab:** looks like parcel only recognizes the simple string match ([e65289c](https://github.com/fartts/fartts/commit/e65289c))
+
 ## [1.3.1](https://github.com/fartts/fartts/compare/v1.3.0...v1.3.1) (2018-08-07)
 
 
