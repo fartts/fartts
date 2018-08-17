@@ -32,9 +32,28 @@ let translation = [0, 0];
 let uResolution: WebGLUniformLocation;
 let resolution = [0, 0];
 
-const r = 50;
-const d = 60000;
-const n = 24;
+const configs = [
+  {
+    radius: 50,
+    period: 60000,
+    count: 24,
+  },
+  {
+    radius: 35,
+    period: 20000,
+    count: 12,
+  },
+  {
+    radius: 20,
+    period: 7000,
+    count: 6,
+  },
+  {
+    radius: 5,
+    period: 2000,
+    count: 3,
+  },
+];
 let points: WaveFunction[];
 
 function next(a: number, b: number): number {
@@ -76,16 +95,22 @@ function resize() {
 
   gl.viewport(0, 0, w, h);
 
-  points = Array(n)
-    .fill(0)
-    .reduce(
-      (p, v, i) =>
-        p.concat([
-          cosWave(d, -r, r, (d / n) * i),
-          sinWave(d, -r, r, (d / n) * i),
-        ]),
-      [],
-    );
+  points = configs.reduce(
+    (ps, { radius, period, count }) =>
+      ps.concat(
+        Array(count)
+          .fill(0)
+          .reduce(
+            (p, v, i) =>
+              p.concat([
+                cosWave(period, -radius, radius, (period / count) * i),
+                sinWave(period, -radius, radius, (period / count) * i),
+              ]),
+            [],
+          ),
+      ),
+    [],
+  );
 }
 
 on('resize', () => {
@@ -145,7 +170,7 @@ function draw(t: number): void {
   gl.uniform2fv(uTranslation, translation);
   gl.uniform2fv(uResolution, resolution);
 
-  gl.drawArrays(gl.POINTS, 0, points.length / 2);
+  gl.drawArrays(gl.LINE_LOOP, 0, points.length / 2);
 }
 
 init();
