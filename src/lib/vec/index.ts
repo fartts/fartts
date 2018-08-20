@@ -1,3 +1,5 @@
+import { isArray } from 'util';
+
 // // const { isArray } = Array;
 // // const { isInteger } = Number;
 
@@ -16,7 +18,7 @@
 //   // },
 // });
 
-// const { construct /* , get, set */ } = Reflect;
+const { construct /* , get, set */ } = Reflect;
 
 function toKeysOfIndices(
   acc: { string?: number },
@@ -45,7 +47,7 @@ function toSwizzledKeySet(
 //   return typeof s === 'string';
 // }
 
-type VectorFactory = () => Float32Array;
+// type VectorFactory = () => Float32Array;
 interface IVectorFactoryConfig {
   keyedIndices: { string: number };
   swizzledKeys: Set<string>;
@@ -57,7 +59,7 @@ const keySets: string[][] = [
   ['r', 'g', 'b', 'a'],
 ];
 
-const config = keySets.reduce(
+export const config = keySets.reduce(
   (acc: IVectorFactoryConfig, axes: string[]): IVectorFactoryConfig => {
     const keyedIndices = axes.reduce(toKeysOfIndices, {});
     const swizzledKeys = new Set(axes.reduceRight(toSwizzledKeySet, axes));
@@ -67,20 +69,38 @@ const config = keySets.reduce(
         ...acc.keyedIndices,
         ...keyedIndices,
       },
-      swizzledKeys: new Set([...acc.swizzledKeys, ...swizzledKeys]),
+      swizzledKeys: new Set([...(acc.swizzledKeys || []), ...swizzledKeys]),
     };
   },
   {} as IVectorFactoryConfig,
 );
 
-// export const [vec2, vec3, vec4]: VectorFactory[] = [, ,].fill(0).map(() => {
-//   return () =>
-//     new Proxy(Float32Array, {
-//       construct(...args) {
-//         return Reflect.construct(...args);
-//       },
-//     });
-// });
+export const [Vec2, Vec3, Vec4]: Float32ArrayConstructor[] = new Array(4)
+  .fill(0)
+  .reduce((acc: Float32ArrayConstructor[], _: number, i: number) => {
+    if (i === 0) {
+      return acc;
+    }
+
+    const size = i + 1;
+
+    return acc.concat(
+      new Proxy(Float32Array, {
+        construct(target, args) {
+          if (args.length > 1 || args[0].length > size || !isArray(args[0])) {
+            throw new Error(
+              [
+                `Incorrect arguments supplied to Vec${size} constructor.`,
+                `Expected an array-like with ${size} or fewer elements.`,
+              ].join(' '),
+            );
+          }
+
+          return construct(target, args);
+        },
+      }),
+    );
+  }, []);
 
 // const getSwizzled = (target: any[], key: string): any =>
 //   key.split('').map((k: string) => target[axisToIndexMap[k]]);
