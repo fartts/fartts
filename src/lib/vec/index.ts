@@ -19,10 +19,10 @@
 // const { construct /* , get, set */ } = Reflect;
 
 function toKeysOfIndices(
-  acc: { [key: string]: number },
+  acc: { string?: number },
   key: string,
   i: number,
-): { [key: string]: number } {
+): { string?: number } {
   return {
     ...acc,
     [key]: i,
@@ -45,61 +45,67 @@ function toSwizzledKeySet(
 //   return typeof s === 'string';
 // }
 
-type vec = () => Float32Array;
+type VectorFactory = () => Float32Array;
+interface IVectorFactoryConfig {
+  keyedIndices: { string: number };
+  swizzledKeys: Set<string>;
+}
 
-export const [vec2, vec3, vec4] = [
+const keySets: string[][] = [
   ['x', 'y', 'z', 'w'],
   ['s', 't', 'p', 'q'],
   ['r', 'g', 'b', 'a'],
-].reduce((acc: vec[], axes: string[]): any[] => {
-  const axisToIndexMap = axes.reduce(toKeysOfIndices, {});
-  const swizzledKeys = new Set(axes.reduceRight(toSwizzledKeySet, axes));
+];
 
-  // const getSwizzled = (target: any[], key: string): any =>
-  //   key.split('').map((k: string) => target[axisToIndexMap[k]]);
+const config = keySets.reduce(
+  (acc: IVectorFactoryConfig, axes: string[]): IVectorFactoryConfig => {
+    const keyedIndices = axes.reduce(toKeysOfIndices, {});
+    const swizzledKeys = new Set(axes.reduceRight(toSwizzledKeySet, axes));
 
-  // const setSwizzled = (target: any[], key: string, val: any): boolean => true;
+    return {
+      keyedIndices: {
+        ...acc.keyedIndices,
+        ...keyedIndices,
+      },
+      swizzledKeys: new Set([...acc.swizzledKeys, ...swizzledKeys]),
+    };
+  },
+  {} as IVectorFactoryConfig,
+);
 
-  // const handler: ProxyHandler = {
-  //   get(target: any[], key: PropertyKey, receiver?: any): any {
-  //     return isString(key) && swizzledKeys.has(key)
-  //       ? getSwizzled(target, key)
-  //       : get(target, key, receiver);
-  //   },
+// export const [vec2, vec3, vec4]: VectorFactory[] = [, ,].fill(0).map(() => {
+//   return () =>
+//     new Proxy(Float32Array, {
+//       construct(...args) {
+//         return Reflect.construct(...args);
+//       },
+//     });
+// });
 
-  //   set(target: any[], key: PropertyKey, val: any, receiver?: any): boolean {
-  //     return isString(key) && swizzledKeys.has(key)
-  //       ? setSwizzled(target, key, val)
-  //       : set(target, key, val, receiver);
-  //   },
-  // };
+// const getSwizzled = (target: any[], key: string): any =>
+//   key.split('').map((k: string) => target[axisToIndexMap[k]]);
 
-  // return acc.concat(
-  //   () =>
-  //     new Proxy(Float32Array, {
-  //       construct(...args): void {
-  //         return construct(...args);
-  //       },
-  //     }),
-  // );
+// const setSwizzled = (target: any[], key: string, val: any): boolean => true;
 
-  return acc;
-}, []);
+// const handler: ProxyHandler = {
+//   get(target: any[], key: PropertyKey, receiver?: any): any {
+//     return isString(key) && swizzledKeys.has(key)
+//       ? getSwizzled(target, key)
+//       : get(target, key, receiver);
+//   },
 
-// function toSwizzledKeys(acc: string[], key: string): string[] {
-//   return acc.concat(rootKeys.map(k => `${key}${k}`));
-// }
+//   set(target: any[], key: PropertyKey, val: any, receiver?: any): boolean {
+//     return isString(key) && swizzledKeys.has(key)
+//       ? setSwizzled(target, key, val)
+//       : set(target, key, val, receiver);
+//   },
+// };
 
-// const nextKeys = rootKeys.reduce(toSwizzledKeys, []);
-// const nextNextKeys = nextKeys.reduce(toSwizzledKeys, []);
-// const nextNextNextKeys = nextNextKeys.reduce(toSwizzledKeys, []);
-
-// const allKeys = [
-//   ...rootKeys,
-//   ...nextKeys,
-//   ...nextNextKeys,
-//   ...nextNextNextKeys,
-// ];
-
-// export const [, rgb, rgba] = ['r', 'g', 'b', 'a'];
-// export const [, hsl, hsla] = ['h', 's', 'l', 'a'];
+// return acc.concat(
+//   () =>
+//     new Proxy(Float32Array, {
+//       construct(...args): void {
+//         return construct(...args);
+//       },
+//     }),
+// );
