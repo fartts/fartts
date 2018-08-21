@@ -1,23 +1,4 @@
-import { isArray } from 'util';
-
-// // const { isArray } = Array;
-// // const { isInteger } = Number;
-
-// const vec = new Proxy(Float32Array, {
-//   construct(target, args) {
-//     // only accept integer or array (with length <= 4) constructor args
-//     return Reflect.construct(target, args);
-//   },
-
-//   // get(target, key, receiver) {
-//   //   return Reflect.get(target, key, receiver);
-//   // },
-
-//   // set(target, key, value, receiver) {
-//   //   return Reflect.set(target, key, value, receiver);
-//   // },
-// });
-
+const { isArray } = Array;
 const { construct /* , get, set */ } = Reflect;
 
 function toKeysOfIndices(
@@ -31,49 +12,44 @@ function toKeysOfIndices(
   };
 }
 
-function toSwizzledKeySet(
+function toSwizzled(
   keys: string[],
   _: string,
   i: number,
   root: string[],
 ): string[] {
-  const toSwizzledKeys = (acc: string[], key: string): string[] =>
+  const toSwizzledDepth = (acc: string[], key: string): string[] =>
     acc.concat(root.map(k => `${key}${k}`));
 
-  return i > 0 ? keys.reduce(toSwizzledKeys, root) : keys;
+  return i > 0 ? keys.reduce(toSwizzledDepth, root) : keys;
 }
 
-// function isString(s: any): s is string {
-//   return typeof s === 'string';
-// }
-
-// type VectorFactory = () => Float32Array;
-interface IVectorFactoryConfig {
-  keyedIndices: { string: number };
-  swizzledKeys: Set<string>;
-}
-
-const keySets: string[][] = [
+const keySets = [
   ['x', 'y', 'z', 'w'],
   ['s', 't', 'p', 'q'],
   ['r', 'g', 'b', 'a'],
 ];
 
-export const config = keySets.reduce(
-  (acc: IVectorFactoryConfig, axes: string[]): IVectorFactoryConfig => {
-    const keyedIndices = axes.reduce(toKeysOfIndices, {});
-    const swizzledKeys = new Set(axes.reduceRight(toSwizzledKeySet, axes));
-
-    return {
-      keyedIndices: {
-        ...acc.keyedIndices,
-        ...keyedIndices,
-      },
-      swizzledKeys: new Set([...(acc.swizzledKeys || []), ...swizzledKeys]),
-    };
-  },
-  {} as IVectorFactoryConfig,
+export const swizzledKeys = new Set(
+  keySets.reduce(
+    (swizzledKeySets, keySet) =>
+      swizzledKeySets.concat(keySet.reduceRight(toSwizzled, keySet)),
+    [],
+  ),
 );
+
+export const keyedIndices = keySets.reduce(
+  (keyedIndexes, keySet) => ({
+    ...keyedIndexes,
+    ...keySet.reduce(toKeysOfIndices, {}),
+  }),
+  {},
+);
+
+export const config = {
+  swizzledKeys,
+  keyedIndices,
+};
 
 export const [Vec2, Vec3, Vec4]: Float32ArrayConstructor[] = new Array(4)
   .fill(0)
