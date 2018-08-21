@@ -1,4 +1,5 @@
 const { isArray } = Array;
+const { assign } = Object;
 const { construct /* , get, set */ } = Reflect;
 
 function toKeysOfIndices(
@@ -39,10 +40,8 @@ export const swizzledKeys = new Set(
 );
 
 export const keyedIndices = keySets.reduce(
-  (keyedIndexes, keySet) => ({
-    ...keyedIndexes,
-    ...keySet.reduce(toKeysOfIndices, {}),
-  }),
+  (keyedIndexes, keySet) =>
+    assign(keyedIndexes, keySet.reduce(toKeysOfIndices, {})),
   {},
 );
 
