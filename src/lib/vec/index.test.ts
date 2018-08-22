@@ -25,6 +25,19 @@ describe('vec/index', () => {
     expect(stpq[1]).toBe(4);
     expect(stpq[2]).toBe(3);
     expect(stpq[3]).toBe(4);
+
+    expect(() => {
+      stpq.pq = [1];
+    }).toThrow('not enough data provided for construction');
+
+    expect(() => {
+      stpq.pq = [1, 2, 3];
+    }).toThrow('too many arguments');
+
+    expect(stpq.s).toBe(3);
+    stpq.s = 1;
+    stpq[1] = 2;
+    expect([].slice.call(stpq.st)).toEqual([1, 2]);
   });
 
   test('config', () => {

@@ -48,42 +48,47 @@ export const indicesByKey = new Map(
   ),
 );
 
-function getSwizzled(target: IVector, prop: string): IVector {
+function flatten(args: Array<Component | Components>): ArrayLike<number> {
+  return concat.apply(
+    [],
+    args.map(arg => (typeof arg === 'number' ? arg : slice.call(arg))),
+  );
+}
+
+function getSwizzled(target: IVector, prop: string): Component | Components {
+  if (prop.length === 1) {
+    return target[(indicesByKey.has(prop) && indicesByKey.get(prop)) as number];
+  }
+
   const factory = vecs[prop.length - 2];
   const keys = prop.split('');
 
   return factory(
     keys.map(k => {
-      const i = indicesByKey.has(k) && indicesByKey.get(k);
-
-      if (typeof i !== 'number') {
-        throw new Error();
-      }
-
+      const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
       return target[i];
     }),
   );
 }
 
-function setSwizzled(target: IVector, prop: string, value: Components) {
+function setSwizzled(
+  target: IVector,
+  prop: string,
+  value: Component | Components,
+) {
   const keys = prop.split('');
-  const values = concat.apply([], value);
+  const values = flatten([value]);
 
-  if (keys.length < values.length) {
+  if (keys.length > values.length) {
     throw new Error('not enough data provided for construction');
   }
 
-  if (keys.length > values.length) {
+  if (keys.length < values.length) {
     throw new Error('too many arguments');
   }
 
   keys.forEach(k => {
-    const i = indicesByKey.has(k) && indicesByKey.get(k);
-
-    if (typeof i !== 'number') {
-      throw new Error();
-    }
-
+    const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
     target[i] = values[i];
   });
 
@@ -97,21 +102,14 @@ const handler: ProxyHandler<IVector> = {
       : get(target, prop);
   },
 
-  set(target: IVector, prop: PropertyKey, value: Components) {
+  set(target: IVector, prop: PropertyKey, value: Component | Components) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? setSwizzled(target, prop, value)
       : set(target, prop, value);
   },
 };
 
-function flatten(args: Components[]): ArrayLike<number> {
-  return concat.apply(
-    [],
-    args.map(arg => (typeof arg === 'number' ? arg : slice.call(arg))),
-  );
-}
-
-function vec(size: number, args: Components[]): IVector {
+function vec(size: number, args: Array<Component | Components>): IVector {
   const components = flatten(args);
 
   if (components.length < size) {
@@ -132,7 +130,8 @@ const vecs = new Array(4)
       i === 0
         ? acc
         : acc.concat(
-            (...args: Components[]) => new Proxy(vec(i + 1, args), handler),
+            (...args: Array<Component | Components>) =>
+              new Proxy(vec(i + 1, args), handler),
           ),
     [],
   );
