@@ -1,19 +1,24 @@
-import { config, Vec2, Vec3, Vec4 } from './index';
-
-const { keys } = Object;
+import { indicesByKey, swizzledKeys, vec2, vec3, vec4 } from './index';
 
 describe('vec/index', () => {
-  test('Vec2, Vec3, Vec4', () => {
-    expect(Vec2).toBeDefined();
-    expect(new Vec2([]).length).toEqual([].length);
-    expect(() => new Vec2([1, 2, 3])).toThrow('Vec2');
-    expect(Vec3).toBeDefined();
-    expect(Vec4).toBeDefined();
+  test('vec2, vec3, vec4', () => {
+    expect(vec2).toBeDefined();
+    expect(vec2(1, 2).length).toEqual([1, 2].length);
+    expect(() => vec2(1)).toThrow('not enough data provided for construction');
+    expect(() => vec2(1, 2, 3)).toThrow('too many arguments');
+
+    expect(vec3).toBeDefined();
+
+    expect(vec4).toBeDefined();
   });
 
   test('config', () => {
-    expect(config).toMatchSnapshot();
-    expect(keys(config.keyedIndices).length).toBe(4 * 3);
-    expect(config.swizzledKeys.size).toBe((4 + 4 ** 2 + 4 ** 3 + 4 ** 4) * 3);
+    expect({
+      indicesByKey,
+      swizzledKeys,
+    }).toMatchSnapshot();
+
+    expect(indicesByKey.size).toBe(4 * 3);
+    expect(swizzledKeys.size).toBe((4 + 4 ** 2 + 4 ** 3 + 4 ** 4) * 3);
   });
 });
