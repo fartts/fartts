@@ -47,10 +47,7 @@ export const indicesByKey = new Map(
   ),
 );
 
-type Components = number | number[] | Float32Array;
-type Factory = (...args: Components[]) => Float32Array;
-
-function getSwizzled(target: Float32Array, prop: string): Float32Array {
+function getSwizzled(target: IVector, prop: string): IVector {
   const factory = vecs[prop.length - 2];
   const keys = prop.split('');
   return factory(
@@ -66,7 +63,7 @@ function getSwizzled(target: Float32Array, prop: string): Float32Array {
   );
 }
 
-function vec(size: number, args: Components[]): Float32Array {
+function vec(size: number, args: Components[]): IVector {
   const components = concat.apply([], args);
 
   if (components.length < size) {
@@ -77,17 +74,17 @@ function vec(size: number, args: Components[]): Float32Array {
     throw new Error('too many arguments');
   }
 
-  return new Float32Array(components);
+  return new Float32Array(components) as IVector;
 }
 
-const handler: ProxyHandler<Float32Array> = {
-  get(target: Float32Array, prop: PropertyKey) {
+const handler: ProxyHandler<IVector> = {
+  get(target: IVector, prop: PropertyKey) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? getSwizzled(target, prop)
       : get(target, prop);
   },
 
-  set(target: Float32Array, prop: PropertyKey, value: Components) {
+  set(target: IVector, prop: PropertyKey, value: Components) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? false
       : set(target, prop, value);

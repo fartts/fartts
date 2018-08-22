@@ -8,7 +8,11 @@ describe('vec/index', () => {
     expect(() => vec2(1, 2, 3)).toThrow('too many arguments');
 
     expect(vec3).toBeDefined();
-    expect(vec3(1, 2, 3).yz).toEqual([2, 3]);
+
+    const yz = vec3(1, 2, 3).yz;
+    expect(yz[0]).toBe(2);
+    expect(yz[1]).toBe(3);
+    expect(yz.length).toBe(2);
 
     expect(vec4).toBeDefined();
   });
