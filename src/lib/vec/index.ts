@@ -47,7 +47,26 @@ export const indicesByKey = new Map(
   ),
 );
 
-function vec(size: number, args: Array<number | number[]>): Float32Array {
+type Components = number | number[] | Float32Array;
+type Factory = (...args: Components[]) => Float32Array;
+
+function getSwizzled(target: Float32Array, prop: string): Float32Array {
+  const factory = vecs[prop.length - 2];
+  const keys = prop.split('');
+  return factory(
+    keys.map(k => {
+      const i = indicesByKey.has(k) && indicesByKey.get(k);
+
+      if (i === undefined || typeof i !== 'number') {
+        throw new Error();
+      }
+
+      return target[i];
+    }),
+  );
+}
+
+function vec(size: number, args: Components[]): Float32Array {
   const components = concat.apply([], args);
 
   if (components.length < size) {
@@ -61,86 +80,30 @@ function vec(size: number, args: Array<number | number[]>): Float32Array {
   return new Float32Array(components);
 }
 
-const handler = {
+const handler: ProxyHandler<Float32Array> = {
   get(target: Float32Array, prop: PropertyKey) {
-    return get(target, prop);
+    return typeof prop === 'string' && swizzledKeys.has(prop)
+      ? getSwizzled(target, prop)
+      : get(target, prop);
   },
 
-  set(target: Float32Array, prop: PropertyKey, value: number | number[]) {
-    return set(target, prop, value);
+  set(target: Float32Array, prop: PropertyKey, value: Components) {
+    return typeof prop === 'string' && swizzledKeys.has(prop)
+      ? false
+      : set(target, prop, value);
   },
 };
 
-export const [vec2, vec3, vec4] = new Array(4)
+const vecs = new Array(4)
   .fill(true)
   .reduce(
-    (vecs, _: boolean, i: number) =>
+    (acc: Factory[], _, i: number) =>
       i === 0
-        ? vecs
-        : vecs.concat(
-            (...args: Array<number | number[]>) =>
-              new Proxy(vec(i + 1, args), handler),
+        ? acc
+        : acc.concat(
+            (...args: Components[]) => new Proxy(vec(i + 1, args), handler),
           ),
     [],
   );
 
-/**
- * TODO: @mysterycommand - don't worry about "fill forward" GLSL throws: "not
- * enough data provided for construction"
- * @see: https://github.com/Popmotion/vekta#fill-forward
- */
-
-// export const [Vec2, Vec3, Vec4]: Float32ArrayConstructor[] = new Array(4)
-//   .fill(0)
-//   .reduce((acc: Float32ArrayConstructor[], _: number, i: number) => {
-//     if (i === 0) {
-//       return acc;
-//     }
-
-//     const size = i + 1;
-
-//     return acc.concat(
-//       new Proxy(Float32Array, {
-//         construct(target, args) {
-//           if (args.length > 1 || args[0].length > size || !isArray(args[0])) {
-//             throw new Error(
-//               [
-//                 `Incorrect arguments supplied to Vec${size} constructor.`,
-//                 `Expected an array-like with ${size} or fewer elements.`,
-//               ].join(' '),
-//             );
-//           }
-
-//           return construct(target, args);
-//         },
-//       }),
-//     );
-//   }, []);
-
-// const getSwizzled = (target: any[], key: string): any =>
-//   key.split('').map((k: string) => target[axisToIndexMap[k]]);
-
-// const setSwizzled = (target: any[], key: string, val: any): boolean => true;
-
-// const handler: ProxyHandler = {
-//   get(target: any[], key: PropertyKey, receiver?: any): any {
-//     return isString(key) && swizzledKeys.has(key)
-//       ? getSwizzled(target, key)
-//       : get(target, key, receiver);
-//   },
-
-//   set(target: any[], key: PropertyKey, val: any, receiver?: any): boolean {
-//     return isString(key) && swizzledKeys.has(key)
-//       ? setSwizzled(target, key, val)
-//       : set(target, key, val, receiver);
-//   },
-// };
-
-// return acc.concat(
-//   () =>
-//     new Proxy(Float32Array, {
-//       construct(...args): void {
-//         return construct(...args);
-//       },
-//     }),
-// );
+export const [vec2, vec3, vec4] = vecs;
