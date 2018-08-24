@@ -1,18 +1,15 @@
 import { swizzledKeys, indicesByKey } from './util/keys';
+import { toArray } from './util';
 
 const { get, set } = Reflect;
-const { slice } = [];
-
-function toArray(acc: number[], arg: Component): number[] {
-  return acc.concat(typeof arg === 'number' ? arg : slice.call(arg));
-}
 
 function getSwizzled(target: Vector, prop: string): Component {
   if (prop.length === 1) {
-    return target[(indicesByKey.has(prop) && indicesByKey.get(prop)) as number];
+    const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
+    return target[i];
   }
 
-  const factory = vecs[prop.length - 2];
+  const factory = factories[prop.length - 2];
   const keys = prop.split('');
 
   return factory(
@@ -28,7 +25,7 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
   const values = [value].reduce(toArray, []);
 
   if (keys.length > values.length) {
-    throw new Error('not enough data provided for construction');
+    throw new Error('not enough data provided for assignment');
   }
 
   if (keys.length < values.length) {
@@ -41,6 +38,20 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
   });
 
   return true;
+}
+
+function createVector(size: number, args: Components): Vector {
+  const components = args.reduce(toArray, []);
+
+  if (components.length < size) {
+    throw new Error('not enough data provided for construction');
+  }
+
+  if (components.length > size) {
+    throw new Error('too many arguments');
+  }
+
+  return new Float32Array(components) as Vector;
 }
 
 const handler: ProxyHandler<Vector> = {
@@ -57,30 +68,17 @@ const handler: ProxyHandler<Vector> = {
   },
 };
 
-function vec(size: number, args: Components): Vector {
-  const components = args.reduce(toArray, []);
-
-  if (components.length < size) {
-    throw new Error('not enough data provided for construction');
-  }
-
-  if (components.length > size) {
-    throw new Error('too many arguments');
-  }
-
-  return new Float32Array(components) as Vector;
-}
-
-const vecs = new Array(4)
+const factories = new Array(4)
   .fill(true)
   .reduce(
     (acc: Factory[], _, i: number) =>
       i === 0
         ? acc
         : acc.concat(
-            (...args: Components) => new Proxy(vec(i + 1, args), handler),
+            (...args: Components) =>
+              new Proxy(createVector(i + 1, args), handler),
           ),
     [],
   );
 
-export const [vec2, vec3, vec4] = vecs;
+export const [vec2, vec3, vec4] = factories;

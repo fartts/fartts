@@ -28,7 +28,7 @@ describe('vec/index', () => {
 
     expect(() => {
       stpq.pq = [1];
-    }).toThrow('not enough data provided for construction');
+    }).toThrow('not enough data provided for assignment');
 
     expect(() => {
       stpq.pq = [1, 2, 3];
