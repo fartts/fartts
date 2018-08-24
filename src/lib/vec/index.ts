@@ -1,5 +1,5 @@
 import { swizzledKeys, indicesByKey } from './util/keys';
-import { toArray } from './util';
+import { toArray, validate, Validates } from './util';
 
 const { get, set } = Reflect;
 
@@ -22,19 +22,13 @@ function getSwizzled(target: Vector, prop: string): Component {
 
 function setSwizzled(target: Vector, prop: string, value: Component) {
   const keys = prop.split('');
-  const values = [value].reduce(toArray, []);
+  const components = [value].reduce(toArray, []);
 
-  if (keys.length > values.length) {
-    throw new Error('not enough data provided for assignment');
-  }
-
-  if (keys.length < values.length) {
-    throw new Error('too many arguments');
-  }
+  validate(keys.length, components.length, Validates.Assignment);
 
   keys.forEach(k => {
     const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
-    target[i] = values[i];
+    target[i] = components[i];
   });
 
   return true;
@@ -43,13 +37,7 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
 function createVector(size: number, args: Components): Vector {
   const components = args.reduce(toArray, []);
 
-  if (components.length < size) {
-    throw new Error('not enough data provided for construction');
-  }
-
-  if (components.length > size) {
-    throw new Error('too many arguments');
-  }
+  validate(size, components.length, Validates.Construction);
 
   return new Float32Array(components) as Vector;
 }

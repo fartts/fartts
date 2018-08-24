@@ -4,8 +4,12 @@ describe('vec/index', () => {
   test('vec2, vec3, vec4', () => {
     expect(vec2).toBeDefined();
     expect(vec2(1, 2).length).toEqual([1, 2].length);
-    expect(() => vec2(1)).toThrow('not enough data provided for construction');
-    expect(() => vec2(1, 2, 3)).toThrow('too many arguments');
+    expect(() => vec2(1)).toThrow(
+      'not enough arguments provided for construction',
+    );
+    expect(() => vec2(1, 2, 3)).toThrow(
+      'too many arguments provided for construction',
+    );
 
     expect(vec3).toBeDefined();
     const yz = vec3(1, 2, 3).yz;
@@ -28,11 +32,11 @@ describe('vec/index', () => {
 
     expect(() => {
       stpq.pq = [1];
-    }).toThrow('not enough data provided for assignment');
+    }).toThrow('not enough arguments provided for assignment');
 
     expect(() => {
       stpq.pq = [1, 2, 3];
-    }).toThrow('too many arguments');
+    }).toThrow('too many arguments provided for assignment');
 
     expect(stpq.s).toBe(3);
     stpq.s = 1;
