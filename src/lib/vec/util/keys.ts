@@ -1,3 +1,12 @@
+/**
+ * ## toSwizzled
+ *
+ * @param {string[]} swizzled
+ * @param {string} _
+ * @param {number} i
+ * @param {string[]} keys
+ * @returns {string[]}
+ */
 function toSwizzled(
   swizzled: string[],
   _: string,
@@ -10,6 +19,14 @@ function toSwizzled(
   return i > 0 ? swizzled.reduce(toSwizzledDepth, keys) : swizzled;
 }
 
+/**
+ * ## toIndicesByKey
+ *
+ * @param {Array<[string, number]>} acc
+ * @param {string} key
+ * @param {number} i
+ * @returns {Array<[string, number]>}
+ */
 function toIndicesByKey(
   acc: Array<[string, number]>,
   key: string,

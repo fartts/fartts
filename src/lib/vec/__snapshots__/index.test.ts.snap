@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`@fartts/lib/vec vec2, vec3, vec4 1`] = `
+Float32Array [
+  3,
+  4,
+  NaN,
+  NaN,
+]
+`;
+
+exports[`vec/index vec2, vec3, vec4 1`] = `
+Float32Array [
+  3,
+  4,
+  NaN,
+  NaN,
+]
+`;

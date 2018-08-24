@@ -1,6 +1,6 @@
 import { vec2, vec3, vec4 } from './index';
 
-describe('vec/index', () => {
+describe('@fartts/lib/vec', () => {
   test('vec2, vec3, vec4', () => {
     expect(vec2).toBeDefined();
     expect(vec2(1, 2).length).toEqual([1, 2].length);
@@ -10,6 +10,8 @@ describe('vec/index', () => {
     expect(() => vec2(1, 2, 3)).toThrow(
       'too many arguments provided for construction',
     );
+
+    expect(vec2(3, 4).xyzw).toMatchSnapshot();
 
     expect(vec3).toBeDefined();
     const yz = vec3(1, 2, 3).yz;

@@ -1,6 +1,6 @@
 import math from './math';
 
-describe('vec/math', () => {
+describe('@fartts/lib/vec/math', () => {
   test('*', () => {
     expect(math).toBeDefined();
   });

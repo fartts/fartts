@@ -3,6 +3,13 @@ import { toArray, validate, Validates } from './util';
 
 const { get, set } = Reflect;
 
+/**
+ * ## getSwizzled
+ *
+ * @param {Vector} target
+ * @param {string} prop
+ * @returns {Component}
+ */
 function getSwizzled(target: Vector, prop: string): Component {
   if (prop.length === 1) {
     const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
@@ -20,6 +27,14 @@ function getSwizzled(target: Vector, prop: string): Component {
   );
 }
 
+/**
+ * ## setSwizzled
+ *
+ * @param {Vector} target
+ * @param {string} prop
+ * @param {Component} value
+ * @returns
+ */
 function setSwizzled(target: Vector, prop: string, value: Component) {
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
@@ -34,6 +49,13 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
   return true;
 }
 
+/**
+ * ## createVector
+ *
+ * @param {number} size
+ * @param {Components} args
+ * @returns {Vector}
+ */
 function createVector(size: number, args: Components): Vector {
   const components = args.reduce(toArray, []);
 

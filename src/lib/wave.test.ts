@@ -4,7 +4,7 @@ import { wave, cosWave, sinWave, sawWave, triWave } from './wave';
 // just to keep the tables below consice when testing defaults
 const u = undefined;
 
-describe('wave functions', () => {
+describe('@fartts/lib/wave', () => {
   test.each`
     fn     | p       | min  | max  | o      | t       | expected
     ${sin} | ${u}    | ${u} | ${u} | ${u}   | ${0}    | ${0}
