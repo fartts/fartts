@@ -7,6 +7,9 @@ import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
 import { cosWave, sinWave, WaveFunction } from '@fartts/lib/wave';
 
+import { vec2 } from '@fartts/lib/vec';
+console.log(vec2(1, 2).xyzw);
+
 // const { keys, getPrototypeOf } = Object;
 const { isInteger } = Number;
 

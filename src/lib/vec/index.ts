@@ -22,6 +22,11 @@ function getSwizzled(target: Vector, prop: string): Component {
   return factory(
     keys.map(k => {
       const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
+
+      if (i >= target.length) {
+        throw new Error('vector field selection out of range');
+      }
+
       return target[i];
     }),
   );

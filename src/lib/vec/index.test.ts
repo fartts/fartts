@@ -11,7 +11,10 @@ describe('@fartts/lib/vec', () => {
       'too many arguments provided for construction',
     );
 
-    expect(vec2(3, 4).xyzw).toMatchSnapshot();
+    const threeFour = vec2(3, 4);
+    expect(() => threeFour.xyzw).toThrow('vector field selection out of range');
+    expect(() => threeFour.xyxy).not.toThrow();
+    expect(threeFour).toMatchSnapshot();
 
     expect(vec3).toBeDefined();
     const yz = vec3(1, 2, 3).yz;
