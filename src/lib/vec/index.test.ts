@@ -43,6 +43,10 @@ describe('@fartts/lib/vec', () => {
       actual.y = actual.x * 2;
       expect(actual.y).toEqual(components[0] * 4);
 
+      // can still do regular index assignment
+      actual[1] = 2500;
+      expect(actual.y).toEqual(2500);
+
       // swizzling!
       actual.yx = [100, 200];
       expect(actual.x).toEqual(200);
@@ -95,6 +99,7 @@ describe('@fartts/lib/vec', () => {
 
       // no out of bounds access
       expect(() => actual.a).toThrow('vector field selection out of range');
+      expect(() => actual.rgba).toThrow('vector field selection out of range');
 
       // assignment
       actual.rgb = [actual.r * 2, actual.g * 3, actual.b * 4];
@@ -104,6 +109,10 @@ describe('@fartts/lib/vec', () => {
 
       actual.g = actual.r * 2;
       expect(actual.g).toEqual(components[0] * 4);
+
+      // can still do regular index assignment
+      actual[2] = 5000;
+      expect(actual.b).toEqual(5000);
 
       // swizzling!
       actual.bgr = [100, 200, 300];
@@ -168,6 +177,10 @@ describe('@fartts/lib/vec', () => {
 
       actual.t = actual.s * 2;
       expect(actual.t).toEqual(components[0] * 4);
+
+      // can still do regular index assignment
+      actual[3] = 10000;
+      expect(actual.q).toEqual(10000);
 
       // swizzling!
       actual.qpts = [100, 200, 300, 400];
