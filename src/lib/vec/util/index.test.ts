@@ -10,6 +10,7 @@ describe('@fartts/lib/vec/util', () => {
     ${[1, [2, [3]], new Float32Array([4, 5, 6])]} | ${[1, 2, [3], 4, 5, 6] /*
       ^^^ demonstrates that it doesn't work recursively, only 1 deep ^^^
     */}
+    ${[[7, [8]]]}                               | ${[7, [8]]}
   `(
     'expect($arguments.reduce(toArray, [])).toEqual($result)',
     ({ args, result }) => {

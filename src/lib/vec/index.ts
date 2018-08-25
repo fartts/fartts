@@ -52,12 +52,10 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
   const size = keys.length; // just for consistency with `createVector` below
   validate(size, components.length, Validates.Assignment);
 
-  target.set(
-    keys.map(k => {
-      const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
-      return components[i];
-    }),
-  );
+  keys.forEach((k, i) => {
+    const j = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
+    target[j] = components[i];
+  });
 
   return true;
 }

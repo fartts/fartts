@@ -1,6 +1,44 @@
+import { toArray } from './util';
 import { vec2, vec3, vec4 } from './index';
 
 describe('@fartts/lib/vec', () => {
+  test.each`
+    args                          | error
+    ${[1, 2]}                     | ${null}
+    ${[[3, 4]]}                   | ${null}
+    ${[5, [6]]}                   | ${null}
+    ${[new Float32Array([7, 8])]} | ${null}
+    ${[1]}                        | ${'not enough arguments'}
+    ${[[[9, 0]]]}                 | ${'not enough arguments'}
+    ${[1, 2, 3]}                  | ${'too many arguments'}
+    ${[[2, 3], 4]}                | ${'too many arguments'}
+  `('vec2($args)', ({ args, error }) => {
+    const components = args.reduce(toArray, []);
+
+    if (error) {
+      expect(() => vec2(...args)).toThrow(error);
+    } else {
+      const actual = vec2(...args);
+      // construction
+      expect(actual).toMatchSnapshot();
+
+      // access
+      expect(actual.x).toEqual(components[0]);
+      expect(actual.y).toEqual(components[1]);
+
+      // swizzling! v2.yx.x === v2.y
+      expect((actual.yx as Vector).x).toEqual(components[1]);
+
+      // assignment
+      actual.xy = [actual.x * 2, actual.y * 3];
+      expect(actual.x).toEqual(components[0] * 2);
+      expect(actual.y).toEqual(components[1] * 3);
+
+      actual.y = actual.x * 2;
+      expect(actual.y).toEqual(components[0] * 4);
+    }
+  });
+
   test('vec2, vec3, vec4', () => {
     expect(vec2).toBeDefined();
     expect(vec2(1, 2).length).toEqual([1, 2].length);
