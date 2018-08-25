@@ -29,6 +29,7 @@ describe('@fartts/lib/vec', () => {
 
       // swizzling! v2.yx.x === v2.y
       expect((actual.yx as Vector).x).toEqual(components[1]);
+      expect(actual.xyxy).toMatchSnapshot();
 
       // no out of bounds access
       expect(() => actual.z).toThrow('vector field selection out of range');
@@ -60,51 +61,120 @@ describe('@fartts/lib/vec', () => {
     }
   });
 
-  test('vec2, vec3, vec4', () => {
-    expect(vec2).toBeDefined();
-    expect(vec2(1, 2).length).toEqual([1, 2].length);
-    expect(() => vec2(1)).toThrow(
-      'not enough arguments provided for construction',
-    );
-    expect(() => vec2(1, 2, 3)).toThrow(
-      'too many arguments provided for construction',
-    );
+  test.each`
+    args                             | error
+    ${[1, 2, 3]}                     | ${null}
+    ${[[3, 4, 5]]}                   | ${null}
+    ${[5, [6, 7]]}                   | ${null}
+    ${[new Float32Array([7, 8, 9])]} | ${null}
+    ${[1]}                           | ${'not enough arguments'}
+    ${[1, 2]}                        | ${'not enough arguments'}
+    ${[1, [2]]}                      | ${'not enough arguments'}
+    ${[[[9, 0]]]}                    | ${'not enough arguments'}
+    ${[1, 2, 3, 4]}                  | ${'too many arguments'}
+    ${[[2, 3], 4, 5]}                | ${'too many arguments'}
+  `('vec3($args)', ({ args, error }) => {
+    const components = args.reduce(toArray, []);
 
-    const threeFour = vec2(3, 4);
-    expect(() => threeFour.xyzw).toThrow('vector field selection out of range');
-    expect(() => threeFour.xyxy).not.toThrow();
-    expect(threeFour).toMatchSnapshot();
+    if (error) {
+      expect(() => vec3(...args)).toThrow(error);
+    } else {
+      const actual = vec3(...args);
+      // construction
+      expect(actual).toMatchSnapshot();
+      expect(actual.length).toBe(3);
 
-    expect(vec3).toBeDefined();
-    const yz = vec3(1, 2, 3).yz;
-    expect(yz[0]).toBe(2);
-    expect(yz[1]).toBe(3);
-    expect(yz.length).toBe(2);
+      // access
+      expect(actual.r).toEqual(components[0]);
+      expect(actual.g).toEqual(components[1]);
+      expect(actual.b).toEqual(components[2]);
 
-    expect(vec4).toBeDefined();
-    const bgr = vec4(yz, 1, 0).bgr;
-    expect(bgr[0]).toBe(1);
-    expect(bgr[1]).toBe(3);
-    expect(bgr[2]).toBe(2);
+      // swizzling! v3.bgr.r === v2.b
+      expect((actual.bgr as Vector).r).toEqual(components[2]);
+      expect(actual.bbbb).toMatchSnapshot();
 
-    const stpq = vec4(1, 2, 3, 4);
-    stpq.st = stpq.pq;
-    expect(stpq[0]).toBe(3);
-    expect(stpq[1]).toBe(4);
-    expect(stpq[2]).toBe(3);
-    expect(stpq[3]).toBe(4);
+      // no out of bounds access
+      expect(() => actual.a).toThrow('vector field selection out of range');
 
-    expect(() => {
-      stpq.pq = [1];
-    }).toThrow('not enough arguments provided for assignment');
+      // assignment
+      actual.rgb = [actual.r * 2, actual.g * 3, actual.b * 4];
+      expect(actual.r).toEqual(components[0] * 2);
+      expect(actual.g).toEqual(components[1] * 3);
+      expect(actual.b).toEqual(components[2] * 4);
 
-    expect(() => {
-      stpq.pq = [1, 2, 3];
-    }).toThrow('too many arguments provided for assignment');
+      actual.g = actual.r * 2;
+      expect(actual.g).toEqual(components[0] * 4);
 
-    expect(stpq.s).toBe(3);
-    stpq.s = 1;
-    stpq[1] = 2;
-    expect([].slice.call(stpq.st)).toEqual([1, 2]);
+      // swizzling!
+      actual.bgr = [100, 200, 300];
+      expect(actual.r).toEqual(300);
+      expect(actual.g).toEqual(200);
+      expect(actual.b).toEqual(100);
+
+      // these are actually kind of funny, but they'll get caught first
+      expect(() => (actual.abgr = [100, 200, 300])).toThrow(
+        'not enough arguments',
+      );
+      expect(() => (actual.abgr = [100, 200, 300, 400, 500])).toThrow(
+        'too many arguments',
+      );
+
+      // no out of bounds assignment either though
+      expect(() => (actual.abgr = [100, 200, 300, 400])).toThrow(
+        'vector field selection out of range',
+      );
+    }
+  });
+
+  test.each`
+    args                                 | error
+    ${[1, 2, 3, 4]}                      | ${null}
+    ${[[3, 4, 5, 6]]}                    | ${null}
+    ${[5, [6, 7], 8]}                    | ${null}
+    ${[new Float32Array([7, 8, 9, 10])]} | ${null}
+    ${[1]}                               | ${'not enough arguments'}
+    ${[1, 2]}                            | ${'not enough arguments'}
+    ${[1, [2, 3]]}                       | ${'not enough arguments'}
+    ${[[[9, 0], 1]]}                     | ${'not enough arguments'}
+    ${[1, 2, 3, 4, 5]}                   | ${'too many arguments'}
+    ${[[1, 2, 3], 4, 5]}                 | ${'too many arguments'}
+  `('vec4($args)', ({ args, error }) => {
+    const components = args.reduce(toArray, []);
+
+    if (error) {
+      expect(() => vec4(...args)).toThrow(error);
+    } else {
+      const actual = vec4(...args);
+      // construction
+      expect(actual).toMatchSnapshot();
+      expect(actual.length).toBe(4);
+
+      // access
+      expect(actual.s).toEqual(components[0]);
+      expect(actual.t).toEqual(components[1]);
+      expect(actual.p).toEqual(components[2]);
+      expect(actual.q).toEqual(components[3]);
+
+      // swizzling! v4.qpts.s === v4.q
+      expect((actual.qpts as Vector).s).toEqual(components[3]);
+      expect(actual.sstt).toMatchSnapshot();
+
+      // assignment
+      actual.stpq = [actual.s * 2, actual.t * 3, actual.p * 4, actual.q * 5];
+      expect(actual.s).toEqual(components[0] * 2);
+      expect(actual.t).toEqual(components[1] * 3);
+      expect(actual.p).toEqual(components[2] * 4);
+      expect(actual.q).toEqual(components[3] * 5);
+
+      actual.t = actual.s * 2;
+      expect(actual.t).toEqual(components[0] * 4);
+
+      // swizzling!
+      actual.qpts = [100, 200, 300, 400];
+      expect(actual.s).toEqual(400);
+      expect(actual.t).toEqual(300);
+      expect(actual.p).toEqual(200);
+      expect(actual.q).toEqual(100);
+    }
   });
 });
