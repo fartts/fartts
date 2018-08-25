@@ -44,12 +44,20 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
 
-  validate(keys.length, components.length, Validates.Assignment);
+  /**
+   * TODO: @mysterycommand - should I need this, if Float32Array.set is working
+   * below as expected? maybe for 'not enough arguments' I guess?
+   * @see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/set
+   */
+  const size = keys.length; // just for consistency with `createVector` below
+  validate(size, components.length, Validates.Assignment);
 
-  keys.forEach(k => {
-    const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
-    target[i] = components[i];
-  });
+  target.set(
+    keys.map(k => {
+      const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
+      return components[i];
+    }),
+  );
 
   return true;
 }
@@ -63,9 +71,7 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
  */
 function createVector(size: number, args: Components): Vector {
   const components = args.reduce(toArray, []);
-
   validate(size, components.length, Validates.Construction);
-
   return new Float32Array(components) as Vector;
 }
 
