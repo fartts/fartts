@@ -35,22 +35,22 @@ let resolution = [0, 0];
 const configs = [
   {
     radius: 50,
-    period: 60000,
+    period: 10000,
     count: 24,
   },
   {
     radius: 35,
-    period: 20000,
+    period: 5000,
     count: 12,
   },
   {
     radius: 20,
-    period: 7000,
+    period: 2500,
     count: 6,
   },
   {
     radius: 5,
-    period: 2000,
+    period: 1250,
     count: 3,
   },
 ];
