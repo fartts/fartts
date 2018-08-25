@@ -21,6 +21,7 @@ describe('@fartts/lib/vec', () => {
       const actual = vec2(...args);
       // construction
       expect(actual).toMatchSnapshot();
+      expect(actual.length).toBe(2);
 
       // access
       expect(actual.x).toEqual(components[0]);
@@ -29,6 +30,10 @@ describe('@fartts/lib/vec', () => {
       // swizzling! v2.yx.x === v2.y
       expect((actual.yx as Vector).x).toEqual(components[1]);
 
+      // no out of bounds access
+      expect(() => actual.z).toThrow('vector field selection out of range');
+      expect(() => actual.w).toThrow('vector field selection out of range');
+
       // assignment
       actual.xy = [actual.x * 2, actual.y * 3];
       expect(actual.x).toEqual(components[0] * 2);
@@ -36,6 +41,22 @@ describe('@fartts/lib/vec', () => {
 
       actual.y = actual.x * 2;
       expect(actual.y).toEqual(components[0] * 4);
+
+      // swizzling!
+      actual.yx = [100, 200];
+      expect(actual.x).toEqual(200);
+      expect(actual.y).toEqual(100);
+
+      // these are actually kind of funny, but they'll get caught first
+      expect(() => (actual.zyx = [100, 200])).toThrow('not enough arguments');
+      expect(() => (actual.zyx = [100, 200, 300, 400])).toThrow(
+        'too many arguments',
+      );
+
+      // no out of bounds assignment either though
+      expect(() => (actual.zyx = [100, 200, 300])).toThrow(
+        'vector field selection out of range',
+      );
     }
   });
 

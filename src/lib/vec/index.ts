@@ -13,6 +13,11 @@ const { get, set } = Reflect;
 function getSwizzled(target: Vector, prop: string): Component {
   if (prop.length === 1) {
     const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
+
+    if (i >= target.length) {
+      throw new Error('vector field selection out of range');
+    }
+
     return target[i];
   }
 
@@ -54,6 +59,11 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
 
   keys.forEach((k, i) => {
     const j = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
+
+    if (j >= target.length) {
+      throw new Error('vector field selection out of range');
+    }
+
     target[j] = components[i];
   });
 
