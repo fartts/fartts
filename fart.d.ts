@@ -6,22 +6,26 @@ declare module '*.json';
 type Component = number | number[] | Vec4;
 type Components = Array<number | number[] | Vec4>;
 
-type Factory = (...args: Components) => Vec4;
+type Factory<Vec> = (...args: Components) => Vec;
 
-type Vec<Key extends string, Keys extends string> = Float32Array &
+type Vec2Factory = Factory<Vec2>;
+type Vec3Factory = Factory<Vec3>;
+type Vec4Factory = Factory<Vec4>;
+
+type Vec<Key extends string, SwizzledKey extends string> = Float32Array &
   { [K in Key]: number } &
-  { [K in Keys]: number[] | Vec<Key, Keys> };
+  { [S in SwizzledKey]: number[] | Vec<Key, SwizzledKey> };
 
-type Vec2 = Vec<Vec2Key, Vec2Keys>;
-type Vec3 = Vec<Vec3Key, Vec3Keys>;
-type Vec4 = Vec<Vec4Key, Vec4Keys>;
+type Vec2 = Vec<Vec2Key, Vec2SwizzledKey>;
+type Vec3 = Vec<Vec3Key, Vec3SwizzledKey>;
+type Vec4 = Vec<Vec4Key, Vec4SwizzledKey>;
 
-type Vec1Key = 'x' | 's' | 'r';
+type Vec1Key = /*     */ 'x' | 's' | 'r';
 type Vec2Key = Vec1Key | 'y' | 't' | 'g';
 type Vec3Key = Vec2Key | 'z' | 'p' | 'b';
 type Vec4Key = Vec3Key | 'w' | 'q' | 'a';
 
-type Vec2Keys =
+type Vec2SwizzledKey =
   | 'xx'
   | 'xy'
   | 'yx'
@@ -34,8 +38,8 @@ type Vec2Keys =
   | 'rg'
   | 'gr'
   | 'gg';
-type Vec3Keys =
-  | Vec2Keys
+type Vec3SwizzledKey =
+  | Vec2SwizzledKey
   | 'xz'
   | 'yz'
   | 'zx'
@@ -132,8 +136,8 @@ type Vec3Keys =
   | 'bbr'
   | 'bbg'
   | 'bbb';
-type Vec4Keys =
-  | Vec3Keys
+type Vec4SwizzledKey =
+  | Vec3SwizzledKey
   | 'xw'
   | 'yw'
   | 'zw'
