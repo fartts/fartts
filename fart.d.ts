@@ -3,25 +3,23 @@ declare module '*.glsl';
 declare module '*.vert';
 declare module '*.json';
 
-type Component = number | number[] | Vector;
-type Components = Array<number | number[] | Vector>;
+type Component = number | number[] | Vec4;
+type Components = Array<number | number[] | Vec4>;
 
-type Factory = (...args: Components) => Vector;
-
-type Vector = Vec2 | Vec3 | Vec4;
+type Factory = (...args: Components) => Vec4;
 
 type Vec<Key extends string, Keys extends string> = Float32Array &
   { [K in Key]: number } &
-  { [K in Keys]: number[] | Vector };
+  { [K in Keys]: number[] | Vec<Key, Keys> };
 
 type Vec2 = Vec<Vec2Key, Vec2Keys>;
 type Vec3 = Vec<Vec3Key, Vec3Keys>;
 type Vec4 = Vec<Vec4Key, Vec4Keys>;
 
 type Vec1Key = 'x' | 's' | 'r';
-type Vec2Key = Vec1Key & 'y' | 't' | 'g';
-type Vec3Key = Vec2Key & 'z' | 'p' | 'b';
-type Vec4Key = Vec3Key & 'w' | 'q' | 'a';
+type Vec2Key = Vec1Key | 'y' | 't' | 'g';
+type Vec3Key = Vec2Key | 'z' | 'p' | 'b';
+type Vec4Key = Vec3Key | 'w' | 'q' | 'a';
 
 type Vec2Keys =
   | 'xx'
@@ -37,7 +35,8 @@ type Vec2Keys =
   | 'gr'
   | 'gg';
 type Vec3Keys =
-  | Vec2Keys & 'xz'
+  | Vec2Keys
+  | 'xz'
   | 'yz'
   | 'zx'
   | 'zy'
@@ -134,7 +133,8 @@ type Vec3Keys =
   | 'bbg'
   | 'bbb';
 type Vec4Keys =
-  | Vec3Keys & 'xw'
+  | Vec3Keys
+  | 'xw'
   | 'yw'
   | 'zw'
   | 'wx'

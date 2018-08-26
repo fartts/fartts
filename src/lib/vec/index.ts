@@ -6,11 +6,11 @@ const { get, set } = Reflect;
 /**
  * ## getByKey
  *
- * @param {Vector} target
+ * @param {Vec4} target
  * @param {string} prop
  * @returns {number}
  */
-function getByKey(target: Vector, prop: string): number {
+function getByKey(target: Vec4, prop: string): number {
   const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(i, target.length);
   return target[i];
@@ -19,11 +19,11 @@ function getByKey(target: Vector, prop: string): number {
 /**
  * ## getSwizzled
  *
- * @param {Vector} target
+ * @param {Vec4} target
  * @param {string} prop
  * @returns {Component}
  */
-function getSwizzled(target: Vector, prop: string): Component {
+function getSwizzled(target: Vec4, prop: string): Component {
   if (prop.length === 1) {
     return getByKey(target, prop);
   }
@@ -37,11 +37,11 @@ function getSwizzled(target: Vector, prop: string): Component {
 /**
  * ## setByKey
  *
- * @param {Vector} target
+ * @param {Vec4} target
  * @param {string} prop
  * @param {number} value
  */
-function setByKey(target: Vector, prop: string, value: number): void {
+function setByKey(target: Vec4, prop: string, value: number): void {
   const j = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(j, target.length);
   target[j] = value;
@@ -50,12 +50,12 @@ function setByKey(target: Vector, prop: string, value: number): void {
 /**
  * ## setSwizzled
  *
- * @param {Vector} target
+ * @param {Vec4} target
  * @param {string} prop
  * @param {Component} value
  * @returns
  */
-function setSwizzled(target: Vector, prop: string, value: Component) {
+function setSwizzled(target: Vec4, prop: string, value: Component) {
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
 
@@ -76,22 +76,22 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
  *
  * @param {number} size
  * @param {Components} args
- * @returns {Vector}
+ * @returns {Vec4}
  */
-function createVector(size: number, args: Components): Vector {
+function createVector(size: number, args: Components): Vec4 {
   const components = args.reduce(toArray, []);
   validateKeys(size, components.length, Validates.Construction);
-  return new Float32Array(components) as Vector;
+  return new Float32Array(components) as Vec4;
 }
 
-const handler: ProxyHandler<Vector> = {
-  get(target: Vector, prop: PropertyKey) {
+const handler: ProxyHandler<Vec4> = {
+  get(target: Vec4, prop: PropertyKey) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? getSwizzled(target, prop)
       : get(target, prop);
   },
 
-  set(target: Vector, prop: PropertyKey, value: Component) {
+  set(target: Vec4, prop: PropertyKey, value: Component) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? setSwizzled(target, prop, value)
       : set(target, prop, value);

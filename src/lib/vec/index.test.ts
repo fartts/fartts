@@ -28,7 +28,7 @@ describe('@fartts/lib/vec', () => {
       expect(actual.y).toEqual(components[1]);
 
       // swizzling! v2.yx.x === v2.y
-      expect((actual.yx as Vector).x).toEqual(components[1]);
+      expect((actual.yx as Vec4).x).toEqual(components[1]);
       expect(actual.xyxy).toMatchSnapshot();
 
       // no out of bounds access
@@ -94,7 +94,7 @@ describe('@fartts/lib/vec', () => {
       expect(actual.b).toEqual(components[2]);
 
       // swizzling! v3.bgr.r === v2.b
-      expect((actual.bgr as Vector).r).toEqual(components[2]);
+      expect((actual.bgr as Vec4).r).toEqual(components[2]);
       expect(actual.bbbb).toMatchSnapshot();
 
       // no out of bounds access
@@ -165,7 +165,7 @@ describe('@fartts/lib/vec', () => {
       expect(actual.q).toEqual(components[3]);
 
       // swizzling! v4.qpts.s === v4.q
-      expect((actual.qpts as Vector).s).toEqual(components[3]);
+      expect((actual.qpts as Vec4).s).toEqual(components[3]);
       expect(actual.sstt).toMatchSnapshot();
 
       // assignment
