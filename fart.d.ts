@@ -4,20 +4,26 @@ declare module '*.vert';
 declare module '*.json';
 
 type Component = number | number[] | Vector;
-type Components = Component[];
+type Components = Array<number | number[] | Vector>;
 
 type Factory = (...args: Components) => Vector;
 
-type Vector = Float32Array &
-  { [B in Component4D]: number } &
-  { [S in Components4D]: number[] | Vector };
+type Vector = Vec2 | Vec3 | Vec4;
 
-type Component1D = 'x' | 's' | 'r';
-type Component2D = Component1D & 'y' | 't' | 'g';
-type Component3D = Component2D & 'z' | 'p' | 'b';
-type Component4D = Component3D & 'w' | 'q' | 'a';
+type Vec<Key extends string, Keys extends string> = Float32Array &
+  { [K in Key]: number } &
+  { [K in Keys]: number[] | Vector };
 
-type Components2D =
+type Vec2 = Vec<Vec2Key, Vec2Keys>;
+type Vec3 = Vec<Vec3Key, Vec3Keys>;
+type Vec4 = Vec<Vec4Key, Vec4Keys>;
+
+type Vec1Key = 'x' | 's' | 'r';
+type Vec2Key = Vec1Key & 'y' | 't' | 'g';
+type Vec3Key = Vec2Key & 'z' | 'p' | 'b';
+type Vec4Key = Vec3Key & 'w' | 'q' | 'a';
+
+type Vec2Keys =
   | 'xx'
   | 'xy'
   | 'yx'
@@ -30,8 +36,8 @@ type Components2D =
   | 'rg'
   | 'gr'
   | 'gg';
-type Components3D =
-  | Components2D & 'xz'
+type Vec3Keys =
+  | Vec2Keys & 'xz'
   | 'yz'
   | 'zx'
   | 'zy'
@@ -127,8 +133,8 @@ type Components3D =
   | 'bbr'
   | 'bbg'
   | 'bbb';
-type Components4D =
-  | Components3D & 'xw'
+type Vec4Keys =
+  | Vec3Keys & 'xw'
   | 'yw'
   | 'zw'
   | 'wx'
