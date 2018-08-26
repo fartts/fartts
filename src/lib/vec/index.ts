@@ -4,6 +4,19 @@ import { toArray, validateKeys, validateRange, Validates } from './util';
 const { get, set } = Reflect;
 
 /**
+ * ## getByKey
+ *
+ * @param {Vector} target
+ * @param {string} prop
+ * @returns {number}
+ */
+function getByKey(target: Vector, prop: string): number {
+  const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
+  validateRange(i, target.length);
+  return target[i];
+}
+
+/**
  * ## getSwizzled
  *
  * @param {Vector} target
@@ -12,21 +25,26 @@ const { get, set } = Reflect;
  */
 function getSwizzled(target: Vector, prop: string): Component {
   if (prop.length === 1) {
-    const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
-    validateRange(i, target.length);
-    return target[i];
+    return getByKey(target, prop);
   }
 
   const factory = factories[prop.length - 2];
   const keys = prop.split('');
 
-  return factory(
-    keys.map(k => {
-      const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
-      validateRange(i, target.length);
-      return target[i];
-    }),
-  );
+  return factory(keys.map(k => getByKey(target, k)));
+}
+
+/**
+ * ## setByKey
+ *
+ * @param {Vector} target
+ * @param {string} prop
+ * @param {number} value
+ */
+function setByKey(target: Vector, prop: string, value: number): void {
+  const j = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
+  validateRange(j, target.length);
+  target[j] = value;
 }
 
 /**
@@ -49,12 +67,7 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
   const size = keys.length; // just for consistency with `createVector` below
   validateKeys(size, components.length, Validates.Assignment);
 
-  keys.forEach((k, i) => {
-    const j = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
-    validateRange(j, target.length);
-    target[j] = components[i];
-  });
-
+  keys.forEach((k, i) => setByKey(target, k, components[i]));
   return true;
 }
 
