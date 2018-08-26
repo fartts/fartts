@@ -18,7 +18,7 @@ export enum Validates {
 }
 
 /**
- * ## validate
+ * ## validateKeys
  *
  * @export
  * @param {number} targetSize
@@ -26,7 +26,7 @@ export enum Validates {
  * @param {Validates} validates
  * @returns {void}
  */
-export function validate(
+export function validateKeys(
   targetSize: number,
   receivedSize: number,
   validates: Validates,
@@ -40,4 +40,25 @@ export function validate(
       targetSize > receivedSize ? 'not enough' : 'too many'
     } arguments provided for ${validates}`,
   );
+}
+
+/**
+ * ## validateRange
+ *
+ * @export
+ * @param {number} index
+ * @param {number} upperBound
+ * @param {number} [lowerBound=0]
+ * @returns {void}
+ */
+export function validateRange(
+  index: number,
+  upperBound: number,
+  lowerBound: number = -1,
+): void {
+  if (lowerBound < index && index < upperBound) {
+    return;
+  }
+
+  throw new Error('vector field selection out of range');
 }

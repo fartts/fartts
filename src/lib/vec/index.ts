@@ -1,5 +1,5 @@
 import { swizzledKeys, indicesByKey } from './util/keys';
-import { toArray, validate, Validates } from './util';
+import { toArray, validateKeys, validateRange, Validates } from './util';
 
 const { get, set } = Reflect;
 
@@ -13,11 +13,7 @@ const { get, set } = Reflect;
 function getSwizzled(target: Vector, prop: string): Component {
   if (prop.length === 1) {
     const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
-
-    if (i >= target.length) {
-      throw new Error('vector field selection out of range');
-    }
-
+    validateRange(i, target.length);
     return target[i];
   }
 
@@ -27,11 +23,7 @@ function getSwizzled(target: Vector, prop: string): Component {
   return factory(
     keys.map(k => {
       const i = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
-
-      if (i >= target.length) {
-        throw new Error('vector field selection out of range');
-      }
-
+      validateRange(i, target.length);
       return target[i];
     }),
   );
@@ -55,15 +47,11 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
    * @see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/set
    */
   const size = keys.length; // just for consistency with `createVector` below
-  validate(size, components.length, Validates.Assignment);
+  validateKeys(size, components.length, Validates.Assignment);
 
   keys.forEach((k, i) => {
     const j = (indicesByKey.has(k) && indicesByKey.get(k)) as number;
-
-    if (j >= target.length) {
-      throw new Error('vector field selection out of range');
-    }
-
+    validateRange(j, target.length);
     target[j] = components[i];
   });
 
@@ -79,7 +67,7 @@ function setSwizzled(target: Vector, prop: string, value: Component) {
  */
 function createVector(size: number, args: Components): Vector {
   const components = args.reduce(toArray, []);
-  validate(size, components.length, Validates.Construction);
+  validateKeys(size, components.length, Validates.Construction);
   return new Float32Array(components) as Vector;
 }
 
