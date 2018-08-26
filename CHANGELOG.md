@@ -1,3 +1,17 @@
+# [1.5.0](https://github.com/fartts/fartts/compare/v1.4.0...v1.5.0) (2018-08-26)
+
+
+### Bug Fixes
+
+* **lib:** fixes [#119](https://github.com/fartts/fartts/issues/119), throws 'vector field selection out of range' ([21ebea6](https://github.com/fartts/fartts/commit/21ebea6))
+
+
+### Features
+
+* start a new experiment by shuffling some stuff around ([6d556a3](https://github.com/fartts/fartts/commit/6d556a3))
+* **lib:** a passing set of vector constructors ([14c2733](https://github.com/fartts/fartts/commit/14c2733))
+* **lib:** initial pass at a swizzle-able vector that proxies Float32Array ([f1c22eb](https://github.com/fartts/fartts/commit/f1c22eb))
+
 # [1.4.0](https://github.com/fartts/fartts/compare/v1.3.1...v1.4.0) (2018-08-17)
 
 
