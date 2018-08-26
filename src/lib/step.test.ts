@@ -4,7 +4,7 @@ import { step, cosStep, sinStep, sawStep, triStep } from './step';
 // just to keep the tables below consice when testing defaults
 const u = undefined;
 
-describe('step functions', () => {
+describe('@fartts/lib/step', () => {
   test.each`
     fn     | p       | min  | max  | o      | t       | expected
     ${cos} | ${u}    | ${u} | ${u} | ${u}   | ${0}    | ${1}
