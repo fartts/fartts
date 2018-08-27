@@ -29,15 +29,22 @@ function getByKey<V extends Vec2 | Vec3 | Vec4>(
 function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
-): Component<V> {
+): Component<Vec2 | Vec3 | Vec4> | undefined {
   if (prop.length === 1) {
     return getByKey(target, prop);
   }
 
   const keys = prop.split('');
-  const factory = factories[prop.length - 2] as Factory<V>;
+  const values = keys.map(k => getByKey(target, k));
 
-  return factory(keys.map(k => getByKey(target, k)));
+  switch (values.length) {
+    case 2:
+      return (factories[values.length - 2] as Factory<Vec2>)(values);
+    case 3:
+      return (factories[values.length - 2] as Factory<Vec3>)(values);
+    case 4:
+      return (factories[values.length - 2] as Factory<Vec4>)(values);
+  }
 }
 
 /**
