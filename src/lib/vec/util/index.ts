@@ -1,13 +1,5 @@
 const { slice } = [];
 
-/**
- * ## toArray
- *
- * @export
- * @param {number[]} acc
- * @param {Component} arg
- * @returns {number[]}
- */
 export function toArray(
   acc: number[],
   arg: Component<Vec2 | Vec3 | Vec4>,
@@ -20,15 +12,6 @@ export enum Validates {
   Assignment = 'assignment',
 }
 
-/**
- * ## validateKeys
- *
- * @export
- * @param {number} targetSize
- * @param {number} receivedSize
- * @param {Validates} validates
- * @returns {void}
- */
 export function validateKeys(
   targetSize: number,
   receivedSize: number,
@@ -45,15 +28,6 @@ export function validateKeys(
   );
 }
 
-/**
- * ## validateRange
- *
- * @export
- * @param {number} index
- * @param {number} upperBound
- * @param {number} [lowerBound=0]
- * @returns {void}
- */
 export function validateRange(
   index: number,
   upperBound: number,

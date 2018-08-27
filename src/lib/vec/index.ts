@@ -3,13 +3,6 @@ import { toArray, validateKeys, validateRange, Validates } from './util';
 
 const { get, set } = Reflect;
 
-/**
- * ## getByKey
- *
- * @param {Vec} target
- * @param {string} prop
- * @returns {number}
- */
 function getByKey<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
@@ -19,13 +12,6 @@ function getByKey<V extends Vec2 | Vec3 | Vec4>(
   return target[i];
 }
 
-/**
- * ## getSwizzled
- *
- * @param {Vec} target
- * @param {string} prop
- * @returns {Component}
- */
 function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
@@ -47,13 +33,6 @@ function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
   }
 }
 
-/**
- * ## setByKey
- *
- * @param {Vec} target
- * @param {string} prop
- * @param {number} value
- */
 function setByKey<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
@@ -64,14 +43,6 @@ function setByKey<V extends Vec2 | Vec3 | Vec4>(
   target[j] = value;
 }
 
-/**
- * ## setSwizzled
- *
- * @param {Vec} target
- * @param {string} prop
- * @param {Component} value
- * @returns
- */
 function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
@@ -80,11 +51,6 @@ function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
 
-  /**
-   * TODO: @mysterycommand - should I need this, if Float32Array.set is working
-   * below as expected? maybe for 'not enough arguments' I guess?
-   * @see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/set
-   */
   const size = keys.length; // just for consistency with `createVector` below
   validateKeys(size, components.length, Validates.Assignment);
 
@@ -92,13 +58,6 @@ function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
   return true;
 }
 
-/**
- * ## createVector
- *
- * @param {number} size
- * @param {Components} args
- * @returns {Vec4}
- */
 function createVector<V extends Vec2 | Vec3 | Vec4>(
   size: number,
   args: Components<V>,
