@@ -3,6 +3,14 @@ import { toArray, validateKeys, validateRange, Validates } from './util';
 
 const { get, set } = Reflect;
 
+/**
+ * ## getByKey<V extends Vec2 | Vec3 | Vec4>
+ *
+ * @template V
+ * @param {V} target
+ * @param {string} prop
+ * @returns {number}
+ */
 function getByKey<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
@@ -12,6 +20,14 @@ function getByKey<V extends Vec2 | Vec3 | Vec4>(
   return target[i];
 }
 
+/**
+ * ## getSwizzled<V extends Vec2 | Vec3 | Vec4>
+ *
+ * @template V
+ * @param {V} target
+ * @param {string} prop
+ * @returns {(Component<Vec2 | Vec3 | Vec4> | undefined)}
+ */
 function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
@@ -33,6 +49,14 @@ function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
   }
 }
 
+/**
+ * ## setByKey<V extends Vec2 | Vec3 | Vec4>
+ *
+ * @template V
+ * @param {V} target
+ * @param {string} prop
+ * @param {number} value
+ */
 function setByKey<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
@@ -43,6 +67,15 @@ function setByKey<V extends Vec2 | Vec3 | Vec4>(
   target[j] = value;
 }
 
+/**
+ * ## setSwizzled<V extends Vec2 | Vec3 | Vec4>
+ *
+ * @template V
+ * @param {V} target
+ * @param {string} prop
+ * @param {Component<V>} value
+ * @returns {boolean}
+ */
 function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
   target: V,
   prop: string,
@@ -58,6 +91,14 @@ function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
   return true;
 }
 
+/**
+ * ## createVector<V extends Vec2 | Vec3 | Vec4>
+ *
+ * @template V
+ * @param {number} size
+ * @param {Components<V>} args
+ * @returns {V}
+ */
 function createVector<V extends Vec2 | Vec3 | Vec4>(
   size: number,
   args: Components<V>,
@@ -68,6 +109,12 @@ function createVector<V extends Vec2 | Vec3 | Vec4>(
   return new Float32Array(components) as V;
 }
 
+/**
+ * createHandler<V extends Vec2 | Vec3 | Vec4>
+ *
+ * @template V
+ * @returns {ProxyHandler<V>}
+ */
 function createHandler<V extends Vec2 | Vec3 | Vec4>(): ProxyHandler<V> {
   return {
     get(target: V, prop: PropertyKey) {
@@ -84,6 +131,13 @@ function createHandler<V extends Vec2 | Vec3 | Vec4>(): ProxyHandler<V> {
   };
 }
 
+/**
+ * ## createFactory<V extends Vec2 | Vec3 | Vec4>
+ *
+ * @template V
+ * @param {number} size
+ * @returns {Factory<V>}
+ */
 function createFactory<V extends Vec2 | Vec3 | Vec4>(size: number): Factory<V> {
   const handler = createHandler<V>();
 
