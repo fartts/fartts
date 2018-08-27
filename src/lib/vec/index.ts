@@ -34,22 +34,9 @@ function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
     return getByKey(target, prop);
   }
 
-  let factory;
-  switch (prop.length) {
-    case 2:
-      factory = factories[prop.length - 2] as Factory<Vec2>;
-      break;
-    case 3:
-      factory = factories[prop.length - 2] as Factory<Vec3>;
-      break;
-    case 4:
-      factory = factories[prop.length - 2] as Factory<Vec4>;
-      break;
-    default:
-      throw new Error(`no factory for ${prop.length} keys`);
-  }
-
   const keys = prop.split('');
+  const factory = factories[prop.length - 2] as Factory<V>;
+
   return factory(keys.map(k => getByKey(target, k)));
 }
 

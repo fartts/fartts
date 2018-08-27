@@ -8,11 +8,9 @@ const { slice } = [];
  * @param {Component} arg
  * @returns {number[]}
  */
-export function toArray<V>(
+export function toArray(
   acc: number[],
-  arg: Component<V>,
-  i?: number,
-  args?: Components<V>,
+  arg: Component<Vec2 | Vec3 | Vec4>,
 ): number[] {
   return acc.concat(typeof arg === 'number' ? arg : slice.call(arg));
 }
