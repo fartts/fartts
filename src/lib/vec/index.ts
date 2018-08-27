@@ -10,7 +10,10 @@ const { get, set } = Reflect;
  * @param {string} prop
  * @returns {number}
  */
-function getByKey<Vec extends Float32Array>(target: Vec, prop: string): number {
+function getByKey<V extends Vec2 | Vec3 | Vec4>(
+  target: V,
+  prop: string,
+): number {
   const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(i, target.length);
   return target[i];
@@ -23,17 +26,30 @@ function getByKey<Vec extends Float32Array>(target: Vec, prop: string): number {
  * @param {string} prop
  * @returns {Component}
  */
-function getSwizzled<Vec extends Float32Array>(
-  target: Vec,
+function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
+  target: V,
   prop: string,
-): Component {
+): Component<V> {
   if (prop.length === 1) {
     return getByKey(target, prop);
   }
 
-  const factory = factories[prop.length - 2];
-  const keys = prop.split('');
+  let factory;
+  switch (prop.length) {
+    case 2:
+      factory = factories[prop.length - 2] as Factory<Vec2>;
+      break;
+    case 3:
+      factory = factories[prop.length - 2] as Factory<Vec3>;
+      break;
+    case 4:
+      factory = factories[prop.length - 2] as Factory<Vec4>;
+      break;
+    default:
+      throw new Error(`no factory for ${prop.length} keys`);
+  }
 
+  const keys = prop.split('');
   return factory(keys.map(k => getByKey(target, k)));
 }
 
@@ -44,8 +60,8 @@ function getSwizzled<Vec extends Float32Array>(
  * @param {string} prop
  * @param {number} value
  */
-function setByKey<Vec extends Float32Array>(
-  target: Vec,
+function setByKey<V extends Vec2 | Vec3 | Vec4>(
+  target: V,
   prop: string,
   value: number,
 ): void {
@@ -62,10 +78,10 @@ function setByKey<Vec extends Float32Array>(
  * @param {Component} value
  * @returns
  */
-function setSwizzled<Vec extends Float32Array>(
-  target: Vec,
+function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
+  target: V,
   prop: string,
-  value: Component,
+  value: Component<V>,
 ): boolean {
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
@@ -89,42 +105,41 @@ function setSwizzled<Vec extends Float32Array>(
  * @param {Components} args
  * @returns {Vec4}
  */
-function createVector<Vec extends Float32Array>(
+function createVector<V extends Vec2 | Vec3 | Vec4>(
   size: number,
-  args: Components,
-): Vec {
+  args: Components<V>,
+): V {
   const components = args.reduce(toArray, []);
   validateKeys(size, components.length, Validates.Construction);
-  return new Float32Array(components) as Vec;
+
+  return new Float32Array(components) as V;
 }
 
-function createHandler<Vec extends Float32Array>(): ProxyHandler<Vec> {
+function createHandler<V extends Vec2 | Vec3 | Vec4>(): ProxyHandler<V> {
   return {
-    get(target: Vec, prop: PropertyKey) {
+    get(target: V, prop: PropertyKey) {
       return typeof prop === 'string' && swizzledKeys.has(prop)
-        ? getSwizzled<Vec>(target, prop)
+        ? getSwizzled<V>(target, prop)
         : get(target, prop);
     },
 
-    set(target: Vec, prop: PropertyKey, value: Component) {
+    set(target: V, prop: PropertyKey, value: Component<V>) {
       return typeof prop === 'string' && swizzledKeys.has(prop)
-        ? setSwizzled<Vec>(target, prop, value)
+        ? setSwizzled<V>(target, prop, value)
         : set(target, prop, value);
     },
   };
 }
 
-const factories = new Array(4)
-  .fill(true)
-  .reduce(
-    (acc: Vec4Factory[], _, i: number) =>
-      i === 0
-        ? acc
-        : acc.concat(
-            (...args: Components) =>
-              new Proxy(createVector<Vec4>(i + 1, args), createHandler<Vec4>()),
-          ),
-    [],
-  );
+function createFactory<V extends Vec2 | Vec3 | Vec4>(size: number): Factory<V> {
+  const handler = createHandler<V>();
 
-export const [vec2, vec3, vec4] = factories;
+  return (...args: Components<V>) =>
+    new Proxy(createVector<V>(size, args), handler);
+}
+
+export const vec2 = createFactory<Vec2>(2);
+export const vec3 = createFactory<Vec3>(3);
+export const vec4 = createFactory<Vec4>(4);
+
+const factories = [vec2, vec3, vec4];
