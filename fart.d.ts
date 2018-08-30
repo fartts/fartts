@@ -16,16 +16,16 @@ type Vec<Key extends string, SwizzledKey extends string> = Float32Array &
   { [K in Key]: number } &
   { [S in SwizzledKey]: number[] | Vec<Key, SwizzledKey> };
 
-type Vec2 = Vec<Vec2Key, Vec2SwizzledKey>;
-type Vec3 = Vec<Vec3Key, Vec3SwizzledKey>;
-type Vec4 = Vec<Vec4Key, Vec4SwizzledKey>;
+type Vec2 = Vec<Vec2Key1, Vec2SwizzledKey>;
+type Vec3 = Vec<Vec3Key1, Vec3SwizzledKey>;
+type Vec4 = Vec<Vec4Key1, Vec4SwizzledKey>;
 
-type Vec1Key = /*     */ 'x' | 's' | 'r';
-type Vec2Key = Vec1Key | 'y' | 't' | 'g';
-type Vec3Key = Vec2Key | 'z' | 'p' | 'b';
-type Vec4Key = Vec3Key | 'w' | 'q' | 'a';
+type Vec1Key1 = /*      */ 'x' | 's' | 'r';
+type Vec2Key1 = Vec1Key1 | 'y' | 't' | 'g';
+type Vec3Key1 = Vec2Key1 | 'z' | 'p' | 'b';
+type Vec4Key1 = Vec3Key1 | 'w' | 'q' | 'a';
 
-type Vec2SwizzledKey =
+type Vec2Key2 =
   | 'xx'
   | 'xy'
   | 'yx'
@@ -37,7 +37,8 @@ type Vec2SwizzledKey =
   | 'rr'
   | 'rg'
   | 'gr'
-  | 'gg'
+  | 'gg';
+type Vec2Key3 =
   | 'xxx'
   | 'xxy'
   | 'xyx'
@@ -61,7 +62,8 @@ type Vec2SwizzledKey =
   | 'grr'
   | 'grg'
   | 'ggr'
-  | 'ggg'
+  | 'ggg';
+type Vec2Key4 =
   | 'xxxx'
   | 'xxxy'
   | 'xxyx'
@@ -110,8 +112,8 @@ type Vec2SwizzledKey =
   | 'ggrg'
   | 'gggr'
   | 'gggg';
-type Vec3SwizzledKey =
-  | Vec2SwizzledKey
+type Vec2SwizzledKey = Vec2Key2 | Vec2Key3 | Vec2Key4;
+type Vec3Key2 =
   | 'xz'
   | 'yz'
   | 'zx'
@@ -126,7 +128,8 @@ type Vec3SwizzledKey =
   | 'gb'
   | 'br'
   | 'bg'
-  | 'bb'
+  | 'bb';
+type Vec3Key3 =
   | 'xxz'
   | 'xyz'
   | 'xzx'
@@ -183,7 +186,8 @@ type Vec3SwizzledKey =
   | 'bgb'
   | 'bbr'
   | 'bbg'
-  | 'bbb'
+  | 'bbb';
+type Vec3Key4 =
   | 'xxxz'
   | 'xxyz'
   | 'xxzx'
@@ -379,8 +383,8 @@ type Vec3SwizzledKey =
   | 'bbbr'
   | 'bbbg'
   | 'bbbb';
-type Vec4SwizzledKey =
-  | Vec3SwizzledKey
+type Vec3SwizzledKey = Vec2SwizzledKey | Vec3Key2 | Vec3Key3 | Vec3Key4;
+type Vec4Key2 =
   | 'xw'
   | 'yw'
   | 'zw'
@@ -401,7 +405,8 @@ type Vec4SwizzledKey =
   | 'ar'
   | 'ag'
   | 'ab'
-  | 'aa'
+  | 'aa';
+type Vec4Key3 =
   | 'xxw'
   | 'xyw'
   | 'xzw'
@@ -512,7 +517,8 @@ type Vec4SwizzledKey =
   | 'aar'
   | 'aag'
   | 'aab'
-  | 'aaa'
+  | 'aaa';
+type Vec4Key4 =
   | 'xxxw'
   | 'xxyw'
   | 'xxzw'
@@ -1038,3 +1044,4 @@ type Vec4SwizzledKey =
   | 'aaag'
   | 'aaab'
   | 'aaaa';
+type Vec4SwizzledKey = Vec3SwizzledKey | Vec4Key2 | Vec4Key3 | Vec4Key4;
