@@ -5,10 +5,13 @@ const { slice } = [];
  *
  * @export
  * @param {number[]} acc
- * @param {Component} arg
+ * @param {(Component<Vec2 | Vec3 | Vec4>)} arg
  * @returns {number[]}
  */
-export function toArray(acc: number[], arg: Component): number[] {
+export function toArray(
+  acc: number[],
+  arg: Component<Vec2 | Vec3 | Vec4>,
+): number[] {
   return acc.concat(typeof arg === 'number' ? arg : slice.call(arg));
 }
 
@@ -48,7 +51,7 @@ export function validateKeys(
  * @export
  * @param {number} index
  * @param {number} upperBound
- * @param {number} [lowerBound=0]
+ * @param {number} [lowerBound=-1]
  * @returns {void}
  */
 export function validateRange(
