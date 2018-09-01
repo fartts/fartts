@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/fartts/fartts/compare/v1.5.0...v1.5.1) (2018-09-01)
+
+
+### Bug Fixes
+
+* **lib:** fixes [#120](https://github.com/fartts/fartts/issues/120) ([fabb871](https://github.com/fartts/fartts/commit/fabb871))
+
 # [1.5.0](https://github.com/fartts/fartts/compare/v1.4.0...v1.5.0) (2018-08-26)
 
 
