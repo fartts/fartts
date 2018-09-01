@@ -12,13 +12,22 @@ type Vec2Factory = Factory<Vec2>;
 type Vec3Factory = Factory<Vec3>;
 type Vec4Factory = Factory<Vec4>;
 
-type Vec<Key extends string, SwizzledKey extends string> = Float32Array &
-  { [K in Key]: number } &
-  { [S in SwizzledKey]: number[] | Vec<Key, SwizzledKey> };
-
-type Vec2 = Vec<Vec2Key1, Vec2SwizzledKey>;
-type Vec3 = Vec<Vec3Key1, Vec3SwizzledKey>;
-type Vec4 = Vec<Vec4Key1, Vec4SwizzledKey>;
+type Vec1 = Float32Array & Record<Vec1Key1, number>;
+type Vec2 = Vec1 &
+  Record<Vec2Key1, number> &
+  Record<Vec2Key2, number[] | Float32Array> &
+  Record<Vec2Key3, number[] | Float32Array> &
+  Record<Vec2Key4, number[] | Float32Array>;
+type Vec3 = Vec2 &
+  Record<Vec3Key1, number> &
+  Record<Vec3Key2, number[] | Float32Array> &
+  Record<Vec3Key3, number[] | Float32Array> &
+  Record<Vec3Key4, number[] | Float32Array>;
+type Vec4 = Vec3 &
+  Record<Vec4Key1, number> &
+  Record<Vec4Key2, number[] | Float32Array> &
+  Record<Vec4Key3, number[] | Float32Array> &
+  Record<Vec4Key4, number[] | Float32Array>;
 
 type Vec1Key1 = /*      */ 'x' | 's' | 'r';
 type Vec2Key1 = Vec1Key1 | 'y' | 't' | 'g';
