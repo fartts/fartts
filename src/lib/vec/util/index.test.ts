@@ -1,4 +1,4 @@
-import { toArray, validateKeys, validateRange, Validates } from './';
+import { toArray, validateKeys, validateRange, Validates } from '.';
 
 describe('@fartts/lib/vec/util', () => {
   test.each`

@@ -1,5 +1,5 @@
 import { toArray } from './util';
-import { vec2, vec3, vec4 } from './index';
+import { vec2, vec3, vec4 } from '.';
 
 describe('@fartts/lib/vec', () => {
   test.each`
