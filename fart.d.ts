@@ -3,11 +3,19 @@ declare module '*.glsl';
 declare module '*.vert';
 declare module '*.json';
 
-type Component = number | number[] | Float32Array;
+type Component = number | number[] | IVector;
 type Components = Component[];
-type Factory<V> = (...args: Array<number | number[] | Float32Array>) => V;
+type Factory<V> = (...args: Array<number | number[] | IVector>) => V;
 
-type Vec1 = Float32Array & { [K in Vec1D1]: number };
+interface IVector extends Float32Array {
+  ρ: number;
+  θ: number;
+  dot(): number;
+  toArray(): number[];
+  toString(): string;
+}
+
+type Vec1 = IVector & { [K in Vec1D1]: number };
 type Vec2 = Vec1 &
   { [K in Vec2D1]: number } &
   { [K in Vec2D2]: Vec2 } &
