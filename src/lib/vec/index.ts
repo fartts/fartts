@@ -63,7 +63,7 @@ function setByKey(target: Float32Array, prop: string, value: number): void {
 function setSwizzled(
   target: Float32Array,
   prop: string,
-  value: number | number[] | Float32Array,
+  value: number | Float32Array,
 ): boolean {
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
@@ -83,13 +83,9 @@ function setSwizzled(
  * @param {Components<V>} args
  * @returns {V}
  */
-function createVector(
-  size: number,
-  args: Array<number | number[] | Float32Array>,
-): Float32Array {
+function createVector(size: number, args: Components): Float32Array {
   const components = args.reduce(toArray, []);
   validateKeys(size, components.length, Validates.Construction);
-
   return new Float32Array(components);
 }
 
@@ -106,11 +102,7 @@ const handler: ProxyHandler<Float32Array> = {
       : get(target, prop);
   },
 
-  set(
-    target: Float32Array,
-    prop: PropertyKey,
-    value: number | number[] | Float32Array,
-  ) {
+  set(target: Float32Array, prop: PropertyKey, value: number | Float32Array) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? setSwizzled(target, prop, value)
       : set(target, prop, value);
@@ -124,17 +116,15 @@ const handler: ProxyHandler<Float32Array> = {
  * @param {number} size
  * @returns {Factory<V>}
  */
-function createFactory<V extends Float32Array>(
-  size: number,
-): (...args: Array<number | number[] | Float32Array>) => V {
-  return (...args: Array<number | number[] | Float32Array>) =>
+function createFactory<V extends Float32Array>(size: number): Factory<V> {
+  return (...args: Components) =>
     new Proxy(createVector(size, args), handler) as V;
 }
 
-const factories: [
-  (...args: Array<number | number[] | Float32Array>) => Vec2,
-  (...args: Array<number | number[] | Float32Array>) => Vec3,
-  (...args: Array<number | number[] | Float32Array>) => Vec4
-] = [createFactory<Vec2>(2), createFactory<Vec3>(3), createFactory<Vec4>(4)];
+const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
+  createFactory<Vec2>(2),
+  createFactory<Vec3>(3),
+  createFactory<Vec4>(4),
+];
 
 export const [vec2, vec3, vec4] = factories;

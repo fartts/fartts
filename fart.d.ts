@@ -3,8 +3,10 @@ declare module '*.glsl';
 declare module '*.vert';
 declare module '*.json';
 
-type Vec1 = ArrayLike<number> & Float32Array & { [K in Vec1D1]: number };
+type Components = Array<number | number[] | Float32Array>;
+type Factory<V> = (...args: Array<number | number[] | Float32Array>) => V;
 
+type Vec1 = Float32Array & { [K in Vec1D1]: number };
 type Vec2 = Vec1 &
   { [K in Vec2D1]: number } &
   { [K in Vec2D2]: Vec2 } &
