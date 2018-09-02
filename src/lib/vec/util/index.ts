@@ -10,7 +10,7 @@ const { slice } = [];
  */
 export function toArray(
   acc: number[],
-  arg: Component<Vec2 | Vec3 | Vec4>,
+  arg: number | number[] | Float32Array,
 ): number[] {
   return acc.concat(typeof arg === 'number' ? arg : slice.call(arg));
 }

@@ -11,10 +11,7 @@ const { get, set } = Reflect;
  * @param {string} prop
  * @returns {number}
  */
-function getByKey<V extends Vec2 | Vec3 | Vec4>(
-  target: V,
-  prop: string,
-): number {
+function getByKey(target: Float32Array, prop: string): number {
   const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(i, target.length);
   return target[i];
@@ -28,25 +25,16 @@ function getByKey<V extends Vec2 | Vec3 | Vec4>(
  * @param {string} prop
  * @returns {(Component<Vec2 | Vec3 | Vec4> | undefined)}
  */
-function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
-  target: V,
+function getSwizzled(
+  target: Float32Array,
   prop: string,
-): Component<Vec2 | Vec3 | Vec4> | undefined {
+): number | Float32Array {
   if (prop.length === 1) {
     return getByKey(target, prop);
   }
 
   const keys = prop.split('');
-  const values = keys.map(k => getByKey(target, k));
-
-  switch (values.length) {
-    case 2:
-      return (factories[values.length - 2] as Factory<Vec2>)(values);
-    case 3:
-      return (factories[values.length - 2] as Factory<Vec3>)(values);
-    case 4:
-      return (factories[values.length - 2] as Factory<Vec4>)(values);
-  }
+  return factories[keys.length - 2](keys.map(k => getByKey(target, k)));
 }
 
 /**
@@ -57,11 +45,7 @@ function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
  * @param {string} prop
  * @param {number} value
  */
-function setByKey<V extends Vec2 | Vec3 | Vec4>(
-  target: V,
-  prop: string,
-  value: number,
-): void {
+function setByKey(target: Float32Array, prop: string, value: number): void {
   const j = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(j, target.length);
   target[j] = value;
@@ -76,10 +60,10 @@ function setByKey<V extends Vec2 | Vec3 | Vec4>(
  * @param {Component<V>} value
  * @returns {boolean}
  */
-function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
-  target: V,
+function setSwizzled(
+  target: Float32Array,
   prop: string,
-  value: Component<V>,
+  value: number | number[] | Float32Array,
 ): boolean {
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
@@ -99,14 +83,14 @@ function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
  * @param {Components<V>} args
  * @returns {V}
  */
-function createVector<V extends Vec2 | Vec3 | Vec4>(
+function createVector(
   size: number,
-  args: Components<V>,
-): V {
+  args: Array<number | number[] | Float32Array>,
+): Float32Array {
   const components = args.reduce(toArray, []);
   validateKeys(size, components.length, Validates.Construction);
 
-  return new Float32Array(components) as V;
+  return new Float32Array(components);
 }
 
 /**
@@ -115,17 +99,21 @@ function createVector<V extends Vec2 | Vec3 | Vec4>(
  * @template V
  * @returns {ProxyHandler<V>}
  */
-function createHandler<V extends Vec2 | Vec3 | Vec4>(): ProxyHandler<V> {
+function createHandler(): ProxyHandler<Float32Array> {
   return {
-    get(target: V, prop: PropertyKey) {
+    get(target: Float32Array, prop: PropertyKey) {
       return typeof prop === 'string' && swizzledKeys.has(prop)
-        ? getSwizzled<V>(target, prop)
+        ? getSwizzled(target, prop)
         : get(target, prop);
     },
 
-    set(target: V, prop: PropertyKey, value: Component<V>) {
+    set(
+      target: Float32Array,
+      prop: PropertyKey,
+      value: number | number[] | Float32Array,
+    ) {
       return typeof prop === 'string' && swizzledKeys.has(prop)
-        ? setSwizzled<V>(target, prop, value)
+        ? setSwizzled(target, prop, value)
         : set(target, prop, value);
     },
   };
@@ -138,15 +126,17 @@ function createHandler<V extends Vec2 | Vec3 | Vec4>(): ProxyHandler<V> {
  * @param {number} size
  * @returns {Factory<V>}
  */
-function createFactory<V extends Vec2 | Vec3 | Vec4>(size: number): Factory<V> {
-  const handler = createHandler<V>();
+function createFactory(
+  size: number,
+): (...args: Array<number | number[] | Float32Array>) => Float32Array {
+  const handler = createHandler();
 
-  return (...args: Components<V>) =>
-    new Proxy(createVector<V>(size, args), handler);
+  return (...args: Array<number | number[] | Float32Array>) =>
+    new Proxy(createVector(size, args), handler);
 }
 
-export const vec2 = createFactory<Vec2>(2);
-export const vec3 = createFactory<Vec3>(3);
-export const vec4 = createFactory<Vec4>(4);
+export const vec2 = createFactory(2);
+export const vec3 = createFactory(3);
+export const vec4 = createFactory(4);
 
 const factories = [vec2, vec3, vec4];
