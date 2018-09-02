@@ -99,25 +99,23 @@ function createVector(
  * @template V
  * @returns {ProxyHandler<V>}
  */
-function createHandler(): ProxyHandler<Float32Array> {
-  return {
-    get(target: Float32Array, prop: PropertyKey) {
-      return typeof prop === 'string' && swizzledKeys.has(prop)
-        ? getSwizzled(target, prop)
-        : get(target, prop);
-    },
+const handler: ProxyHandler<Float32Array> = {
+  get(target: Float32Array, prop: PropertyKey) {
+    return typeof prop === 'string' && swizzledKeys.has(prop)
+      ? getSwizzled(target, prop)
+      : get(target, prop);
+  },
 
-    set(
-      target: Float32Array,
-      prop: PropertyKey,
-      value: number | number[] | Float32Array,
-    ) {
-      return typeof prop === 'string' && swizzledKeys.has(prop)
-        ? setSwizzled(target, prop, value)
-        : set(target, prop, value);
-    },
-  };
-}
+  set(
+    target: Float32Array,
+    prop: PropertyKey,
+    value: number | number[] | Float32Array,
+  ) {
+    return typeof prop === 'string' && swizzledKeys.has(prop)
+      ? setSwizzled(target, prop, value)
+      : set(target, prop, value);
+  },
+};
 
 /**
  * ## createFactory<V extends Vec2 | Vec3 | Vec4>
@@ -126,17 +124,17 @@ function createHandler(): ProxyHandler<Float32Array> {
  * @param {number} size
  * @returns {Factory<V>}
  */
-function createFactory(
+function createFactory<V extends Float32Array>(
   size: number,
-): (...args: Array<number | number[] | Float32Array>) => Float32Array {
-  const handler = createHandler();
-
+): (...args: Array<number | number[] | Float32Array>) => V {
   return (...args: Array<number | number[] | Float32Array>) =>
-    new Proxy(createVector(size, args), handler);
+    new Proxy(createVector(size, args), handler) as V;
 }
 
-export const vec2 = createFactory(2);
-export const vec3 = createFactory(3);
-export const vec4 = createFactory(4);
+const factories: [
+  (...args: Array<number | number[] | Float32Array>) => Vec2,
+  (...args: Array<number | number[] | Float32Array>) => Vec3,
+  (...args: Array<number | number[] | Float32Array>) => Vec4
+] = [createFactory<Vec2>(2), createFactory<Vec3>(3), createFactory<Vec4>(4)];
 
-const factories = [vec2, vec3, vec4];
+export const [vec2, vec3, vec4] = factories;
