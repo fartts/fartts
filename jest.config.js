@@ -1,6 +1,10 @@
 module.exports = {
   collectCoverage: true,
-  collectCoverageFrom: ['src/lib/**/*.ts', '!**/node_modules/**'],
+  collectCoverageFrom: [
+    'src/lib/**/*.ts',
+    '!src/lib/**/*.d.ts',
+    '!**/node_modules/**',
+  ],
   coverageThreshold: {
     global: {
       branches: 100,
