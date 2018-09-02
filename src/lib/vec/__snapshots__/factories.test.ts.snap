@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`@fartts/lib/vec vec2([[Array]]) 1`] = `
+exports[`@fartts/lib/vec/factories vec2([[Array]]) 1`] = `
 Float32Array [
   3,
   4,
 ]
 `;
 
-exports[`@fartts/lib/vec vec2([[Array]]) 2`] = `
+exports[`@fartts/lib/vec/factories vec2([[Array]]) 2`] = `
 Float32Array [
   3,
   4,
@@ -16,14 +16,14 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec2([[Float32Array]]) 1`] = `
+exports[`@fartts/lib/vec/factories vec2([[Float32Array]]) 1`] = `
 Float32Array [
   7,
   8,
 ]
 `;
 
-exports[`@fartts/lib/vec vec2([[Float32Array]]) 2`] = `
+exports[`@fartts/lib/vec/factories vec2([[Float32Array]]) 2`] = `
 Float32Array [
   7,
   8,
@@ -32,14 +32,14 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec2([1, 2]) 1`] = `
+exports[`@fartts/lib/vec/factories vec2([1, 2]) 1`] = `
 Float32Array [
   1,
   2,
 ]
 `;
 
-exports[`@fartts/lib/vec vec2([1, 2]) 2`] = `
+exports[`@fartts/lib/vec/factories vec2([1, 2]) 2`] = `
 Float32Array [
   1,
   2,
@@ -48,14 +48,14 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec2([5, [Array]]) 1`] = `
+exports[`@fartts/lib/vec/factories vec2([5, [Array]]) 1`] = `
 Float32Array [
   5,
   6,
 ]
 `;
 
-exports[`@fartts/lib/vec vec2([5, [Array]]) 2`] = `
+exports[`@fartts/lib/vec/factories vec2([5, [Array]]) 2`] = `
 Float32Array [
   5,
   6,
@@ -64,7 +64,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec3([[Array]]) 1`] = `
+exports[`@fartts/lib/vec/factories vec3([[Array]]) 1`] = `
 Float32Array [
   3,
   4,
@@ -72,7 +72,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec3([[Array]]) 2`] = `
+exports[`@fartts/lib/vec/factories vec3([[Array]]) 2`] = `
 Float32Array [
   5,
   5,
@@ -81,7 +81,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec3([[Float32Array]]) 1`] = `
+exports[`@fartts/lib/vec/factories vec3([[Float32Array]]) 1`] = `
 Float32Array [
   7,
   8,
@@ -89,7 +89,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec3([[Float32Array]]) 2`] = `
+exports[`@fartts/lib/vec/factories vec3([[Float32Array]]) 2`] = `
 Float32Array [
   9,
   9,
@@ -98,7 +98,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec3([1, 2, 3]) 1`] = `
+exports[`@fartts/lib/vec/factories vec3([1, 2, 3]) 1`] = `
 Float32Array [
   1,
   2,
@@ -106,7 +106,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec3([1, 2, 3]) 2`] = `
+exports[`@fartts/lib/vec/factories vec3([1, 2, 3]) 2`] = `
 Float32Array [
   3,
   3,
@@ -115,7 +115,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec3([5, [Array]]) 1`] = `
+exports[`@fartts/lib/vec/factories vec3([5, [Array]]) 1`] = `
 Float32Array [
   5,
   6,
@@ -123,7 +123,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec3([5, [Array]]) 2`] = `
+exports[`@fartts/lib/vec/factories vec3([5, [Array]]) 2`] = `
 Float32Array [
   7,
   7,
@@ -132,7 +132,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec4([[Array]]) 1`] = `
+exports[`@fartts/lib/vec/factories vec4([[Array]]) 1`] = `
 Float32Array [
   3,
   4,
@@ -141,7 +141,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec4([[Array]]) 2`] = `
+exports[`@fartts/lib/vec/factories vec4([[Array]]) 2`] = `
 Float32Array [
   3,
   3,
@@ -150,7 +150,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec4([[Float32Array]]) 1`] = `
+exports[`@fartts/lib/vec/factories vec4([[Float32Array]]) 1`] = `
 Float32Array [
   7,
   8,
@@ -159,7 +159,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec4([[Float32Array]]) 2`] = `
+exports[`@fartts/lib/vec/factories vec4([[Float32Array]]) 2`] = `
 Float32Array [
   7,
   7,
@@ -168,7 +168,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec4([1, 2, 3, 4]) 1`] = `
+exports[`@fartts/lib/vec/factories vec4([1, 2, 3, 4]) 1`] = `
 Float32Array [
   1,
   2,
@@ -177,7 +177,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec4([1, 2, 3, 4]) 2`] = `
+exports[`@fartts/lib/vec/factories vec4([1, 2, 3, 4]) 2`] = `
 Float32Array [
   1,
   1,
@@ -186,7 +186,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec4([5, [Array], 8]) 1`] = `
+exports[`@fartts/lib/vec/factories vec4([5, [Array], 8]) 1`] = `
 Float32Array [
   5,
   6,
@@ -195,7 +195,7 @@ Float32Array [
 ]
 `;
 
-exports[`@fartts/lib/vec vec4([5, [Array], 8]) 2`] = `
+exports[`@fartts/lib/vec/factories vec4([5, [Array], 8]) 2`] = `
 Float32Array [
   5,
   5,

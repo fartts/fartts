@@ -1,7 +1,7 @@
 import { toArray } from './util';
 import { vec2, vec3, vec4 } from './factories';
 
-describe('@fartts/lib/vec', () => {
+describe('@fartts/lib/vec/factories', () => {
   test.each`
     args                          | error
     ${[1, 2]}                     | ${null}
