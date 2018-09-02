@@ -1,4 +1,5 @@
 import { dot, ρ, θ } from './math';
+import { slice } from './util';
 
 export default class Vector extends Float32Array {
   public get ρ(): number {
@@ -15,7 +16,7 @@ export default class Vector extends Float32Array {
   }
 
   public toArray(): number[] {
-    return [...this];
+    return slice.call(this);
   }
 
   public toString(): string {

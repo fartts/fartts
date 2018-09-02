@@ -1,4 +1,4 @@
-const { slice } = [];
+export const { slice } = [];
 
 /**
  * ## toArray
