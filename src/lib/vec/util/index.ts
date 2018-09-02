@@ -5,13 +5,10 @@ const { slice } = [];
  *
  * @export
  * @param {number[]} acc
- * @param {(Component<Vec2 | Vec3 | Vec4>)} arg
+ * @param {Component} arg
  * @returns {number[]}
  */
-export function toArray(
-  acc: number[],
-  arg: number | number[] | Float32Array,
-): number[] {
+export function toArray(acc: number[], arg: Component): number[] {
   return acc.concat(typeof arg === 'number' ? arg : slice.call(arg));
 }
 

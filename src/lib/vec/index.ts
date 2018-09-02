@@ -4,10 +4,9 @@ import { toArray, validateKeys, validateRange, Validates } from './util';
 const { get, set } = Reflect;
 
 /**
- * ## getByKey<V extends Vec2 | Vec3 | Vec4>
+ * ## getByKey
  *
- * @template V
- * @param {V} target
+ * @param {Float32Array} target
  * @param {string} prop
  * @returns {number}
  */
@@ -18,12 +17,11 @@ function getByKey(target: Float32Array, prop: string): number {
 }
 
 /**
- * ## getSwizzled<V extends Vec2 | Vec3 | Vec4>
+ * ## getSwizzled
  *
- * @template V
- * @param {V} target
+ * @param {Float32Array} target
  * @param {string} prop
- * @returns {(Component<Vec2 | Vec3 | Vec4> | undefined)}
+ * @returns {(number | Float32Array)}
  */
 function getSwizzled(
   target: Float32Array,
@@ -38,10 +36,9 @@ function getSwizzled(
 }
 
 /**
- * ## setByKey<V extends Vec2 | Vec3 | Vec4>
+ * ## setByKey
  *
- * @template V
- * @param {V} target
+ * @param {Float32Array} target
  * @param {string} prop
  * @param {number} value
  */
@@ -52,12 +49,11 @@ function setByKey(target: Float32Array, prop: string, value: number): void {
 }
 
 /**
- * ## setSwizzled<V extends Vec2 | Vec3 | Vec4>
+ * ## setSwizzled
  *
- * @template V
- * @param {V} target
+ * @param {Float32Array} target
  * @param {string} prop
- * @param {Component<V>} value
+ * @param {(number | Float32Array)} value
  * @returns {boolean}
  */
 function setSwizzled(
@@ -76,12 +72,11 @@ function setSwizzled(
 }
 
 /**
- * ## createVector<V extends Vec2 | Vec3 | Vec4>
+ * ## createVector
  *
- * @template V
  * @param {number} size
- * @param {Components<V>} args
- * @returns {V}
+ * @param {Components} args
+ * @returns {Float32Array}
  */
 function createVector(size: number, args: Components): Float32Array {
   const components = args.reduce(toArray, []);
@@ -89,19 +84,28 @@ function createVector(size: number, args: Components): Float32Array {
   return new Float32Array(components);
 }
 
-/**
- * createHandler<V extends Vec2 | Vec3 | Vec4>
- *
- * @template V
- * @returns {ProxyHandler<V>}
- */
 const handler: ProxyHandler<Float32Array> = {
+  /**
+   * ### get
+   *
+   * @param {Float32Array} target
+   * @param {PropertyKey} prop
+   * @returns
+   */
   get(target: Float32Array, prop: PropertyKey) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? getSwizzled(target, prop)
       : get(target, prop);
   },
 
+  /**
+   * ### set
+   *
+   * @param {Float32Array} target
+   * @param {PropertyKey} prop
+   * @param {(number | Float32Array)} value
+   * @returns
+   */
   set(target: Float32Array, prop: PropertyKey, value: number | Float32Array) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? setSwizzled(target, prop, value)
@@ -110,7 +114,7 @@ const handler: ProxyHandler<Float32Array> = {
 };
 
 /**
- * ## createFactory<V extends Vec2 | Vec3 | Vec4>
+ * ## createFactory<V extends Float32Array>
  *
  * @template V
  * @param {number} size
