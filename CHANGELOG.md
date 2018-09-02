@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/fartts/fartts/compare/v1.5.1...v1.5.2) (2018-09-02)
+
+
+### Bug Fixes
+
+* **lib:** fixes [#134](https://github.com/fartts/fartts/issues/134), minimizes type casting, removes the switch ([9e5f5ac](https://github.com/fartts/fartts/commit/9e5f5ac))
+
 ## [1.5.1](https://github.com/fartts/fartts/compare/v1.5.0...v1.5.1) (2018-09-01)
 
 
