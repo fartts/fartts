@@ -1,16 +1,17 @@
-import { swizzledKeys, indicesByKey } from './util/keys';
+import Vector from '.';
 import { toArray, validateKeys, validateRange, Validates } from './util';
+import { swizzledKeys, indicesByKey } from './util/keys';
 
 const { get, set } = Reflect;
 
 /**
  * ## getByKey
  *
- * @param {Float32Array} target
+ * @param {Vector} target
  * @param {string} prop
  * @returns {number}
  */
-function getByKey(target: Float32Array, prop: string): number {
+function getByKey(target: Vector, prop: string): number {
   const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(i, target.length);
   return target[i];
@@ -19,14 +20,11 @@ function getByKey(target: Float32Array, prop: string): number {
 /**
  * ## getSwizzled
  *
- * @param {Float32Array} target
+ * @param {Vector} target
  * @param {string} prop
- * @returns {(number | Float32Array)}
+ * @returns {(number | Vector)}
  */
-function getSwizzled(
-  target: Float32Array,
-  prop: string,
-): number | Float32Array {
+function getSwizzled(target: Vector, prop: string): number | Vector {
   if (prop.length === 1) {
     return getByKey(target, prop);
   }
@@ -38,11 +36,11 @@ function getSwizzled(
 /**
  * ## setByKey
  *
- * @param {Float32Array} target
+ * @param {Vector} target
  * @param {string} prop
  * @param {number} value
  */
-function setByKey(target: Float32Array, prop: string, value: number): void {
+function setByKey(target: Vector, prop: string, value: number): void {
   const j = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(j, target.length);
   target[j] = value;
@@ -51,15 +49,15 @@ function setByKey(target: Float32Array, prop: string, value: number): void {
 /**
  * ## setSwizzled
  *
- * @param {Float32Array} target
+ * @param {Vector} target
  * @param {string} prop
- * @param {(number | Float32Array)} value
+ * @param {(number | Vector)} value
  * @returns {boolean}
  */
 function setSwizzled(
-  target: Float32Array,
+  target: Vector,
   prop: string,
-  value: number | Float32Array,
+  value: number | Vector,
 ): boolean {
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
@@ -76,23 +74,23 @@ function setSwizzled(
  *
  * @param {number} size
  * @param {Components} args
- * @returns {Float32Array}
+ * @returns {Vector}
  */
-function createVector(size: number, args: Components): Float32Array {
+function createVector(size: number, args: Components): Vector {
   const components = args.reduce(toArray, []);
   validateKeys(size, components.length, Validates.Construction);
-  return new Float32Array(components);
+  return new Vector(components);
 }
 
-const handler: ProxyHandler<Float32Array> = {
+const handler: ProxyHandler<Vector> = {
   /**
    * ### get
    *
-   * @param {Float32Array} target
+   * @param {Vector} target
    * @param {PropertyKey} prop
    * @returns
    */
-  get(target: Float32Array, prop: PropertyKey) {
+  get(target: Vector, prop: PropertyKey) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? getSwizzled(target, prop)
       : get(target, prop);
@@ -101,12 +99,12 @@ const handler: ProxyHandler<Float32Array> = {
   /**
    * ### set
    *
-   * @param {Float32Array} target
+   * @param {Vector} target
    * @param {PropertyKey} prop
-   * @param {(number | Float32Array)} value
+   * @param {(number | Vector)} value
    * @returns
    */
-  set(target: Float32Array, prop: PropertyKey, value: number | Float32Array) {
+  set(target: Vector, prop: PropertyKey, value: number | Vector) {
     return typeof prop === 'string' && swizzledKeys.has(prop)
       ? setSwizzled(target, prop, value)
       : set(target, prop, value);
@@ -114,13 +112,13 @@ const handler: ProxyHandler<Float32Array> = {
 };
 
 /**
- * ## createFactory<V extends Float32Array>
+ * ## createFactory<V extends Vector>
  *
  * @template V
  * @param {number} size
  * @returns {Factory<V>}
  */
-function createFactory<V extends Float32Array>(size: number): Factory<V> {
+function createFactory<V extends Vector>(size: number): Factory<V> {
   return (...args: Components) =>
     new Proxy(createVector(size, args), handler) as V;
 }
