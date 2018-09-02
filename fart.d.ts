@@ -3,7 +3,8 @@ declare module '*.glsl';
 declare module '*.vert';
 declare module '*.json';
 
-type Components = Array<number | number[] | Float32Array>;
+type Component = number | number[] | Float32Array;
+type Components = Component[];
 type Factory<V> = (...args: Array<number | number[] | Float32Array>) => V;
 
 type Vec1 = Float32Array & { [K in Vec1D1]: number };
