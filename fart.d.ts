@@ -3,38 +3,33 @@ declare module '*.glsl';
 declare module '*.vert';
 declare module '*.json';
 
-type Component<V> = number | number[] | V;
-type Components<V> = Component<V>[];
+type Component = number | number[] | Float32Array;
+type Components = Component[];
+type Factory<V> = (...args: Array<number | number[] | Float32Array>) => V;
 
-type Factory<V> = (...args: Components<V>) => V;
-
-type Vec2Factory = Factory<Vec2>;
-type Vec3Factory = Factory<Vec3>;
-type Vec4Factory = Factory<Vec4>;
-
-type Vec1 = Float32Array & Record<Vec1Key1, number>;
+type Vec1 = Float32Array & { [K in Vec1D1]: number };
 type Vec2 = Vec1 &
-  Record<Vec2Key1, number> &
-  Record<Vec2Key2, number[] | Float32Array> &
-  Record<Vec2Key3, number[] | Float32Array> &
-  Record<Vec2Key4, number[] | Float32Array>;
+  { [K in Vec2D1]: number } &
+  { [K in Vec2D2]: Vec2 } &
+  { [K in Vec2D3]: Vec3 } &
+  { [K in Vec2D4]: Vec4 };
 type Vec3 = Vec2 &
-  Record<Vec3Key1, number> &
-  Record<Vec3Key2, number[] | Float32Array> &
-  Record<Vec3Key3, number[] | Float32Array> &
-  Record<Vec3Key4, number[] | Float32Array>;
+  { [K in Vec3D1]: number } &
+  { [K in Vec3D2]: Vec2 } &
+  { [K in Vec3D3]: Vec3 } &
+  { [K in Vec3D4]: Vec4 };
 type Vec4 = Vec3 &
-  Record<Vec4Key1, number> &
-  Record<Vec4Key2, number[] | Float32Array> &
-  Record<Vec4Key3, number[] | Float32Array> &
-  Record<Vec4Key4, number[] | Float32Array>;
+  { [K in Vec4D1]: number } &
+  { [K in Vec4D2]: Vec2 } &
+  { [K in Vec4D3]: Vec3 } &
+  { [K in Vec4D4]: Vec4 };
 
-type Vec1Key1 = /*      */ 'x' | 's' | 'r';
-type Vec2Key1 = Vec1Key1 | 'y' | 't' | 'g';
-type Vec3Key1 = Vec2Key1 | 'z' | 'p' | 'b';
-type Vec4Key1 = Vec3Key1 | 'w' | 'q' | 'a';
+type Vec1D1 = 'x' | 's' | 'r';
+type Vec2D1 = 'y' | 't' | 'g';
+type Vec3D1 = 'z' | 'p' | 'b';
+type Vec4D1 = 'w' | 'q' | 'a';
 
-type Vec2Key2 =
+type Vec2D2 =
   | 'xx'
   | 'xy'
   | 'yx'
@@ -47,7 +42,7 @@ type Vec2Key2 =
   | 'rg'
   | 'gr'
   | 'gg';
-type Vec2Key3 =
+type Vec2D3 =
   | 'xxx'
   | 'xxy'
   | 'xyx'
@@ -72,7 +67,7 @@ type Vec2Key3 =
   | 'grg'
   | 'ggr'
   | 'ggg';
-type Vec2Key4 =
+type Vec2D4 =
   | 'xxxx'
   | 'xxxy'
   | 'xxyx'
@@ -121,8 +116,8 @@ type Vec2Key4 =
   | 'ggrg'
   | 'gggr'
   | 'gggg';
-type Vec2SwizzledKey = Vec2Key2 | Vec2Key3 | Vec2Key4;
-type Vec3Key2 =
+
+type Vec3D2 =
   | 'xz'
   | 'yz'
   | 'zx'
@@ -138,7 +133,7 @@ type Vec3Key2 =
   | 'br'
   | 'bg'
   | 'bb';
-type Vec3Key3 =
+type Vec3D3 =
   | 'xxz'
   | 'xyz'
   | 'xzx'
@@ -196,7 +191,7 @@ type Vec3Key3 =
   | 'bbr'
   | 'bbg'
   | 'bbb';
-type Vec3Key4 =
+type Vec3D4 =
   | 'xxxz'
   | 'xxyz'
   | 'xxzx'
@@ -392,8 +387,8 @@ type Vec3Key4 =
   | 'bbbr'
   | 'bbbg'
   | 'bbbb';
-type Vec3SwizzledKey = Vec2SwizzledKey | Vec3Key2 | Vec3Key3 | Vec3Key4;
-type Vec4Key2 =
+
+type Vec4D2 =
   | 'xw'
   | 'yw'
   | 'zw'
@@ -415,7 +410,7 @@ type Vec4Key2 =
   | 'ag'
   | 'ab'
   | 'aa';
-type Vec4Key3 =
+type Vec4D3 =
   | 'xxw'
   | 'xyw'
   | 'xzw'
@@ -527,7 +522,7 @@ type Vec4Key3 =
   | 'aag'
   | 'aab'
   | 'aaa';
-type Vec4Key4 =
+type Vec4D4 =
   | 'xxxw'
   | 'xxyw'
   | 'xxzw'
@@ -1053,4 +1048,3 @@ type Vec4Key4 =
   | 'aaag'
   | 'aaab'
   | 'aaaa';
-type Vec4SwizzledKey = Vec3SwizzledKey | Vec4Key2 | Vec4Key3 | Vec4Key4;

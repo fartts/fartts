@@ -4,82 +4,62 @@ import { toArray, validateKeys, validateRange, Validates } from './util';
 const { get, set } = Reflect;
 
 /**
- * ## getByKey<V extends Vec2 | Vec3 | Vec4>
+ * ## getByKey
  *
- * @template V
- * @param {V} target
+ * @param {Float32Array} target
  * @param {string} prop
  * @returns {number}
  */
-function getByKey<V extends Vec2 | Vec3 | Vec4>(
-  target: V,
-  prop: string,
-): number {
+function getByKey(target: Float32Array, prop: string): number {
   const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(i, target.length);
   return target[i];
 }
 
 /**
- * ## getSwizzled<V extends Vec2 | Vec3 | Vec4>
+ * ## getSwizzled
  *
- * @template V
- * @param {V} target
+ * @param {Float32Array} target
  * @param {string} prop
- * @returns {(Component<Vec2 | Vec3 | Vec4> | undefined)}
+ * @returns {(number | Float32Array)}
  */
-function getSwizzled<V extends Vec2 | Vec3 | Vec4>(
-  target: V,
+function getSwizzled(
+  target: Float32Array,
   prop: string,
-): Component<Vec2 | Vec3 | Vec4> | undefined {
+): number | Float32Array {
   if (prop.length === 1) {
     return getByKey(target, prop);
   }
 
   const keys = prop.split('');
-  const values = keys.map(k => getByKey(target, k));
-
-  switch (values.length) {
-    case 2:
-      return (factories[values.length - 2] as Factory<Vec2>)(values);
-    case 3:
-      return (factories[values.length - 2] as Factory<Vec3>)(values);
-    case 4:
-      return (factories[values.length - 2] as Factory<Vec4>)(values);
-  }
+  return factories[keys.length - 2](keys.map(k => getByKey(target, k)));
 }
 
 /**
- * ## setByKey<V extends Vec2 | Vec3 | Vec4>
+ * ## setByKey
  *
- * @template V
- * @param {V} target
+ * @param {Float32Array} target
  * @param {string} prop
  * @param {number} value
  */
-function setByKey<V extends Vec2 | Vec3 | Vec4>(
-  target: V,
-  prop: string,
-  value: number,
-): void {
+function setByKey(target: Float32Array, prop: string, value: number): void {
   const j = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
   validateRange(j, target.length);
   target[j] = value;
 }
 
 /**
- * ## setSwizzled<V extends Vec2 | Vec3 | Vec4>
+ * ## setSwizzled
  *
- * @template V
- * @param {V} target
+ * @param {Float32Array} target
  * @param {string} prop
- * @param {Component<V>} value
+ * @param {(number | Float32Array)} value
  * @returns {boolean}
  */
-function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
-  target: V,
+function setSwizzled(
+  target: Float32Array,
   prop: string,
-  value: Component<V>,
+  value: number | Float32Array,
 ): boolean {
   const keys = prop.split('');
   const components = [value].reduce(toArray, []);
@@ -92,61 +72,63 @@ function setSwizzled<V extends Vec2 | Vec3 | Vec4>(
 }
 
 /**
- * ## createVector<V extends Vec2 | Vec3 | Vec4>
+ * ## createVector
  *
- * @template V
  * @param {number} size
- * @param {Components<V>} args
- * @returns {V}
+ * @param {Components} args
+ * @returns {Float32Array}
  */
-function createVector<V extends Vec2 | Vec3 | Vec4>(
-  size: number,
-  args: Components<V>,
-): V {
+function createVector(size: number, args: Components): Float32Array {
   const components = args.reduce(toArray, []);
   validateKeys(size, components.length, Validates.Construction);
-
-  return new Float32Array(components) as V;
+  return new Float32Array(components);
 }
 
-/**
- * createHandler<V extends Vec2 | Vec3 | Vec4>
- *
- * @template V
- * @returns {ProxyHandler<V>}
- */
-function createHandler<V extends Vec2 | Vec3 | Vec4>(): ProxyHandler<V> {
-  return {
-    get(target: V, prop: PropertyKey) {
-      return typeof prop === 'string' && swizzledKeys.has(prop)
-        ? getSwizzled<V>(target, prop)
-        : get(target, prop);
-    },
+const handler: ProxyHandler<Float32Array> = {
+  /**
+   * ### get
+   *
+   * @param {Float32Array} target
+   * @param {PropertyKey} prop
+   * @returns
+   */
+  get(target: Float32Array, prop: PropertyKey) {
+    return typeof prop === 'string' && swizzledKeys.has(prop)
+      ? getSwizzled(target, prop)
+      : get(target, prop);
+  },
 
-    set(target: V, prop: PropertyKey, value: Component<V>) {
-      return typeof prop === 'string' && swizzledKeys.has(prop)
-        ? setSwizzled<V>(target, prop, value)
-        : set(target, prop, value);
-    },
-  };
-}
+  /**
+   * ### set
+   *
+   * @param {Float32Array} target
+   * @param {PropertyKey} prop
+   * @param {(number | Float32Array)} value
+   * @returns
+   */
+  set(target: Float32Array, prop: PropertyKey, value: number | Float32Array) {
+    return typeof prop === 'string' && swizzledKeys.has(prop)
+      ? setSwizzled(target, prop, value)
+      : set(target, prop, value);
+  },
+};
 
 /**
- * ## createFactory<V extends Vec2 | Vec3 | Vec4>
+ * ## createFactory<V extends Float32Array>
  *
  * @template V
  * @param {number} size
  * @returns {Factory<V>}
  */
-function createFactory<V extends Vec2 | Vec3 | Vec4>(size: number): Factory<V> {
-  const handler = createHandler<V>();
-
-  return (...args: Components<V>) =>
-    new Proxy(createVector<V>(size, args), handler);
+function createFactory<V extends Float32Array>(size: number): Factory<V> {
+  return (...args: Components) =>
+    new Proxy(createVector(size, args), handler) as V;
 }
 
-export const vec2 = createFactory<Vec2>(2);
-export const vec3 = createFactory<Vec3>(3);
-export const vec4 = createFactory<Vec4>(4);
+const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
+  createFactory<Vec2>(2),
+  createFactory<Vec3>(3),
+  createFactory<Vec4>(4),
+];
 
-const factories = [vec2, vec3, vec4];
+export const [vec2, vec3, vec4] = factories;

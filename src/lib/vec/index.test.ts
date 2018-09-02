@@ -28,15 +28,11 @@ describe('@fartts/lib/vec', () => {
       expect(actual.y).toEqual(components[1]);
 
       // swizzling! v2.yx.x === v2.y
-      expect((actual.yx as Vec4).x).toEqual(components[1]);
+      expect(actual.yx.x).toEqual(components[1]);
       expect(actual.xyxy).toMatchSnapshot();
 
-      // no out of bounds access - these are type errors now!
-      // expect(() => actual.z).toThrow('vector field selection out of range');
-      // expect(() => actual.w).toThrow('vector field selection out of range');
-
       // assignment
-      actual.xy = [actual.x * 2, actual.y * 3];
+      actual.xy = vec2([actual.x * 2, actual.y * 3]);
       expect(actual.x).toEqual(components[0] * 2);
       expect(actual.y).toEqual(components[1] * 3);
 
@@ -48,20 +44,9 @@ describe('@fartts/lib/vec', () => {
       expect(actual.y).toEqual(2500);
 
       // swizzling!
-      actual.yx = [100, 200];
+      actual.yx = vec2(100, 200);
       expect(actual.x).toEqual(200);
       expect(actual.y).toEqual(100);
-
-      // these are actually kind of funny, but they'll get caught first - these are type errors now!
-      // expect(() => (actual.zyx = [100, 200])).toThrow('not enough arguments');
-      // expect(() => (actual.zyx = [100, 200, 300, 400])).toThrow(
-      //   'too many arguments',
-      // );
-
-      // no out of bounds assignment either though - these are type errors now!
-      // expect(() => (actual.zyx = [100, 200, 300])).toThrow(
-      //   'vector field selection out of range',
-      // );
     }
   });
 
@@ -94,15 +79,11 @@ describe('@fartts/lib/vec', () => {
       expect(actual.b).toEqual(components[2]);
 
       // swizzling! v3.bgr.r === v2.b
-      expect((actual.bgr as Vec4).r).toEqual(components[2]);
+      expect(actual.bgr.r).toEqual(components[2]);
       expect(actual.bbbb).toMatchSnapshot();
 
-      // no out of bounds access - these are type errors now!
-      // expect(() => actual.a).toThrow('vector field selection out of range');
-      // expect(() => actual.rgba).toThrow('vector field selection out of range');
-
       // assignment
-      actual.rgb = [actual.r * 2, actual.g * 3, actual.b * 4];
+      actual.rgb = vec3([actual.r * 2, actual.g * 3, actual.b * 4]);
       expect(actual.r).toEqual(components[0] * 2);
       expect(actual.g).toEqual(components[1] * 3);
       expect(actual.b).toEqual(components[2] * 4);
@@ -115,23 +96,10 @@ describe('@fartts/lib/vec', () => {
       expect(actual.b).toEqual(5000);
 
       // swizzling!
-      actual.bgr = [100, 200, 300];
+      actual.bgr = vec3(100, 200, 300);
       expect(actual.r).toEqual(300);
       expect(actual.g).toEqual(200);
       expect(actual.b).toEqual(100);
-
-      // these are actually kind of funny, but they'll get caught first - these are type errors now!
-      // expect(() => (actual.abgr = [100, 200, 300])).toThrow(
-      //   'not enough arguments',
-      // );
-      // expect(() => (actual.abgr = [100, 200, 300, 400, 500])).toThrow(
-      //   'too many arguments',
-      // );
-
-      // no out of bounds assignment either though - these are type errors now!
-      // expect(() => (actual.abgr = [100, 200, 300, 400])).toThrow(
-      //   'vector field selection out of range',
-      // );
     }
   });
 
@@ -165,11 +133,16 @@ describe('@fartts/lib/vec', () => {
       expect(actual.q).toEqual(components[3]);
 
       // swizzling! v4.qpts.s === v4.q
-      expect((actual.qpts as Vec4).s).toEqual(components[3]);
+      expect(actual.qpts.s).toEqual(components[3]);
       expect(actual.sstt).toMatchSnapshot();
 
       // assignment
-      actual.stpq = [actual.s * 2, actual.t * 3, actual.p * 4, actual.q * 5];
+      actual.stpq = vec4([
+        actual.s * 2,
+        actual.t * 3,
+        actual.p * 4,
+        actual.q * 5,
+      ]);
       expect(actual.s).toEqual(components[0] * 2);
       expect(actual.t).toEqual(components[1] * 3);
       expect(actual.p).toEqual(components[2] * 4);
@@ -183,7 +156,7 @@ describe('@fartts/lib/vec', () => {
       expect(actual.q).toEqual(10000);
 
       // swizzling!
-      actual.qpts = [100, 200, 300, 400];
+      actual.qpts = vec4(100, 200, 300, 400);
       expect(actual.s).toEqual(400);
       expect(actual.t).toEqual(300);
       expect(actual.p).toEqual(200);
