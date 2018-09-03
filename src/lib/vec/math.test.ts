@@ -12,8 +12,8 @@ describe('@fartts/lib/vec/math', () => {
 
   test.each`
     a     | b     | result  | error
-    ${v2} | ${v3} | ${null} | ${'expected vectors of equal length'}
-    ${v3} | ${v4} | ${null} | ${'expected vectors of equal length'}
+    ${v2} | ${v3} | ${null} | ${'wrong operand types'}
+    ${v3} | ${v4} | ${null} | ${'wrong operand types'}
     ${v2} | ${v2} | ${8}    | ${null}
     ${v3} | ${v3} | ${27}   | ${null}
     ${v4} | ${v4} | ${64}   | ${null}
