@@ -12,7 +12,8 @@
     "build": "parcel build src/app/{index.html,README.md} --public-url / --experimental-scope-hoisting",
     "start": "parcel src/app/{index.html,README.md}",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "jest"
+    "test": "jest",
+    "coverage": "open coverage/lcov-report/index.html"
   },
   "engines": {
     "node": "8.11.4",
