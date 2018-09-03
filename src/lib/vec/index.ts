@@ -1,8 +1,16 @@
 import { factories } from './factories';
 import { dot, ρ, θ } from './math';
-import { slice } from './util';
+import { validateRange, toArray } from './util';
 
-export default class Vector extends Float32Array implements Iterable<number> {
+import { Components } from './index.d';
+
+export default class Vector extends Array<number> implements Iterable<number> {
+  constructor(...args: Components) {
+    const components = args.reduce(toArray, []);
+    validateRange(components.length, 5, 1);
+    super(...components);
+  }
+
   public get dot(): number {
     return dot(this, this);
   }
@@ -17,11 +25,7 @@ export default class Vector extends Float32Array implements Iterable<number> {
     return θ(left, this);
   }
 
-  public toArray(): number[] {
-    return slice.call(this);
-  }
-
   public toString(): string {
-    return `vec${this.length}(${this.toArray().toString()})`;
+    return `vec${this.length}(${super.toString()})`;
   }
 }

@@ -18,13 +18,13 @@ describe('@fartts/lib/vec/math', () => {
 
   test('ρ', () => {
     expect(ρ(v2)).toBe(sqrt(8));
-    expect(ρ(v2)).toBe(hypot(...v2.toArray()));
+    expect(ρ(v2)).toBe(hypot(...v2));
 
     expect(ρ(v3)).toBe(sqrt(27));
-    expect(ρ(v3)).toBe(hypot(...v3.toArray()));
+    expect(ρ(v3)).toBe(hypot(...v3));
 
     expect(ρ(v4)).toBe(sqrt(64));
-    expect(ρ(v4)).toBe(hypot(...v4.toArray()));
+    expect(ρ(v4)).toBe(hypot(...v4));
   });
 
   test('θ', () => {
