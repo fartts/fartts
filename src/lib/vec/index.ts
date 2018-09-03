@@ -1,18 +1,34 @@
+import { vec2, vec3, vec4 } from './factories';
 import { dot, ρ, θ } from './math';
 import { slice } from './util';
 
-export default class Vector extends Float32Array {
+export default class Vector extends Float32Array implements Iterable<number> {
+  public get dot(): number {
+    return dot(this, this);
+  }
+
   public get ρ(): number {
     return ρ(this);
   }
 
   public get θ(): number {
-    const o = new Vector(this.toArray().fill(0));
-    return θ(o, this);
-  }
+    let left;
 
-  public dot(): number {
-    return dot(this, this);
+    switch (this.length) {
+      case 2:
+        left = vec2(1, 0);
+        break;
+      case 3:
+        left = vec3(1, 0, 0);
+        break;
+      case 4:
+        left = vec4(1, 0, 0, 0);
+        break;
+      default:
+        throw new Error('');
+    }
+
+    return θ(left, this);
   }
 
   public toArray(): number[] {
@@ -20,6 +36,6 @@ export default class Vector extends Float32Array {
   }
 
   public toString(): string {
-    return `vec${this.length}(${super.toString()})`;
+    return `vec${this.length}(${this.toArray().toString()})`;
   }
 }
