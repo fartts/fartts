@@ -1,3 +1,12 @@
+# [1.7.0](https://github.com/fartts/fartts/compare/v1.6.0...v1.7.0) (2018-09-03)
+
+
+### Features
+
+* **app:** add a link to the vector experiment to the main app ([5d35b63](https://github.com/fartts/fartts/commit/5d35b63))
+* **lib:** more math, this is actually fun again now ([357022e](https://github.com/fartts/fartts/commit/357022e))
+* **lib/vec:** add public static origin list of vectors ([f41b51b](https://github.com/fartts/fartts/commit/f41b51b))
+
 # [1.6.0](https://github.com/fartts/fartts/compare/v1.5.2...v1.6.0) (2018-09-03)
 
 
