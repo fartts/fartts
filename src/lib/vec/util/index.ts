@@ -1,4 +1,5 @@
-import { Component } from '../index.d';
+import Vector from '..';
+import { Component } from '../types';
 
 /**
  * ## toArray
@@ -61,4 +62,23 @@ export function validateRange(
   }
 
   throw new Error(`${index} out of range [${lowerBound}, ${upperBound}]`);
+}
+
+export function validateOperands(
+  operation: string,
+  leftHand: Vector,
+  rightHand: Vector,
+) {
+  if (leftHand.length === rightHand.length) {
+    return;
+  }
+
+  throw new Error(
+    [
+      `wrong operand types - no operation ${operation} exists that takes a`,
+      `left-hand operand of type '${leftHand.length}-component vector' and a`,
+      `right operand of type 'const ${rightHand.length}-component vector' (or`,
+      'there is no acceptable conversion)',
+    ].join(' '),
+  );
 }

@@ -1,7 +1,6 @@
 import { dot, ρ, θ } from './math';
-import { validateRange, toArray } from './util';
-
-import { Components } from './index.d';
+import { Components } from './types';
+import { toArray } from './util';
 
 /**
  * # Vector
@@ -12,17 +11,31 @@ import { Components } from './index.d';
  * @implements {Iterable<number>}
  */
 export default class Vector extends Array<number> implements Iterable<number> {
+  public static readonly origin: [Vector, Vector, Vector] = [
+    new Vector(0, 0),
+    new Vector(0, 0, 0),
+    new Vector(0, 0, 0, 0),
+  ];
+
+  public static readonly left: [Vector, Vector, Vector] = [
+    new Vector(1, 0),
+    new Vector(1, 0, 0),
+    new Vector(1, 0, 0, 0),
+  ];
+
   /**
    * ## constructor
-   * Creates an instance of Vector.
    *
    * @param {...Components} args
    * @memberof Vector
    */
   constructor(...args: Components) {
     const components = args.reduce(toArray, []);
-    validateRange(components.length, 5, 1);
-    super(...components);
+    if (components.length === 1 && typeof components[0] === 'number') {
+      super(components[0]);
+    } else {
+      super(...components);
+    }
   }
 
   /**
@@ -55,9 +68,7 @@ export default class Vector extends Array<number> implements Iterable<number> {
    * @memberof Vector
    */
   public get θ(): number {
-    const args = new Array(this.length).fill(1).fill(0, 1);
-    const left = new Vector(...args);
-    return θ(left, this);
+    return θ(Vector.left[this.length - 2], this);
   }
 
   /**

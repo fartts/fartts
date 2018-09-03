@@ -1,8 +1,7 @@
 import Vector from '.';
+import { Components, Factory, Vec2, Vec3, Vec4 } from './types';
 import { toArray, validateKeys, validateRange, Validates } from './util';
 import { swizzledKeys, indicesByKey } from './util/keys';
-
-import { Components, Factory, Vec2, Vec3, Vec4 } from './index.d';
 
 const { get, set } = Reflect;
 
@@ -80,6 +79,17 @@ function setSwizzled(
  */
 function createVector(size: number, args: Components): Vector {
   const components = args.reduce(toArray, []);
+
+  /**
+   * maybe enable this to support "forward fill" type construction with a single
+   * argument meant to be spread over all components
+   *
+   * @see: https://en.wikibooks.org/wiki/GLSL_Programming/Vector_and_Matrix_Operations#Constructors
+   */
+  // if (components.length === 1 && typeof components[0] === 'number') {
+  //   components = new Array(size).fill(components[0]);
+  // }
+
   validateKeys(size, components.length, Validates.Construction);
   return new Vector(components);
 }

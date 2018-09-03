@@ -8,9 +8,9 @@ describe('@fartts/lib/vec', () => {
   const v4 = vec4(4, 4, 4, 4);
 
   test('constructor', () => {
-    expect(() => new Vector()).toThrow('out of range');
-    expect(() => new Vector(1)).toThrow('out of range');
-    expect(() => new Vector(1, 2, 3, 4, 5)).toThrow('out of range');
+    expect(() => new Vector()).not.toThrow();
+    expect(() => new Vector(1)).not.toThrow();
+    expect(() => new Vector(1, 2, 3, 4, 5)).not.toThrow();
 
     expect(new Vector(2, 2).toString()).toEqual(v2.toString());
     expect(new Vector(3, 3, 3).toString()).toEqual(v3.toString());
