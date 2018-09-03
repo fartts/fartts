@@ -37,15 +37,15 @@ export function ρ(v: Vector): number {
  * @returns {number}
  */
 export function θ(a: Vector, b: Vector): number {
-  const dab = dot(a, b);
   const ρa = ρ(a);
   const ρb = ρ(b);
 
   if (ρa === 0 || ρb === 0) {
-    throw new Error(`cannot get θ between vectors: ${a}, ${b}`);
+    // it looks like this is what WebGL does
+    return 0;
   }
 
-  return acos(dab / ρa / ρb);
+  return acos(dot(a, b) / (ρa * ρb));
 }
 
 /**

@@ -41,26 +41,19 @@ describe('@fartts/lib/vec/math', () => {
   });
 
   test.each`
-    a     | b            | result                           | error
-    ${v2} | ${origin[0]} | ${null}                          | ${'cannot get θ between vectors'}
-    ${v3} | ${origin[1]} | ${null}                          | ${'cannot get θ between vectors'}
-    ${v4} | ${origin[2]} | ${null}                          | ${'cannot get θ between vectors'}
-    ${v2} | ${left[0]}   | ${π / 4}                         | ${null}
-    ${v2} | ${left[0]}   | ${toRadians(45)}                 | ${null}
-    ${v3} | ${left[1]}   | ${π / 3.2885355431}              | ${null}
-    ${v3} | ${left[1]}   | ${toRadians(54.735610317245346)} | ${null}
-    ${v4} | ${left[2]}   | ${π / 3}                         | ${null}
-    ${v4} | ${left[2]}   | ${toRadians(60)}                 | ${null}
-  `(
-    'θ($a, $b) should be $result or throw $error',
-    ({ a, b, result, error }) => {
-      if (error) {
-        expect(() => θ(a, b)).toThrow(error);
-      } else {
-        expect(θ(a, b)).toBeCloseTo(result);
-      }
-    },
-  );
+    a     | b            | result
+    ${v2} | ${origin[0]} | ${0}
+    ${v3} | ${origin[1]} | ${0}
+    ${v4} | ${origin[2]} | ${0}
+    ${v2} | ${left[0]}   | ${π / 4}
+    ${v2} | ${left[0]}   | ${toRadians(45)}
+    ${v3} | ${left[1]}   | ${π / 3.2885355431}
+    ${v3} | ${left[1]}   | ${toRadians(54.735610317245346)}
+    ${v4} | ${left[2]}   | ${π / 3}
+    ${v4} | ${left[2]}   | ${toRadians(60)}
+  `('θ($a, $b) should be $result', ({ a, b, result }) => {
+    expect(θ(a, b)).toBeCloseTo(result);
+  });
 
   test.each`
     v     | result
