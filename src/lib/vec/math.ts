@@ -54,42 +54,51 @@ export function clone(v: Vector): Vector {
   return new Vector(v);
 }
 
-export function add(a: Vector, b: number | Vector): Vector {
-  if (typeof b === 'number') {
-    return new Vector(a.map(c => c + b));
-  }
+const getAdd = (b: number | Vector) =>
+  typeof b === 'number'
+    ? (c: number) => c + b
+    : (c: number, i: number) => c + (b[i] || 0);
 
-  return new Vector(a.map((c, i) => c + b[i]));
+export function add(a: Vector, b: number | Vector): Vector {
+  return new Vector(a.map(getAdd(b)));
 }
+
+const getSub = (b: number | Vector) =>
+  typeof b === 'number'
+    ? (c: number) => c - b
+    : (c: number, i: number) => c - (b[i] || 0);
 
 export function sub(a: Vector, b: number | Vector): Vector {
-  if (typeof b === 'number') {
-    return new Vector(a.map(c => c - b));
-  }
-
-  return new Vector(a.map((c, i) => c - b[i]));
+  return new Vector(a.map(getSub(b)));
 }
+
+const getMul = (b: number | Vector) =>
+  typeof b === 'number'
+    ? (c: number) => c * b
+    : (c: number, i: number) => c * (b[i] || 0);
 
 export function mul(a: Vector, b: number | Vector): Vector {
-  if (typeof b === 'number') {
-    return new Vector(a.map(c => c * b));
-  }
-
-  return new Vector(a.map((c, i) => c * b[i]));
+  return new Vector(a.map(getMul(b)));
 }
 
-export function div(a: Vector, b: number | Vector): Vector {
-  if (typeof b === 'number') {
-    return new Vector(a.map(c => c / b));
-  }
+const getDiv = (b: number | Vector) =>
+  typeof b === 'number'
+    ? (c: number) => c / b
+    : (c: number, i: number) => c / (b[i] || 0);
 
-  return new Vector(a.map((c, i) => c / b[i]));
+export function div(a: Vector, b: number | Vector): Vector {
+  return new Vector(a.map(getDiv(b)));
 }
 
 export function norm(v: Vector): Vector {
   return new Vector(div(v, v.ρ));
 }
 
+const getLerp = (b: Vector, i: number | Vector) =>
+  typeof i === 'number'
+    ? (c: number, j: number) => slerp(c, b[j], i)
+    : (c: number, j: number) => slerp(c, b[j], i[j]);
+
 export function lerp(a: Vector, b: Vector, i: number): Vector {
-  return new Vector(a.map((c, j) => slerp(c, b[j], i)));
+  return new Vector(a.map(getLerp(b, i)));
 }
