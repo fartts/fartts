@@ -1,7 +1,5 @@
 import { Component } from '../index.d';
 
-export const { slice } = [];
-
 /**
  * ## toArray
  *
@@ -11,7 +9,7 @@ export const { slice } = [];
  * @returns {number[]}
  */
 export function toArray(acc: number[], arg: Component): number[] {
-  return acc.concat(typeof arg === 'number' ? arg : slice.call(arg));
+  return acc.concat(arg);
 }
 
 export enum Validates {
@@ -62,5 +60,5 @@ export function validateRange(
     return;
   }
 
-  throw new Error('vector field selection out of range');
+  throw new Error(`${index} out of range [${lowerBound}, ${upperBound}]`);
 }

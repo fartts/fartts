@@ -1,17 +1,18 @@
+import Vector from '.';
 import { vec2, vec3, vec4 } from './factories';
 import { toArray } from './util';
 
 describe('@fartts/lib/vec/factories', () => {
   test.each`
-    args                          | error
-    ${[1, 2]}                     | ${null}
-    ${[[3, 4]]}                   | ${null}
-    ${[5, [6]]}                   | ${null}
-    ${[new Float32Array([7, 8])]} | ${null}
-    ${[1]}                        | ${'not enough arguments'}
-    ${[[[9, 0]]]}                 | ${'not enough arguments'}
-    ${[1, 2, 3]}                  | ${'too many arguments'}
-    ${[[2, 3], 4]}                | ${'too many arguments'}
+    args                    | error
+    ${[1, 2]}               | ${null}
+    ${[[3, 4]]}             | ${null}
+    ${[5, [6]]}             | ${null}
+    ${[new Vector([7, 8])]} | ${null}
+    ${[1]}                  | ${'not enough arguments'}
+    ${[[[9, 0]]]}           | ${'not enough arguments'}
+    ${[1, 2, 3]}            | ${'too many arguments'}
+    ${[[2, 3], 4]}          | ${'too many arguments'}
   `('vec2($args)', ({ args, error }) => {
     const components = args.reduce(toArray, []);
 
@@ -30,6 +31,8 @@ describe('@fartts/lib/vec/factories', () => {
       // swizzling! v2.yx.x === v2.y
       expect(actual.yx.x).toEqual(components[1]);
       expect(actual.xyxy).toMatchSnapshot();
+      expect(vec3(actual, 0)).toMatchSnapshot();
+      expect(vec4(actual, actual)).toMatchSnapshot();
 
       // assignment
       actual.xy = vec2([actual.x * 2, actual.y * 3]);
@@ -51,17 +54,17 @@ describe('@fartts/lib/vec/factories', () => {
   });
 
   test.each`
-    args                             | error
-    ${[1, 2, 3]}                     | ${null}
-    ${[[3, 4, 5]]}                   | ${null}
-    ${[5, [6, 7]]}                   | ${null}
-    ${[new Float32Array([7, 8, 9])]} | ${null}
-    ${[1]}                           | ${'not enough arguments'}
-    ${[1, 2]}                        | ${'not enough arguments'}
-    ${[1, [2]]}                      | ${'not enough arguments'}
-    ${[[[9, 0]]]}                    | ${'not enough arguments'}
-    ${[1, 2, 3, 4]}                  | ${'too many arguments'}
-    ${[[2, 3], 4, 5]}                | ${'too many arguments'}
+    args                       | error
+    ${[1, 2, 3]}               | ${null}
+    ${[[3, 4, 5]]}             | ${null}
+    ${[5, [6, 7]]}             | ${null}
+    ${[new Vector([7, 8, 9])]} | ${null}
+    ${[1]}                     | ${'not enough arguments'}
+    ${[1, 2]}                  | ${'not enough arguments'}
+    ${[1, [2]]}                | ${'not enough arguments'}
+    ${[[[9, 0]]]}              | ${'not enough arguments'}
+    ${[1, 2, 3, 4]}            | ${'too many arguments'}
+    ${[[2, 3], 4, 5]}          | ${'too many arguments'}
   `('vec3($args)', ({ args, error }) => {
     const components = args.reduce(toArray, []);
 
@@ -81,6 +84,7 @@ describe('@fartts/lib/vec/factories', () => {
       // swizzling! v3.bgr.r === v2.b
       expect(actual.bgr.r).toEqual(components[2]);
       expect(actual.bbbb).toMatchSnapshot();
+      expect(vec4(actual, 0)).toMatchSnapshot();
 
       // assignment
       actual.rgb = vec3([actual.r * 2, actual.g * 3, actual.b * 4]);
@@ -104,17 +108,17 @@ describe('@fartts/lib/vec/factories', () => {
   });
 
   test.each`
-    args                                 | error
-    ${[1, 2, 3, 4]}                      | ${null}
-    ${[[3, 4, 5, 6]]}                    | ${null}
-    ${[5, [6, 7], 8]}                    | ${null}
-    ${[new Float32Array([7, 8, 9, 10])]} | ${null}
-    ${[1]}                               | ${'not enough arguments'}
-    ${[1, 2]}                            | ${'not enough arguments'}
-    ${[1, [2, 3]]}                       | ${'not enough arguments'}
-    ${[[[9, 0], 1]]}                     | ${'not enough arguments'}
-    ${[1, 2, 3, 4, 5]}                   | ${'too many arguments'}
-    ${[[1, 2, 3], 4, 5]}                 | ${'too many arguments'}
+    args                           | error
+    ${[1, 2, 3, 4]}                | ${null}
+    ${[[3, 4, 5, 6]]}              | ${null}
+    ${[5, [6, 7], 8]}              | ${null}
+    ${[new Vector([7, 8, 9, 10])]} | ${null}
+    ${[1]}                         | ${'not enough arguments'}
+    ${[1, 2]}                      | ${'not enough arguments'}
+    ${[1, [2, 3]]}                 | ${'not enough arguments'}
+    ${[[[9, 0], 1]]}               | ${'not enough arguments'}
+    ${[1, 2, 3, 4, 5]}             | ${'too many arguments'}
+    ${[[1, 2, 3], 4, 5]}           | ${'too many arguments'}
   `('vec4($args)', ({ args, error }) => {
     const components = args.reduce(toArray, []);
 
@@ -135,6 +139,8 @@ describe('@fartts/lib/vec/factories', () => {
       // swizzling! v4.qpts.s === v4.q
       expect(actual.qpts.s).toEqual(components[3]);
       expect(actual.sstt).toMatchSnapshot();
+      expect(vec4(actual.st, actual.ts)).toMatchSnapshot();
+      expect(vec4(actual.ttt, 0)).toMatchSnapshot();
 
       // assignment
       actual.stpq = vec4([

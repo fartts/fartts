@@ -1,3 +1,4 @@
+import Vector from '.';
 import { vec2, vec3, vec4 } from './factories';
 import { sqrt, hypot, toRadians, π } from '../math';
 
@@ -6,6 +7,20 @@ describe('@fartts/lib/vec', () => {
   const v3 = vec3(3, 3, 3);
   const v4 = vec4(4, 4, 4, 4);
 
+  test('constructor', () => {
+    expect(() => new Vector()).toThrow('out of range');
+    expect(() => new Vector(1)).toThrow('out of range');
+    expect(() => new Vector(1, 2, 3, 4, 5)).toThrow('out of range');
+
+    expect(new Vector(2, 2).toString()).toEqual(v2.toString());
+    expect(new Vector(3, 3, 3).toString()).toEqual(v3.toString());
+    expect(new Vector(4, 4, 4, 4).toString()).toEqual(v4.toString());
+
+    expect(new Vector(v2, 3).toString()).toBe('vec3(2,2,3)');
+    expect(new Vector(v3, 4).toString()).toBe('vec4(3,3,3,4)');
+    expect(new Vector(v2.x, 3, v4.zw).toString()).toBe('vec4(2,3,4,4)');
+  });
+
   test('dot', () => {
     expect(v2.dot).toBe(8);
     expect(v3.dot).toBe(27);
@@ -13,13 +28,13 @@ describe('@fartts/lib/vec', () => {
   });
 
   test('get ρ', () => {
-    expect(v2.ρ).toBeCloseTo(hypot(...v2.toArray()));
+    expect(v2.ρ).toBeCloseTo(hypot(...v2));
     expect(v2.ρ).toBeCloseTo(sqrt(8));
 
-    expect(v3.ρ).toBeCloseTo(hypot(...v3.toArray()));
+    expect(v3.ρ).toBeCloseTo(hypot(...v3));
     expect(v3.ρ).toBeCloseTo(sqrt(27));
 
-    expect(v4.ρ).toBeCloseTo(hypot(...v4.toArray()));
+    expect(v4.ρ).toBeCloseTo(hypot(...v4));
     expect(v4.ρ).toBeCloseTo(sqrt(64));
   });
 
