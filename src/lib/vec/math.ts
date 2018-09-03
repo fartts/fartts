@@ -99,6 +99,6 @@ const getLerp = (b: Vector, i: number | Vector) =>
     ? (c: number, j: number) => slerp(c, b[j], i)
     : (c: number, j: number) => slerp(c, b[j], i[j]);
 
-export function lerp(a: Vector, b: Vector, i: number): Vector {
+export function lerp(a: Vector, b: Vector, i: number | Vector): Vector {
   return new Vector(a.map(getLerp(b, i)));
 }
