@@ -1,5 +1,5 @@
 import Vector from '.';
-import { acos, hypot } from '../math';
+import { acos, hypot, lerp as slerp } from '../math';
 
 /**
  * ## dot
@@ -48,4 +48,48 @@ export function θ(a: Vector, b: Vector): number {
   }
 
   return acos(dab / ρa / ρb);
+}
+
+export function clone(v: Vector): Vector {
+  return new Vector(v);
+}
+
+export function add(a: Vector, b: number | Vector): Vector {
+  if (typeof b === 'number') {
+    return new Vector(a.map(c => c + b));
+  }
+
+  return new Vector(a.map((c, i) => c + b[i]));
+}
+
+export function sub(a: Vector, b: number | Vector): Vector {
+  if (typeof b === 'number') {
+    return new Vector(a.map(c => c - b));
+  }
+
+  return new Vector(a.map((c, i) => c - b[i]));
+}
+
+export function mul(a: Vector, b: number | Vector): Vector {
+  if (typeof b === 'number') {
+    return new Vector(a.map(c => c * b));
+  }
+
+  return new Vector(a.map((c, i) => c * b[i]));
+}
+
+export function div(a: Vector, b: number | Vector): Vector {
+  if (typeof b === 'number') {
+    return new Vector(a.map(c => c / b));
+  }
+
+  return new Vector(a.map((c, i) => c / b[i]));
+}
+
+export function norm(v: Vector): Vector {
+  return new Vector(div(v, v.ρ));
+}
+
+export function lerp(a: Vector, b: Vector, i: number): Vector {
+  return new Vector(a.map((c, j) => slerp(c, b[j], i)));
 }
