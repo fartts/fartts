@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/fartts/fartts/compare/v1.5.2...v1.6.0) (2018-09-03)
+
+
+### Features
+
+* **lib:** a vector class extends Float32Array, adds some helpful methods/accessors ([046b3c7](https://github.com/fartts/fartts/commit/046b3c7))
+* **lib:** add some simple instance methods ([6bf86e0](https://github.com/fartts/fartts/commit/6bf86e0))
+* **lib:** stub of a new vec implementation ([f62537b](https://github.com/fartts/fartts/commit/f62537b))
+
 ## [1.5.2](https://github.com/fartts/fartts/compare/v1.5.1...v1.5.2) (2018-09-02)
 
 
