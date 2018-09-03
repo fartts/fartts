@@ -125,7 +125,7 @@ function createFactory<V extends Vector>(size: number): Factory<V> {
     new Proxy(createVector(size, args), handler) as V;
 }
 
-const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
+export const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
   createFactory<Vec2>(2),
   createFactory<Vec3>(3),
   createFactory<Vec4>(4),
