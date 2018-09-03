@@ -8,6 +8,9 @@ describe('@fartts/lib/vec/math', () => {
   const v4 = vec4(4, 4, 4, 4);
 
   test('dot', () => {
+    expect(() => dot(v2, v3)).toThrow();
+    expect(() => dot(v3, v4)).toThrow();
+
     expect(dot(v2, v2)).toBe(8);
     expect(dot(v3, v3)).toBe(27);
     expect(dot(v4, v4)).toBe(64);
