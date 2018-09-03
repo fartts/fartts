@@ -1,5 +1,5 @@
 import { dot, ρ, θ } from './math';
-import { validateRange, toArray } from './util';
+import { toArray } from './util';
 
 import { Components } from './index.d';
 
@@ -32,8 +32,11 @@ export default class Vector extends Array<number> implements Iterable<number> {
    */
   constructor(...args: Components) {
     const components = args.reduce(toArray, []);
-    validateRange(components.length, 5, 1);
-    super(...components);
+    if (components.length === 1 && typeof components[0] === 'number') {
+      super(components[0]);
+    } else {
+      super(...components);
+    }
   }
 
   /**
