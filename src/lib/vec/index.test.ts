@@ -11,14 +11,6 @@ describe('@fartts/lib/vec', () => {
     expect(() => new Vector()).not.toThrow();
     expect(() => new Vector(1)).not.toThrow();
     expect(() => new Vector(1, 2, 3, 4, 5)).not.toThrow();
-
-    expect(new Vector(2, 2).toString()).toEqual(v2.toString());
-    expect(new Vector(3, 3, 3).toString()).toEqual(v3.toString());
-    expect(new Vector(4, 4, 4, 4).toString()).toEqual(v4.toString());
-
-    expect(new Vector(v2, 3).toString()).toBe('vec3(2,2,3)');
-    expect(new Vector(v3, 4).toString()).toBe('vec4(3,3,3,4)');
-    expect(new Vector(v2.x, 3, v4.zw).toString()).toBe('vec4(2,3,4,4)');
   });
 
   test('dot', () => {

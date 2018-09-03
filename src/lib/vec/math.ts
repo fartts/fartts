@@ -37,7 +37,10 @@ export function ρ(v: Vector): number {
  * @param {Vector} b
  * @returns {number}
  */
-export function θ(a: Vector, b: Vector): number {
+export function θ(
+  a: Vector,
+  b: Vector = getFactory(a.length)([1, ...new Array(a.length - 1).fill(0)]),
+): number {
   const ρa = ρ(a);
   const ρb = ρ(b);
 

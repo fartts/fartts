@@ -1,18 +1,17 @@
-import Vector from '.';
 import { vec2, vec3, vec4 } from './factories';
 import { toArray } from './util';
 
 describe('@fartts/lib/vec/factories', () => {
   test.each`
-    args                    | error
-    ${[1, 2]}               | ${null}
-    ${[[3, 4]]}             | ${null}
-    ${[5, [6]]}             | ${null}
-    ${[new Vector([7, 8])]} | ${null}
-    ${[1]}                  | ${'not enough arguments'}
-    ${[[[9, 0]]]}           | ${'not enough arguments'}
-    ${[1, 2, 3]}            | ${'too many arguments'}
-    ${[[2, 3], 4]}          | ${'too many arguments'}
+    args            | error
+    ${[1, 2]}       | ${null}
+    ${[[3, 4]]}     | ${null}
+    ${[5, [6]]}     | ${null}
+    ${[vec2(7, 8)]} | ${null}
+    ${[1]}          | ${'not enough arguments'}
+    ${[[[9, 0]]]}   | ${'not enough arguments'}
+    ${[1, 2, 3]}    | ${'too many arguments'}
+    ${[[2, 3], 4]}  | ${'too many arguments'}
   `('vec2($args)', ({ args, error }) => {
     const components = args.reduce(toArray, []);
 
@@ -54,17 +53,17 @@ describe('@fartts/lib/vec/factories', () => {
   });
 
   test.each`
-    args                       | error
-    ${[1, 2, 3]}               | ${null}
-    ${[[3, 4, 5]]}             | ${null}
-    ${[5, [6, 7]]}             | ${null}
-    ${[new Vector([7, 8, 9])]} | ${null}
-    ${[1]}                     | ${'not enough arguments'}
-    ${[1, 2]}                  | ${'not enough arguments'}
-    ${[1, [2]]}                | ${'not enough arguments'}
-    ${[[[9, 0]]]}              | ${'not enough arguments'}
-    ${[1, 2, 3, 4]}            | ${'too many arguments'}
-    ${[[2, 3], 4, 5]}          | ${'too many arguments'}
+    args                 | error
+    ${[1, 2, 3]}         | ${null}
+    ${[[3, 4, 5]]}       | ${null}
+    ${[5, [6, 7]]}       | ${null}
+    ${[vec3([7, 8, 9])]} | ${null}
+    ${[1]}               | ${'not enough arguments'}
+    ${[1, 2]}            | ${'not enough arguments'}
+    ${[1, [2]]}          | ${'not enough arguments'}
+    ${[[[9, 0]]]}        | ${'not enough arguments'}
+    ${[1, 2, 3, 4]}      | ${'too many arguments'}
+    ${[[2, 3], 4, 5]}    | ${'too many arguments'}
   `('vec3($args)', ({ args, error }) => {
     const components = args.reduce(toArray, []);
 
@@ -108,17 +107,17 @@ describe('@fartts/lib/vec/factories', () => {
   });
 
   test.each`
-    args                           | error
-    ${[1, 2, 3, 4]}                | ${null}
-    ${[[3, 4, 5, 6]]}              | ${null}
-    ${[5, [6, 7], 8]}              | ${null}
-    ${[new Vector([7, 8, 9, 10])]} | ${null}
-    ${[1]}                         | ${'not enough arguments'}
-    ${[1, 2]}                      | ${'not enough arguments'}
-    ${[1, [2, 3]]}                 | ${'not enough arguments'}
-    ${[[[9, 0], 1]]}               | ${'not enough arguments'}
-    ${[1, 2, 3, 4, 5]}             | ${'too many arguments'}
-    ${[[1, 2, 3], 4, 5]}           | ${'too many arguments'}
+    args                     | error
+    ${[1, 2, 3, 4]}          | ${null}
+    ${[[3, 4, 5, 6]]}        | ${null}
+    ${[5, [6, 7], 8]}        | ${null}
+    ${[vec4([7, 8, 9, 10])]} | ${null}
+    ${[1]}                   | ${'not enough arguments'}
+    ${[1, 2]}                | ${'not enough arguments'}
+    ${[1, [2, 3]]}           | ${'not enough arguments'}
+    ${[[[9, 0], 1]]}         | ${'not enough arguments'}
+    ${[1, 2, 3, 4, 5]}       | ${'too many arguments'}
+    ${[[1, 2, 3], 4, 5]}     | ${'too many arguments'}
   `('vec4($args)', ({ args, error }) => {
     const components = args.reduce(toArray, []);
 

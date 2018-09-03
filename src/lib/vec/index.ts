@@ -11,18 +11,6 @@ import { toArray } from './util';
  * @implements {Iterable<number>}
  */
 export default class Vector extends Array<number> implements Iterable<number> {
-  public static readonly origin: [Vector, Vector, Vector] = [
-    new Vector(0, 0),
-    new Vector(0, 0, 0),
-    new Vector(0, 0, 0, 0),
-  ];
-
-  public static readonly left: [Vector, Vector, Vector] = [
-    new Vector(1, 0),
-    new Vector(1, 0, 0),
-    new Vector(1, 0, 0, 0),
-  ];
-
   /**
    * ## constructor
    *
@@ -68,7 +56,7 @@ export default class Vector extends Array<number> implements Iterable<number> {
    * @memberof Vector
    */
   public get θ(): number {
-    return θ(Vector.left[this.length - 2], this);
+    return θ(this);
   }
 
   /**
