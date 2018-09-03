@@ -1,3 +1,5 @@
+import { Component } from '../index.d';
+
 export const { slice } = [];
 
 /**
