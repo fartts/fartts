@@ -8,8 +8,8 @@ describe('@fartts/lib/vec/math', () => {
   const v4 = vec4(4, 4, 4, 4);
 
   test('dot', () => {
-    expect(() => dot(v2, v3)).toThrow();
-    expect(() => dot(v3, v4)).toThrow();
+    expect(() => dot(v2, v3)).toThrow('expected vectors of equal length');
+    expect(() => dot(v3, v4)).toThrow('expected vectors of equal length');
 
     expect(dot(v2, v2)).toBe(8);
     expect(dot(v3, v3)).toBe(27);
@@ -31,7 +31,7 @@ describe('@fartts/lib/vec/math', () => {
     const originV2 = vec2([0, 0]);
     const leftV2 = vec2([1, 0]);
 
-    expect(() => θ(v2, originV2)).toThrow();
+    expect(() => θ(v2, originV2)).toThrow('cannot get θ between vectors');
     expect(θ(v2, leftV2)).toBeCloseTo(π / 4);
     expect(θ(v2, leftV2)).toBeCloseTo(toRadians(45));
   });
