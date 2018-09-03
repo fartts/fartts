@@ -1,4 +1,3 @@
-import { factories } from './factories';
 import { dot, ρ, θ } from './math';
 import { validateRange, toArray } from './util';
 
@@ -20,8 +19,8 @@ export default class Vector extends Array<number> implements Iterable<number> {
   }
 
   public get θ(): number {
-    const args = [1, ...new Array(this.length - 1).fill(0)];
-    const left = factories[this.length - 2](...args);
+    const args = new Array(this.length).fill(1).fill(0, 1);
+    const left = new Vector(...args);
     return θ(left, this);
   }
 
