@@ -12,6 +12,12 @@ import { Components } from './index.d';
  * @implements {Iterable<number>}
  */
 export default class Vector extends Array<number> implements Iterable<number> {
+  public static readonly origin: [Vector, Vector, Vector] = [
+    new Vector(0, 0),
+    new Vector(0, 0, 0),
+    new Vector(0, 0, 0, 0),
+  ];
+
   public static readonly left: [Vector, Vector, Vector] = [
     new Vector(1, 0),
     new Vector(1, 0, 0),
