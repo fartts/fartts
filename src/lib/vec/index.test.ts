@@ -1,166 +1,42 @@
-import { toArray } from './util';
-import { vec2, vec3, vec4 } from '.';
+import { vec2, vec3, vec4 } from './factories';
+import { sqrt, hypot, toRadians, π } from '../math';
 
 describe('@fartts/lib/vec', () => {
-  test.each`
-    args                          | error
-    ${[1, 2]}                     | ${null}
-    ${[[3, 4]]}                   | ${null}
-    ${[5, [6]]}                   | ${null}
-    ${[new Float32Array([7, 8])]} | ${null}
-    ${[1]}                        | ${'not enough arguments'}
-    ${[[[9, 0]]]}                 | ${'not enough arguments'}
-    ${[1, 2, 3]}                  | ${'too many arguments'}
-    ${[[2, 3], 4]}                | ${'too many arguments'}
-  `('vec2($args)', ({ args, error }) => {
-    const components = args.reduce(toArray, []);
+  const v2 = vec2(2, 2);
+  const v3 = vec3(3, 3, 3);
+  const v4 = vec4(4, 4, 4, 4);
 
-    if (error) {
-      expect(() => vec2(...args)).toThrow(error);
-    } else {
-      const actual = vec2(...args);
-      // construction
-      expect(actual).toMatchSnapshot();
-      expect(actual.length).toBe(2);
-
-      // access
-      expect(actual.x).toEqual(components[0]);
-      expect(actual.y).toEqual(components[1]);
-
-      // swizzling! v2.yx.x === v2.y
-      expect(actual.yx.x).toEqual(components[1]);
-      expect(actual.xyxy).toMatchSnapshot();
-
-      // assignment
-      actual.xy = vec2([actual.x * 2, actual.y * 3]);
-      expect(actual.x).toEqual(components[0] * 2);
-      expect(actual.y).toEqual(components[1] * 3);
-
-      actual.y = actual.x * 2;
-      expect(actual.y).toEqual(components[0] * 4);
-
-      // can still do regular index assignment
-      actual[1] = 2500;
-      expect(actual.y).toEqual(2500);
-
-      // swizzling!
-      actual.yx = vec2(100, 200);
-      expect(actual.x).toEqual(200);
-      expect(actual.y).toEqual(100);
-    }
+  test('dot', () => {
+    expect(v2.dot).toBe(8);
+    expect(v3.dot).toBe(27);
+    expect(v4.dot).toBe(64);
   });
 
-  test.each`
-    args                             | error
-    ${[1, 2, 3]}                     | ${null}
-    ${[[3, 4, 5]]}                   | ${null}
-    ${[5, [6, 7]]}                   | ${null}
-    ${[new Float32Array([7, 8, 9])]} | ${null}
-    ${[1]}                           | ${'not enough arguments'}
-    ${[1, 2]}                        | ${'not enough arguments'}
-    ${[1, [2]]}                      | ${'not enough arguments'}
-    ${[[[9, 0]]]}                    | ${'not enough arguments'}
-    ${[1, 2, 3, 4]}                  | ${'too many arguments'}
-    ${[[2, 3], 4, 5]}                | ${'too many arguments'}
-  `('vec3($args)', ({ args, error }) => {
-    const components = args.reduce(toArray, []);
+  test('get ρ', () => {
+    expect(v2.ρ).toBeCloseTo(hypot(...v2.toArray()));
+    expect(v2.ρ).toBeCloseTo(sqrt(8));
 
-    if (error) {
-      expect(() => vec3(...args)).toThrow(error);
-    } else {
-      const actual = vec3(...args);
-      // construction
-      expect(actual).toMatchSnapshot();
-      expect(actual.length).toBe(3);
+    expect(v3.ρ).toBeCloseTo(hypot(...v3.toArray()));
+    expect(v3.ρ).toBeCloseTo(sqrt(27));
 
-      // access
-      expect(actual.r).toEqual(components[0]);
-      expect(actual.g).toEqual(components[1]);
-      expect(actual.b).toEqual(components[2]);
-
-      // swizzling! v3.bgr.r === v2.b
-      expect(actual.bgr.r).toEqual(components[2]);
-      expect(actual.bbbb).toMatchSnapshot();
-
-      // assignment
-      actual.rgb = vec3([actual.r * 2, actual.g * 3, actual.b * 4]);
-      expect(actual.r).toEqual(components[0] * 2);
-      expect(actual.g).toEqual(components[1] * 3);
-      expect(actual.b).toEqual(components[2] * 4);
-
-      actual.g = actual.r * 2;
-      expect(actual.g).toEqual(components[0] * 4);
-
-      // can still do regular index assignment
-      actual[2] = 5000;
-      expect(actual.b).toEqual(5000);
-
-      // swizzling!
-      actual.bgr = vec3(100, 200, 300);
-      expect(actual.r).toEqual(300);
-      expect(actual.g).toEqual(200);
-      expect(actual.b).toEqual(100);
-    }
+    expect(v4.ρ).toBeCloseTo(hypot(...v4.toArray()));
+    expect(v4.ρ).toBeCloseTo(sqrt(64));
   });
 
-  test.each`
-    args                                 | error
-    ${[1, 2, 3, 4]}                      | ${null}
-    ${[[3, 4, 5, 6]]}                    | ${null}
-    ${[5, [6, 7], 8]}                    | ${null}
-    ${[new Float32Array([7, 8, 9, 10])]} | ${null}
-    ${[1]}                               | ${'not enough arguments'}
-    ${[1, 2]}                            | ${'not enough arguments'}
-    ${[1, [2, 3]]}                       | ${'not enough arguments'}
-    ${[[[9, 0], 1]]}                     | ${'not enough arguments'}
-    ${[1, 2, 3, 4, 5]}                   | ${'too many arguments'}
-    ${[[1, 2, 3], 4, 5]}                 | ${'too many arguments'}
-  `('vec4($args)', ({ args, error }) => {
-    const components = args.reduce(toArray, []);
+  test('get θ', () => {
+    expect(v2.θ).toBeCloseTo(π / 4);
+    expect(v2.θ).toBeCloseTo(toRadians(45));
 
-    if (error) {
-      expect(() => vec4(...args)).toThrow(error);
-    } else {
-      const actual = vec4(...args);
-      // construction
-      expect(actual).toMatchSnapshot();
-      expect(actual.length).toBe(4);
+    expect(v3.θ).toBeCloseTo(π / 3.2885355431);
+    expect(v3.θ).toBeCloseTo(toRadians(54.735610317245346));
 
-      // access
-      expect(actual.s).toEqual(components[0]);
-      expect(actual.t).toEqual(components[1]);
-      expect(actual.p).toEqual(components[2]);
-      expect(actual.q).toEqual(components[3]);
+    expect(v4.θ).toBeCloseTo(π / 3);
+    expect(v4.θ).toBeCloseTo(toRadians(60));
+  });
 
-      // swizzling! v4.qpts.s === v4.q
-      expect(actual.qpts.s).toEqual(components[3]);
-      expect(actual.sstt).toMatchSnapshot();
-
-      // assignment
-      actual.stpq = vec4([
-        actual.s * 2,
-        actual.t * 3,
-        actual.p * 4,
-        actual.q * 5,
-      ]);
-      expect(actual.s).toEqual(components[0] * 2);
-      expect(actual.t).toEqual(components[1] * 3);
-      expect(actual.p).toEqual(components[2] * 4);
-      expect(actual.q).toEqual(components[3] * 5);
-
-      actual.t = actual.s * 2;
-      expect(actual.t).toEqual(components[0] * 4);
-
-      // can still do regular index assignment
-      actual[3] = 10000;
-      expect(actual.q).toEqual(10000);
-
-      // swizzling!
-      actual.qpts = vec4(100, 200, 300, 400);
-      expect(actual.s).toEqual(400);
-      expect(actual.t).toEqual(300);
-      expect(actual.p).toEqual(200);
-      expect(actual.q).toEqual(100);
-    }
+  test('toString', () => {
+    expect(v2.toString()).toBe('vec2(2,2)');
+    expect(v3.toString()).toBe('vec3(3,3,3)');
+    expect(v4.toString()).toBe('vec4(4,4,4,4)');
   });
 });
