@@ -12,22 +12,8 @@ export default class Vector extends Float32Array implements Iterable<number> {
   }
 
   public get θ(): number {
-    let left;
-
-    switch (this.length) {
-      case 2:
-        left = vec2(1, 0);
-        break;
-      case 3:
-        left = vec3(1, 0, 0);
-        break;
-      case 4:
-        left = vec4(1, 0, 0, 0);
-        break;
-      default:
-        throw new Error('');
-    }
-
+    const args = [1, ...new Array(this.length - 1).fill(0)];
+    const left = [vec2, vec3, vec4][this.length - 2](...args);
     return θ(left, this);
   }
 

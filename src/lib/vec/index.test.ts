@@ -1,5 +1,5 @@
 import { vec2, vec3, vec4 } from './factories';
-import { sqrt, hypot, toRadians, π, ππ, toDegrees } from '../math';
+import { sqrt, hypot, toRadians, π } from '../math';
 
 describe('@fartts/lib/vec', () => {
   const v2 = vec2(2, 2);
