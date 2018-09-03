@@ -1,8 +1,7 @@
 import Vector from '.';
+import { Components, Factory, Vec2, Vec3, Vec4 } from './types';
 import { toArray, validateKeys, validateRange, Validates } from './util';
 import { swizzledKeys, indicesByKey } from './util/keys';
-
-import { Components, Factory, Vec2, Vec3, Vec4 } from './index.d';
 
 const { get, set } = Reflect;
 

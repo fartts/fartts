@@ -1,5 +1,5 @@
 import Vector from '..';
-import { Component } from '../index.d';
+import { Component } from '../types';
 
 /**
  * ## toArray

@@ -1,7 +1,6 @@
 import { dot, ρ, θ } from './math';
+import { Components } from './types';
 import { toArray } from './util';
-
-import { Components } from './index.d';
 
 /**
  * # Vector
