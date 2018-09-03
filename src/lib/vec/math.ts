@@ -1,4 +1,5 @@
 import Vector from '.';
+import { getFactory } from './factories';
 import { acos, hypot, lerp as slerp } from '../math';
 import { validateOperands } from './util';
 
@@ -56,7 +57,8 @@ export function θ(a: Vector, b: Vector): number {
  * @returns {Vector}
  */
 export function clone(v: Vector): Vector {
-  return new Vector(v);
+  const factory = getFactory(v.length);
+  return factory(v);
 }
 
 /**
@@ -72,7 +74,8 @@ export function add(a: Vector, b: number | Vector): Vector {
     validateOperands('add', a, b);
   }
 
-  return new Vector(a.map(getAdd(b)));
+  const factory = getFactory(a.length);
+  return factory(a.map(getAdd(b)));
 }
 
 const getAdd = (b: number | Vector) =>
@@ -93,7 +96,8 @@ export function sub(a: Vector, b: number | Vector): Vector {
     validateOperands('sub', a, b);
   }
 
-  return new Vector(a.map(getSub(b)));
+  const factory = getFactory(a.length);
+  return factory(a.map(getSub(b)));
 }
 
 const getSub = (b: number | Vector) =>
@@ -114,7 +118,8 @@ export function mul(a: Vector, b: number | Vector): Vector {
     validateOperands('mul', a, b);
   }
 
-  return new Vector(a.map(getMul(b)));
+  const factory = getFactory(a.length);
+  return factory(a.map(getMul(b)));
 }
 
 const getMul = (b: number | Vector) =>
@@ -135,7 +140,8 @@ export function div(a: Vector, b: number | Vector): Vector {
     validateOperands('div', a, b);
   }
 
-  return new Vector(a.map(getDiv(b)));
+  const factory = getFactory(a.length);
+  return factory(a.map(getDiv(b)));
 }
 
 const getDiv = (b: number | Vector) =>
@@ -151,7 +157,8 @@ const getDiv = (b: number | Vector) =>
  * @returns {Vector}
  */
 export function norm(v: Vector): Vector {
-  return new Vector(div(v, v.ρ));
+  const factory = getFactory(v.length);
+  return factory(div(v, v.ρ));
 }
 
 /**
@@ -170,7 +177,8 @@ export function lerp(a: Vector, b: Vector, i: number | Vector): Vector {
     validateOperands('lerp', a, i);
   }
 
-  return new Vector(a.map(getLerp(b, i)));
+  const factory = getFactory(a.length);
+  return factory(a.map(getLerp(b, i)));
 }
 
 const getLerp = (b: Vector, i: number | Vector) =>

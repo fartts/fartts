@@ -31,7 +31,8 @@ function getSwizzled(target: Vector, prop: string): number | Vector {
   }
 
   const keys = prop.split('');
-  return factories[keys.length - 2](keys.map(k => getByKey(target, k)));
+  const factory = getFactory(keys.length);
+  return factory(keys.map(k => getByKey(target, k)));
 }
 
 /**
@@ -135,7 +136,13 @@ function createFactory<V extends Vector>(size: number): Factory<V> {
     new Proxy(createVector(size, args), handler) as V;
 }
 
-export const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
+export function getFactory(
+  size: number,
+): Factory<Vec2> | Factory<Vec3> | Factory<Vec4> {
+  return factories[size - 2];
+}
+
+const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
   createFactory<Vec2>(2),
   createFactory<Vec3>(3),
   createFactory<Vec4>(4),
