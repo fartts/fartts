@@ -2,6 +2,7 @@ import Vector from '@fartts/lib/vec';
 import { getFactory, getLeft } from '@fartts/lib/vec/factories';
 import { acos, hypot, lerp as slerp } from '@fartts/lib/math';
 import { validateOperands } from '@fartts/lib/vec/util';
+import { Vec2, Vec3, Vec4 } from '@fartts/lib/vec/types';
 
 /**
  * ## dot
@@ -56,7 +57,7 @@ export function direction(a: Vector, b: Vector = getLeft(a.length)): number {
  * @param {Vector} v
  * @returns {Vector}
  */
-export function clone(v: Vector): Vector {
+export function clone(v: Vector): Vec2 | Vec3 | Vec4 {
   const factory = getFactory(v.length);
   return factory(v);
 }
@@ -69,7 +70,7 @@ export function clone(v: Vector): Vector {
  * @param {(number | Vector)} b
  * @returns {Vector}
  */
-export function add(a: Vector, b: number | Vector): Vector {
+export function add(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
   if (b instanceof Vector) {
     validateOperands('add', a, b);
   }
@@ -91,7 +92,7 @@ const getAdd = (b: number | Vector) =>
  * @param {(number | Vector)} b
  * @returns {Vector}
  */
-export function sub(a: Vector, b: number | Vector): Vector {
+export function sub(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
   if (b instanceof Vector) {
     validateOperands('sub', a, b);
   }
@@ -113,7 +114,7 @@ const getSub = (b: number | Vector) =>
  * @param {(number | Vector)} b
  * @returns {Vector}
  */
-export function mul(a: Vector, b: number | Vector): Vector {
+export function mul(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
   if (b instanceof Vector) {
     validateOperands('mul', a, b);
   }
@@ -135,7 +136,7 @@ const getMul = (b: number | Vector) =>
  * @param {(number | Vector)} b
  * @returns {Vector}
  */
-export function div(a: Vector, b: number | Vector): Vector {
+export function div(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
   if (b instanceof Vector) {
     validateOperands('div', a, b);
   }
@@ -150,13 +151,13 @@ const getDiv = (b: number | Vector) =>
     : (c: number, i: number) => c / b[i];
 
 /**
- * ## norm
+ * ## normalize
  *
  * @export
  * @param {Vector} v
  * @returns {Vector}
  */
-export function norm(v: Vector): Vector {
+export function normalize(v: Vector): Vec2 | Vec3 | Vec4 {
   const factory = getFactory(v.length);
   return factory(div(v, v.magnitude));
 }
@@ -170,7 +171,11 @@ export function norm(v: Vector): Vector {
  * @param {(number | Vector)} i
  * @returns {Vector}
  */
-export function lerp(a: Vector, b: Vector, i: number | Vector): Vector {
+export function lerp(
+  a: Vector,
+  b: Vector,
+  i: number | Vector,
+): Vec2 | Vec3 | Vec4 {
   validateOperands('lerp', a, b);
 
   if (i instanceof Vector) {
