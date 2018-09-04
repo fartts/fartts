@@ -1,11 +1,19 @@
-import Vector from '.';
-import { vec2, vec3, vec4 } from './factories';
-import { dot, ρ, θ, clone, add, sub, mul, div, norm, lerp } from './math';
+import { vec2, vec3, vec4, getLeft, getZeros } from './factories';
+import {
+  dot,
+  magnitude,
+  direction,
+  clone,
+  add,
+  sub,
+  mul,
+  div,
+  norm,
+  lerp,
+} from './math';
 import { hypot, sqrt, π, toRadians } from '../math';
 
 describe('@fartts/lib/vec/math', () => {
-  const { origin, left } = Vector;
-
   const v2 = vec2(2, 2);
   const v3 = vec3(3, 3, 3);
   const v4 = vec4(4, 4, 4, 4);
@@ -36,23 +44,23 @@ describe('@fartts/lib/vec/math', () => {
     ${v3} | ${hypot(...v3)}
     ${v4} | ${sqrt(64)}
     ${v4} | ${hypot(...v4)}
-  `('ρ($v) should be $result', ({ v, result }) => {
-    expect(ρ(v)).toBe(result);
+  `('magnitude($v) should be $result', ({ v, result }) => {
+    expect(magnitude(v)).toBe(result);
   });
 
   test.each`
-    a     | b            | result
-    ${v2} | ${origin[0]} | ${0}
-    ${v3} | ${origin[1]} | ${0}
-    ${v4} | ${origin[2]} | ${0}
-    ${v2} | ${left[0]}   | ${π / 4}
-    ${v2} | ${left[0]}   | ${toRadians(45)}
-    ${v3} | ${left[1]}   | ${π / 3.2885355431}
-    ${v3} | ${left[1]}   | ${toRadians(54.735610317245346)}
-    ${v4} | ${left[2]}   | ${π / 3}
-    ${v4} | ${left[2]}   | ${toRadians(60)}
-  `('θ($a, $b) should be $result', ({ a, b, result }) => {
-    expect(θ(a, b)).toBeCloseTo(result);
+    a     | b                      | result
+    ${v2} | ${getZeros(v2.length)} | ${0}
+    ${v3} | ${getZeros(v3.length)} | ${0}
+    ${v4} | ${getZeros(v4.length)} | ${0}
+    ${v2} | ${getLeft(v2.length)}  | ${π / 4}
+    ${v2} | ${getLeft(v2.length)}  | ${toRadians(45)}
+    ${v3} | ${getLeft(v3.length)}  | ${π / 3.2885355431}
+    ${v3} | ${getLeft(v3.length)}  | ${toRadians(54.735610317245346)}
+    ${v4} | ${getLeft(v4.length)}  | ${π / 3}
+    ${v4} | ${getLeft(v4.length)}  | ${toRadians(60)}
+  `('direction($a, $b) should be $result', ({ a, b, result }) => {
+    expect(direction(a, b)).toBeCloseTo(result);
   });
 
   test.each`
@@ -125,13 +133,13 @@ describe('@fartts/lib/vec/math', () => {
   });
 
   test.each`
-    a     | b            | i                                   | result
-    ${v2} | ${origin[0]} | ${1 / 2}                            | ${'vec2(1,1)'}
-    ${v2} | ${origin[0]} | ${vec2(2, 3)}                       | ${'vec2(-2,-4)'}
-    ${v3} | ${origin[1]} | ${2 / 3}                            | ${'vec3(1,1,1)'}
-    ${v3} | ${origin[1]} | ${vec3(1 / 3, 1 / 4, 1 / 5)}        | ${'vec3(2,2.25,2.4)'}
-    ${v4} | ${origin[2]} | ${1 / 4}                            | ${'vec4(3,3,3,3)'}
-    ${v4} | ${origin[2]} | ${vec4(2 / 5, 1 / 3, 2 / 7, 3 / 8)} | ${'vec4(2.4,2.666666666666667,2.857142857142857,2.5)'}
+    a     | b                      | i                                   | result
+    ${v2} | ${getZeros(v2.length)} | ${1 / 2}                            | ${'vec2(1,1)'}
+    ${v2} | ${getZeros(v2.length)} | ${vec2(2, 3)}                       | ${'vec2(-2,-4)'}
+    ${v3} | ${getZeros(v3.length)} | ${2 / 3}                            | ${'vec3(1,1,1)'}
+    ${v3} | ${getZeros(v3.length)} | ${vec3(1 / 3, 1 / 4, 1 / 5)}        | ${'vec3(2,2.25,2.4)'}
+    ${v4} | ${getZeros(v4.length)} | ${1 / 4}                            | ${'vec4(3,3,3,3)'}
+    ${v4} | ${getZeros(v4.length)} | ${vec4(2 / 5, 1 / 3, 2 / 7, 3 / 8)} | ${'vec4(2.4,2.666666666666667,2.857142857142857,2.5)'}
   `('lerp($a, $b, $i) should be $result', ({ a, b, i, result }) => {
     expect(lerp(a, b, i).toString()).toEqual(result);
   });

@@ -1,4 +1,4 @@
-import { dot, ρ, θ } from './math';
+import { dot, magnitude, direction } from './math';
 import { Components } from './types';
 import { toArray } from './util';
 
@@ -11,18 +11,6 @@ import { toArray } from './util';
  * @implements {Iterable<number>}
  */
 export default class Vector extends Array<number> implements Iterable<number> {
-  public static readonly origin: [Vector, Vector, Vector] = [
-    new Vector(0, 0),
-    new Vector(0, 0, 0),
-    new Vector(0, 0, 0, 0),
-  ];
-
-  public static readonly left: [Vector, Vector, Vector] = [
-    new Vector(1, 0),
-    new Vector(1, 0, 0),
-    new Vector(1, 0, 0, 0),
-  ];
-
   /**
    * ## constructor
    *
@@ -39,7 +27,7 @@ export default class Vector extends Array<number> implements Iterable<number> {
   }
 
   /**
-   * ## dot
+   * ## get dot
    *
    * @readonly
    * @type {number}
@@ -50,25 +38,25 @@ export default class Vector extends Array<number> implements Iterable<number> {
   }
 
   /**
-   * ## ρ
+   * ## get magnitude
    *
    * @readonly
    * @type {number}
    * @memberof Vector
    */
-  public get ρ(): number {
-    return ρ(this);
+  public get magnitude(): number {
+    return magnitude(this);
   }
 
   /**
-   * get θ
+   * ## get direction
    *
    * @readonly
    * @type {number}
    * @memberof Vector
    */
-  public get θ(): number {
-    return θ(Vector.left[this.length - 2], this);
+  public get direction(): number {
+    return direction(this);
   }
 
   /**

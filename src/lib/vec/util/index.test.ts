@@ -1,15 +1,15 @@
-import Vector from '..';
+import { vec2, vec3, vec4 } from '../factories';
 import { toArray, validateKeys, validateRange, Validates } from '.';
 
 describe('@fartts/lib/vec/util', () => {
   test.each`
-    args                                     | result
-    ${[1]}                                   | ${[1]}
-    ${[1, [2]]}                              | ${[1, 2]}
-    ${[1, [2], new Vector(3, 4)]}            | ${[1, 2, 3, 4]}
-    ${[1, [2, 3], new Vector(4, 5, 6)]}      | ${[1, 2, 3, 4, 5, 6]}
-    ${[[7, [8]]]}                            | ${[7, [8]]}
-    ${[1, [2, [3]], new Vector(4, 5, 6, 7)]} | ${[1, 2, [3], 4, 5, 6, 7]}
+    args                               | result
+    ${[1]}                             | ${[1]}
+    ${[1, [2]]}                        | ${[1, 2]}
+    ${[1, [2], vec2(3, 4)]}            | ${[1, 2, 3, 4]}
+    ${[1, [2, 3], vec3(4, 5, 6)]}      | ${[1, 2, 3, 4, 5, 6]}
+    ${[[7, [8]]]}                      | ${[7, [8]]}
+    ${[1, [2, [3]], vec4(4, 5, 6, 7)]} | ${[1, 2, [3], 4, 5, 6, 7]}
   `(
     /* ^^ demonstrates that it doesn't work recursively, only 1 deep ^^ */
     'expect($arguments.reduce(toArray, [])).toEqual($result)',
