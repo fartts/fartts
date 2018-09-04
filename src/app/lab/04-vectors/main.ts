@@ -1,25 +1,17 @@
 import './main.css';
 
+import { el, on } from './dom';
 import { compile } from './webgl/shader';
 import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
-import { cosWave, sinWave, WaveFunction } from '@fartts/lib/wave';
-
-// const { keys, getPrototypeOf } = Object;
-const { isInteger } = Number;
-
-const el = (s: string) => document.querySelector(s);
-const on = (e: string, fn: EventListener) => window.addEventListener(e, fn);
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,
 }) as WebGLRenderingContext;
-
-let shouldResize = true;
 
 let program: WebGLProgram;
 
@@ -32,29 +24,7 @@ let translation = [0, 0];
 let uResolution: WebGLUniformLocation;
 let resolution = [0, 0];
 
-const configs = [
-  {
-    radius: 50,
-    period: 60000,
-    count: 24,
-  },
-  {
-    radius: 35,
-    period: 20000,
-    count: 12,
-  },
-  {
-    radius: 20,
-    period: 7000,
-    count: 6,
-  },
-  {
-    radius: 5,
-    period: 2000,
-    count: 3,
-  },
-];
-let points: WaveFunction[];
+const { isInteger } = Number;
 
 function next(a: number, b: number): number {
   while (!isInteger(a / b)) {
@@ -64,7 +34,13 @@ function next(a: number, b: number): number {
   return a;
 }
 
+let shouldResize = true;
+
 function resize() {
+  if (!shouldResize) {
+    return;
+  }
+
   shouldResize = false;
 
   let { devicePixelRatio: dpr } = window;
@@ -94,23 +70,6 @@ function resize() {
   c.height = h;
 
   gl.viewport(0, 0, w, h);
-
-  points = configs.reduce(
-    (ps, { radius, period, count }) =>
-      ps.concat(
-        Array(count)
-          .fill(0)
-          .reduce(
-            (p, v, i) =>
-              p.concat([
-                cosWave(period, -radius, radius, (period / count) * i),
-                sinWave(period, -radius, radius, (period / count) * i),
-              ]),
-            [],
-          ),
-      ),
-    [],
-  );
 }
 
 on('resize', () => {
@@ -119,9 +78,7 @@ on('resize', () => {
 
 function init(): void {
   // console.log('init'); // tslint:disable-line no-console
-  if (shouldResize) {
-    resize();
-  }
+  resize();
 
   gl.clearColor(0, 0, 0, 1);
 
@@ -148,20 +105,13 @@ function init(): void {
 function draw(t: number): void {
   // console.log('draw', t); // tslint:disable-line no-console
   requestAnimationFrame(draw);
-
-  if (shouldResize) {
-    resize();
-  }
+  resize();
 
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array(points.map((xy, i) => xy(t))),
-    gl.STATIC_DRAW,
-  );
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([]), gl.STATIC_DRAW);
 
   gl.enableVertexAttribArray(aPositions);
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
@@ -170,7 +120,7 @@ function draw(t: number): void {
   gl.uniform2fv(uTranslation, translation);
   gl.uniform2fv(uResolution, resolution);
 
-  gl.drawArrays(gl.LINE_LOOP, 0, points.length / 2);
+  gl.drawArrays(gl.LINE_LOOP, 0, 0);
 }
 
 init();
