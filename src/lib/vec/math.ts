@@ -1,5 +1,5 @@
 import Vector from '.';
-import { getFactory } from './factories';
+import { getFactory, getLeft } from './factories';
 import { acos, hypot, lerp as slerp } from '../math';
 import { validateOperands } from './util';
 
@@ -37,10 +37,7 @@ export function magnitude(v: Vector): number {
  * @param {Vector} b
  * @returns {number}
  */
-export function direction(
-  a: Vector,
-  b: Vector = getFactory(a.length)([1, ...new Array(a.length - 1).fill(0)]),
-): number {
+export function direction(a: Vector, b: Vector = getLeft(a.length)): number {
   const ρa = magnitude(a);
   const ρb = magnitude(b);
 

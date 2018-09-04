@@ -136,20 +136,17 @@ function createFactory<V extends Vector>(size: number): Factory<V> {
     new Proxy(createVector(size, args), handler) as V;
 }
 
+/**
+ * ## getFactory
+ *
+ * @export
+ * @param {number} size
+ * @returns {(Factory<Vec2> | Factory<Vec3> | Factory<Vec4>)}
+ */
 export function getFactory(
   size: number,
 ): Factory<Vec2> | Factory<Vec3> | Factory<Vec4> {
   return factories[size - 2];
-}
-
-export function getLeft(size: number): Vec2 | Vec3 | Vec4 {
-  const factory = getFactory(size);
-  return factory(1, ...new Array(size - 1).fill(0));
-}
-
-export function getZeros(size: number): Vec2 | Vec3 | Vec4 {
-  const factory = getFactory(size);
-  return factory(new Array(size).fill(0));
 }
 
 const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
@@ -159,3 +156,29 @@ const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
 ];
 
 export const [vec2, vec3, vec4] = factories;
+
+/**
+ * ## getLeft
+ *
+ * @export
+ * @param {number} size
+ * @returns {(Vec2 | Vec3 | Vec4)}
+ */
+export function getLeft(size: number): Vec2 | Vec3 | Vec4 {
+  const factory = getFactory(size);
+  const args = new Array(size - 1).fill(0);
+  return factory(1, ...args);
+}
+
+/**
+ * ## getZeros
+ *
+ * @export
+ * @param {number} size
+ * @returns {(Vec2 | Vec3 | Vec4)}
+ */
+export function getZeros(size: number): Vec2 | Vec3 | Vec4 {
+  const factory = getFactory(size);
+  const args = new Array(size).fill(0);
+  return factory(...args);
+}
