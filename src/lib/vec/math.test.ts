@@ -1,4 +1,4 @@
-import { vec2, vec3, vec4, getLeft, getZeros } from './factories';
+import { vec2, vec3, vec4, getLeft, getZeros } from '@fartts/lib/vec/factories';
 import {
   dot,
   magnitude,
@@ -8,10 +8,10 @@ import {
   sub,
   mul,
   div,
-  norm,
+  normalize,
   lerp,
-} from './math';
-import { hypot, sqrt, π, toRadians } from '../math';
+} from '@fartts/lib/vec/math';
+import { hypot, sqrt, π, toRadians } from '@fartts/lib/math';
 
 describe('@fartts/lib/vec/math', () => {
   const v2 = vec2(2, 2);
@@ -128,8 +128,8 @@ describe('@fartts/lib/vec/math', () => {
     ${v2} | ${vec2(0.7071067811865475, 0.7071067811865475)}
     ${v3} | ${vec3(0.5773502691896257, 0.5773502691896257, 0.5773502691896257)}
     ${v4} | ${vec4(0.5, 0.5, 0.5, 0.5)}
-  `('norm($v) should be $result', ({ v, result }) => {
-    expect(norm(v)).toEqual(result);
+  `('normalize($v) should be $result', ({ v, result }) => {
+    expect(normalize(v)).toEqual(result);
   });
 
   test.each`

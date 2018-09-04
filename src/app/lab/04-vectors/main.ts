@@ -1,25 +1,23 @@
 import './main.css';
 
-import { compile } from '@fartts/app/lab/04-vectors/webgl/shader';
-import { link } from '@fartts/app/lab/04-vectors/webgl/program';
+import { el, on } from './dom';
+import { next } from './util';
+import { compile } from './webgl/shader';
+import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
-import { cosWave, sinWave, WaveFunction } from '@fartts/lib/wave';
 
-// const { keys, getPrototypeOf } = Object;
-const { isInteger } = Number;
-
-const el = (s: string) => document.querySelector(s);
-const on = (e: string, fn: EventListener) => window.addEventListener(e, fn);
+import { random, sin, cos, ππ } from '@fartts/lib/math';
+import { vec2 } from '@fartts/lib/vec/factories';
+import { sub, mul, add } from '@fartts/lib/vec/math';
+import { Vec2 } from '@fartts/lib/vec/types';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,
 }) as WebGLRenderingContext;
-
-let shouldResize = true;
 
 let program: WebGLProgram;
 
@@ -32,37 +30,7 @@ let translation = [0, 0];
 let uResolution: WebGLUniformLocation;
 let resolution = [0, 0];
 
-const configs = [
-  {
-    radius: 50,
-    period: 60000,
-    count: 24,
-  },
-  {
-    radius: 35,
-    period: 20000,
-    count: 12,
-  },
-  {
-    radius: 20,
-    period: 7000,
-    count: 6,
-  },
-  {
-    radius: 5,
-    period: 2000,
-    count: 3,
-  },
-];
-let points: WaveFunction[];
-
-function next(a: number, b: number): number {
-  while (!isInteger(a / b)) {
-    a += 1;
-  }
-
-  return a;
-}
+let shouldResize = true;
 
 function resize() {
   shouldResize = false;
@@ -94,28 +62,51 @@ function resize() {
   c.height = h;
 
   gl.viewport(0, 0, w, h);
-
-  points = configs.reduce(
-    (ps, { radius, period, count }) =>
-      ps.concat(
-        Array(count)
-          .fill(0)
-          .reduce(
-            (p, v, i) =>
-              p.concat([
-                cosWave(period, -radius, radius, (period / count) * i),
-                sinWave(period, -radius, radius, (period / count) * i),
-              ]),
-            [],
-          ),
-      ),
-    [],
-  );
 }
 
 on('resize', () => {
   shouldResize = true;
 });
+
+interface IParticle {
+  cpos: Vec2;
+  ppos: Vec2;
+  update(): void;
+}
+
+const drag = 0.99;
+const grav = vec2(0, -0.1);
+
+function getMagnitude() {
+  return (random() * 2 - 1) * 4;
+}
+
+function getDirection() {
+  return random() * ππ;
+}
+
+function getParticle() {
+  const mag = getMagnitude();
+  const dir = getDirection();
+  const o = vec2(0, 20);
+
+  return {
+    cpos: o,
+    ppos: add(o, vec2(sin(dir) * mag, cos(dir) * mag)),
+    update() {
+      let vel = sub(this.cpos, this.ppos);
+      vel = add(vel, grav);
+      vel = mul(vel, drag);
+
+      this.ppos = this.cpos;
+      this.cpos = add(this.cpos, vel);
+    },
+  };
+}
+
+const particles: IParticle[] = new Array(200)
+  .fill(true)
+  .reduce((acc, _, i) => acc.concat(getParticle()), []);
 
 function init(): void {
   // console.log('init'); // tslint:disable-line no-console
@@ -153,15 +144,26 @@ function draw(t: number): void {
     resize();
   }
 
+  const points: number[] = particles.reduce((acc: number[], p) => {
+    p.update();
+
+    if (p.cpos.y < -c.height / 2) {
+      const mag = getMagnitude();
+      const dir = getDirection();
+      const o = vec2(0, 20);
+
+      p.cpos = o;
+      p.ppos = add(o, vec2(sin(dir) * mag, cos(dir) * mag));
+    }
+
+    return acc.concat(p.cpos);
+  }, []);
+
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array(points.map((xy, i) => xy(t))),
-    gl.STATIC_DRAW,
-  );
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
 
   gl.enableVertexAttribArray(aPositions);
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
@@ -170,7 +172,7 @@ function draw(t: number): void {
   gl.uniform2fv(uTranslation, translation);
   gl.uniform2fv(uResolution, resolution);
 
-  gl.drawArrays(gl.LINE_LOOP, 0, points.length / 2);
+  gl.drawArrays(gl.POINTS, 0, points.length / 2);
 }
 
 init();

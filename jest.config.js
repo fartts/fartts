@@ -15,6 +15,7 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'json'],
   moduleNameMapper: {
+    '@fartts/lib/(.*)': '<rootDir>/src/lib/$1',
     '^.+\\.s?css$': 'identity-obj-proxy',
   },
   testMatch: ['<rootDir>/src/lib/**/?(*.)test?(s).ts'],
