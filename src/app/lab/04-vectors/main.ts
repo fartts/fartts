@@ -1,6 +1,7 @@
 import './main.css';
 
 import { el, on } from './dom';
+import { next } from './util';
 import { compile } from './webgl/shader';
 import { link } from './webgl/program';
 
@@ -24,23 +25,9 @@ let translation = [0, 0];
 let uResolution: WebGLUniformLocation;
 let resolution = [0, 0];
 
-const { isInteger } = Number;
-
-function next(a: number, b: number): number {
-  while (!isInteger(a / b)) {
-    a += 1;
-  }
-
-  return a;
-}
-
 let shouldResize = true;
 
 function resize() {
-  if (!shouldResize) {
-    return;
-  }
-
   shouldResize = false;
 
   let { devicePixelRatio: dpr } = window;
@@ -78,7 +65,9 @@ on('resize', () => {
 
 function init(): void {
   // console.log('init'); // tslint:disable-line no-console
-  resize();
+  if (shouldResize) {
+    resize();
+  }
 
   gl.clearColor(0, 0, 0, 1);
 
@@ -105,13 +94,16 @@ function init(): void {
 function draw(t: number): void {
   // console.log('draw', t); // tslint:disable-line no-console
   requestAnimationFrame(draw);
-  resize();
+
+  if (shouldResize) {
+    resize();
+  }
 
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([]), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0]), gl.STATIC_DRAW);
 
   gl.enableVertexAttribArray(aPositions);
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
@@ -120,7 +112,7 @@ function draw(t: number): void {
   gl.uniform2fv(uTranslation, translation);
   gl.uniform2fv(uResolution, resolution);
 
-  gl.drawArrays(gl.LINE_LOOP, 0, 0);
+  gl.drawArrays(gl.LINE_LOOP, 0, 1);
 }
 
 init();
