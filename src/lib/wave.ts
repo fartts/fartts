@@ -1,4 +1,4 @@
-import { cos, saw, sin, tri, ππ } from './math';
+import { cos, saw, sin, tri, ππ } from '@fartts/lib/math';
 
 export type TrigFunction = (radians: number) => number;
 export type WaveFunction = (timestamp: number) => number;

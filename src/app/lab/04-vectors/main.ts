@@ -1,7 +1,7 @@
 import './main.css';
 
-import { compile } from '@fartts/app/lab/04-vectors/webgl/shader';
-import { link } from '@fartts/app/lab/04-vectors/webgl/program';
+import { compile } from './webgl/shader';
+import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';

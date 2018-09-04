@@ -1,6 +1,6 @@
-import { Rg2, Rg3, Rg4 } from './rg';
-import { St2, St3, St4 } from './st';
-import { Xy2, Xy3, Xy4 } from './xy';
+import { Rg2, Rg3, Rg4 } from '@fartts/lib/vec/types/vec2/rg';
+import { St2, St3, St4 } from '@fartts/lib/vec/types/vec2/st';
+import { Xy2, Xy3, Xy4 } from '@fartts/lib/vec/types/vec2/xy';
 
 export type Vec2D1 = 'g' | 't' | 'y';
 export type Vec2D2 = Rg2 | St2 | Xy2;

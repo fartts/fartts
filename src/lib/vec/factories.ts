@@ -1,7 +1,12 @@
-import Vector from '.';
-import { Components, Factory, Vec2, Vec3, Vec4 } from './types';
-import { toArray, validateKeys, validateRange, Validates } from './util';
-import { swizzledKeys, indicesByKey } from './util/keys';
+import Vector from '@fartts/lib/vec';
+import { Components, Factory, Vec2, Vec3, Vec4 } from '@fartts/lib/vec/types';
+import {
+  toArray,
+  validateKeys,
+  validateRange,
+  Validates,
+} from '@fartts/lib/vec/util';
+import { swizzledKeys, indicesByKey } from '@fartts/lib/vec/util/keys';
 
 const { get, set } = Reflect;
 

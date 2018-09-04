@@ -1,6 +1,6 @@
-import Vector from '.';
-import { vec2, vec3, vec4 } from './factories';
-import { sqrt, hypot, toRadians, π } from '../math';
+import Vector from '@fartts/lib/vec';
+import { vec2, vec3, vec4 } from '@fartts/lib/vec/factories';
+import { sqrt, hypot, toRadians, π } from '@fartts/lib/math';
 
 describe('@fartts/lib/vec', () => {
   const v2 = vec2(2, 2);

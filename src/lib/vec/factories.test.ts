@@ -1,5 +1,5 @@
-import { vec2, vec3, vec4 } from './factories';
-import { toArray } from './util';
+import { vec2, vec3, vec4 } from '@fartts/lib/vec/factories';
+import { toArray } from '@fartts/lib/vec/util';
 
 describe('@fartts/lib/vec/factories', () => {
   test.each`

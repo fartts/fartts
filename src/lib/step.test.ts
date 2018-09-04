@@ -1,5 +1,5 @@
-import { cos, sin } from './math';
-import { step, cosStep, sinStep, sawStep, triStep } from './step';
+import { cos, sin } from '@fartts/lib/math';
+import { step, cosStep, sinStep, sawStep, triStep } from '@fartts/lib/step';
 
 // just to keep the tables below consice when testing defaults
 const u = undefined;
