@@ -1,5 +1,16 @@
 import { vec2, vec3, vec4, getLeft, getZeros } from './factories';
-import { dot, ρ, θ, clone, add, sub, mul, div, norm, lerp } from './math';
+import {
+  dot,
+  magnitude,
+  direction,
+  clone,
+  add,
+  sub,
+  mul,
+  div,
+  norm,
+  lerp,
+} from './math';
 import { hypot, sqrt, π, toRadians } from '../math';
 
 describe('@fartts/lib/vec/math', () => {
@@ -33,8 +44,8 @@ describe('@fartts/lib/vec/math', () => {
     ${v3} | ${hypot(...v3)}
     ${v4} | ${sqrt(64)}
     ${v4} | ${hypot(...v4)}
-  `('ρ($v) should be $result', ({ v, result }) => {
-    expect(ρ(v)).toBe(result);
+  `('magnitude($v) should be $result', ({ v, result }) => {
+    expect(magnitude(v)).toBe(result);
   });
 
   test.each`
@@ -48,8 +59,8 @@ describe('@fartts/lib/vec/math', () => {
     ${v3} | ${getLeft(v3.length)}  | ${toRadians(54.735610317245346)}
     ${v4} | ${getLeft(v4.length)}  | ${π / 3}
     ${v4} | ${getLeft(v4.length)}  | ${toRadians(60)}
-  `('θ($a, $b) should be $result', ({ a, b, result }) => {
-    expect(θ(a, b)).toBeCloseTo(result);
+  `('direction($a, $b) should be $result', ({ a, b, result }) => {
+    expect(direction(a, b)).toBeCloseTo(result);
   });
 
   test.each`

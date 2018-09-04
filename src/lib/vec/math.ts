@@ -17,32 +17,32 @@ export function dot(a: Vector, b: Vector): number {
 }
 
 /**
- * ## ρ
+ * ## magnitude
  *
  * @export
  * @param {Vector} v
  * @returns {number}
  */
-export function ρ(v: Vector): number {
+export function magnitude(v: Vector): number {
   // an alternative for later comparison
   // return sqrt(dot(v, v));
   return hypot(...v);
 }
 
 /**
- * ## θ
+ * ## direction
  *
  * @export
  * @param {Vector} a
  * @param {Vector} b
  * @returns {number}
  */
-export function θ(
+export function direction(
   a: Vector,
   b: Vector = getFactory(a.length)([1, ...new Array(a.length - 1).fill(0)]),
 ): number {
-  const ρa = ρ(a);
-  const ρb = ρ(b);
+  const ρa = magnitude(a);
+  const ρb = magnitude(b);
 
   if (ρa === 0 || ρb === 0) {
     // it looks like this is what WebGL does
@@ -161,7 +161,7 @@ const getDiv = (b: number | Vector) =>
  */
 export function norm(v: Vector): Vector {
   const factory = getFactory(v.length);
-  return factory(div(v, v.ρ));
+  return factory(div(v, v.magnitude));
 }
 
 /**

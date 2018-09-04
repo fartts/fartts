@@ -13,32 +13,32 @@ describe('@fartts/lib/vec', () => {
     expect(() => new Vector(1, 2, 3, 4, 5)).not.toThrow();
   });
 
-  test('dot', () => {
+  test('get dot', () => {
     expect(v2.dot).toBe(8);
     expect(v3.dot).toBe(27);
     expect(v4.dot).toBe(64);
   });
 
-  test('get ρ', () => {
-    expect(v2.ρ).toBeCloseTo(hypot(...v2));
-    expect(v2.ρ).toBeCloseTo(sqrt(8));
+  test('get magnitude', () => {
+    expect(v2.magnitude).toBeCloseTo(hypot(...v2));
+    expect(v2.magnitude).toBeCloseTo(sqrt(8));
 
-    expect(v3.ρ).toBeCloseTo(hypot(...v3));
-    expect(v3.ρ).toBeCloseTo(sqrt(27));
+    expect(v3.magnitude).toBeCloseTo(hypot(...v3));
+    expect(v3.magnitude).toBeCloseTo(sqrt(27));
 
-    expect(v4.ρ).toBeCloseTo(hypot(...v4));
-    expect(v4.ρ).toBeCloseTo(sqrt(64));
+    expect(v4.magnitude).toBeCloseTo(hypot(...v4));
+    expect(v4.magnitude).toBeCloseTo(sqrt(64));
   });
 
-  test('get θ', () => {
-    expect(v2.θ).toBeCloseTo(π / 4);
-    expect(v2.θ).toBeCloseTo(toRadians(45));
+  test('get direction', () => {
+    expect(v2.direction).toBeCloseTo(π / 4);
+    expect(v2.direction).toBeCloseTo(toRadians(45));
 
-    expect(v3.θ).toBeCloseTo(π / 3.2885355431);
-    expect(v3.θ).toBeCloseTo(toRadians(54.735610317245346));
+    expect(v3.direction).toBeCloseTo(π / 3.2885355431);
+    expect(v3.direction).toBeCloseTo(toRadians(54.735610317245346));
 
-    expect(v4.θ).toBeCloseTo(π / 3);
-    expect(v4.θ).toBeCloseTo(toRadians(60));
+    expect(v4.direction).toBeCloseTo(π / 3);
+    expect(v4.direction).toBeCloseTo(toRadians(60));
   });
 
   test('toString', () => {
