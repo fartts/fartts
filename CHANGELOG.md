@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/fartts/fartts/compare/v1.7.0...v1.7.1) (2018-09-04)
+
+
+### Bug Fixes
+
+* **lab:** fixes the 04-vectors example to actually use vectors ([c905c1b](https://github.com/fartts/fartts/commit/c905c1b))
+
 # [1.7.0](https://github.com/fartts/fartts/compare/v1.6.0...v1.7.0) (2018-09-03)
 
 
