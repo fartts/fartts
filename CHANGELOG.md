@@ -1,3 +1,12 @@
+## [1.8.1](https://github.com/fartts/fartts/compare/v1.8.0...v1.8.1) (2018-09-09)
+
+
+### Bug Fixes
+
+* **lab/04:** remove code that's in lib now ([dd7f107](https://github.com/fartts/fartts/commit/dd7f107))
+* **lab/04:** remove vestigial util ([6a5fc14](https://github.com/fartts/fartts/commit/6a5fc14))
+* **lib/util & lab/04:** move resize stuff into lib/util ([cfd68d5](https://github.com/fartts/fartts/commit/cfd68d5))
+
 # [1.8.0](https://github.com/fartts/fartts/compare/v1.7.1...v1.8.0) (2018-09-09)
 
 
