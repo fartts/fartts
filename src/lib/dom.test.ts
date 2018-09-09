@@ -1,4 +1,4 @@
-import { el, on } from './dom';
+import { el, on } from '@fartts/lib/dom';
 
 test('el', () => {
   const querySelectorSpy = jest.spyOn(document, 'querySelector');
