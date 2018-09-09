@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/fartts/fartts/compare/v1.7.1...v1.8.0) (2018-09-09)
+
+
+### Features
+
+* **lib:** add a rough stub of a game loop ([2787d72](https://github.com/fartts/fartts/commit/2787d72))
+
 ## [1.7.1](https://github.com/fartts/fartts/compare/v1.7.0...v1.7.1) (2018-09-04)
 
 
