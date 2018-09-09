@@ -8,6 +8,7 @@ import { link } from './webgl/program';
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
 
+import loop from '@fartts/lib/game/loop';
 import { random, sin, cos, ππ } from '@fartts/lib/math';
 import { vec2 } from '@fartts/lib/vec/factories';
 import { sub, mul, add } from '@fartts/lib/vec/math';
@@ -136,15 +137,8 @@ function init(): void {
   ) as WebGLUniformLocation;
 }
 
-function draw(t: number): void {
-  // console.log('draw', t); // tslint:disable-line no-console
-  requestAnimationFrame(draw);
-
-  if (shouldResize) {
-    resize();
-  }
-
-  const points: number[] = particles.reduce((acc: number[], p) => {
+const getPoints = () =>
+  particles.reduce((acc: number[], p) => {
     p.update();
 
     if (p.cpos.y < -c.height / 2) {
@@ -158,6 +152,17 @@ function draw(t: number): void {
 
     return acc.concat(p.cpos);
   }, []);
+
+let points: number[] = getPoints();
+
+function update(t: number, dt: number): void {
+  points = getPoints();
+}
+
+function render(lag: number): void {
+  if (shouldResize) {
+    resize();
+  }
 
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
@@ -175,5 +180,7 @@ function draw(t: number): void {
   gl.drawArrays(gl.POINTS, 0, points.length / 2);
 }
 
+const { start } = loop(update, render);
+
 init();
-requestAnimationFrame(draw);
+start();
