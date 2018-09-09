@@ -9,7 +9,7 @@ import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
 
 import loop from '@fartts/lib/game/loop';
-import { random, sin, cos, ππ } from '@fartts/lib/math';
+import { random, sin, cos, ππ, round } from '@fartts/lib/math';
 import { vec2 } from '@fartts/lib/vec/factories';
 import { sub, mul, add, div } from '@fartts/lib/vec/math';
 import { Vec2 } from '@fartts/lib/vec/types';
@@ -30,6 +30,9 @@ let translation = [0, 0];
 
 let uResolution: WebGLUniformLocation;
 let resolution = [0, 0];
+
+let uPointSize: WebGLUniformLocation;
+let pointSize = 0;
 
 let shouldResize = true;
 
@@ -62,6 +65,7 @@ function resize() {
   c.width = w;
   c.height = h;
 
+  pointSize = round(w / 30);
   gl.viewport(0, 0, w, h);
 }
 
@@ -79,11 +83,15 @@ const drag = 0.01;
 const grav = vec2(0, 10);
 
 function getMagnitude() {
-  return (random() * 2 - 1) * 3;
+  return (random() * 2 - 1) * pointSize;
 }
 
 function getDirection() {
   return random() * ππ;
+}
+
+function getOrigin() {
+  return vec2(0, c.height / 8);
 }
 
 function getRandom() {
@@ -94,7 +102,7 @@ function getRandom() {
 }
 
 function getParticle() {
-  const cp = vec2(0, 20);
+  const cp = getOrigin();
   const pp = getRandom();
 
   return {
@@ -112,7 +120,7 @@ function getParticle() {
   };
 }
 
-const particles: IParticle[] = new Array(200)
+const particles: IParticle[] = new Array(50)
   .fill(true)
   .reduce((acc, _, i) => acc.concat(getParticle()), []);
 
@@ -121,7 +129,7 @@ const getPoints = (dt: number) =>
     p.update(dt);
 
     if (p.cpos.y < -c.height / 2) {
-      const cp = vec2(0, 20);
+      const cp = getOrigin();
       const pp = getRandom();
 
       p.cpos = cp;
@@ -159,6 +167,11 @@ function init(): void {
     program,
     'uResolution',
   ) as WebGLUniformLocation;
+
+  uPointSize = gl.getUniformLocation(
+    program,
+    'uPointSize',
+  ) as WebGLUniformLocation;
 }
 
 function update(t: number, dt: number): void {
@@ -182,6 +195,7 @@ function render(lag: number): void {
 
   gl.uniform2fv(uTranslation, translation);
   gl.uniform2fv(uResolution, resolution);
+  gl.uniform1f(uPointSize, pointSize);
 
   gl.drawArrays(gl.POINTS, 0, points.length / 2);
 }
