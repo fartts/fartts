@@ -1,45 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`resize 1`] = `
+exports[`resize [300, 150] to [391, 291] at dpr: undefined 1`] = `
 Object {
-  "height": 2,
+  "height": 30,
   "style": Object {
-    "height": "11px",
-    "width": "11px",
+    "height": "300px",
+    "width": "400px",
   },
-  "width": 2,
+  "width": 40,
 }
 `;
 
-exports[`resize 2`] = `
+exports[`resize [300, 150] to [715, 475] at dpr: 1 1`] = `
 Object {
-  "height": 2,
+  "height": 48,
   "style": Object {
-    "height": "11px",
-    "width": "11px",
+    "height": "480px",
+    "width": "720px",
   },
-  "width": 2,
+  "width": 72,
 }
 `;
 
-exports[`resize 3`] = `
+exports[`resize [300, 150] to [800, 450] at dpr: 2 1`] = `
 Object {
-  "height": 4,
+  "height": 90,
   "style": Object {
-    "height": "11px",
-    "width": "11px",
+    "height": "450px",
+    "width": "800px",
   },
-  "width": 4,
+  "width": 160,
 }
 `;
 
-exports[`resize 4`] = `
+exports[`resize [300, 150] to [959, 539] at dpr: 3 1`] = `
 Object {
-  "height": 108,
+  "height": 162,
   "style": Object {
-    "height": "539px",
-    "width": "959px",
+    "height": "540px",
+    "width": "960px",
   },
-  "width": 192,
+  "width": 288,
 }
 `;

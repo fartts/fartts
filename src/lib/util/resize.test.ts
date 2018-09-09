@@ -2,11 +2,11 @@ import resize from '@fartts/lib/util/resize';
 
 test.each`
   w      | h      | cw     | ch     | dpr
-  ${0}   | ${0}   | ${11}  | ${11}  | ${undefined}
-  ${0}   | ${0}   | ${11}  | ${11}  | ${1}
-  ${0}   | ${0}   | ${11}  | ${11}  | ${2}
-  ${300} | ${150} | ${959} | ${539} | ${2}
-`('resize', ({ w, h, cw, ch, dpr }) => {
+  ${300} | ${150} | ${391} | ${291} | ${undefined}
+  ${300} | ${150} | ${715} | ${475} | ${1}
+  ${300} | ${150} | ${800} | ${450} | ${2}
+  ${300} | ${150} | ${959} | ${539} | ${3}
+`('resize [$w, $h] to [$cw, $ch] at dpr: $dpr', ({ w, h, cw, ch, dpr }) => {
   const mockCanvas = {
     width: w,
     height: h,
