@@ -8,9 +8,10 @@ import { link } from './webgl/program';
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
 
+import loop from '@fartts/lib/game/loop';
 import { random, sin, cos, ππ } from '@fartts/lib/math';
 import { vec2 } from '@fartts/lib/vec/factories';
-import { sub, mul, add } from '@fartts/lib/vec/math';
+import { sub, mul, add, div } from '@fartts/lib/vec/math';
 import { Vec2 } from '@fartts/lib/vec/types';
 
 const m = el('main') as HTMLMainElement;
@@ -71,32 +72,39 @@ on('resize', () => {
 interface IParticle {
   cpos: Vec2;
   ppos: Vec2;
-  update(): void;
+  update(dt: number): void;
 }
 
-const drag = 0.99;
-const grav = vec2(0, -0.1);
+const drag = 0.01;
+const grav = vec2(0, 10);
 
 function getMagnitude() {
-  return (random() * 2 - 1) * 4;
+  return (random() * 2 - 1) * 3;
 }
 
 function getDirection() {
   return random() * ππ;
 }
 
-function getParticle() {
+function getRandom() {
   const mag = getMagnitude();
   const dir = getDirection();
-  const o = vec2(0, 20);
+
+  return vec2(sin(dir) * mag, cos(dir) * mag);
+}
+
+function getParticle() {
+  const cp = vec2(0, 20);
+  const pp = getRandom();
 
   return {
-    cpos: o,
-    ppos: add(o, vec2(sin(dir) * mag, cos(dir) * mag)),
-    update() {
+    cpos: cp,
+    ppos: add(cp, pp),
+    update(dt: number) {
       let vel = sub(this.cpos, this.ppos);
-      vel = add(vel, grav);
-      vel = mul(vel, drag);
+
+      vel = sub(vel, div(grav, dt * dt));
+      vel = mul(vel, 1 - drag);
 
       this.ppos = this.cpos;
       this.cpos = add(this.cpos, vel);
@@ -107,6 +115,23 @@ function getParticle() {
 const particles: IParticle[] = new Array(200)
   .fill(true)
   .reduce((acc, _, i) => acc.concat(getParticle()), []);
+
+const getPoints = (dt: number) =>
+  particles.reduce((acc: number[], p) => {
+    p.update(dt);
+
+    if (p.cpos.y < -c.height / 2) {
+      const cp = vec2(0, 20);
+      const pp = getRandom();
+
+      p.cpos = cp;
+      p.ppos = add(cp, pp);
+    }
+
+    return acc.concat(p.cpos);
+  }, []);
+
+let points: number[] = getPoints(0);
 
 function init(): void {
   // console.log('init'); // tslint:disable-line no-console
@@ -136,28 +161,14 @@ function init(): void {
   ) as WebGLUniformLocation;
 }
 
-function draw(t: number): void {
-  // console.log('draw', t); // tslint:disable-line no-console
-  requestAnimationFrame(draw);
+function update(t: number, dt: number): void {
+  points = getPoints(dt);
+}
 
+function render(lag: number): void {
   if (shouldResize) {
     resize();
   }
-
-  const points: number[] = particles.reduce((acc: number[], p) => {
-    p.update();
-
-    if (p.cpos.y < -c.height / 2) {
-      const mag = getMagnitude();
-      const dir = getDirection();
-      const o = vec2(0, 20);
-
-      p.cpos = o;
-      p.ppos = add(o, vec2(sin(dir) * mag, cos(dir) * mag));
-    }
-
-    return acc.concat(p.cpos);
-  }, []);
 
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
@@ -175,5 +186,7 @@ function draw(t: number): void {
   gl.drawArrays(gl.POINTS, 0, points.length / 2);
 }
 
+const { start } = loop(update, render);
+
 init();
-requestAnimationFrame(draw);
+start();
