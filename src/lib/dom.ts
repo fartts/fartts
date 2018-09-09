@@ -1,4 +1,4 @@
-export const { requestAnimationFrame, cancelAnimationFrame } = window;
+export const { requestAnimationFrame: rAF, cancelAnimationFrame: cAF } = window;
 
 export function el(selectors: string): Element | null {
   return document.querySelector(selectors);
