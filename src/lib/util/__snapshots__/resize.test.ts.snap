@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`resize 1`] = `
+Object {
+  "height": 2,
+  "style": Object {
+    "height": "11px",
+    "width": "11px",
+  },
+  "width": 2,
+}
+`;
+
+exports[`resize 2`] = `
+Object {
+  "height": 2,
+  "style": Object {
+    "height": "11px",
+    "width": "11px",
+  },
+  "width": 2,
+}
+`;
+
+exports[`resize 3`] = `
+Object {
+  "height": 4,
+  "style": Object {
+    "height": "11px",
+    "width": "11px",
+  },
+  "width": 4,
+}
+`;
+
+exports[`resize 4`] = `
+Object {
+  "height": 108,
+  "style": Object {
+    "height": "539px",
+    "width": "959px",
+  },
+  "width": 192,
+}
+`;

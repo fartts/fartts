@@ -29,15 +29,15 @@ export default function resize(
     dpr = 1;
   }
 
+  c.style.width = `${width}px`;
+  c.style.height = `${height}px`;
+
   const scale = 10;
   width = next(width, scale);
   height = next(height, scale);
 
   const w = (width * dpr) / scale;
   const h = (height * dpr) / scale;
-
-  c.style.width = `${width}px`;
-  c.style.height = `${height}px`;
 
   c.width = w;
   c.height = h;
