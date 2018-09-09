@@ -1,50 +1,67 @@
-import { requestAnimationFrame, cancelAnimationFrame } from '@fartts/lib/dom';
+import { rAF, cAF } from '@fartts/lib/dom';
 import { min } from '@fartts/lib/math';
 
 type UpdateFunction = (t: number, dt: number) => void;
 type RenderFunction = (lag: number) => void;
 
-export default function loop(update: UpdateFunction, render: RenderFunction) {
-  let frameId = -1;
+export const stepTime = 1000 / 60;
 
-  let firstTime = 0;
-  let previousTime = 0;
+let frameId = -1;
 
-  let currentTime = 0;
-  let deltaTime = 0;
+let firstTime = 0;
+let previousTime = 0;
 
-  const step = 1000 / 60;
-  let excess = 0;
+let overTime = 0;
 
+let currentTime = 0;
+let deltaTime = 0;
+
+export default function loop(
+  update: UpdateFunction,
+  render: RenderFunction,
+): { start: () => void; stop: () => void } {
   function tick(time: DOMHighResTimeStamp) {
-    frameId = requestAnimationFrame(tick);
+    frameId = rAF(tick);
 
     currentTime = time - firstTime;
     deltaTime = currentTime - previousTime;
 
     previousTime = currentTime;
-    excess += deltaTime;
+    overTime += deltaTime;
 
-    excess = min(excess, 1000);
-    while (excess >= step) {
-      update(currentTime, step);
-      excess -= step;
+    overTime = min(overTime, 1000);
+    while (overTime >= stepTime) {
+      update(currentTime, stepTime);
+      overTime -= stepTime;
     }
 
-    render(excess / step);
-    stop();
+    render(overTime / stepTime);
   }
 
-  function stop() {
-    cancelAnimationFrame(frameId);
-    frameId = -1;
-  }
+  return {
+    start() {
+      if (frameId !== -1) {
+        return;
+      }
 
-  frameId = requestAnimationFrame((time: DOMHighResTimeStamp) => {
-    firstTime = time;
-    previousTime = 0;
-    excess = 0;
+      frameId = rAF((time: DOMHighResTimeStamp) => {
+        render(1);
 
-    frameId = requestAnimationFrame(tick);
-  });
+        firstTime = time;
+        previousTime = 0;
+        overTime = 0;
+
+        frameId = rAF(tick);
+      });
+    },
+
+    stop() {
+      if (frameId === -1) {
+        return;
+      }
+
+      cAF(frameId);
+      frameId = -1;
+    },
+  };
 }
