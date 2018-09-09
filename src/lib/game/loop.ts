@@ -30,6 +30,7 @@ export default function loop(
     overTime += deltaTime;
 
     overTime = min(overTime, 1000);
+
     while (overTime >= stepTime) {
       update(currentTime, stepTime);
       overTime -= stepTime;
@@ -45,13 +46,13 @@ export default function loop(
       }
 
       frameId = rAF((time: DOMHighResTimeStamp) => {
+        frameId = rAF(tick);
+
         render(1);
 
         firstTime = time;
         previousTime = 0;
         overTime = 0;
-
-        frameId = rAF(tick);
       });
     },
 

@@ -1,18 +1,18 @@
+import { el } from '@fartts/lib/dom';
+import loop from '@fartts/lib/game/loop';
+import { random, sin, cos, ππ, round } from '@fartts/lib/math';
+import resize from '@fartts/lib/util/resize';
+import { vec2 } from '@fartts/lib/vec/factories';
+import { sub, mul, add, div } from '@fartts/lib/vec/math';
+import { Vec2 } from '@fartts/lib/vec/types';
+
 import './main.css';
 
-import { el, on } from './dom';
-import { next } from './util';
 import { compile } from './webgl/shader';
 import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
-
-import loop from '@fartts/lib/game/loop';
-import { random, sin, cos, ππ, round } from '@fartts/lib/math';
-import { vec2 } from '@fartts/lib/vec/factories';
-import { sub, mul, add, div } from '@fartts/lib/vec/math';
-import { Vec2 } from '@fartts/lib/vec/types';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
@@ -34,44 +34,13 @@ let resolution = [0, 0];
 let uPointSize: WebGLUniformLocation;
 let pointSize = 0;
 
-let shouldResize = true;
-
-function resize() {
-  shouldResize = false;
-
-  let { devicePixelRatio: dpr } = window;
-  let { clientWidth: width, clientHeight: height } = m;
-
-  if (dpr === undefined) {
-    dpr = 1;
-  }
-
-  c.style.width = `${width}px`;
-  c.style.height = `${height}px`;
-
-  const scale = 10;
-  width = next(width, scale);
-  height = next(height, scale);
-
-  const w = (width * dpr) / scale;
-  const h = (height * dpr) / scale;
-
-  const hw = w / 2;
-  const hh = h / 2;
-
-  translation = [hw, hh];
+function setUniforms(w: number, h: number): void {
+  translation = [w / 2, h / 2];
   resolution = [w, h];
-
-  c.width = w;
-  c.height = h;
-
   pointSize = round(w / 30);
+
   gl.viewport(0, 0, w, h);
 }
-
-on('resize', () => {
-  shouldResize = true;
-});
 
 interface IParticle {
   cpos: Vec2;
@@ -142,9 +111,8 @@ const getPoints = (dt: number) =>
 let points: number[] = getPoints(0);
 
 function init(): void {
-  // console.log('init'); // tslint:disable-line no-console
-  if (shouldResize) {
-    resize();
+  if (resize(c, m)) {
+    setUniforms(c.width, c.height);
   }
 
   gl.clearColor(0, 0, 0, 1);
@@ -179,8 +147,8 @@ function update(t: number, dt: number): void {
 }
 
 function render(lag: number): void {
-  if (shouldResize) {
-    resize();
+  if (resize(c, m)) {
+    setUniforms(c.width, c.height);
   }
 
   gl.clear(gl.COLOR_BUFFER_BIT);

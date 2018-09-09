@@ -1,6 +1,16 @@
 import loop, { stepTime } from '@fartts/lib/game/loop';
 
-test('loop', done => {
+let mockTime = 0;
+jest.mock('@fartts/lib/dom', () => ({
+  rAF: (callback: FrameRequestCallback) => {
+    mockTime += 1000 / 60;
+    setTimeout(() => callback(mockTime), 1000 / 60);
+  },
+  cAF: (frameId: number) => clearTimeout(frameId),
+}));
+jest.useFakeTimers();
+
+test('loop', () => {
   const update = jest.fn();
   const render = jest.fn();
   const { start, stop } = loop(update, render);
@@ -9,17 +19,15 @@ test('loop', done => {
   start();
   start();
 
-  setTimeout(() => {
-    // multiple calls have no effect
-    stop();
-    stop();
+  jest.advanceTimersByTime(stepTime * 3);
 
-    expect(update).toHaveBeenCalledTimes(1);
-    expect(update).toHaveBeenCalledWith(expect.any(Number), stepTime);
+  // multiple calls have no effect
+  stop();
+  stop();
 
-    expect(render).toHaveBeenCalledTimes(2);
-    expect(render).toHaveBeenCalledWith(expect.any(Number));
+  expect(update).toHaveBeenCalledTimes(1);
+  expect(update).toHaveBeenCalledWith(expect.any(Number), stepTime);
 
-    done();
-  }, stepTime * 3);
+  expect(render).toHaveBeenCalledTimes(3);
+  expect(render).toHaveBeenCalledWith(expect.any(Number));
 });
