@@ -1,18 +1,18 @@
+import { el, on } from '@fartts/lib/dom';
+import loop from '@fartts/lib/game/loop';
+import { random, sin, cos, ππ, round } from '@fartts/lib/math';
+import { vec2 } from '@fartts/lib/vec/factories';
+import { sub, mul, add, div } from '@fartts/lib/vec/math';
+import { Vec2 } from '@fartts/lib/vec/types';
+
 import './main.css';
 
-import { el, on } from './dom';
 import { next } from './util';
 import { compile } from './webgl/shader';
 import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
-
-import loop from '@fartts/lib/game/loop';
-import { random, sin, cos, ππ, round } from '@fartts/lib/math';
-import { vec2 } from '@fartts/lib/vec/factories';
-import { sub, mul, add, div } from '@fartts/lib/vec/math';
-import { Vec2 } from '@fartts/lib/vec/types';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
