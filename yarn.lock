@@ -6451,9 +6451,9 @@ seedrandom@2.4.4:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/seedrandom/-/seedrandom-2.4.4.tgz#b25ea98632c73e45f58b77cfaa931678df01f9ba"
 
-semantic-release-github-pr@5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/semantic-release-github-pr/-/semantic-release-github-pr-5.0.5.tgz#b8bd75509ec3795546cc65c5dc4bc855ea4885ea"
+semantic-release-github-pr@5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/semantic-release-github-pr/-/semantic-release-github-pr-5.0.7.tgz#73cdacc2962e3520ba96af79f6585c73650fa87a"
   dependencies:
     execa "^0.8.0"
     github "^12.1.0"
