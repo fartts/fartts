@@ -1,3 +1,11 @@
+## [1.8.2](https://github.com/fartts/fartts/compare/v1.8.1...v1.8.2) (2018-09-19)
+
+
+### Bug Fixes
+
+* **package.json:** rollback semantic-release to 15.6.6 ([2cd743d](https://github.com/fartts/fartts/commit/2cd743d))
+* **yarn.lock:** yarn upgrade, marked fix to test out semantic-release-github-pr ([63ef6ae](https://github.com/fartts/fartts/commit/63ef6ae))
+
 ## [1.8.1](https://github.com/fartts/fartts/compare/v1.8.0...v1.8.1) (2018-09-09)
 
 
