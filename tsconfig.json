@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "declaration": false,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -14,6 +15,7 @@
     ],
     "module": "es2015",
     "moduleResolution": "node",
+    "noEmit": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "paths": {
