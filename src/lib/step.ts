@@ -1,5 +1,5 @@
-import { cos, floor, saw, sin, tri } from '@fartts/lib/math';
-import { wave, TrigFunction, WaveFunction } from '@fartts/lib/wave';
+import { cos, floor, saw, sin, tri } from './math';
+import { wave, TrigFunction, WaveFunction } from './wave';
 
 /**
  * ## step

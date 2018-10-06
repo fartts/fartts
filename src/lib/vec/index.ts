@@ -1,6 +1,6 @@
-import { dot, magnitude, direction } from '@fartts/lib/vec/math';
-import { Components } from '@fartts/lib/vec/types';
-import { toArray } from '@fartts/lib/vec/util';
+import { dot, magnitude, direction } from './math';
+import { Components } from './types';
+import { toArray } from './util';
 
 /**
  * # Vector

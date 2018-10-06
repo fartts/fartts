@@ -1,8 +1,8 @@
-import Vector from '@fartts/lib/vec';
-import { getFactory, getLeft } from '@fartts/lib/vec/factories';
-import { acos, hypot, lerp as slerp } from '@fartts/lib/math';
-import { validateOperands } from '@fartts/lib/vec/util';
-import { Vec2, Vec3, Vec4 } from '@fartts/lib/vec/types';
+import Vector from '.';
+import { getFactory, getLeft } from './factories';
+import { acos, hypot, lerp as slerp } from '../math';
+import { validateOperands } from './util';
+import { Vec2, Vec3, Vec4 } from './types';
 
 /**
  * ## dot
