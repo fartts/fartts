@@ -24,6 +24,8 @@
     "seedrandom": "2.4.4"
   },
   "devDependencies": {
+    "@babel/core": "7.1.2",
+    "@babel/preset-typescript": "7.1.0",
     "@semantic-release/changelog": "3.0.0",
     "@semantic-release/git": "7.0.4",
     "@types/jest": "23.3.3",
@@ -36,7 +38,6 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "23.6.0",
     "parcel-bundler": "1.10.2",
-    "parcel-plugin-typescript": "1.0.0",
     "prettier": "1.14.3",
     "semantic-release": "15.9.17",
     "semantic-release-github-pr": "5.1.0",
