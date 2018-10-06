@@ -1,3 +1,10 @@
+## [1.8.4](https://github.com/fartts/fartts/compare/v1.8.3...v1.8.4) (2018-10-06)
+
+
+### Bug Fixes
+
+* **build:** adds stuff to make parcel use Babel 7 to compile TypeScript ([88ca648](https://github.com/fartts/fartts/commit/88ca648))
+
 ## [1.8.3](https://github.com/fartts/fartts/compare/v1.8.2...v1.8.3) (2018-10-06)
 
 
