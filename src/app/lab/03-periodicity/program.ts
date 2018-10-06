@@ -5,11 +5,11 @@ export function validate(
   const success = gl.getProgramParameter(program, gl.LINK_STATUS);
 
   if (!success) {
+    gl.deleteProgram(program);
+
     throw new Error(
       `program (${program}) failed to link:\n${gl.getProgramInfoLog(program)}`,
     );
-
-    gl.deleteProgram(program);
   }
 }
 

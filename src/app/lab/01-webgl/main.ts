@@ -42,13 +42,13 @@ function makeShader(
     );
 
     if (!compileSuccess) {
+      context.deleteShader(shader);
+
       throw new Error(
         `shader (${shader}) failed to compile:\n${context.getShaderInfoLog(
           shader,
         )}`,
       );
-
-      context.deleteShader(shader);
     }
   }
 
@@ -74,13 +74,13 @@ function makeProgram(
     );
 
     if (!linkSuccess) {
+      context.deleteProgram(program);
+
       throw new Error(
         `program (${program}) failed to compile:\n${context.getShaderInfoLog(
           program,
         )}`,
       );
-
-      context.deleteProgram(program);
     }
   }
 

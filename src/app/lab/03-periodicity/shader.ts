@@ -5,11 +5,11 @@ export function validate(
   const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
 
   if (!success) {
+    gl.deleteShader(shader);
+
     throw new Error(
       `shader ${shader} failed to compile:\n${gl.getShaderInfoLog(shader)}`,
     );
-
-    gl.deleteShader(shader);
   }
 }
 
