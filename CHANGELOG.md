@@ -1,3 +1,11 @@
+## [1.8.3](https://github.com/fartts/fartts/compare/v1.8.2...v1.8.3) (2018-10-06)
+
+
+### Bug Fixes
+
+* **lab:** delete the unsuccessful shader/program before throwing ([bfbe290](https://github.com/fartts/fartts/commit/bfbe290))
+* **lab:** fix new type errors (based on new typings in 3.1.1 I guess?) ([92a0644](https://github.com/fartts/fartts/commit/92a0644))
+
 ## [1.8.2](https://github.com/fartts/fartts/compare/v1.8.1...v1.8.2) (2018-09-19)
 
 
