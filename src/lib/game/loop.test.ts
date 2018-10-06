@@ -1,7 +1,7 @@
 import loop, { stepTime } from './loop';
 
 let mockTime = 0;
-jest.mock('./dom', () => ({
+jest.mock('../dom', () => ({
   rAF: (callback: FrameRequestCallback) => {
     mockTime += 1000 / 60;
     setTimeout(() => callback(mockTime), 1000 / 60);

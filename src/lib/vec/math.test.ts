@@ -11,7 +11,7 @@ import {
   normalize,
   lerp,
 } from './math';
-import { hypot, sqrt, π, toRadians } from './math';
+import { hypot, sqrt, π, toRadians } from '../math';
 
 describe('@fartts/lib/vec/math', () => {
   const v2 = vec2(2, 2);
