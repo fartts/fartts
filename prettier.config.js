@@ -3,7 +3,7 @@ module.exports = {
   trailingComma: 'all',
   overrides: [
     {
-      files: 'ts*.json',
+      files: ['.babelrc', 'ts*.json'],
       options: { parser: 'json-stringify' },
     },
   ],
