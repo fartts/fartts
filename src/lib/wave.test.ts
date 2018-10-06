@@ -1,5 +1,5 @@
-import { cos, sin } from '@fartts/lib/math';
-import { wave, cosWave, sinWave, sawWave, triWave } from '@fartts/lib/wave';
+import { cos, sin } from './math';
+import { wave, cosWave, sinWave, sawWave, triWave } from './wave';
 
 // just to keep the tables below consice when testing defaults
 const u = undefined;

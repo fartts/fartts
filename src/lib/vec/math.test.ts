@@ -1,4 +1,4 @@
-import { vec2, vec3, vec4, getLeft, getZeros } from '@fartts/lib/vec/factories';
+import { vec2, vec3, vec4, getLeft, getZeros } from './factories';
 import {
   dot,
   magnitude,
@@ -10,8 +10,8 @@ import {
   div,
   normalize,
   lerp,
-} from '@fartts/lib/vec/math';
-import { hypot, sqrt, π, toRadians } from '@fartts/lib/math';
+} from './math';
+import { hypot, sqrt, π, toRadians } from './math';
 
 describe('@fartts/lib/vec/math', () => {
   const v2 = vec2(2, 2);

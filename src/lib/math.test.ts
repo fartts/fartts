@@ -7,7 +7,7 @@ import {
   tri,
   π,
   ππ,
-} from '@fartts/lib/math';
+} from './math';
 
 describe('@fartts/lib/math', () => {
   test('lerp', () => {

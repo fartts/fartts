@@ -1,4 +1,4 @@
-import { swizzledKeys, indicesByKey } from '@fartts/lib/vec/util/keys';
+import { swizzledKeys, indicesByKey } from './keys';
 
 describe('@fartts/lib/vec/util/keys', () => {
   test('config', () => {
