@@ -1,5 +1,5 @@
-import Vector from '@fartts/lib/vec';
-import { Component } from '@fartts/lib/vec/types';
+import Vector from '..';
+import { Component } from '../types';
 
 /**
  * ## toArray

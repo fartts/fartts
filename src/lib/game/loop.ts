@@ -1,5 +1,5 @@
-import { rAF, cAF } from '@fartts/lib/dom';
-import { min } from '@fartts/lib/math';
+import { rAF, cAF } from '../dom';
+import { min } from '../math';
 
 type UpdateFunction = (t: number, dt: number) => void;
 type RenderFunction = (lag: number) => void;

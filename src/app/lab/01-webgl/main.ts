@@ -1,6 +1,6 @@
 import './main.css';
 
-import { cos, sin, toRadians } from '@fartts/lib/math';
+import { cos, sin, toRadians } from '../../../lib/math';
 
 const DEV = 'development';
 // const PROD = 'production';

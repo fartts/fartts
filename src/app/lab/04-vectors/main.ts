@@ -1,10 +1,10 @@
-import { el } from '@fartts/lib/dom';
-import loop from '@fartts/lib/game/loop';
-import { random, sin, cos, ππ, round } from '@fartts/lib/math';
-import resize from '@fartts/lib/util/resize';
-import { vec2 } from '@fartts/lib/vec/factories';
-import { sub, mul, add, div } from '@fartts/lib/vec/math';
-import { Vec2 } from '@fartts/lib/vec/types';
+import { el } from '../../../lib/dom';
+import loop from '../../../lib/game/loop';
+import { random, sin, cos, ππ, round } from '../../../lib/math';
+import resize from '../../../lib/util/resize';
+import { vec2 } from '../../../lib/vec/factories';
+import { sub, mul, add, div } from '../../../lib/vec/math';
+import { Vec2 } from '../../../lib/vec/types';
 
 import './main.css';
 

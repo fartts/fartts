@@ -1,4 +1,4 @@
-import { on } from '@fartts/lib/dom';
+import { on } from '../dom';
 
 const { isInteger } = Number;
 
