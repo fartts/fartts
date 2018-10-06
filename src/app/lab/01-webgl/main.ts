@@ -30,7 +30,7 @@ function makeShader(
   type: WebGLShaderType,
   source: string,
 ): WebGLShader {
-  const shader = context.createShader(type);
+  const shader = context.createShader(type) as WebGLShader;
 
   context.shaderSource(shader, source);
   context.compileShader(shader);
@@ -52,7 +52,7 @@ function makeShader(
     }
   }
 
-  return shader as WebGLShader;
+  return shader;
 }
 
 function makeProgram(
@@ -60,7 +60,7 @@ function makeProgram(
   vertexShader: WebGLShader,
   fragmentShader: WebGLShader,
 ): WebGLProgram {
-  const program = context.createProgram();
+  const program = context.createProgram() as WebGLProgram;
 
   context.attachShader(program, vertexShader);
   context.attachShader(program, fragmentShader);
@@ -84,7 +84,7 @@ function makeProgram(
     }
   }
 
-  return program as WebGLProgram;
+  return program;
 }
 
 const vertShader = makeShader(

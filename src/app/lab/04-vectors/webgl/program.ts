@@ -1,6 +1,6 @@
 export function validate(
   gl: WebGLRenderingContext,
-  program: WebGLProgram | null,
+  program: WebGLProgram,
 ): void {
   const success = gl.getProgramParameter(program, gl.LINK_STATUS);
 
@@ -18,7 +18,7 @@ export function link(
   vert: WebGLShader,
   frag: WebGLShader,
 ): WebGLProgram {
-  const program = gl.createProgram();
+  const program = gl.createProgram() as WebGLProgram;
 
   gl.attachShader(program, vert);
   gl.attachShader(program, frag);
@@ -28,5 +28,5 @@ export function link(
     validate(gl, program);
   }
 
-  return program as WebGLProgram;
+  return program;
 }
