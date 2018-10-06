@@ -60,3 +60,6 @@ typings/
 # Parcel build files
 .cache/
 dist/
+
+# VS Code settings
+.vscode/
