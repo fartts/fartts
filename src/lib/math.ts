@@ -33,7 +33,6 @@ export const ππ = π * 2;
  * ratio provided in `i`
  */
 export function lerp(v0: number, v1: number, t: number): number {
-  // return v0 + (v1 - v0) * t;
   /**
    * prefer precise method
    * @see: https://github.com/mattdesl/lerp/blob/master/index.js
