@@ -1,6 +1,5 @@
 import { el } from '../../../lib/dom';
 import loop from '../../../lib/game/loop';
-import { round } from '../../../lib/math';
 import resize from './resize';
 
 import './main.css';
@@ -10,6 +9,9 @@ import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
+import Vector from '../../../lib/vec';
+import { vec2 } from '../../../lib/vec/factories';
+import { cosWave, sawWave, sinWave, triWave } from '../../../lib/wave';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
@@ -34,10 +36,35 @@ let pointSize = 0;
 function setUniforms(w: number, h: number): void {
   translation = [w / 2, h / 2];
   resolution = [w, h];
-  pointSize = round(w / 30);
+  pointSize = 10;
 
   gl.viewport(0, 0, w, h);
 }
+
+const width = 900;
+const steps = width / 30;
+const step = width / steps;
+const toComponents = (components: number[], v: Vector) => [...components, ...v];
+
+const points = [cosWave, sawWave, sinWave, triWave].reduce(
+  (components: number[], wave, i) => {
+    const oX = i % 2 ? step : -(width + step);
+    const oY = i < 2 ? width / 2 : -(width / 2);
+    const fY = wave(1, oY - width / 3, oY + width / 3, 0);
+
+    const toVectors = (_: number, j: number) =>
+      vec2(oX + j * step, fY(j / (steps - 1)));
+
+    return [
+      ...components,
+      ...new Array(steps)
+        .fill(0)
+        .map(toVectors)
+        .reduce(toComponents, []),
+    ];
+  },
+  [],
+);
 
 function init(): void {
   if (resize(c, m)) {
@@ -84,7 +111,7 @@ function render(lag: number): void {
   gl.useProgram(program);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0]), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
 
   gl.enableVertexAttribArray(aPositions);
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
@@ -94,10 +121,11 @@ function render(lag: number): void {
   gl.uniform2fv(uResolution, resolution);
   gl.uniform1f(uPointSize, pointSize);
 
-  gl.drawArrays(gl.POINTS, 0, 1);
+  gl.drawArrays(gl.POINTS, 0, points.length / 2);
 }
 
 const { start } = loop(update, render);
 
 init();
 start();
+stop();

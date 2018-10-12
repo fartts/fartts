@@ -29,7 +29,7 @@ export default function resize(
     dpr = 1;
   }
 
-  const scale = 10;
+  const scale = 1;
   width = next(width, scale);
   height = next(height, scale);
 
