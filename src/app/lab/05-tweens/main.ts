@@ -1,3 +1,4 @@
+import { round } from '../../../lib/math';
 import { el } from '../../../lib/dom';
 import loop from '../../../lib/game/loop';
 import resize from './resize';
@@ -11,7 +12,13 @@ import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
 import Vector from '../../../lib/vec';
 import { vec2 } from '../../../lib/vec/factories';
-import { cosWave, sawWave, sinWave, triWave } from '../../../lib/wave';
+import {
+  cosWave,
+  sawWave,
+  sinWave,
+  triWave,
+  WaveFunction,
+} from '../../../lib/wave';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
@@ -36,7 +43,7 @@ let pointSize = 0;
 function setUniforms(w: number, h: number): void {
   translation = [w / 2, h / 2];
   resolution = [w, h];
-  pointSize = 10;
+  pointSize = round(w / 150);
 
   gl.viewport(0, 0, w, h);
 }
@@ -46,14 +53,24 @@ const steps = width / 30;
 const step = width / steps;
 const toComponents = (components: number[], v: Vector) => [...components, ...v];
 
+const travellers: WaveFunction[] = [];
+let travellerComponents: number[] = [];
+
 const points = [cosWave, sawWave, sinWave, triWave].reduce(
   (components: number[], wave, i) => {
     const oX = i % 2 ? step : -(width + step);
     const oY = i < 2 ? width / 2 : -(width / 2);
+
+    const fX = sawWave(1, oX, oX + width, 0);
     const fY = wave(1, oY - width / 3, oY + width / 3, 0);
 
     const toVectors = (_: number, j: number) =>
-      vec2(oX + j * step, fY(j / (steps - 1)));
+      vec2(fX(j / steps), fY(j / steps));
+
+    travellers.push(sawWave(2000, oX, oX + width, 0));
+    travellers.push(wave(2000, oY - width / 3, oY + width / 3, 0));
+    travellers.push(wave(2000, oX, oX + width, 0));
+    travellers.push(() => oY - width / 2 + step * 2);
 
     return [
       ...components,
@@ -99,7 +116,7 @@ function init(): void {
 }
 
 function update(t: number, dt: number): void {
-  // do something here
+  travellerComponents = travellers.map(fn => fn(t));
 }
 
 function render(lag: number): void {
@@ -107,11 +124,13 @@ function render(lag: number): void {
     setUniforms(c.width, c.height);
   }
 
+  const data = points.concat(travellerComponents);
+
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
 
   gl.enableVertexAttribArray(aPositions);
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
@@ -121,7 +140,7 @@ function render(lag: number): void {
   gl.uniform2fv(uResolution, resolution);
   gl.uniform1f(uPointSize, pointSize);
 
-  gl.drawArrays(gl.POINTS, 0, points.length / 2);
+  gl.drawArrays(gl.POINTS, 0, data.length / 2);
 }
 
 const { start } = loop(update, render);
