@@ -2,14 +2,19 @@ export function validate(
   gl: WebGLRenderingContext,
   program: WebGLProgram,
 ): void {
-  const success = gl.getProgramParameter(program, gl.LINK_STATUS);
-
-  if (!success) {
+  const linked = gl.getProgramParameter(program, gl.LINK_STATUS);
+  if (!linked) {
     gl.deleteProgram(program);
+    const info = gl.getProgramInfoLog(program);
+    throw new Error(`program (${program}) failed to link:\n${info}`);
+  }
 
-    throw new Error(
-      `program (${program}) failed to link:\n${gl.getProgramInfoLog(program)}`,
-    );
+  gl.validateProgram(program);
+  const valid = gl.getProgramParameter(program, gl.VALIDATE_STATUS);
+  if (!valid) {
+    gl.deleteProgram(program);
+    const info = gl.getProgramInfoLog(program);
+    throw new Error(`program (${program}) failed to validate:\n${info}`);
   }
 }
 
