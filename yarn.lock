@@ -3865,10 +3865,10 @@ glsl-tokenizer@^2.0.0, glsl-tokenizer@^2.0.2:
   dependencies:
     through2 "^0.6.3"
 
-glslify-bundle@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/glslify-bundle/-/glslify-bundle-5.0.0.tgz#0252ada1ef9df30b660006e0bb21fd130b486e42"
-  integrity sha1-AlKtoe+d8wtmAAbguyH9EwtIbkI=
+glslify-bundle@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/glslify-bundle/-/glslify-bundle-5.1.1.tgz#30d2ddf2e6b935bf44d1299321e3b729782c409a"
+  integrity sha512-plaAOQPv62M1r3OsWf2UbjN0hUYAB7Aph5bfH58VxJZJhloRNbxOL9tl/7H71K7OLJoSJ2ZqWOKk3ttQ6wy24A==
   dependencies:
     glsl-inject-defines "^1.0.1"
     glsl-token-defines "^1.0.0"
