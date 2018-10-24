@@ -20,6 +20,8 @@ module.exports = {
   hour: 'numeric',
   minute: 'numeric',
 })%> [skip ci]
+<%=nextRelease.gitTag%>
+<%=nextRelease.gitHead%>
 <%=nextRelease.notes%>`,
     },
   ],
