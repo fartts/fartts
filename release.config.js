@@ -1,19 +1,21 @@
 module.exports = {
-  verifyConditions: [
+  plugins: [
+    '@semantic-release/commit-analyzer',
+    '@semantic-release/release-notes-generator',
     '@semantic-release/changelog',
-    '@semantic-release/npm',
-    '@semantic-release/git',
-    '@semantic-release/github',
-  ],
-  prepare: [
-    '@semantic-release/changelog',
-    '@semantic-release/npm',
-    {
-      path: '@semantic-release/git',
-      message: `\
+    [
+      '@semantic-release/npm',
+      {
+        npmPublish: false,
+      },
+    ],
+    [
+      '@semantic-release/git',
+      {
+        message: `\
 [<%= nextRelease.version %>]\
-(https://github.com/fartts/fartts/tree/<%= nextRelease.version%>)\
- - <%= new Date().toLocaleDateString('en-US', {
+(https://github.com/fartts/superfluity/tree/<%= nextRelease.version%>)\
+- <%= new Date().toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
@@ -23,12 +25,8 @@ module.exports = {
 <%=nextRelease.gitTag%>
 <%=nextRelease.gitHead%>
 <%=nextRelease.notes%>`,
-    },
+      },
+    ],
+    '@semantic-release/github',
   ],
-  publish: ['@semantic-release/npm', '@semantic-release/github'],
-  npmPublish: false,
-  githubPr: {
-    analyzeCommits: '@semantic-release/commit-analyzer',
-    generateNotes: '@semantic-release/release-notes-generator',
-  },
 };
