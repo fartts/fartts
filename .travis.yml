@@ -1,51 +1,51 @@
 language: node_js
 
 node_js:
-- 8.12.0
+  - 8.12.0
 
 cache: yarn
 
 env:
   global:
-  - secure: uDZBU7RPbYqjyH2OcMCQzmRPrb95ToxXJfMcy+Sa9y2al6sLZ053u3KPlxeKby9aOPnWLF+XPj1eT3kxPBg+kaccE9DfqIX6l2acrWWc5mQMoRk0bZ5m15dD+jDquFXQy6MmWJeqYkE0PKNmJ0aff/ZUm1XP+pKu44gC/9ZrB6JSPcQEXjbI2mzslIhsEv/araUnsBgxGY3S69MQ4X82RBErvdX9VTxnrp5xHVrhKX/mWf7TmAJHsKmpsUZh0hs7fN2RrW3TLBamZVUvhezsGh8x/UrUsak4I/RNZCatq4IaXlm6VxaEn4iFoOoZlAGlTUMB8ACJhu6RjAScz00JLGcYsiWk2OwT5egdxrZy1Wiia7f/7tWdp5wiwotAr0e/K+LtZNsq9o/xci5P5TzeufK0+5T9nEnzrXRaPBCum2+RUdqIkO8wDaF6rZQcm1dlQdOlG7n86RMadQCG8PtI2P2IKAoJbjO5tFdADlwXPMq1YnYxSES/B80Jur9zV17s7mqgSxhBMuSTPsYfWOgkHNAkEYwWMDhjW70+wSBXKu0WTuYdcE3pIG3JLn1Wli7Cxrf0oozHp0fr28HqbywYUUPjBeCoBtRnyFUSS1RqpaNbCQsnl8yz5GwjePD/IUvY320k6WAXsTCOVsGY/Qi39ptyAiu8vTYVT9VWnK25kG0=
-  - secure: Q0fqtYAW2csrLzJF6Clx6xxhRTLpK0kEpHsmKHaW0RUqif15IkZ+rqopS0aXTF+f3lX15Rpuew8Q1E3ciZj6L1ON99c98Nu8DCahFaYgG+uU3VxTW0Ds4DY5leHjFM7N8Pkpf/6oVQt/rF55CnH/dMVwKIyI845r3IAxW3SPyhJHhtVxcewn3t/aLNAWRAQGRKRyFlzqohnd1uKjaCYgN3isD3olgpkDoVOP8rjKRrT2EojvV2xx4TY4D8PUXnmRbdRBCHMbP+CxDt/p23wxiZkUwPUzt0wwbgQTodN8ap5VExnMrh67fj/cH5KMGpwN5E8ZwodsylgpjF4wGUBOM8MQorNqOWzGHs3h82v8FNpzq3vJfUho0wx/iXHLhATexNhnEj6HDkqbk7eKDapQJJWCm5gZUvjXEN5L9+gIufrPLf4aewTNWGwvM5szrYScQsCGHlM7P66q530e8yo30zXDDJnb6cKilJ8+omZzwMVqDguJXgkH6q3yH9FB+Dl/vIiRHCibFKgbPM/MHUPhzHDIqmugG3F5uEs/jq9fpGH7BvwE2L/CU0+GrsNMgByDnlpBoNq/Ul0L86KldPXVzei5TYoTv5qIRuVIBto0p3yRA0PMk7FhQD9eUHNW4soO8pv5JoXr6O9m4BuyXBXvDhwAN0/eWOR8pkJRPAXZuJg=
+    - secure: uDZBU7RPbYqjyH2OcMCQzmRPrb95ToxXJfMcy+Sa9y2al6sLZ053u3KPlxeKby9aOPnWLF+XPj1eT3kxPBg+kaccE9DfqIX6l2acrWWc5mQMoRk0bZ5m15dD+jDquFXQy6MmWJeqYkE0PKNmJ0aff/ZUm1XP+pKu44gC/9ZrB6JSPcQEXjbI2mzslIhsEv/araUnsBgxGY3S69MQ4X82RBErvdX9VTxnrp5xHVrhKX/mWf7TmAJHsKmpsUZh0hs7fN2RrW3TLBamZVUvhezsGh8x/UrUsak4I/RNZCatq4IaXlm6VxaEn4iFoOoZlAGlTUMB8ACJhu6RjAScz00JLGcYsiWk2OwT5egdxrZy1Wiia7f/7tWdp5wiwotAr0e/K+LtZNsq9o/xci5P5TzeufK0+5T9nEnzrXRaPBCum2+RUdqIkO8wDaF6rZQcm1dlQdOlG7n86RMadQCG8PtI2P2IKAoJbjO5tFdADlwXPMq1YnYxSES/B80Jur9zV17s7mqgSxhBMuSTPsYfWOgkHNAkEYwWMDhjW70+wSBXKu0WTuYdcE3pIG3JLn1Wli7Cxrf0oozHp0fr28HqbywYUUPjBeCoBtRnyFUSS1RqpaNbCQsnl8yz5GwjePD/IUvY320k6WAXsTCOVsGY/Qi39ptyAiu8vTYVT9VWnK25kG0=
+    - secure: Q0fqtYAW2csrLzJF6Clx6xxhRTLpK0kEpHsmKHaW0RUqif15IkZ+rqopS0aXTF+f3lX15Rpuew8Q1E3ciZj6L1ON99c98Nu8DCahFaYgG+uU3VxTW0Ds4DY5leHjFM7N8Pkpf/6oVQt/rF55CnH/dMVwKIyI845r3IAxW3SPyhJHhtVxcewn3t/aLNAWRAQGRKRyFlzqohnd1uKjaCYgN3isD3olgpkDoVOP8rjKRrT2EojvV2xx4TY4D8PUXnmRbdRBCHMbP+CxDt/p23wxiZkUwPUzt0wwbgQTodN8ap5VExnMrh67fj/cH5KMGpwN5E8ZwodsylgpjF4wGUBOM8MQorNqOWzGHs3h82v8FNpzq3vJfUho0wx/iXHLhATexNhnEj6HDkqbk7eKDapQJJWCm5gZUvjXEN5L9+gIufrPLf4aewTNWGwvM5szrYScQsCGHlM7P66q530e8yo30zXDDJnb6cKilJ8+omZzwMVqDguJXgkH6q3yH9FB+Dl/vIiRHCibFKgbPM/MHUPhzHDIqmugG3F5uEs/jq9fpGH7BvwE2L/CU0+GrsNMgByDnlpBoNq/Ul0L86KldPXVzei5TYoTv5qIRuVIBto0p3yRA0PMk7FhQD9eUHNW4soO8pv5JoXr6O9m4BuyXBXvDhwAN0/eWOR8pkJRPAXZuJg=
 
 before_install:
-# get the right npm version
-- NPM_VERSION=`node -pe "require('./package.json').engines.npm"`
-- if [ `npm --version` != "$NPM_VERSION" ]; then
+  # get the right npm version
+  - NPM_VERSION=`node -pe "require('./package.json').engines.npm"`
+  - if [ `npm --version` != "$NPM_VERSION" ]; then
     npm install --global npm@${NPM_VERSION};
-  fi
+    fi
 
-# get the right yarn version
-- YARN_VERSION=`node -pe "require('./package.json').engines.yarn"`
-- if [ `yarn --version` != "$YARN_VERSION" ]; then
+  # get the right yarn version
+  - YARN_VERSION=`node -pe "require('./package.json').engines.yarn"`
+  - if [ `yarn --version` != "$YARN_VERSION" ]; then
     curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION;
     export PATH=$HOME/.yarn/bin:$PATH;
-  fi
+    fi
 
-# globally add coverage reporters and greenkeeper
-- yarn global add codecov coveralls greenkeeper-lockfile
+  # globally add coverage reporters and greenkeeper
+  - yarn global add codecov coveralls greenkeeper-lockfile
 
 before_script:
-# code climate's coverage reporter
-- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-  > ./cc-test-reporter
-- chmod +x ./cc-test-reporter
-- "./cc-test-reporter before-build"
+  # code climate's coverage reporter
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+    > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - './cc-test-reporter before-build'
 
-# greenkeeper
-- greenkeeper-lockfile-update
+  # greenkeeper
+  - greenkeeper-lockfile-update
 
 script:
-- yarn lint
-- yarn test
+  - yarn lint
+  - yarn test
 
 after_success:
-- test $TRAVIS_PULL_REQUEST != "false" && npx semantic-release-github-pr
+  - test $TRAVIS_PULL_REQUEST != "false" && npx semantic-release-github-pr
 
 before_deploy:
-- yarn build
+  - yarn build
 
 deploy:
   # deploy a git tag, release notes, bump package.json, update READMEs
@@ -59,7 +59,7 @@ deploy:
   - provider: pages
     repo: fartts/fartts.github.io
     target_branch: master
-    github_token: "$GH_TOKEN"
+    github_token: '$GH_TOKEN'
     allow_empty_commit: true
     skip_cleanup: true
     keep_history: true
@@ -68,10 +68,10 @@ deploy:
       branch: master
 
 after_script:
-# report coverage
-- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
-- cat ./coverage/lcov.info | coveralls
-- codecov
+  # report coverage
+  - './cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT'
+  - cat ./coverage/lcov.info | coveralls
+  - codecov
 
-# validate dependencies
-- greenkeeper-lockfile-upload
+  # validate dependencies
+  - greenkeeper-lockfile-upload
