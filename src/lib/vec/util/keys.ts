@@ -7,7 +7,7 @@
  * @param {string[]} keys
  * @returns {string[]}
  */
-function toSwizzled(
+export function toSwizzled(
   swizzled: string[],
   _: string,
   i: number,
@@ -27,7 +27,7 @@ function toSwizzled(
  * @param {number} i
  * @returns {Array<[string, number]>}
  */
-function toIndicesByKey(
+export function toIndicesByKey(
   acc: Array<[string, number]>,
   key: string,
   i: number,
