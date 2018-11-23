@@ -3,18 +3,17 @@ export function validate(
   program: WebGLProgram,
 ): void {
   const linked = gl.getProgramParameter(program, gl.LINK_STATUS);
-  if (!linked) {
-    gl.deleteProgram(program);
-    const info = gl.getProgramInfoLog(program);
-    throw new Error(`program (${program}) failed to link:\n${info}`);
-  }
-
-  gl.validateProgram(program);
   const valid = gl.getProgramParameter(program, gl.VALIDATE_STATUS);
-  if (!valid) {
-    gl.deleteProgram(program);
+
+  if (!(linked && valid)) {
     const info = gl.getProgramInfoLog(program);
-    throw new Error(`program (${program}) failed to validate:\n${info}`);
+    const failure = [
+      ...(linked ? ['link'] : []),
+      ...(valid ? ['validate'] : []),
+    ].join(' & ');
+
+    gl.deleteProgram(program);
+    throw new Error(`program (${program}) failed to ${failure}:\n${info}`);
   }
 }
 
@@ -30,6 +29,7 @@ export function link(
   gl.linkProgram(program);
 
   if (process.env.NODE_ENV === 'development') {
+    gl.validateProgram(program);
     validate(gl, program);
   }
 
