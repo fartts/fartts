@@ -1,5 +1,6 @@
 import './main.css';
 import { toSwizzled, toIndicesByKey } from '../lib/vec/util/keys';
+import { vec2 } from '../lib/vec/factories';
 
 class Vector extends Float32Array {
   static get [Symbol.species]() {
@@ -44,19 +45,19 @@ const propertyDescriptor = Array.from(swizzledKeys).reduce(
     [key]: {
       get:
         key.length === 1
-          ? function() {
+          ? function(this: Vector) {
               return getByKey(this, key);
             }
-          : function() {
+          : function(this: Vector) {
               const keys = key.split('');
               return new Vector(keys.map(k => getByKey(this, k)));
             },
       set:
         key.length === 1
-          ? function(val: number) {
+          ? function(this: Vector, val: number) {
               setByKey(this, key, val);
             }
-          : function(val: Vector) {
+          : function(this: Vector, val: Vector) {
               key.split('').forEach((k, i) => setByKey(this, k, val[i]));
             },
     },
@@ -70,3 +71,4 @@ console.log(Vector); // tslint:disable-line no-console
 console.log(swizzledKeys); // tslint:disable-line no-console
 console.log(propertyDescriptor); // tslint:disable-line no-console
 console.log(new Vector([0, 1])); // tslint:disable-line no-console
+console.log(vec2(0, 1)); // tslint:disable-line no-console
