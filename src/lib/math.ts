@@ -26,14 +26,19 @@ export const ππ = π * 2;
  * 0 `a` is returned, if `i` is 1 `b` is returned)
  *
  * @export
- * @param {number} a the lower bound of the interpolation
- * @param {number} b the upper bound of the interpolation
- * @param {number} i the ratio by which to interpolate between `a` and `b`
+ * @param {number} v0 the lower bound of the interpolation
+ * @param {number} v1 the upper bound of the interpolation
+ * @param {number} t the ratio by which to interpolate between `a` and `b`
  * @returns {number} a number that is interpolated between `a` and `b` by the
  * ratio provided in `i`
  */
-export function lerp(a: number, b: number, i: number): number {
-  return a + (b - a) * i;
+export function lerp(v0: number, v1: number, t: number): number {
+  /**
+   * prefer precise method
+   * @see: https://github.com/mattdesl/lerp/blob/master/index.js
+   * @see: https://en.wikipedia.org/wiki/Linear_interpolation#Programming_language_support
+   */
+  return (1 - t) * v0 + t * v1;
 }
 
 /**

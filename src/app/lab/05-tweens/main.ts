@@ -1,10 +1,7 @@
+import { round } from '../../../lib/math';
 import { el } from '../../../lib/dom';
 import loop from '../../../lib/game/loop';
-import { random, sin, cos, ππ, round } from '../../../lib/math';
 import resize from './resize';
-import { vec2 } from '../../../lib/vec/factories';
-import { sub, mul, add, div } from '../../../lib/vec/math';
-import { Vec2 } from '../../../lib/vec/types';
 
 import './main.css';
 
@@ -13,6 +10,15 @@ import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
+import Vector from '../../../lib/vec';
+import { vec2 } from '../../../lib/vec/factories';
+import {
+  cosWave,
+  sawWave,
+  sinWave,
+  triWave,
+  WaveFunction,
+} from '../../../lib/wave';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
@@ -37,78 +43,45 @@ let pointSize = 0;
 function setUniforms(w: number, h: number): void {
   translation = [w / 2, h / 2];
   resolution = [w, h];
-  pointSize = round(w / 30);
+  pointSize = round(w / 150);
 
   gl.viewport(0, 0, w, h);
 }
 
-interface IParticle {
-  cpos: Vec2;
-  ppos: Vec2;
-  update(dt: number): void;
-}
+const width = 900;
+const steps = width / 30;
+const step = width / steps;
+const toComponents = (components: number[], v: Vector) => [...components, ...v];
 
-const drag = 0.01;
-const grav = vec2(0, 10);
+const travellers: WaveFunction[] = [];
+let travellerComponents: number[] = [];
 
-function getMagnitude() {
-  return (random() * 2 - 1) * pointSize;
-}
+const points = [cosWave, sawWave, sinWave, triWave].reduce(
+  (components: number[], wave, i) => {
+    const oX = i % 2 ? step : -(width + step);
+    const oY = i < 2 ? width / 2 : -(width / 2);
 
-function getDirection() {
-  return random() * ππ;
-}
+    const fX = sawWave(1, oX, oX + width, 0);
+    const fY = wave(1, oY - width / 3, oY + width / 3, 0);
 
-function getOrigin() {
-  return vec2(0, c.height / 8);
-}
+    const toVectors = (_: number, j: number) =>
+      vec2(fX(j / steps), fY(j / steps));
 
-function getRandom() {
-  const mag = getMagnitude();
-  const dir = getDirection();
+    travellers.push(sawWave(2000, oX, oX + width, 0));
+    travellers.push(wave(2000, oY - width / 3, oY + width / 3, 0));
+    travellers.push(wave(2000, oX, oX + width, 0));
+    travellers.push(() => oY - width / 2 + step * 2);
 
-  return vec2(sin(dir) * mag, cos(dir) * mag);
-}
-
-function getParticle() {
-  const cp = getOrigin();
-  const pp = getRandom();
-
-  return {
-    cpos: cp,
-    ppos: add(cp, pp),
-    update(dt: number) {
-      let vel = sub(this.cpos, this.ppos);
-
-      vel = sub(vel, div(grav, dt * dt));
-      vel = mul(vel, 1 - drag);
-
-      this.ppos = this.cpos;
-      this.cpos = add(this.cpos, vel);
-    },
-  };
-}
-
-const particles: IParticle[] = new Array(50)
-  .fill(true)
-  .reduce((acc, _, i) => acc.concat(getParticle()), []);
-
-const getPoints = (dt: number) =>
-  particles.reduce((acc: number[], p) => {
-    p.update(dt);
-
-    if (p.cpos.y < -c.height / 2) {
-      const cp = getOrigin();
-      const pp = getRandom();
-
-      p.cpos = cp;
-      p.ppos = add(cp, pp);
-    }
-
-    return acc.concat(p.cpos);
-  }, []);
-
-let points: number[] = getPoints(0);
+    return [
+      ...components,
+      ...new Array(steps)
+        .fill(0)
+        .map(toVectors)
+        .reduce(toComponents, []),
+    ];
+  },
+  [],
+);
 
 function init(): void {
   if (resize(c, m)) {
@@ -143,7 +116,7 @@ function init(): void {
 }
 
 function update(t: number, dt: number): void {
-  points = getPoints(dt);
+  travellerComponents = travellers.map(fn => fn(t));
 }
 
 function render(lag: number): void {
@@ -151,11 +124,13 @@ function render(lag: number): void {
     setUniforms(c.width, c.height);
   }
 
+  const data = points.concat(travellerComponents);
+
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
 
   gl.enableVertexAttribArray(aPositions);
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
@@ -165,10 +140,11 @@ function render(lag: number): void {
   gl.uniform2fv(uResolution, resolution);
   gl.uniform1f(uPointSize, pointSize);
 
-  gl.drawArrays(gl.POINTS, 0, points.length / 2);
+  gl.drawArrays(gl.POINTS, 0, data.length / 2);
 }
 
 const { start } = loop(update, render);
 
 init();
 start();
+stop();

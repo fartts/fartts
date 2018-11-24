@@ -137,7 +137,7 @@ describe('@fartts/lib/vec/math', () => {
     ${v2} | ${getZeros(v2.length)} | ${1 / 2}                            | ${'vec2(1,1)'}
     ${v2} | ${getZeros(v2.length)} | ${vec2(2, 3)}                       | ${'vec2(-2,-4)'}
     ${v3} | ${getZeros(v3.length)} | ${2 / 3}                            | ${'vec3(1,1,1)'}
-    ${v3} | ${getZeros(v3.length)} | ${vec3(1 / 3, 1 / 4, 1 / 5)}        | ${'vec3(2,2.25,2.4)'}
+    ${v3} | ${getZeros(v3.length)} | ${vec3(1 / 3, 1 / 4, 1 / 5)}        | ${'vec3(2,2.25,2.4000000000000004)'}
     ${v4} | ${getZeros(v4.length)} | ${1 / 4}                            | ${'vec4(3,3,3,3)'}
     ${v4} | ${getZeros(v4.length)} | ${vec4(2 / 5, 1 / 3, 2 / 7, 3 / 8)} | ${'vec4(2.4,2.666666666666667,2.857142857142857,2.5)'}
   `('lerp($a, $b, $i) should be $result', ({ a, b, i, result }) => {

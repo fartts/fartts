@@ -46,7 +46,9 @@ export function wave(
   };
 }
 
-export const cosWave = (...args: number[]) => wave(cos, ...args);
-export const sawWave = (...args: number[]) => wave(saw, ...args);
-export const sinWave = (...args: number[]) => wave(sin, ...args);
-export const triWave = (...args: number[]) => wave(tri, ...args);
+export const [cosWave, sawWave, sinWave, triWave] = [
+  (p = 1000, min = -1, max = 1, o = 0) => wave(cos, p, min, max, o),
+  (p = 1000, min = -1, max = 1, o = 0) => wave(saw, p, min, max, o),
+  (p = 1000, min = -1, max = 1, o = 0) => wave(sin, p, min, max, o),
+  (p = 1000, min = -1, max = 1, o = 0) => wave(tri, p, min, max, o),
+];
