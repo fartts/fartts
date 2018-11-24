@@ -1,3 +1,23 @@
+# [1.9.0](https://github.com/fartts/fartts.git/compare/v1.8.4...v1.9.0) (2018-11-24)
+
+
+### Bug Fixes
+
+* **05-tweens/program:** rework the validation a bit to have a single info/message ([97f94ed](https://github.com/fartts/fartts.git/commit/97f94ed))
+* **05-tweens/shader:** pull the info out of the shader before deleting it ([b6e769a](https://github.com/fartts/fartts.git/commit/b6e769a))
+
+
+### Features
+
+* **lab/05-tweens:** adds travellers along the sampled wave paths ([8c653b4](https://github.com/fartts/fartts.git/commit/8c653b4))
+* **lab/05-tweens:** copies most of 04-vectors and strips it down for a new experiment ([40ed842](https://github.com/fartts/fartts.git/commit/40ed842))
+* **lab/05-tweens:** draw samples of 4 wave functions ([5f76128](https://github.com/fartts/fartts.git/commit/5f76128))
+
+
+### Performance Improvements
+
+* **spike:** spike out a prototype-over-proxy implementation of the swizzled key stuff ([db93bcf](https://github.com/fartts/fartts.git/commit/db93bcf))
+
 ## [1.8.4](https://github.com/fartts/fartts/compare/v1.8.3...v1.8.4) (2018-10-06)
 
 
