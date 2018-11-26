@@ -40,9 +40,8 @@ function setByKey(target: Vector, prop: string, value: number): void {
 }
 
 const propertyDescriptor = Array.from(swizzledKeys).reduce(
-  (acc: PropertyDescriptorMap, key: string) => ({
-    ...acc,
-    [key]: {
+  (acc: PropertyDescriptorMap, key: string) => {
+    acc[key] = {
       get:
         key.length === 1
           ? function(this: Vector) {
@@ -60,8 +59,10 @@ const propertyDescriptor = Array.from(swizzledKeys).reduce(
           : function(this: Vector, val: Vector) {
               key.split('').forEach((k, i) => setByKey(this, k, val[i]));
             },
-    },
-  }),
+    };
+
+    return acc;
+  },
   {},
 );
 
