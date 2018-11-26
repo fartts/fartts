@@ -8,7 +8,7 @@ class Vector extends Float32Array {
   }
 }
 
-const baseKeys = [['x', 'y'] /* , ['r', 'g'], ['s', 't'] */];
+const baseKeys = [['x', 'y'], ['r', 'g'], ['s', 't']];
 const swizzledSet = toSwizzledSet(baseKeys);
 const keyIndexMap = toKeyIndexMap(baseKeys);
 
