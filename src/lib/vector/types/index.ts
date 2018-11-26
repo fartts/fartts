@@ -9,20 +9,20 @@ export type Components = Component[];
 export type Factory<V> = (...args: Array<number | number[] | Vector>) => V;
 
 type Vec1D1 = 'x' | 's' | 'r';
-type Vec1 = Vector & { [K in Vec1D1]: number };
+type Vector1 = Vector & { [K in Vec1D1]: number };
 
-export type Vec2 = Vec1 &
+export type Vector2 = Vector1 &
   { [K in Vec2D1]: number } &
-  { [K in Vec2D2]: Vec2 } &
-  { [K in Vec2D3]: Vec3 } &
-  { [K in Vec2D4]: Vec4 };
-export type Vec3 = Vec2 &
+  { [K in Vec2D2]: Vector2 } &
+  { [K in Vec2D3]: Vector3 } &
+  { [K in Vec2D4]: Vector4 };
+export type Vector3 = Vector2 &
   { [K in Vec3D1]: number } &
-  { [K in Vec3D2]: Vec2 } &
-  { [K in Vec3D3]: Vec3 } &
-  { [K in Vec3D4]: Vec4 };
-export type Vec4 = Vec3 &
+  { [K in Vec3D2]: Vector2 } &
+  { [K in Vec3D3]: Vector3 } &
+  { [K in Vec3D4]: Vector4 };
+export type Vector4 = Vector3 &
   { [K in Vec4D1]: number } &
-  { [K in Vec4D2]: Vec2 } &
-  { [K in Vec4D3]: Vec3 } &
-  { [K in Vec4D4]: Vec4 };
+  { [K in Vec4D2]: Vector2 } &
+  { [K in Vec4D3]: Vector3 } &
+  { [K in Vec4D4]: Vector4 };

@@ -2,7 +2,7 @@ import Vector from '.';
 import { getFactory, getLeft } from './factories';
 import { acos, hypot, lerp as slerp } from '../math';
 import { validateOperands } from './util';
-import { Vec2, Vec3, Vec4 } from './types';
+import { Vector2, Vector3, Vector4 } from './types';
 
 /**
  * ## dot
@@ -57,7 +57,7 @@ export function direction(a: Vector, b: Vector = getLeft(a.length)): number {
  * @param {Vector} v
  * @returns {Vector}
  */
-export function clone(v: Vector): Vec2 | Vec3 | Vec4 {
+export function clone(v: Vector): Vector2 | Vector3 | Vector4 {
   const factory = getFactory(v.length);
   return factory(v);
 }
@@ -70,7 +70,10 @@ export function clone(v: Vector): Vec2 | Vec3 | Vec4 {
  * @param {(number | Vector)} b
  * @returns {Vector}
  */
-export function add(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
+export function add(
+  a: Vector,
+  b: number | Vector,
+): Vector2 | Vector3 | Vector4 {
   if (b instanceof Vector) {
     validateOperands('add', a, b);
   }
@@ -92,7 +95,10 @@ const getAdd = (b: number | Vector) =>
  * @param {(number | Vector)} b
  * @returns {Vector}
  */
-export function sub(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
+export function sub(
+  a: Vector,
+  b: number | Vector,
+): Vector2 | Vector3 | Vector4 {
   if (b instanceof Vector) {
     validateOperands('sub', a, b);
   }
@@ -114,7 +120,10 @@ const getSub = (b: number | Vector) =>
  * @param {(number | Vector)} b
  * @returns {Vector}
  */
-export function mul(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
+export function mul(
+  a: Vector,
+  b: number | Vector,
+): Vector2 | Vector3 | Vector4 {
   if (b instanceof Vector) {
     validateOperands('mul', a, b);
   }
@@ -136,7 +145,10 @@ const getMul = (b: number | Vector) =>
  * @param {(number | Vector)} b
  * @returns {Vector}
  */
-export function div(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
+export function div(
+  a: Vector,
+  b: number | Vector,
+): Vector2 | Vector3 | Vector4 {
   if (b instanceof Vector) {
     validateOperands('div', a, b);
   }
@@ -157,7 +169,7 @@ const getDiv = (b: number | Vector) =>
  * @param {Vector} v
  * @returns {Vector}
  */
-export function normalize(v: Vector): Vec2 | Vec3 | Vec4 {
+export function normalize(v: Vector): Vector2 | Vector3 | Vector4 {
   const factory = getFactory(v.length);
   return factory(div(v, v.magnitude));
 }
@@ -175,7 +187,7 @@ export function lerp(
   a: Vector,
   b: Vector,
   i: number | Vector,
-): Vec2 | Vec3 | Vec4 {
+): Vector2 | Vector3 | Vector4 {
   validateOperands('lerp', a, b);
 
   if (i instanceof Vector) {

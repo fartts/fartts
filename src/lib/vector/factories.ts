@@ -1,5 +1,5 @@
 import Vector from '.';
-import { Components, Factory, Vec2, Vec3, Vec4 } from './types';
+import { Components, Factory, Vector2, Vector3, Vector4 } from './types';
 import { toArray, validateKeys, validateRange, Validates } from './util';
 import { swizzledKeys, indicesByKey } from './util/keys';
 
@@ -141,18 +141,18 @@ function createFactory<V extends Vector>(size: number): Factory<V> {
  *
  * @export
  * @param {number} size
- * @returns {(Factory<Vec2> | Factory<Vec3> | Factory<Vec4>)}
+ * @returns {(Factory<Vector2> | Factory<Vector3> | Factory<Vector4>)}
  */
 export function getFactory(
   size: number,
-): Factory<Vec2> | Factory<Vec3> | Factory<Vec4> {
+): Factory<Vector2> | Factory<Vector3> | Factory<Vector4> {
   return factories[size - 2];
 }
 
-const factories: [Factory<Vec2>, Factory<Vec3>, Factory<Vec4>] = [
-  createFactory<Vec2>(2),
-  createFactory<Vec3>(3),
-  createFactory<Vec4>(4),
+const factories: [Factory<Vector2>, Factory<Vector3>, Factory<Vector4>] = [
+  createFactory<Vector2>(2),
+  createFactory<Vector3>(3),
+  createFactory<Vector4>(4),
 ];
 
 export const [vec2, vec3, vec4] = factories;
@@ -162,9 +162,9 @@ export const [vec2, vec3, vec4] = factories;
  *
  * @export
  * @param {number} size
- * @returns {(Vec2 | Vec3 | Vec4)}
+ * @returns {(Vector2 | Vector3 | Vector4)}
  */
-export function getLeft(size: number): Vec2 | Vec3 | Vec4 {
+export function getLeft(size: number): Vector2 | Vector3 | Vector4 {
   const factory = getFactory(size);
   const args = new Array(size - 1).fill(0);
   return factory(1, ...args);
@@ -175,9 +175,9 @@ export function getLeft(size: number): Vec2 | Vec3 | Vec4 {
  *
  * @export
  * @param {number} size
- * @returns {(Vec2 | Vec3 | Vec4)}
+ * @returns {(Vector2 | Vector3 | Vector4)}
  */
-export function getZeros(size: number): Vec2 | Vec3 | Vec4 {
+export function getZeros(size: number): Vector2 | Vector3 | Vector4 {
   const factory = getFactory(size);
   const args = new Array(size).fill(0);
   return factory(...args);

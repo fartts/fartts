@@ -4,7 +4,7 @@ import { random, sin, cos, ππ, round } from '../../lib/math';
 import resize from './resize';
 import { vec2 } from '../../lib/vector/factories';
 import { sub, mul, add, div } from '../../lib/vector/math';
-import { Vec2 } from '../../lib/vector/types';
+import { Vector2 } from '../../lib/vector/types';
 
 import './main.css';
 
@@ -43,8 +43,8 @@ function setUniforms(w: number, h: number): void {
 }
 
 interface IParticle {
-  cpos: Vec2;
-  ppos: Vec2;
+  cpos: Vector2;
+  ppos: Vector2;
   update(dt: number): void;
 }
 
