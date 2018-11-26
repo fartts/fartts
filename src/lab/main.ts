@@ -1,5 +1,5 @@
 import './main.css';
-import { toSwizzled, toIndicesByKey } from '../lib/vector/util/keys';
+import { toSwizzledSet, toKeyIndexMap } from '../lib/vec/keys';
 import { vec2 } from '../lib/vector/factories';
 
 class Vector extends Float32Array {
@@ -8,38 +8,21 @@ class Vector extends Float32Array {
   }
 }
 
-const baseKeys = [['x', 'y'], ['r', 'g'], ['s', 't']];
-const swizzledKeys = new Set(
-  baseKeys.reduce(
-    (acc: string[], keys: string[]) => [
-      ...acc,
-      ...keys.reduceRight(toSwizzled, keys),
-    ],
-    [],
-  ),
-);
-
-const indicesByKey = new Map(
-  baseKeys.reduce(
-    (acc: Array<[string, number]>, keys: string[]) => [
-      ...acc,
-      ...keys.reduce(toIndicesByKey, []),
-    ],
-    [],
-  ),
-);
+const baseKeys = [['x', 'y'] /* , ['r', 'g'], ['s', 't'] */];
+const swizzledSet = toSwizzledSet(baseKeys);
+const keyIndexMap = toKeyIndexMap(baseKeys);
 
 function getByKey(target: Vector, prop: string): number {
-  const i = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
+  const i = (keyIndexMap.has(prop) && keyIndexMap.get(prop)) as number;
   return target[i];
 }
 
 function setByKey(target: Vector, prop: string, value: number): void {
-  const j = (indicesByKey.has(prop) && indicesByKey.get(prop)) as number;
+  const j = (keyIndexMap.has(prop) && keyIndexMap.get(prop)) as number;
   target[j] = value;
 }
 
-const propertyDescriptor = Array.from(swizzledKeys).reduce(
+const propertyDescriptor = Array.from(swizzledSet).reduce(
   (acc: PropertyDescriptorMap, key: string) => {
     acc[key] = {
       get:
@@ -69,7 +52,7 @@ const propertyDescriptor = Array.from(swizzledKeys).reduce(
 Object.defineProperties(Vector.prototype, propertyDescriptor);
 
 console.log(Vector); // tslint:disable-line no-console
-console.log(swizzledKeys); // tslint:disable-line no-console
+console.log(swizzledSet); // tslint:disable-line no-console
 console.log(propertyDescriptor); // tslint:disable-line no-console
 console.log(new Vector([0, 1])); // tslint:disable-line no-console
 console.log(vec2(0, 1)); // tslint:disable-line no-console
