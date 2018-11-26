@@ -5,7 +5,7 @@ import { link } from './program';
 
 import vert from './shader.vert';
 import frag from './shader.frag';
-import { cosWave, sinWave, WaveFunction } from '../../../lib/wave';
+import { cosWave, sinWave, WaveFunction } from '../../lib/wave';
 
 // const { keys, getPrototypeOf } = Object;
 const { isInteger } = Number;

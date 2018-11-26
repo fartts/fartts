@@ -1,6 +1,6 @@
-import { round } from '../../../lib/math';
-import { el } from '../../../lib/dom';
-import loop from '../../../lib/game/loop';
+import { round } from '../../lib/math';
+import { el } from '../../lib/dom';
+import loop from '../../lib/game/loop';
 import resize from './resize';
 
 import './main.css';
@@ -10,15 +10,15 @@ import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
-import Vector from '../../../lib/vec';
-import { vec2 } from '../../../lib/vec/factories';
+import Vector from '../../lib/vec';
+import { vec2 } from '../../lib/vec/factories';
 import {
   cosWave,
   sawWave,
   sinWave,
   triWave,
   WaveFunction,
-} from '../../../lib/wave';
+} from '../../lib/wave';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
