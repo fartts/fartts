@@ -18,6 +18,8 @@ function createProperties<I extends Float32Array>(baseKeys: string[][]) {
     return target[i];
   }
 
+  const Vec = [Float32Array, Float32Array, Vec2, Vec3, Vec4];
+
   function getterFor(
     key: string,
   ):
@@ -25,29 +27,16 @@ function createProperties<I extends Float32Array>(baseKeys: string[][]) {
     | ((this: I) => Vec2)
     | ((this: I) => Vec3)
     | ((this: I) => Vec4) {
-    switch (key.length) {
-      case 1:
-        return function get(this: I) {
+    const { length } = key;
+
+    return length === 1
+      ? function get(this: I) {
           return getByKey(this, key);
-        };
-      case 2:
-        return function get(this: I) {
+        }
+      : function get(this: I) {
           const args = key.split('').map(k => getByKey(this, k));
-          return new Vec2(args);
+          return new Vec[length](args);
         };
-      case 3:
-        return function get(this: I) {
-          const args = key.split('').map(k => getByKey(this, k));
-          return new Vec3(args);
-        };
-      case 4:
-        return function get(this: I) {
-          const args = key.split('').map(k => getByKey(this, k));
-          return new Vec4(args);
-        };
-      default:
-        throw new Error(`Invalid key ${key} supplied to getterFor`);
-    }
   }
 
   function setByKey(target: I, key: string, value: number): void {
@@ -58,37 +47,36 @@ function createProperties<I extends Float32Array>(baseKeys: string[][]) {
         }`,
       );
     }
+
     const i = keyIndexMap.get(key) as number;
     target[i] = value;
   }
 
   function setterFor(
     key: string,
-  ): ((this: I, value: number) => void) | ((this: I, value: number[]) => void) {
-    switch (key.length) {
-      case 1:
-        return function set(this: I, value: number) {
+  ):
+    | ((this: I, value: number) => void)
+    | ((this: I, value: ArrayLike<number>) => void) {
+    const { length } = key;
+
+    return length === 1
+      ? function set(this: I, value: number) {
           setByKey(this, key, value);
-        };
-      case 2:
-      case 3:
-      case 4:
-        return function set(this: I, value: number[]) {
-          if (key.length !== value.length) {
+        }
+      : function set(this: I, value: ArrayLike<number>) {
+          if (length !== value.length) {
             throw new Error(
               [
                 'Dimension mismatch',
-                `Cannot assign ${value.length}-component value: ${value} to ${
-                  key.length
-                }-component key ${key}`,
+                `Cannot assign ${
+                  value.length
+                }-component value: ${value} to ${length}-component key ${key}`,
               ].join('\n'),
             );
           }
+
           key.split('').forEach((k, i) => setByKey(this, k, value[i]));
         };
-      default:
-        throw new Error(`Invalid key ${key} supplied to setterFor`);
-    }
   }
 
   return Array.from(swizzledSet).reduce((acc: PropertyDescriptorMap, key) => {
