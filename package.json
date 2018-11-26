@@ -1,6 +1,6 @@
 {
   "name": "@fartts/fartts",
-  "version": "1.8.4",
+  "version": "1.9.0",
   "description": "𝑓(unctional)Art(-making).ᴛ(ype)ꜱ(cript) - an experiment by [Matt Hayes](https://github.com/mysterycommand)",
   "main": "index.js",
   "repository": "https://github.com/fartts/fartts.git",
@@ -9,8 +9,8 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf .cache/ coverage/ dist/ node_modules/",
-    "build": "parcel build src/app/{index.html,README.md} --public-url / --experimental-scope-hoisting",
-    "start": "parcel src/app/{index.html,README.md}",
+    "build": "parcel build src/lab/{index.html,README.md} --public-url / --experimental-scope-hoisting",
+    "start": "parcel src/lab/{index.html,README.md}",
     "lint": "tslint 'src/**/*.ts'",
     "test": "jest",
     "coverage": "open coverage/lcov-report/index.html"
@@ -34,7 +34,7 @@
     "@semantic-release/changelog": "3.0.1",
     "@semantic-release/commit-analyzer": "6.1.0",
     "@semantic-release/git": "7.0.5",
-    "@semantic-release/github": "5.2.1",
+    "@semantic-release/github": "5.2.5",
     "@semantic-release/npm": "5.0.5",
     "@semantic-release/release-notes-generator": "7.1.3",
     "@types/jest": "23.3.9",

@@ -1,22 +1,14 @@
-@import '../../styles/base.css';
+@import '../styles/base.css';
 
-body,
 main {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-main {
-  border: 3px dashed #fff;
-  overflow: hidden;
-  width: 80%;
-  height: 80%;
+  flex-flow: column;
   padding: 0;
 }
 
 canvas {
-  flex-shrink: 0;
   background: #000;
   image-rendering: optimizeSpeed;
   image-rendering: -moz-crisp-edges;
