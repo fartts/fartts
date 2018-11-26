@@ -1,6 +1,6 @@
 import { swizzledKeys, indicesByKey } from './keys';
 
-describe('@fartts/lib/vec/util/keys', () => {
+describe('@fartts/lib/vector/util/keys', () => {
   test('config', () => {
     expect({
       indicesByKey,

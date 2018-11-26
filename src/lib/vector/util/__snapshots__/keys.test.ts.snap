@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`@fartts/lib/vec/util/keys config 1`] = `
+exports[`@fartts/lib/vector/util/keys config 1`] = `
 Object {
   "indicesByKey": Map {
     "x" => 0,

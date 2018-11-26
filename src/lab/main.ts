@@ -1,6 +1,6 @@
 import './main.css';
-import { toSwizzled, toIndicesByKey } from '../lib/vec/util/keys';
-import { vec2 } from '../lib/vec/factories';
+import { toSwizzled, toIndicesByKey } from '../lib/vector/util/keys';
+import { vec2 } from '../lib/vector/factories';
 
 class Vector extends Float32Array {
   static get [Symbol.species]() {

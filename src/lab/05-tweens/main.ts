@@ -10,8 +10,8 @@ import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
-import Vector from '../../lib/vec';
-import { vec2 } from '../../lib/vec/factories';
+import Vector from '../../lib/vector';
+import { vec2 } from '../../lib/vector/factories';
 import {
   cosWave,
   sawWave,

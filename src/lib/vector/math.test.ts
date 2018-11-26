@@ -13,7 +13,7 @@ import {
 } from './math';
 import { hypot, sqrt, π, toRadians } from '../math';
 
-describe('@fartts/lib/vec/math', () => {
+describe('@fartts/lib/vector/math', () => {
   const v2 = vec2(2, 2);
   const v3 = vec3(3, 3, 3);
   const v4 = vec4(4, 4, 4, 4);

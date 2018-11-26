@@ -2,7 +2,7 @@ import Vector from '.';
 import { vec2, vec3, vec4 } from './factories';
 import { sqrt, hypot, toRadians, π } from '../math';
 
-describe('@fartts/lib/vec', () => {
+describe('@fartts/lib/vector', () => {
   const v2 = vec2(2, 2);
   const v3 = vec3(3, 3, 3);
   const v4 = vec4(4, 4, 4, 4);

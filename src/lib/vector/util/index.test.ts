@@ -1,7 +1,7 @@
 import { vec2, vec3, vec4 } from '../factories';
 import { toArray, validateKeys, validateRange, Validates } from '.';
 
-describe('@fartts/lib/vec/util', () => {
+describe('@fartts/lib/vector/util', () => {
   test.each`
     args                               | result
     ${[1]}                             | ${[1]}
