@@ -1,6 +1,6 @@
 import './main.css';
 
-import { cos, sin, toRadians } from '../../../lib/math';
+import { cos, sin, toRadians } from '../../lib/math';
 
 import frag from './shader.frag';
 import vert from './shader.vert';

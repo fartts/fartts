@@ -1,10 +1,10 @@
-import { el } from '../../../lib/dom';
-import loop from '../../../lib/game/loop';
-import { random, sin, cos, ππ, round } from '../../../lib/math';
+import { el } from '../../lib/dom';
+import loop from '../../lib/game/loop';
+import { random, sin, cos, ππ, round } from '../../lib/math';
 import resize from './resize';
-import { vec2 } from '../../../lib/vec/factories';
-import { sub, mul, add, div } from '../../../lib/vec/math';
-import { Vec2 } from '../../../lib/vec/types';
+import { vec2 } from '../../lib/vec/factories';
+import { sub, mul, add, div } from '../../lib/vec/math';
+import { Vec2 } from '../../lib/vec/types';
 
 import './main.css';
 
