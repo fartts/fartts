@@ -1,6 +1,7 @@
 import { toKeyIndexMap, toSwizzledSet } from './keys';
 import Vec3 from './3';
 import Vec4 from './4';
+import { isFinite } from '../math';
 
 export default class Vec2 extends Float32Array {
   static get [Symbol.species]() {
@@ -45,7 +46,48 @@ function createProperties<I extends Float32Array>(baseKeys: string[][]) {
           return new Vec4(args);
         };
       default:
-        throw new Error(`Invalid key ${key} supplied to getterFor.`);
+        throw new Error(`Invalid key ${key} supplied to getterFor`);
+    }
+  }
+
+  function setByKey(target: I, key: string, value: number): void {
+    if (!isFinite(value)) {
+      throw new Error(
+        `Cannot assign ${typeof value} value "${value}" to a component of ${
+          target.constructor.name
+        }`,
+      );
+    }
+    const i = keyIndexMap.get(key) as number;
+    target[i] = value;
+  }
+
+  function setterFor(
+    key: string,
+  ): ((this: I, value: number) => void) | ((this: I, value: number[]) => void) {
+    switch (key.length) {
+      case 1:
+        return function set(this: I, value: number) {
+          setByKey(this, key, value);
+        };
+      case 2:
+      case 3:
+      case 4:
+        return function set(this: I, value: number[]) {
+          if (key.length !== value.length) {
+            throw new Error(
+              [
+                'Dimension mismatch',
+                `Cannot assign ${value.length}-component value: ${value} to ${
+                  key.length
+                }-component key ${key}`,
+              ].join('\n'),
+            );
+          }
+          key.split('').forEach((k, i) => setByKey(this, k, value[i]));
+        };
+      default:
+        throw new Error(`Invalid key ${key} supplied to setterFor`);
     }
   }
 
@@ -54,9 +96,7 @@ function createProperties<I extends Float32Array>(baseKeys: string[][]) {
       configurable: false,
       enumerable: true,
       get: getterFor(key),
-      set(this: Vec2, val) {
-        // do nothing
-      },
+      set: setterFor(key),
     };
 
     return acc;
