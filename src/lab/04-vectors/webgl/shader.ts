@@ -2,11 +2,9 @@ export function validate(gl: WebGLRenderingContext, shader: WebGLShader): void {
   const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
 
   if (!success) {
+    const info = gl.getShaderInfoLog(shader);
     gl.deleteShader(shader);
-
-    throw new Error(
-      `shader ${shader} failed to compile:\n${gl.getShaderInfoLog(shader)}`,
-    );
+    throw new Error(`shader ${shader} failed to compile:\n${info}`);
   }
 }
 
