@@ -17,13 +17,6 @@ function createProperties<I extends Float32Array>(baseKeys: string[][]) {
     return target[i];
   }
 
-  // function getN<J extends Float32ArrayConstructor>(Ctor: J, key: string) {
-  //   return function get(this: I) {
-  //     const args = key.split('').map(k => getByKey(this, k));
-  //     return new Ctor(args);
-  //   };
-  // }
-
   function getterFor(
     key: string,
   ):
