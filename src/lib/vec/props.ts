@@ -5,16 +5,16 @@ import Vec4 from './4';
 import { isFinite } from '../math';
 import { toSwizzledSet, toKeyIndexMap } from './keys';
 
-export function createProperties<I extends Float32Array>(baseKeys: string[][]) {
+export function createProps<I extends Float32Array>(baseKeys: string[][]) {
   const swizzledSet = toSwizzledSet(baseKeys);
   const keyIndexMap = toKeyIndexMap(baseKeys);
+
+  const Vec = [Float32Array, Float32Array, Vec2, Vec3, Vec4];
 
   function getByKey(target: I, key: string): number {
     const i = keyIndexMap.get(key) as number;
     return target[i];
   }
-
-  const Vec = [Float32Array, Float32Array, Vec2, Vec3, Vec4];
 
   function getterFor(
     key: string,

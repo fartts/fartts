@@ -12,7 +12,7 @@ describe('@fartts/lib/vector/util', () => {
     ${[1, [2, [3]], vec4(4, 5, 6, 7)]} | ${[1, 2, [3], 4, 5, 6, 7]}
   `(
     /* ^^ demonstrates that it doesn't work recursively, only 1 deep ^^ */
-    'expect($arguments.reduce(toArray, [])).toEqual($result)',
+    'expect($args.reduce(toArray, [])).toEqual($result)',
     ({ args, result }) => {
       expect(args.reduce(toArray, [])).toEqual(result);
     },
