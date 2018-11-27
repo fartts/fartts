@@ -9,7 +9,7 @@ export function createProps<I extends Float32Array>(baseKeys: string[][]) {
   const swizzledSet = toSwizzledSet(baseKeys);
   const keyIndexMap = toKeyIndexMap(baseKeys);
 
-  const Vec = [Float32Array, Float32Array, Vec2, Vec3, Vec4];
+  const Vec = [Vec2, Vec3, Vec4];
 
   function getByKey(target: I, key: string): number {
     const i = keyIndexMap.get(key) as number;
@@ -31,7 +31,7 @@ export function createProps<I extends Float32Array>(baseKeys: string[][]) {
         }
       : function get(this: I) {
           const args = key.split('').map(k => getByKey(this, k));
-          return new Vec[length](args);
+          return new Vec[length - 2](args);
         };
   }
 
