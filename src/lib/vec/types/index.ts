@@ -1,50 +1,50 @@
 import {
-  Component2Length1,
-  Component2Length2,
-  Component2Length3,
-  Component2Length4,
+  Components2Length1,
+  Components2Length2,
+  Components2Length3,
+  Components2Length4,
 } from './2';
 
 import {
-  Component3Length1,
-  Component3Length2,
-  Component3Length3,
-  Component3Length4,
+  Components3Length1,
+  Components3Length2,
+  Components3Length3,
+  Components3Length4,
 } from './3';
 
 import {
-  Component4Length1,
-  Component4Length2,
-  Component4Length3,
-  Component4Length4,
+  Components4Length1,
+  Components4Length2,
+  Components4Length3,
+  Components4Length4,
 } from './4';
 
-type Component1Length1 = 'r' | 's' | 'x';
-type Component1Length2 = 'rr' | 'ss' | 'xx';
-type Component1Length3 = 'rrr' | 'sss' | 'xxx';
-type Component1Length4 = 'rrrr' | 'ssss' | 'xxxx';
+type Components1Length1 = 'r' | 's' | 'x';
+type Components1Length2 = 'rr' | 'ss' | 'xx';
+type Components1Length3 = 'rrr' | 'sss' | 'xxx';
+type Components1Length4 = 'rrrr' | 'ssss' | 'xxxx';
 
 // prettier-ignore
 type Swizzled1 =
-  { [K in Component1Length1]: number } &
-  { [K in Component1Length2]: Swizzled2 } &
-  { [K in Component1Length3]: Swizzled3 } &
-  { [K in Component1Length4]: Swizzled4 };
+  { [K in Components1Length1]: number } &
+  { [K in Components1Length2]: Swizzled2 } &
+  { [K in Components1Length3]: Swizzled3 } &
+  { [K in Components1Length4]: Swizzled4 };
 
 export type Swizzled2 = Swizzled1 &
-  { [K in Component2Length1]: number } &
-  { [K in Component2Length2]: Swizzled2 } &
-  { [K in Component2Length3]: Swizzled3 } &
-  { [K in Component2Length4]: Swizzled4 };
+  { [K in Components2Length1]: number } &
+  { [K in Components2Length2]: Swizzled2 } &
+  { [K in Components2Length3]: Swizzled3 } &
+  { [K in Components2Length4]: Swizzled4 };
 
 export type Swizzled3 = Swizzled2 &
-  { [K in Component3Length1]: number } &
-  { [K in Component3Length2]: Swizzled2 } &
-  { [K in Component3Length3]: Swizzled3 } &
-  { [K in Component3Length4]: Swizzled4 };
+  { [K in Components3Length1]: number } &
+  { [K in Components3Length2]: Swizzled2 } &
+  { [K in Components3Length3]: Swizzled3 } &
+  { [K in Components3Length4]: Swizzled4 };
 
 export type Swizzled4 = Swizzled3 &
-  { [K in Component4Length1]: number } &
-  { [K in Component4Length2]: Swizzled2 } &
-  { [K in Component4Length3]: Swizzled3 } &
-  { [K in Component4Length4]: Swizzled4 };
+  { [K in Components4Length1]: number } &
+  { [K in Components4Length2]: Swizzled2 } &
+  { [K in Components4Length3]: Swizzled3 } &
+  { [K in Components4Length4]: Swizzled4 };
