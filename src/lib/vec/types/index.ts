@@ -1,31 +1,50 @@
-import { Vec2D1, Vec2D2, Vec2D3, Vec2D4 } from './2';
-import { Vec3D1, Vec3D2, Vec3D3, Vec3D4 } from './3';
-import { Vec4D1, Vec4D2, Vec4D3, Vec4D4 } from './4';
+import {
+  Component2Length1,
+  Component2Length2,
+  Component2Length3,
+  Component2Length4,
+} from './2';
 
-type Vec1D1 = 'r' | 's' | 'x';
-type Vec1D2 = 'rr' | 'ss' | 'xx';
-type Vec1D3 = 'rrr' | 'sss' | 'xxx';
-type Vec1D4 = 'rrrr' | 'ssss' | 'xxxx';
+import {
+  Component3Length1,
+  Component3Length2,
+  Component3Length3,
+  Component3Length4,
+} from './3';
 
-type Swizzled1 = { [K in Vec1D1]: number } &
-  { [K in Vec1D2]: Swizzled2 } &
-  { [K in Vec1D3]: Swizzled3 } &
-  { [K in Vec1D4]: Swizzled4 };
+import {
+  Component4Length1,
+  Component4Length2,
+  Component4Length3,
+  Component4Length4,
+} from './4';
+
+type Component1Length1 = 'r' | 's' | 'x';
+type Component1Length2 = 'rr' | 'ss' | 'xx';
+type Component1Length3 = 'rrr' | 'sss' | 'xxx';
+type Component1Length4 = 'rrrr' | 'ssss' | 'xxxx';
+
+// prettier-ignore
+type Swizzled1 =
+  { [K in Component1Length1]: number } &
+  { [K in Component1Length2]: Swizzled2 } &
+  { [K in Component1Length3]: Swizzled3 } &
+  { [K in Component1Length4]: Swizzled4 };
 
 export type Swizzled2 = Swizzled1 &
-  { [K in Vec2D1]: number } &
-  { [K in Vec2D2]: Swizzled2 } &
-  { [K in Vec2D3]: Swizzled3 } &
-  { [K in Vec2D4]: Swizzled4 };
+  { [K in Component2Length1]: number } &
+  { [K in Component2Length2]: Swizzled2 } &
+  { [K in Component2Length3]: Swizzled3 } &
+  { [K in Component2Length4]: Swizzled4 };
 
 export type Swizzled3 = Swizzled2 &
-  { [K in Vec3D1]: number } &
-  { [K in Vec3D2]: Swizzled2 } &
-  { [K in Vec3D3]: Swizzled3 } &
-  { [K in Vec3D4]: Swizzled4 };
+  { [K in Component3Length1]: number } &
+  { [K in Component3Length2]: Swizzled2 } &
+  { [K in Component3Length3]: Swizzled3 } &
+  { [K in Component3Length4]: Swizzled4 };
 
 export type Swizzled4 = Swizzled3 &
-  { [K in Vec4D1]: number } &
-  { [K in Vec4D2]: Swizzled2 } &
-  { [K in Vec4D3]: Swizzled3 } &
-  { [K in Vec4D4]: Swizzled4 };
+  { [K in Component4Length1]: number } &
+  { [K in Component4Length2]: Swizzled2 } &
+  { [K in Component4Length3]: Swizzled3 } &
+  { [K in Component4Length4]: Swizzled4 };
