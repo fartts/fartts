@@ -1,7 +1,11 @@
-import { Vec1D1, Vec1D2, Vec1D3, Vec1D4 } from './1';
 import { Vec2D1, Vec2D2, Vec2D3, Vec2D4 } from './2';
 import { Vec3D1, Vec3D2, Vec3D3, Vec3D4 } from './3';
 import { Vec4D1, Vec4D2, Vec4D3, Vec4D4 } from './4';
+
+type Vec1D1 = 'r' | 's' | 'x';
+type Vec1D2 = 'rr' | 'ss' | 'xx';
+type Vec1D3 = 'rrr' | 'sss' | 'xxx';
+type Vec1D4 = 'rrrr' | 'ssss' | 'xxxx';
 
 type Swizzled1 = { [K in Vec1D1]: number } &
   { [K in Vec1D2]: Swizzled2 } &
