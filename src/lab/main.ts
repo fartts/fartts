@@ -1,5 +1,6 @@
 import './main.css';
-import Vec2 from '../lib/vec/2';
+import { vec2, vec3, vec4 } from '../lib/vec';
 
-const v = new Vec2([0, 1]);
-console.log(v); // tslint:disable-line no-console
+console.log(vec2(0)); // tslint:disable-line no-console
+console.log(vec3(11, 1, 1).slice()); // tslint:disable-line no-console
+console.log(vec4(2, 2, vec2(2, 2)).map(val => val * 2)); // tslint:disable-line no-console
