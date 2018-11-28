@@ -4,6 +4,7 @@ import Vec4 from './4';
 
 import { createProps } from './props';
 import { toArray } from './util';
+import { isFinite } from '../math';
 
 Object.defineProperties(
   Vec2.prototype,
@@ -53,6 +54,15 @@ function createFactory<V extends AnyVec>(
         `${
           flat.length < size ? 'Not enough' : 'Too many'
         } arguments provided for construction of ${Vec.name.toLowerCase()}`,
+      );
+    }
+
+    if (
+      flat.length === 1 &&
+      !(typeof flat[0] === 'number' && isFinite(flat[0]))
+    ) {
+      throw new Error(
+        `Invalid arguments "${flat}" provided to  ${Vec.name.toLowerCase()}`,
       );
     }
 
