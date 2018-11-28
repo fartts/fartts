@@ -278,6 +278,9 @@ Object {
     "get": [Function],
     "set": [Function],
   },
+  "toString": Object {
+    "value": [Function],
+  },
   "ts": Object {
     "configurable": false,
     "enumerable": true,
@@ -1752,6 +1755,9 @@ Object {
     "enumerable": true,
     "get": [Function],
     "set": [Function],
+  },
+  "toString": Object {
+    "value": [Function],
   },
   "tp": Object {
     "configurable": false,
@@ -6287,6 +6293,9 @@ Object {
     "enumerable": true,
     "get": [Function],
     "set": [Function],
+  },
+  "toString": Object {
+    "value": [Function],
   },
   "tp": Object {
     "configurable": false,

@@ -75,14 +75,25 @@ export function createProps<I extends Float32Array>(baseKeys: string[][]) {
         };
   }
 
-  return Array.from(swizzledSet).reduce((acc: PropertyDescriptorMap, key) => {
-    acc[key] = {
-      configurable: false,
-      enumerable: true,
-      get: getterFor(key),
-      set: setterFor(key),
-    };
+  return Array.from(swizzledSet).reduce(
+    (acc: PropertyDescriptorMap, key) => {
+      acc[key] = {
+        configurable: false,
+        enumerable: true,
+        get: getterFor(key),
+        set: setterFor(key),
+      };
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {
+      toString: {
+        value: function toString(this: I) {
+          return `vec${this.length}(${Float32Array.prototype.toString.call(
+            this,
+          )})`;
+        },
+      },
+    },
+  );
 }
