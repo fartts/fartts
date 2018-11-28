@@ -1,3 +1,19 @@
+# [1.10.0](https://github.com/fartts/fartts.git/compare/v1.9.0...v1.10.0) (2018-11-28)
+
+
+### Bug Fixes
+
+* **lib/vec:** removes old proxy-bases swizzle implementation in favor of decorated prototypes (faste ([acd5d23](https://github.com/fartts/fartts.git/commit/acd5d23)), closes [#118](https://github.com/fartts/fartts.git/issues/118) [#117](https://github.com/fartts/fartts.git/issues/117)
+
+
+### Features
+
+* **lib/math:** reexport Number.isNumber ([4a77f96](https://github.com/fartts/fartts.git/commit/4a77f96))
+* **lib/vec:** create vec2, vec3, and vec4 factory functions, going to prefer their usage over 'new ([8baa748](https://github.com/fartts/fartts.git/commit/8baa748))
+* **lib/vec:** first pass at an 'on-the-prototype' version of the swizzled vectors ([3bee17e](https://github.com/fartts/fartts.git/commit/3bee17e))
+* **lib/vec:** impliment setters ([e98e7be](https://github.com/fartts/fartts.git/commit/e98e7be))
+* **lib/vec/types:** updates to make the swizzled types work for each Vec class ([9ca0c33](https://github.com/fartts/fartts.git/commit/9ca0c33))
+
 # [1.9.0](https://github.com/fartts/fartts.git/compare/v1.8.4...v1.9.0) (2018-11-24)
 
 
