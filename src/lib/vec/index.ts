@@ -35,22 +35,36 @@ Object.defineProperties(
   ]),
 );
 
-export const [vec2, vec3, vec4] = [Vec2, Vec3, Vec4].map(
-  (Vec, i) => (...args: Array<number | number[] | Float32Array>) => {
+type AnyVec = Vec2 | Vec3 | Vec4;
+type AnyVecType = typeof Vec2 | typeof Vec3 | typeof Vec4;
+
+type Components = Array<number | number[] | Float32Array>;
+type Factory<V extends AnyVec> = (...args: Components) => V;
+
+function createFactory<V extends AnyVec>(
+  Vec: AnyVecType,
+  size: number,
+): Factory<V> {
+  return (...args: Components): V => {
     const flat = args.reduce(toArray, []);
 
-    const len = i + 2;
-    if (flat.length > 1 && flat.length !== len) {
+    if (flat.length > 1 && flat.length !== size) {
       throw new Error(
         `${
-          flat.length < len ? 'Not enough' : 'Too many'
+          flat.length < size ? 'Not enough' : 'Too many'
         } arguments provided for construction of ${Vec.name.toLowerCase()}`,
       );
     }
 
     const components =
-      flat.length <= 1 ? new Array(i + 2).fill(flat[0] || 0) : flat;
+      flat.length <= 1 ? new Array(size).fill(flat[0] || 0) : flat;
 
-    return new Vec(components);
-  },
-);
+    return new Vec(components) as V;
+  };
+}
+
+export const [vec2, vec3, vec4] = [
+  createFactory<Vec2>(Vec2, 2),
+  createFactory<Vec3>(Vec3, 3),
+  createFactory<Vec4>(Vec4, 4),
+];
