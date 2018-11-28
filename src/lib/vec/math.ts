@@ -1,192 +1,58 @@
-import Vector from '.';
-import { getFactory, getLeft } from './factories';
-import { acos, hypot, lerp as slerp } from '../math';
-import { validateOperands } from './util';
-import { Vec2, Vec3, Vec4 } from './types';
+import Vec2 from './2';
+import Vec3 from './3';
+import Vec4 from './4';
 
-/**
- * ## dot
- *
- * @export
- * @param {Vector} a
- * @param {Vector} b
- * @returns {number}
- */
-export function dot(a: Vector, b: Vector): number {
-  validateOperands('dot', a, b);
-  return a.reduce((acc, c, i) => acc + c * b[i], 0);
+import { vec2 } from '.';
+
+type AnyVec = Vec2 | Vec3 | Vec4;
+
+export interface VectorMath<V extends AnyVec> {
+  clone(v: V): V;
+
+  dot(a: V, b: V): number;
+  // cross(a: V, b: V): number;
+  // outer(a: V, b: V): number;
+
+  magnitude(v: V): number;
+  direction(a: V, b: V): number;
+
+  add(a: V, b: number | V): V;
+  sub(a: V, b: number | V): V;
+  mul(a: V, b: number | V): V;
+  div(a: V, b: number | V): V;
+
+  norm(v: V): V;
+  lerp(a: V, b: V, i: number | V): V;
 }
 
-/**
- * ## magnitude
- *
- * @export
- * @param {Vector} v
- * @returns {number}
- */
-export function magnitude(v: Vector): number {
-  // an alternative for later comparison
-  // return sqrt(dot(v, v));
-  return hypot(...v);
-}
-
-/**
- * ## direction
- *
- * @export
- * @param {Vector} a
- * @param {Vector} b
- * @returns {number}
- */
-export function direction(a: Vector, b: Vector = getLeft(a.length)): number {
-  const ρa = magnitude(a);
-  const ρb = magnitude(b);
-
-  if (ρa === 0 || ρb === 0) {
-    // it looks like this is what WebGL does
-    return 0;
+export function add(a: Vec2, b: number | Vec2): Vec2 {
+  if (typeof b === 'number') {
+    b = vec2(b);
   }
 
-  return acos(dot(a, b) / (ρa * ρb));
+  return vec2(a.map((c, i) => c + (b as Vec2)[i]));
 }
 
-/**
- * ## clone
- *
- * @export
- * @param {Vector} v
- * @returns {Vector}
- */
-export function clone(v: Vector): Vec2 | Vec3 | Vec4 {
-  const factory = getFactory(v.length);
-  return factory(v);
-}
-
-/**
- * ## add
- *
- * @export
- * @param {Vector} a
- * @param {(number | Vector)} b
- * @returns {Vector}
- */
-export function add(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
-  if (b instanceof Vector) {
-    validateOperands('add', a, b);
+export function sub(a: Vec2, b: number | Vec2): Vec2 {
+  if (typeof b === 'number') {
+    b = vec2(b);
   }
 
-  const factory = getFactory(a.length);
-  return factory(a.map(getAdd(b)));
+  return vec2(a.map((c, i) => c - (b as Vec2)[i]));
 }
 
-const getAdd = (b: number | Vector) =>
-  typeof b === 'number'
-    ? (c: number) => c + b
-    : (c: number, i: number) => c + b[i];
-
-/**
- * ## sub
- *
- * @export
- * @param {Vector} a
- * @param {(number | Vector)} b
- * @returns {Vector}
- */
-export function sub(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
-  if (b instanceof Vector) {
-    validateOperands('sub', a, b);
+export function mul(a: Vec2, b: number | Vec2): Vec2 {
+  if (typeof b === 'number') {
+    b = vec2(b);
   }
 
-  const factory = getFactory(a.length);
-  return factory(a.map(getSub(b)));
+  return vec2(a.map((c, i) => c * (b as Vec2)[i]));
 }
 
-const getSub = (b: number | Vector) =>
-  typeof b === 'number'
-    ? (c: number) => c - b
-    : (c: number, i: number) => c - b[i];
-
-/**
- * ## mul
- *
- * @export
- * @param {Vector} a
- * @param {(number | Vector)} b
- * @returns {Vector}
- */
-export function mul(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
-  if (b instanceof Vector) {
-    validateOperands('mul', a, b);
+export function div(a: Vec2, b: number | Vec2): Vec2 {
+  if (typeof b === 'number') {
+    b = vec2(b);
   }
 
-  const factory = getFactory(a.length);
-  return factory(a.map(getMul(b)));
+  return vec2(a.map((c, i) => c / (b as Vec2)[i]));
 }
-
-const getMul = (b: number | Vector) =>
-  typeof b === 'number'
-    ? (c: number) => c * b
-    : (c: number, i: number) => c * b[i];
-
-/**
- * ## div
- *
- * @export
- * @param {Vector} a
- * @param {(number | Vector)} b
- * @returns {Vector}
- */
-export function div(a: Vector, b: number | Vector): Vec2 | Vec3 | Vec4 {
-  if (b instanceof Vector) {
-    validateOperands('div', a, b);
-  }
-
-  const factory = getFactory(a.length);
-  return factory(a.map(getDiv(b)));
-}
-
-const getDiv = (b: number | Vector) =>
-  typeof b === 'number'
-    ? (c: number) => c / b
-    : (c: number, i: number) => c / b[i];
-
-/**
- * ## normalize
- *
- * @export
- * @param {Vector} v
- * @returns {Vector}
- */
-export function normalize(v: Vector): Vec2 | Vec3 | Vec4 {
-  const factory = getFactory(v.length);
-  return factory(div(v, v.magnitude));
-}
-
-/**
- * ## lerp
- *
- * @export
- * @param {Vector} a
- * @param {Vector} b
- * @param {(number | Vector)} i
- * @returns {Vector}
- */
-export function lerp(
-  a: Vector,
-  b: Vector,
-  i: number | Vector,
-): Vec2 | Vec3 | Vec4 {
-  validateOperands('lerp', a, b);
-
-  if (i instanceof Vector) {
-    validateOperands('lerp', a, i);
-  }
-
-  const factory = getFactory(a.length);
-  return factory(a.map(getLerp(b, i)));
-}
-
-const getLerp = (b: Vector, i: number | Vector) =>
-  typeof i === 'number'
-    ? (c: number, j: number) => slerp(c, b[j], i)
-    : (c: number, j: number) => slerp(c, b[j], i[j]);

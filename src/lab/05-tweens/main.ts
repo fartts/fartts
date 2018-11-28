@@ -10,8 +10,8 @@ import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
-import Vector from '../../lib/vec';
-import { vec2 } from '../../lib/vec/factories';
+import Vec2 from '../../lib/vec/2';
+import { vec2 } from '../../lib/vec';
 import {
   cosWave,
   sawWave,
@@ -51,7 +51,7 @@ function setUniforms(w: number, h: number): void {
 const width = 900;
 const steps = width / 30;
 const step = width / steps;
-const toComponents = (components: number[], v: Vector) => [...components, ...v];
+const toComponents = (components: number[], v: Vec2) => [...components, ...v];
 
 const travellers: WaveFunction[] = [];
 let travellerComponents: number[] = [];

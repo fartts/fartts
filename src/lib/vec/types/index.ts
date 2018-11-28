@@ -1,28 +1,54 @@
-import Vector from '..';
+import Vec2 from '../2';
+import Vec3 from '../3';
+import Vec4 from '../4';
 
-import { Vec2D1, Vec2D2, Vec2D3, Vec2D4 } from './vec2';
-import { Vec3D1, Vec3D2, Vec3D3, Vec3D4 } from './vec3';
-import { Vec4D1, Vec4D2, Vec4D3, Vec4D4 } from './vec4';
+import {
+  Components2Length1,
+  Components2Length2,
+  Components2Length3,
+  Components2Length4,
+} from './2';
 
-export type Component = number | number[] | Vector;
-export type Components = Component[];
-export type Factory<V> = (...args: Array<number | number[] | Vector>) => V;
+import {
+  Components3Length1,
+  Components3Length2,
+  Components3Length3,
+  Components3Length4,
+} from './3';
 
-type Vec1D1 = 'x' | 's' | 'r';
-type Vec1 = Vector & { [K in Vec1D1]: number };
+import {
+  Components4Length1,
+  Components4Length2,
+  Components4Length3,
+  Components4Length4,
+} from './4';
 
-export type Vec2 = Vec1 &
-  { [K in Vec2D1]: number } &
-  { [K in Vec2D2]: Vec2 } &
-  { [K in Vec2D3]: Vec3 } &
-  { [K in Vec2D4]: Vec4 };
-export type Vec3 = Vec2 &
-  { [K in Vec3D1]: number } &
-  { [K in Vec3D2]: Vec2 } &
-  { [K in Vec3D3]: Vec3 } &
-  { [K in Vec3D4]: Vec4 };
-export type Vec4 = Vec3 &
-  { [K in Vec4D1]: number } &
-  { [K in Vec4D2]: Vec2 } &
-  { [K in Vec4D3]: Vec3 } &
-  { [K in Vec4D4]: Vec4 };
+type Components1Length1 = 'r' | 's' | 'x';
+type Components1Length2 = 'rr' | 'ss' | 'xx';
+type Components1Length3 = 'rrr' | 'sss' | 'xxx';
+type Components1Length4 = 'rrrr' | 'ssss' | 'xxxx';
+
+// prettier-ignore
+type Swizzled1 =
+  { [K in Components1Length1]: number } &
+  { [K in Components1Length2]: Vec2 } &
+  { [K in Components1Length3]: Vec3 } &
+  { [K in Components1Length4]: Vec4 };
+
+export type Swizzled2 = Swizzled1 &
+  { [K in Components2Length1]: number } &
+  { [K in Components2Length2]: Vec2 } &
+  { [K in Components2Length3]: Vec3 } &
+  { [K in Components2Length4]: Vec4 };
+
+export type Swizzled3 = Swizzled2 &
+  { [K in Components3Length1]: number } &
+  { [K in Components3Length2]: Vec2 } &
+  { [K in Components3Length3]: Vec3 } &
+  { [K in Components3Length4]: Vec4 };
+
+export type Swizzled4 = Swizzled3 &
+  { [K in Components4Length1]: number } &
+  { [K in Components4Length2]: Vec2 } &
+  { [K in Components4Length3]: Vec3 } &
+  { [K in Components4Length4]: Vec4 };

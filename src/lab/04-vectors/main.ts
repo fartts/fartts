@@ -2,9 +2,9 @@ import { el } from '../../lib/dom';
 import loop from '../../lib/game/loop';
 import { random, sin, cos, ππ, round } from '../../lib/math';
 import resize from './resize';
-import { vec2 } from '../../lib/vec/factories';
+import { vec2 } from '../../lib/vec';
 import { sub, mul, add, div } from '../../lib/vec/math';
-import { Vec2 } from '../../lib/vec/types';
+import Vec2 from '../../lib/vec/2';
 
 import './main.css';
 
@@ -13,6 +13,7 @@ import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
+import { slice } from '../../lib/util';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
@@ -105,7 +106,7 @@ const getPoints = (dt: number) =>
       p.ppos = add(cp, pp);
     }
 
-    return acc.concat(p.cpos);
+    return acc.concat(slice.call(p.cpos));
   }, []);
 
 let points: number[] = getPoints(0);

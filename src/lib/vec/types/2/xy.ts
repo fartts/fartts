@@ -1,7 +1,6 @@
-export type Xy2 = 'xx' | 'xy' | 'yx' | 'yy';
-export type Xy3 = 'xxx' | 'xxy' | 'xyx' | 'xyy' | 'yxx' | 'yxy' | 'yyx' | 'yyy';
+export type Xy2 = 'xy' | 'yx' | 'yy';
+export type Xy3 = 'xxy' | 'xyx' | 'xyy' | 'yxx' | 'yxy' | 'yyx' | 'yyy';
 export type Xy4 =
-  | 'xxxx'
   | 'xxxy'
   | 'xxyx'
   | 'xxyy'

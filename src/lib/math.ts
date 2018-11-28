@@ -18,6 +18,7 @@ export const {
   sqrt,
 } = Math;
 export const ππ = π * 2;
+export const { isFinite } = Number;
 
 /**
  * ## lerp
