@@ -86,25 +86,14 @@ export function createProps<V extends Float32Array>(baseKeys: string[][]) {
   const swizzledSet = toSwizzledSet(baseKeys);
   const keyIndexMap = toKeyIndexMap(baseKeys);
 
-  return Array.from(swizzledSet).reduce(
-    (acc: PropertyDescriptorMap, key) => {
-      acc[key] = {
-        configurable: false,
-        enumerable: true,
-        get: getterFor<V>(key, keyIndexMap),
-        set: setterFor<V>(key, keyIndexMap),
-      };
+  return Array.from(swizzledSet).reduce((acc: PropertyDescriptorMap, key) => {
+    acc[key] = {
+      configurable: false,
+      enumerable: true,
+      get: getterFor<V>(key, keyIndexMap),
+      set: setterFor<V>(key, keyIndexMap),
+    };
 
-      return acc;
-    },
-    {
-      toString: {
-        value: function toString(this: V) {
-          return `vec${this.length}(${Float32Array.prototype.toString.call(
-            this,
-          )})`;
-        },
-      },
-    },
-  );
+    return acc;
+  }, {});
 }
