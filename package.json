@@ -2,7 +2,6 @@
   "name": "@fartts/fartts",
   "version": "1.10.0",
   "description": "𝑓(unctional)Art(-making).ᴛ(ype)ꜱ(cript) - an experiment by [Matt Hayes](https://github.com/mysterycommand)",
-  "main": "index.js",
   "repository": "https://github.com/fartts/fartts.git",
   "author": "Matt Hayes <matt@mysterycommand.com>",
   "license": "MIT",
