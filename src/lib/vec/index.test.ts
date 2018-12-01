@@ -2,6 +2,15 @@ import { vec2, vec3, vec4 } from '.';
 
 describe('@fartts/lib/vec', () => {
   test.each`
+    v                   | result
+    ${vec2(2, 2)}       | ${'vec2(2,2)'}
+    ${vec3(3, 3, 3)}    | ${'vec3(3,3,3)'}
+    ${vec4(4, 4, 4, 4)} | ${'vec4(4,4,4,4)'}
+  `('toString should be $result', ({ v, result }) => {
+    expect(v.toString()).toEqual(result);
+  });
+
+  test.each`
     args            | components   | error
     ${[]}           | ${[0, 0]}    | ${undefined}
     ${[1]}          | ${[1, 1]}    | ${undefined}
