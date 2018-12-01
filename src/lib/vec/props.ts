@@ -2,7 +2,7 @@ import Vec2 from './2';
 import Vec3 from './3';
 import Vec4 from './4';
 
-import { isFinite } from '../math';
+import { isFinite } from '../core/math';
 import { toSwizzledSet, toKeyIndexMap } from './keys';
 
 const Vec = [Vec2, Vec3, Vec4];

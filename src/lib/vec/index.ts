@@ -4,7 +4,7 @@ import Vec4 from './4';
 
 import { createProps } from './props';
 import { toArray } from './util';
-import { isFinite } from '../math';
+import { isFinite } from '../core/math';
 
 Object.defineProperties(
   Vec2.prototype,
