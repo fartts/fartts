@@ -9,6 +9,8 @@ main {
 
 main {
   overflow: hidden;
+  /* border: 1px solid #f0f; */
+
   width: 100%;
   height: 100%;
   padding: 0;
@@ -17,6 +19,7 @@ main {
 canvas {
   flex-shrink: 0;
   background: #000;
+
   image-rendering: optimizeSpeed;
   image-rendering: -moz-crisp-edges;
   image-rendering: -o-crisp-edges;
@@ -25,4 +28,7 @@ canvas {
   image-rendering: crisp-edges;
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
+
+  /* opacity: 0.3; */
+  transform-origin: center;
 }
