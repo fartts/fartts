@@ -1,3 +1,21 @@
+# [1.11.0](https://github.com/fartts/fartts/compare/v1.10.0...v1.11.0) (2018-12-04)
+
+
+### Bug Fixes
+
+* **lib/vec:** add a displayName and toString method to each class so the minifier doesn't think they ([a978708](https://github.com/fartts/fartts/commit/a978708))
+* **lib/vec:** fixes [#311](https://github.com/fartts/fartts/issues/311) ([b4b3613](https://github.com/fartts/fartts/commit/b4b3613))
+* **vec2:** fixes [#311](https://github.com/fartts/fartts/issues/311), adds toString in the class declaration, only to vec2, and not in the definePr ([8275cbe](https://github.com/fartts/fartts/commit/8275cbe))
+
+
+### Features
+
+* **lab/06-sprites:** an experiment in sprites ([d1ad407](https://github.com/fartts/fartts/commit/d1ad407))
+* **lab/06-sprites:** going with context 2d for this one, want to draw paths and pixelate them ([9289f7c](https://github.com/fartts/fartts/commit/9289f7c))
+* **lab/06-sprites:** implements midpoint-circle for sharp pixel approximated circles ([501c4a9](https://github.com/fartts/fartts/commit/501c4a9))
+* **lab/06-sprites:** just messing with canvas and the resizer (which I like a lot better now) ([fef8cea](https://github.com/fartts/fartts/commit/fef8cea))
+* **lib/core/util:** add a reexport for Number.isInteger ([1805983](https://github.com/fartts/fartts/commit/1805983))
+
 # [1.10.0](https://github.com/fartts/fartts.git/compare/v1.9.0...v1.10.0) (2018-11-28)
 
 
