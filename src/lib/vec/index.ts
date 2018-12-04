@@ -4,15 +4,15 @@ import Vec4 from './4';
 
 import { createProps } from './props';
 import { toArray } from './util';
-import { isFinite } from '../math';
+import { isFinite } from '../core/math';
 
 Object.defineProperties(
   Vec2.prototype,
   // prettier-ignore
   createProps<Vec2>([
-    ['x', 'y'],
     ['r', 'g'],
     ['s', 't'],
+    ['x', 'y'],
   ]),
 );
 
@@ -20,9 +20,9 @@ Object.defineProperties(
   Vec3.prototype,
   // prettier-ignore
   createProps<Vec3>([
-    ['x', 'y', 'z'],
     ['r', 'g', 'b'],
     ['s', 't', 'p'],
+    ['x', 'y', 'z'],
   ]),
 );
 
@@ -30,9 +30,9 @@ Object.defineProperties(
   Vec4.prototype,
   // prettier-ignore
   createProps<Vec4>([
-    ['x', 'y', 'z', 'w'],
     ['r', 'g', 'b', 'a'],
     ['s', 't', 'p', 'q'],
+    ['x', 'y', 'z', 'w'],
   ]),
 );
 

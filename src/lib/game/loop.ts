@@ -1,5 +1,5 @@
-import { rAF, cAF } from '../dom';
-import { min } from '../math';
+import { rAF, cAF } from '../core/dom';
+import { min } from '../core/math';
 
 type UpdateFunction = (t: number, dt: number) => void;
 type RenderFunction = (lag: number) => void;

@@ -1,6 +1,6 @@
 import seedRandom from 'seedrandom';
-import { name } from '../../package.json';
 
+const name = '@fartts/fartts';
 export const random = seedRandom(name);
 export const {
   abs,

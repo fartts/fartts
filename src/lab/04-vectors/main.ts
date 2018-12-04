@@ -1,6 +1,6 @@
-import { el } from '../../lib/dom';
+import { el } from '../../lib/core/dom';
 import loop from '../../lib/game/loop';
-import { random, sin, cos, ππ, round } from '../../lib/math';
+import { random, sin, cos, ππ, round } from '../../lib/core/math';
 import resize from './resize';
 import { vec2 } from '../../lib/vec';
 import { sub, mul, add, div } from '../../lib/vec/math';
@@ -13,7 +13,7 @@ import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
-import { slice } from '../../lib/util';
+import { slice } from '../../lib/core/util';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;

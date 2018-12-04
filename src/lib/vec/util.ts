@@ -1,4 +1,4 @@
-import { slice } from '../util';
+import { slice } from '../core/util';
 
 /**
  * ## toArray

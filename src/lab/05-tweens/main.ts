@@ -1,5 +1,5 @@
-import { round } from '../../lib/math';
-import { el } from '../../lib/dom';
+import { round } from '../../lib/core/math';
+import { el } from '../../lib/core/dom';
 import loop from '../../lib/game/loop';
 import resize from './resize';
 
@@ -18,7 +18,7 @@ import {
   sinWave,
   triWave,
   WaveFunction,
-} from '../../lib/wave';
+} from '../../lib/core/wave';
 
 const m = el('main') as HTMLMainElement;
 const c = el('canvas') as HTMLCanvasElement;
