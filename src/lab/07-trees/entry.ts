@@ -9,15 +9,19 @@ import {
   randomRange,
   random,
   toDegrees,
+  ππ,
+  hypot,
+  max,
 } from '../../lib/core/math';
-import { sawWave } from '../../lib/core/wave';
+import { sawWave, sinWave } from '../../lib/core/wave';
 
 const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
 const totalIterations = 15;
-const saturationWave = sawWave(totalIterations, 100, 50);
+const saturationWave = sawWave(totalIterations + 1, 100, 50);
+const luminosityWave = sinWave(totalIterations + 1, 20, 50);
 
 function branch(
   context: CanvasRenderingContext2D,
@@ -36,7 +40,7 @@ function branch(
 
   context.strokeStyle = `hsla(${toDegrees(a)}, ${saturationWave(
     i,
-  )}%, 20%, 0.5)`;
+  )}%, ${luminosityWave(i)}%, 0.65)`;
   context.lineWidth = 8 * str;
   context.moveTo(x, y);
   context.lineTo(ax, ay);
@@ -64,9 +68,12 @@ function tree(
 }
 
 let pointerDown = false;
+
 let treeX = c.width * 0.5;
 let treeY = c.height * 0.8;
+const treeR = 100;
 
+/* let frameId =  */ rAF(tick);
 function tick(/* time */) {
   /* frameId =  */ rAF(tick);
 
@@ -77,25 +84,17 @@ function tick(/* time */) {
     ctx.fillRect(0, 0, c.width, c.height);
   }
 
-  if (pointerDown) {
-    tree(ctx, treeX, treeY, c.width / 4);
+  if (pointerDown && random() < 0.8) {
+    const d = randomRange(0, ππ);
+    const r = randomRange(0, treeR);
+    const x = treeX + cos(d) * r;
+    const y = treeY + sin(d) * r;
+
+    if (random() < hypot(x - treeX, y - treeY) / treeR) {
+      tree(ctx, x, y, c.width / 4);
+    }
   }
 }
-
-function onPointerMove(event: MouseEvent | TouchEvent) {
-  if (event.type === 'mousemove') {
-    treeX = (event as MouseEvent).offsetX;
-    treeY = (event as MouseEvent).offsetY;
-    return;
-  }
-
-  if (event.type === 'touchmove') {
-    treeX = (event as TouchEvent).touches[0].screenX;
-    treeY = (event as TouchEvent).touches[0].screenY;
-    return;
-  }
-}
-/* let frameId =  */ rAF(tick);
 
 // on<KeyboardEvent>('keyup', ({ code }) => {
 //   if (code !== 'Space') {
@@ -110,7 +109,26 @@ function onPointerMove(event: MouseEvent | TouchEvent) {
 //   }
 // });
 
-on<MouseEvent>('mousedown', () => {
+function onPointerMove(event: MouseEvent | TouchEvent) {
+  if (event.type === 'mousemove') {
+    treeX = (event as MouseEvent).offsetX;
+    treeY = (event as MouseEvent).offsetY;
+    return;
+  }
+
+  if (event.type === 'touchmove') {
+    const s = max(m.clientWidth / c.width, m.clientHeight / c.height);
+
+    treeX = (event as TouchEvent).touches[0].clientX / s;
+    treeY = (event as TouchEvent).touches[0].clientY / s;
+    return;
+  }
+}
+
+on<MouseEvent>('mousedown', event => {
+  treeX = event.offsetX;
+  treeY = event.offsetY;
+
   pointerDown = true;
   on<MouseEvent>('mousemove', onPointerMove);
 });
@@ -120,12 +138,17 @@ on<MouseEvent>('mouseup', () => {
   off<MouseEvent>('mousemove', onPointerMove);
 });
 
-on<TouchEvent>('touchdown', () => {
+on<TouchEvent>('touchstart', event => {
+  const s = max(m.clientWidth / c.width, m.clientHeight / c.height);
+
+  treeX = (event as TouchEvent).touches[0].clientX / s;
+  treeY = (event as TouchEvent).touches[0].clientY / s;
+
   pointerDown = true;
   on<TouchEvent>('touchmove', onPointerMove);
 });
 
-on<TouchEvent>('touchup', () => {
+on<TouchEvent>('touchend', () => {
   pointerDown = false;
   off<TouchEvent>('touchmove', onPointerMove);
 });
