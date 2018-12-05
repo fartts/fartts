@@ -1,4 +1,4 @@
-import { el, on } from './dom';
+import { el, on, off } from './dom';
 
 describe('@fartts/lib/dom', () => {
   test('el', () => {
@@ -20,5 +20,18 @@ describe('@fartts/lib/dom', () => {
     expect(addEventlistenerSpy).toHaveBeenCalledTimes(1);
     expect(addEventlistenerSpy).toHaveBeenCalledWith('resize', listener);
     expect(listener).toHaveBeenCalledTimes(1);
+  });
+
+  test('on', () => {
+    const removeEventlistenerSpy = jest.spyOn(window, 'removeEventListener');
+    const listener = jest.fn();
+
+    on('resize', listener);
+    off('resize', listener);
+    window.dispatchEvent(new Event('resize'));
+
+    expect(removeEventlistenerSpy).toHaveBeenCalledTimes(1);
+    expect(removeEventlistenerSpy).toHaveBeenCalledWith('resize', listener);
+    expect(listener).toHaveBeenCalledTimes(0);
   });
 });
