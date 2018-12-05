@@ -1,3 +1,11 @@
+## [1.11.1](https://github.com/fartts/fartts/compare/v1.11.0...v1.11.1) (2018-12-04)
+
+
+### Bug Fixes
+
+* **lab/06-circles:** rename lab for clarity ([b7cfa5d](https://github.com/fartts/fartts/commit/b7cfa5d))
+* **lab/06-circles:** update the title ([86fee30](https://github.com/fartts/fartts/commit/86fee30))
+
 # [1.11.0](https://github.com/fartts/fartts/compare/v1.10.0...v1.11.0) (2018-12-04)
 
 
