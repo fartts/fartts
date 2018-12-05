@@ -1,3 +1,14 @@
+# [1.12.0](https://github.com/fartts/fartts/compare/v1.11.1...v1.12.0) (2018-12-05)
+
+
+### Features
+
+* **lab/07-trees:** an initial random tree generator ([c49bd75](https://github.com/fartts/fartts/commit/c49bd75))
+* **lab/07-trees:** painting with trees ([60b2bfd](https://github.com/fartts/fartts/commit/60b2bfd))
+* **lab/07-trees:** some final tweaks, add styling so it works on mobile, fix scaling issue with tou ([3669e91](https://github.com/fartts/fartts/commit/3669e91))
+* **lib/core/dom:** add an off function to remove event listeners, and tests for it ([6c8427c](https://github.com/fartts/fartts/commit/6c8427c))
+* **lib/core/math:** add a randomRange function and tests ([cdc7871](https://github.com/fartts/fartts/commit/cdc7871))
+
 ## [1.11.1](https://github.com/fartts/fartts/compare/v1.11.0...v1.11.1) (2018-12-04)
 
 
