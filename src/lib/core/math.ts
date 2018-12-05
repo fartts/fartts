@@ -53,6 +53,18 @@ export function randomBool(): boolean {
 }
 
 /**
+ * ## randomRange
+ *
+ * @export
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ */
+export function randomRange(a: number, b: number): number {
+  return lerp(a, b, random());
+}
+
+/**
  * ## saw
  * this is a trigonometric function (like Math.sin, or Math.cos), it takes an
  * angle in radians and returns a value between -1 and 1, the "shape" of the
