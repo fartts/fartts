@@ -47,6 +47,25 @@ function* branch(
   }
 }
 
+function hsla(h: number, s: number, l: number, a: number) {
+  return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+}
+
+function drawBranch(
+  context: CanvasRenderingContext2D,
+  [a, i, x, y, ax, ay, str]: Branch,
+) {
+  context.beginPath();
+
+  context.strokeStyle = hsla(toDegrees(a), sWave(i), lWave(i), 0.65);
+  context.lineWidth = 10 * str;
+
+  context.moveTo(x, y);
+  context.lineTo(ax, ay);
+
+  context.stroke();
+}
+
 function* tree(x: number, y: number, s: number) {
   const a = π * 1.5 + randomRange(0.05, 0.15) * (randomBool() ? 1 : -1);
   yield* Array.from(branch(x, y, a, s / 5, totalIterations))
@@ -76,30 +95,21 @@ function tick(/* time */) {
   ctx.lineCap = 'round';
   ctx.fillStyle = 'rgba(0,0,0,0.1)';
 
-  trees.forEach(t => {
+  trees.forEach((t, j) => {
     const b = t.next();
 
-    if (b.done) {
-      ctx.fillRect(0, 0, c.width, c.height);
-      trees.push(tree(treeX, treeY, c.width / 2));
-    } else {
-      const [a, i, x, y, ax, ay, str] = b.value;
-
-      ctx.beginPath();
-
-      ctx.strokeStyle = `hsla(${toDegrees(a)}, ${sWave(i)}%, ${lWave(
-        i,
-      )}%, 0.65)`;
-      ctx.lineWidth = 10 * str;
-
-      ctx.moveTo(x, y);
-      ctx.lineTo(ax, ay);
-
-      ctx.stroke();
+    if (!b.done) {
+      drawBranch(ctx, b.value);
     }
   });
+
+  if (random() < 0.005) {
+    ctx.fillRect(0, 0, c.width, c.height);
+    trees.push(tree(treeX, treeY, c.width / 2));
+  }
 }
 
 on<MouseEvent>('click', () => {
+  ctx.fillRect(0, 0, c.width, c.height);
   trees.push(tree(treeX, treeY, c.width / 2));
 });
