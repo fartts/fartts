@@ -11,6 +11,7 @@ import {
   toDegrees,
   randomBool,
   hypot,
+  min,
 } from '../../lib/core/math';
 import { sawWave, sinWave } from '../../lib/core/wave';
 
@@ -105,26 +106,10 @@ function* tree(x: number, y: number, s: number) {
 let treeX = c.width * 0.5;
 let treeY = c.height * 0.8;
 let trees: Array<IterableIterator<Branch>> = [];
+let isDrawing = false;
 
-rAF(tick);
-function tick(/* time */) {
-  rAF(tick);
-
-  if (shouldResize()) {
-    resize(c, m);
-    buffer.width = c.width;
-    buffer.height = c.height;
-
-    buf.fillStyle = '#000';
-    buf.fillRect(0, 0, buffer.width, buffer.height);
-
-    treeX = buffer.width * 0.5;
-    treeY = buffer.height * 0.9;
-    trees = [tree(treeX, treeY, buffer.width / 2)];
-  }
-
-  buf.lineCap = 'round';
-  buf.fillStyle = 'rgba(0,0,0,0.1)';
+function tick() {
+  isDrawing = true;
 
   trees.forEach(t => {
     let b = t.next();
@@ -143,9 +128,36 @@ function tick(/* time */) {
     }
   });
 
+  isDrawing = false;
+}
+
+rAF(draw);
+function draw(/* time */) {
+  rAF(draw);
+
+  if (shouldResize()) {
+    resize(c, m);
+    buffer.width = c.width;
+    buffer.height = c.height;
+
+    buf.fillStyle = '#000';
+    buf.fillRect(0, 0, buffer.width, buffer.height);
+
+    treeX = buffer.width * 0.5;
+    treeY = buffer.height * 0.9;
+    trees = [tree(treeX, treeY, buffer.width / 2)];
+  }
+
+  buf.lineCap = 'round';
+  buf.fillStyle = 'rgba(0,0,0,0.1)';
+
+  if (!isDrawing) {
+    setTimeout(tick, 0);
+  }
+
   if (random() < 0) {
     buf.fillRect(0, 0, c.width, c.height);
-    trees.push(tree(treeX, treeY, c.width / 2));
+    trees.push(tree(treeX, treeY, min(c.width, c.height) / 2));
   }
 
   ctx.clearRect(0, 0, c.width, c.height);
