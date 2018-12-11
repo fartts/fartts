@@ -10,6 +10,7 @@ import {
   random,
   toDegrees,
   randomBool,
+  hypot,
 } from '../../lib/core/math';
 import { sawWave, sinWave } from '../../lib/core/wave';
 
@@ -17,7 +18,7 @@ const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
-const totalIterations = 10;
+const totalIterations = 15;
 const sWave = sawWave(totalIterations + 1, 100, 50);
 const lWave = sinWave(totalIterations + 1, 20, 50);
 
@@ -58,7 +59,15 @@ function drawBranch(
 ) {
   context.beginPath();
 
-  context.strokeStyle = hsla(toDegrees(a), sWave(i), lWave(i), 1);
+  const prev = hsla(toDegrees(a), sWave(i + 1), lWave(i + 1), 1);
+  const color = hsla(toDegrees(a), sWave(i), lWave(i), 1);
+  const stop = (20 * str) / hypot(ax - x, ay - y);
+
+  const gradient = context.createLinearGradient(x, y, ax, ay);
+  gradient.addColorStop(0, prev);
+  gradient.addColorStop(stop, color);
+
+  context.strokeStyle = gradient;
   context.lineWidth = 10 * str;
 
   context.moveTo(x, y);
@@ -98,14 +107,23 @@ function tick(/* time */) {
   ctx.fillStyle = 'rgba(0,0,0,0.1)';
 
   trees.forEach(t => {
-    const b = t.next();
+    let b = t.next();
+
+    if (!b.done) {
+      const [, i] = b.value;
+
+      while (!b.done && b.value[1] === i) {
+        drawBranch(ctx, b.value);
+        b = t.next();
+      }
+    }
 
     if (!b.done) {
       drawBranch(ctx, b.value);
     }
   });
 
-  if (random() < 0.005) {
+  if (random() < 0) {
     ctx.fillRect(0, 0, c.width, c.height);
     trees.push(tree(treeX, treeY, c.width / 2));
   }
