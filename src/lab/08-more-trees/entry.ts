@@ -18,7 +18,10 @@ const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
-const totalIterations = 15;
+const buffer = c.cloneNode() as HTMLCanvasElement;
+const buf = buffer.getContext('2d') as CanvasRenderingContext2D;
+
+const totalIterations = 25;
 const sWave = sawWave(totalIterations + 1, 100, 50);
 const lWave = sinWave(totalIterations + 1, 20, 50);
 
@@ -53,13 +56,11 @@ function hsla(h: number, s: number, l: number, a: number) {
   return `hsla(${h}, ${s}%, ${l}%, ${a})`;
 }
 
-function drawBranch(
+function gradientFor(
   context: CanvasRenderingContext2D,
   [a, i, x, y, ax, ay, str]: Branch,
-) {
-  context.beginPath();
-
-  const prev = hsla(toDegrees(a), sWave(i + 1), lWave(i + 1), 0.65);
+): CanvasGradient {
+  const prev = hsla(toDegrees(a), sWave(i + 1), lWave(i + 1), 1);
   const color = hsla(toDegrees(a), sWave(i), lWave(i), 1);
   const stop = (5 * str) / hypot(ax - x, ay - y);
 
@@ -71,10 +72,20 @@ function drawBranch(
     y,
     hypot(ax - x, ay - y),
   );
+
   gradient.addColorStop(0, prev);
   gradient.addColorStop(stop, color);
 
-  context.strokeStyle = gradient;
+  return gradient;
+}
+
+function drawBranch(
+  context: CanvasRenderingContext2D,
+  [a, i, x, y, ax, ay, str]: Branch,
+) {
+  context.beginPath();
+
+  context.strokeStyle = gradientFor(context, [a, i, x, y, ax, ay, str]);
   context.lineWidth = 10 * str;
 
   context.moveTo(x, y);
@@ -101,17 +112,19 @@ function tick(/* time */) {
 
   if (shouldResize()) {
     resize(c, m);
+    buffer.width = c.width;
+    buffer.height = c.height;
 
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, c.width, c.height);
+    buf.fillStyle = '#000';
+    buf.fillRect(0, 0, buffer.width, buffer.height);
 
-    treeX = c.width * 0.5;
-    treeY = c.height * 0.9;
-    trees = [tree(treeX, treeY, c.width / 2)];
+    treeX = buffer.width * 0.5;
+    treeY = buffer.height * 0.9;
+    trees = [tree(treeX, treeY, buffer.width / 2)];
   }
 
-  ctx.lineCap = 'round';
-  ctx.fillStyle = 'rgba(0,0,0,0.1)';
+  buf.lineCap = 'round';
+  buf.fillStyle = 'rgba(0,0,0,0.1)';
 
   trees.forEach(t => {
     let b = t.next();
@@ -120,23 +133,26 @@ function tick(/* time */) {
       const [, i] = b.value;
 
       while (!b.done && b.value[1] === i) {
-        drawBranch(ctx, b.value);
+        drawBranch(buf, b.value);
         b = t.next();
       }
     }
 
     if (!b.done) {
-      drawBranch(ctx, b.value);
+      drawBranch(buf, b.value);
     }
   });
 
   if (random() < 0) {
-    ctx.fillRect(0, 0, c.width, c.height);
+    buf.fillRect(0, 0, c.width, c.height);
     trees.push(tree(treeX, treeY, c.width / 2));
   }
+
+  ctx.clearRect(0, 0, c.width, c.height);
+  ctx.drawImage(buffer, 0, 0);
 }
 
 on<MouseEvent>('click', () => {
-  ctx.fillRect(0, 0, c.width, c.height);
+  buf.fillRect(0, 0, buffer.width, buffer.height);
   trees.push(tree(treeX, treeY, c.width / 2));
 });
