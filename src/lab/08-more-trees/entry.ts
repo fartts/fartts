@@ -17,11 +17,12 @@ const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
-const totalIterations = 25;
+const totalIterations = 10;
 const sWave = sawWave(totalIterations + 1, 100, 50);
 const lWave = sinWave(totalIterations + 1, 20, 50);
 
 type Branch = [number, number, number, number, number, number, number];
+
 function* branch(
   x: number,
   y: number,
@@ -57,7 +58,7 @@ function drawBranch(
 ) {
   context.beginPath();
 
-  context.strokeStyle = hsla(toDegrees(a), sWave(i), lWave(i), 0.65);
+  context.strokeStyle = hsla(toDegrees(a), sWave(i), lWave(i), 1);
   context.lineWidth = 10 * str;
 
   context.moveTo(x, y);
@@ -68,6 +69,7 @@ function drawBranch(
 
 function* tree(x: number, y: number, s: number) {
   const a = π * 1.5 + randomRange(0.05, 0.15) * (randomBool() ? 1 : -1);
+
   yield* Array.from(branch(x, y, a, s / 5, totalIterations))
     .sort(([, i1], [, i2]) => i2 - i1)
     .values();
@@ -95,7 +97,7 @@ function tick(/* time */) {
   ctx.lineCap = 'round';
   ctx.fillStyle = 'rgba(0,0,0,0.1)';
 
-  trees.forEach((t, j) => {
+  trees.forEach(t => {
     const b = t.next();
 
     if (!b.done) {
