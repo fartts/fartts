@@ -59,11 +59,18 @@ function drawBranch(
 ) {
   context.beginPath();
 
-  const prev = hsla(toDegrees(a), sWave(i + 1), lWave(i + 1), 1);
+  const prev = hsla(toDegrees(a), sWave(i + 1), lWave(i + 1), 0.65);
   const color = hsla(toDegrees(a), sWave(i), lWave(i), 1);
-  const stop = (20 * str) / hypot(ax - x, ay - y);
+  const stop = (5 * str) / hypot(ax - x, ay - y);
 
-  const gradient = context.createLinearGradient(x, y, ax, ay);
+  const gradient = context.createRadialGradient(
+    x,
+    y,
+    5 * str,
+    x,
+    y,
+    hypot(ax - x, ay - y),
+  );
   gradient.addColorStop(0, prev);
   gradient.addColorStop(stop, color);
 
