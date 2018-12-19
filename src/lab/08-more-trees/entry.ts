@@ -116,8 +116,13 @@ function tick() {
 
     if (!b.done) {
       const [, i] = b.value;
+      const ts = performance.now();
 
-      while (!b.done && b.value[1] === i) {
+      while (
+        !b.done &&
+        b.value[1] === i &&
+        performance.now() - ts < 10 / trees.length
+      ) {
         drawBranch(buf, b.value);
         b = t.next();
       }
