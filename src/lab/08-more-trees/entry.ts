@@ -22,7 +22,7 @@ const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 const buffer = c.cloneNode() as HTMLCanvasElement;
 const buf = buffer.getContext('2d') as CanvasRenderingContext2D;
 
-const totalIterations = 25;
+const totalIterations = 20;
 const sWave = sawWave(totalIterations + 1, 100, 50);
 const lWave = sinWave(totalIterations + 1, 20, 50);
 
