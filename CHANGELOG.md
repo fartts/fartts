@@ -1,3 +1,12 @@
+# [1.13.0](https://github.com/fartts/fartts/compare/v1.12.0...v1.13.0) (2018-12-20)
+
+
+### Features
+
+* **lab/08-more-trees:** getting somewhere interesting ([c0defcb](https://github.com/fartts/fartts/commit/c0defcb))
+* **lab/08-more-trees:** use generators and iterators to render trees one branch at a time breadth-w ([b90fe81](https://github.com/fartts/fartts/commit/b90fe81))
+* **lib/core/math:** add randomInt function ([f21102f](https://github.com/fartts/fartts/commit/f21102f))
+
 # [1.12.0](https://github.com/fartts/fartts/compare/v1.11.1...v1.12.0) (2018-12-05)
 
 
