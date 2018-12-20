@@ -1,6 +1,7 @@
 import {
   lerp,
   randomBool,
+  randomInt,
   randomRange,
   saw,
   toDegrees,
@@ -31,6 +32,13 @@ describe('@fartts/lib/math', () => {
     expect(randomRange(1, 30)).toBe(27.889704444634948);
     expect(randomRange(40, 20)).toBe(24.1776263921708);
     expect(randomRange(5000, 5)).toBe(3343.64129004656);
+  });
+
+  test('randomInt', () => {
+    expect(randomInt(10)).toBe(3);
+    expect(randomInt(-20)).toBe(-11);
+    expect(randomInt(40, 20)).toBe(32);
+    expect(randomInt(5, 5000)).toBe(1675);
   });
 
   test('saw', () => {

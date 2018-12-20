@@ -53,6 +53,18 @@ export function randomBool(): boolean {
 }
 
 /**
+ * ## randomInt
+ *
+ * @export
+ * @param {number} a
+ * @param {number} [b]
+ * @returns {number}
+ */
+export function randomInt(a: number, b?: number): number {
+  return round(b === undefined ? randomRange(0, a) : randomRange(a, b));
+}
+
+/**
  * ## randomRange
  *
  * @export
