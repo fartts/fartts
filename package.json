@@ -15,8 +15,8 @@
     "coverage": "open coverage/lcov-report/index.html"
   },
   "engines": {
-    "node": "10.13.0",
-    "npm": "6.4.1",
+    "node": "10.14.2",
+    "npm": "6.5.0",
     "yarn": "1.12.3"
   },
   "config": {
