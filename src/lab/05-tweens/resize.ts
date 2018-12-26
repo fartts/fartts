@@ -1,50 +1,40 @@
 import { on } from '../../lib/core/dom';
+import { max } from '../../lib/core/math';
 
-const { isInteger } = Number;
-
-function next(a: number, b: number): number {
-  while (!isInteger(a / b)) {
-    a += 1;
-  }
-
-  return a;
+function next(multipleOf = 1, startingAt = 0) {
+  return startingAt % multipleOf !== 0
+    ? startingAt + (multipleOf - (startingAt % multipleOf))
+    : startingAt;
 }
 
-let shouldResize = true;
-
-export default function resize(
-  c: HTMLCanvasElement,
-  m: HTMLMainElement,
-): boolean {
-  if (!shouldResize) {
-    return false;
-  }
-
-  shouldResize = false;
-
-  let { devicePixelRatio: dpr } = window;
-  let { clientWidth: width, clientHeight: height } = m;
-
-  if (dpr === undefined) {
-    dpr = 1;
-  }
-
-  const scale = 1;
-  width = next(width, scale);
-  height = next(height, scale);
-
-  const w = (width * dpr) / scale;
-  const h = (height * dpr) / scale;
-
-  c.style.width = `${width}px`;
-  c.style.height = `${height}px`;
-
-  c.width = w;
-  c.height = h;
-
-  return true;
-}
-
+let didResizeWindow = true;
 on('resize', () => {
-  shouldResize = true;
+  didResizeWindow = true;
 });
+
+export function shouldResize() {
+  return didResizeWindow;
+}
+
+export function resize(
+  canvas: HTMLCanvasElement,
+  container: HTMLElement,
+  scale = 1,
+): void {
+  if (!didResizeWindow) {
+    return;
+  }
+
+  didResizeWindow = false;
+
+  const { devicePixelRatio: dpr } = window;
+  const { clientHeight: h, clientWidth: w } = container;
+
+  const width = next(scale, w);
+  const height = next(scale, h);
+
+  canvas.width = (width * dpr) / scale;
+  canvas.height = (height * dpr) / scale;
+
+  canvas.style.transform = `scale(${max(w / canvas.width, h / canvas.height)})`;
+}

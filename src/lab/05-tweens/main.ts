@@ -1,7 +1,7 @@
 import { round } from '../../lib/core/math';
 import { el } from '../../lib/core/dom';
 import loop from '../../lib/game/loop';
-import resize from './resize';
+import { resize, shouldResize } from './resize';
 
 import './main.css';
 
@@ -84,7 +84,8 @@ const points = [cosWave, sawWave, sinWave, triWave].reduce(
 );
 
 function init(): void {
-  if (resize(c, m)) {
+  if (shouldResize()) {
+    resize(c, m);
     setUniforms(c.width, c.height);
   }
 
@@ -115,12 +116,13 @@ function init(): void {
   ) as WebGLUniformLocation;
 }
 
-function update(t: number, dt: number): void {
+function update(t: number /* , dt: number */): void {
   travellerComponents = travellers.map(fn => fn(t));
 }
 
-function render(lag: number): void {
-  if (resize(c, m)) {
+function render(/* lag: number */): void {
+  if (shouldResize()) {
+    resize(c, m);
     setUniforms(c.width, c.height);
   }
 
@@ -147,4 +149,3 @@ const { start } = loop(update, render);
 
 init();
 start();
-stop();
