@@ -1,6 +1,6 @@
 import seedRandom from 'seedrandom';
 
-const name = '@fartts/core';
+const name = '@fartts/fartts';
 export const random = seedRandom(name);
 export const {
   abs,
