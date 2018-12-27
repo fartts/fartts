@@ -3,7 +3,7 @@ import { el } from '../../lib/core/dom';
 import loop from '../../lib/game/loop';
 import { resize, shouldResize } from './resize';
 
-import './main.css';
+import './style.css';
 
 import { compile } from './webgl/shader';
 import { link } from './webgl/program';
