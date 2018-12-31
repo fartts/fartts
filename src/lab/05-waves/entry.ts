@@ -10,6 +10,7 @@ import { link } from './webgl/program';
 
 import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
+
 import Vec2 from '../../lib/vec/2';
 import { vec2 } from '../../lib/vec';
 import {
