@@ -23,6 +23,8 @@ let pointerX = 0;
 let pointerY = 0;
 
 interface Handle {
+  ox: number;
+  oy: number;
   x: number;
   y: number;
   isDragging: boolean;
@@ -30,11 +32,15 @@ interface Handle {
 
 const handles: Handle[] = [
   {
+    ox: 0,
+    oy: 0,
     x: 0,
     y: 0,
     isDragging: false,
   },
   {
+    ox: 0,
+    oy: 0,
     x: 0,
     y: 0,
     isDragging: false,
@@ -112,9 +118,15 @@ function draw(/* ts: number */) {
 
     const spacer = graphSize / (handles.length + 1);
     handles.forEach((handle, i) => {
-      handle.x = hw - hs + spacer * (i + 1);
-      handle.y = hh;
+      handle.x = hw;
+      handle.y = hh + hs - spacer * (i + 1);
     });
+
+    handles[0].ox = hw - hs;
+    handles[0].oy = hh + hs;
+
+    handles[1].ox = hw + hs;
+    handles[1].oy = hh - hs;
   }
 
   ctx.clearRect(0, 0, c.width, c.height);
@@ -142,8 +154,22 @@ function draw(/* ts: number */) {
 
     ctx.beginPath();
     ctx.arc(handle.x, handle.y, handleRadius, 0, ππ);
+    ctx.moveTo(handle.ox, handle.oy);
+    ctx.lineTo(handle.x, handle.y);
     ctx.stroke();
   });
+
+  ctx.beginPath();
+  ctx.moveTo(handles[0].ox, handles[0].oy);
+  ctx.bezierCurveTo(
+    handles[0].x,
+    handles[0].y,
+    handles[1].x,
+    handles[1].y,
+    handles[1].ox,
+    handles[1].oy,
+  );
+  ctx.stroke();
 }
 
 rAF(draw);
