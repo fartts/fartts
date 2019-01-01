@@ -131,16 +131,6 @@ function draw(/* ts: number */) {
 
   ctx.clearRect(0, 0, c.width, c.height);
 
-  // ctx.font = '32px monospace';
-  // ctx.textBaseline = 'top';
-  // ctx.fillStyle = '#e7e7e7';
-
-  // `pointerX: ${pointerX}\npointerY: ${pointerY}`
-  //   .split('\n')
-  //   .forEach((line, i) => {
-  //     ctx.fillText(line, 10, 10 + i * 38.4);
-  //   });
-
   ctx.lineWidth = 3;
   ctx.strokeStyle = '#e7e7e7';
   ctx.strokeRect(hw - hs, hh - hs, graphSize, graphSize);
