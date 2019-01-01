@@ -21,39 +21,66 @@ let hh = 0;
 
 let pointerX = 0;
 let pointerY = 0;
-let isDragging = false;
 
-let handle1X = 0;
-let handle1Y = 0;
-const handle1Radius = 20;
+interface Handle {
+  x: number;
+  y: number;
+  isDragging: boolean;
+}
+
+const handles: Handle[] = [
+  {
+    x: 0,
+    y: 0,
+    isDragging: false,
+  },
+  {
+    x: 0,
+    y: 0,
+    isDragging: false,
+  },
+];
+
+const handleRadius = 30;
 
 function onMouseDown(event: MouseEvent) {
   pointerX = event.clientX * dpr;
   pointerY = event.clientY * dpr;
 
-  isDragging = hypot(pointerX - handle1X, pointerY - handle1Y) < handle1Radius;
+  handles.forEach(handle => {
+    handle.isDragging =
+      hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius;
+  });
 }
 function onMouseUp() {
-  isDragging = false;
+  handles.forEach(handle => {
+    handle.isDragging = false;
+  });
 }
 function onMouseMove(event: MouseEvent) {
   pointerX = event.clientX * dpr;
   pointerY = event.clientY * dpr;
 
-  m.style.cursor =
-    hypot(pointerX - handle1X, pointerY - handle1Y) < handle1Radius
-      ? 'pointer'
-      : 'default';
+  m.style.cursor = handles.some(
+    handle => hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius,
+  )
+    ? 'pointer'
+    : 'default';
 }
 
 function onTouchStart(event: TouchEvent) {
   pointerX = event.touches[0].clientX * dpr;
   pointerY = event.touches[0].clientY * dpr;
 
-  isDragging = hypot(pointerX - handle1X, pointerY - handle1Y) < handle1Radius;
+  handles.forEach(handle => {
+    handle.isDragging =
+      hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius;
+  });
 }
 function onTouchEnd() {
-  isDragging = false;
+  handles.forEach(handle => {
+    handle.isDragging = false;
+  });
 }
 function onTouchMove(event: TouchEvent) {
   pointerX = event.touches[0].clientX * dpr;
@@ -83,13 +110,11 @@ function draw(/* ts: number */) {
     graphSize = min(c.width, c.height) * 0.8;
     hs = graphSize / 2;
 
-    handle1X = hw;
-    handle1Y = hh;
-  }
-
-  if (isDragging) {
-    handle1X = lerp(handle1X, pointerX, 0.5);
-    handle1Y = lerp(handle1Y, pointerY, 0.5);
+    const spacer = graphSize / (handles.length + 1);
+    handles.forEach((handle, i) => {
+      handle.x = hw - hs + spacer * (i + 1);
+      handle.y = hh;
+    });
   }
 
   ctx.clearRect(0, 0, c.width, c.height);
@@ -98,7 +123,7 @@ function draw(/* ts: number */) {
   ctx.textBaseline = 'top';
   ctx.fillStyle = '#e7e7e7';
 
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 3;
   ctx.strokeStyle = '#e7e7e7';
 
   `pointerX: ${pointerX}\npointerY: ${pointerY}`
@@ -109,9 +134,16 @@ function draw(/* ts: number */) {
 
   ctx.strokeRect(hw - hs, hh - hs, graphSize, graphSize);
 
-  ctx.beginPath();
-  ctx.arc(handle1X, handle1Y, handle1Radius, 0, ππ);
-  ctx.stroke();
+  handles.forEach(handle => {
+    if (handle.isDragging) {
+      handle.x = lerp(handle.x, pointerX, 0.5);
+      handle.y = lerp(handle.y, pointerY, 0.5);
+    }
+
+    ctx.beginPath();
+    ctx.arc(handle.x, handle.y, handleRadius, 0, ππ);
+    ctx.stroke();
+  });
 }
 
 rAF(draw);
