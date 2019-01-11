@@ -1,4 +1,4 @@
-import { el, rAF, on, off } from '../../lib/core/dom';
+import { el, rAF, on } from '../../lib/core/dom';
 import { min, ππ, hypot, lerp } from '../../lib/core/math';
 
 import { resize, shouldResize } from './resize';
@@ -58,11 +58,13 @@ function onMouseDown(event: MouseEvent) {
       hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius;
   });
 }
+
 function onMouseUp() {
   handles.forEach(handle => {
     handle.isDragging = false;
   });
 }
+
 function onMouseMove(event: MouseEvent) {
   pointerX = event.clientX * dpr;
   pointerY = event.clientY * dpr;
@@ -83,11 +85,13 @@ function onTouchStart(event: TouchEvent) {
       hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius;
   });
 }
+
 function onTouchEnd() {
   handles.forEach(handle => {
     handle.isDragging = false;
   });
 }
+
 function onTouchMove(event: TouchEvent) {
   pointerX = event.touches[0].clientX * dpr;
   pointerY = event.touches[0].clientY * dpr;
@@ -113,19 +117,19 @@ function draw(/* ts: number */) {
     hw = w / 2;
     hh = h / 2;
 
-    graphSize = min(c.width, c.height) * 0.8;
+    graphSize = min(c.width, c.height) * 0.4;
     hs = graphSize / 2;
 
     const spacer = graphSize / (handles.length + 1);
     handles.forEach((handle, i) => {
-      handle.x = hw;
+      handle.x = hw - hs;
       handle.y = hh + hs - spacer * (i + 1);
     });
 
-    handles[0].ox = hw - hs;
+    handles[0].ox = hw - graphSize;
     handles[0].oy = hh + hs;
 
-    handles[1].ox = hw + hs;
+    handles[1].ox = hw;
     handles[1].oy = hh - hs;
   }
 
@@ -133,7 +137,7 @@ function draw(/* ts: number */) {
 
   ctx.lineWidth = 3;
   ctx.strokeStyle = '#e7e7e7';
-  ctx.strokeRect(hw - hs, hh - hs, graphSize, graphSize);
+  ctx.strokeRect(hw - graphSize, hh - hs, graphSize, graphSize);
 
   handles.forEach(handle => {
     if (handle.isDragging) {
