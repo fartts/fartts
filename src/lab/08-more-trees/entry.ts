@@ -98,13 +98,15 @@ function drawBranch(
 function* tree(x: number, y: number, s: number) {
   const a = π * 1.5 + randomRange(0.05, 0.15) * (randomBool() ? 1 : -1);
 
-  yield* Array.from(branch(x, y, a, s / 5, totalIterations))
+  yield* Array.from(branch(x, y, a, s, totalIterations))
     .sort(([, i1], [, i2]) => i2 - i1)
     .values();
 }
 
 let treeX = c.width * 0.5;
 let treeY = c.height * 0.8;
+let treeScale = min(c.width, c.height) / 8;
+
 let trees: Array<IterableIterator<Branch>> = [];
 let isDrawing = false;
 
@@ -150,7 +152,8 @@ function draw(/* time */) {
 
     treeX = buffer.width * 0.5;
     treeY = buffer.height * 0.9;
-    trees = [tree(treeX, treeY, buffer.width / 2)];
+    treeScale = min(c.width, c.height) / 8;
+    trees = [tree(treeX, treeY, treeScale)];
   }
 
   buf.lineCap = 'round';
@@ -160,16 +163,11 @@ function draw(/* time */) {
     setTimeout(tick, 0);
   }
 
-  if (random() < 0) {
-    buf.fillRect(0, 0, c.width, c.height);
-    trees.push(tree(treeX, treeY, min(c.width, c.height) / 2));
-  }
-
   ctx.clearRect(0, 0, c.width, c.height);
   ctx.drawImage(buffer, 0, 0);
 }
 
 on<MouseEvent>('click', () => {
   buf.fillRect(0, 0, buffer.width, buffer.height);
-  trees.push(tree(treeX, treeY, c.width / 2));
+  trees.push(tree(treeX, treeY, treeScale));
 });

@@ -101,7 +101,7 @@ export function saw(radians: number): number {
  * @returns {number} a value between -1 and 1 for entry values between 0 and ππ
  */
 export function tri(radians: number): number {
-  return 1 - 2 * Math.abs(saw(radians));
+  return 1 - 2 * abs(saw(radians));
 }
 
 /**
