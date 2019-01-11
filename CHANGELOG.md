@@ -1,3 +1,16 @@
+# [1.14.0](https://github.com/fartts/fartts/compare/v1.13.0...v1.14.0) (2019-01-11)
+
+
+### Features
+
+* **lab/09:** a handle, and pointer (mouse and touch) event handling ([038fe44](https://github.com/fartts/fartts/commit/038fe44))
+* **lab/09:** a rectangle ([2ad6ca4](https://github.com/fartts/fartts/commit/2ad6ca4))
+* **lab/09:** a simple resize/draw loop ([d054651](https://github.com/fartts/fartts/commit/d054651))
+* **lab/09:** a stub of an experiment in creating bezier waveforms ([8fb95f5](https://github.com/fartts/fartts/commit/8fb95f5))
+* **lab/09:** adds shadow handles, and a shadow curve ([e9664da](https://github.com/fartts/fartts/commit/e9664da))
+* **lab/09:** it's a bezier curve toy ([f579d26](https://github.com/fartts/fartts/commit/f579d26))
+* **lab/09:** multiple handles ([188211a](https://github.com/fartts/fartts/commit/188211a))
+
 # [1.13.0](https://github.com/fartts/fartts/compare/v1.12.0...v1.13.0) (2018-12-20)
 
 
