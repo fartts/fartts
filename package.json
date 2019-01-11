@@ -15,9 +15,9 @@
     "coverage": "open coverage/lcov-report/index.html"
   },
   "engines": {
-    "node": "10.14.2",
+    "node": "10.15.0",
     "npm": "6.5.0",
-    "yarn": "1.12.3"
+    "yarn": "1.13.0"
   },
   "config": {
     "commitizen": {
