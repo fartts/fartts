@@ -1,4 +1,12 @@
-import { π, randomRange, cos, sin, random } from '../../lib/core/math';
+import {
+  π,
+  randomRange,
+  cos,
+  sin,
+  random,
+  lerp,
+  round,
+} from '../../lib/core/math';
 
 interface Collar {
   x: number;
@@ -17,6 +25,12 @@ export interface Branch {
   iteration: number;
 }
 
+interface Config {
+  a: () => number;
+  l: () => number;
+  n: () => number;
+}
+
 function branch({ x, y, angle, length, iteration }: Collar): Branch {
   return {
     startX: x,
@@ -28,13 +42,14 @@ function branch({ x, y, angle, length, iteration }: Collar): Branch {
   };
 }
 
-function* branches(c: Collar): IterableIterator<Branch> {
+function* branches(c: Collar, config: Config): IterableIterator<Branch> {
   const b = branch(c);
   yield b;
 
   if (c.iteration - 1 > 0) {
-    const a = randomRange(0.2, 0.4);
-    const l = randomRange(0.7, 0.9);
+    const a = config.a();
+    const l = config.l();
+    const n = config.n();
 
     const nextCollar = {
       x: b.endX,
@@ -43,18 +58,16 @@ function* branches(c: Collar): IterableIterator<Branch> {
       iteration: c.iteration - 1,
     };
 
-    if (random() < 0.8) {
-      yield* branches({
-        ...nextCollar,
-        angle: c.angle + a,
-      });
-    }
-
-    if (random() < 0.8) {
-      yield* branches({
-        ...nextCollar,
-        angle: c.angle - a,
-      });
+    for (let i = 0; i <= n; ++i) {
+      if (random() < 0.8) {
+        yield* branches(
+          {
+            ...nextCollar,
+            angle: c.angle + lerp(-a, a, i / n),
+          },
+          config,
+        );
+      }
     }
   }
 }
@@ -64,7 +77,18 @@ export function* tree(
   maxIterations = 20,
 ): IterableIterator<Branch> {
   const angle = π * 1.5 + randomRange(-0.2, 0.2);
-  yield* Array.from(branches({ ...root, angle, iteration: maxIterations }))
+  const n = round(randomRange(1, 2));
+
+  yield* Array.from(
+    branches(
+      { ...root, angle, iteration: maxIterations },
+      {
+        a: () => randomRange(0.2, 0.4),
+        l: () => randomRange(0.7, 0.9),
+        n: () => n,
+      },
+    ),
+  )
     .sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1)
     .values();
 }
