@@ -50,7 +50,7 @@ function drawTree(t: IterableIterator<Branch>) {
   }
 }
 
-function draw(time: DOMHighResTimeStamp) {
+function draw(/* time: DOMHighResTimeStamp */) {
   rAF(draw);
 
   if (shouldResize()) {
