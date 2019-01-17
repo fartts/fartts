@@ -77,7 +77,7 @@ export function* tree(
   maxIterations = 20,
 ): IterableIterator<Branch> {
   const angle = π * 1.5 + randomRange(-0.2, 0.2);
-  const n = round(randomRange(1, 2));
+  const n = round(randomRange(1, 1));
 
   yield* Array.from(
     branches(
