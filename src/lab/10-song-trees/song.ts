@@ -1,4 +1,4 @@
-import songUrl from './assets/Lindenmayr Song - 12_23_18, 6.35 AM.mp3';
+import songUrl from './assets/lindenmayr-song.mp3';
 
 const song = new Audio(songUrl);
 
