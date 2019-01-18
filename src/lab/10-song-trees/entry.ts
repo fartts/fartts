@@ -1,44 +1,51 @@
 import './style.css';
 
-import { rAF, el, on, dpr } from '../../lib/core/dom';
-import { min } from '../../lib/core/math';
+import { rAF, el, dpr } from '../../lib/core/dom';
+import pointer from './pointer';
 
 import { shouldResize, resize } from './resize';
-import { Branch } from './tree/constants';
+import { Branch, Tree } from './tree/constants';
 import { gradient } from './tree/gradient';
+import { lerp, min } from '../../lib/core/math';
 
 const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
-const buffer = c.cloneNode() as HTMLCanvasElement;
-const buf = buffer.getContext('2d') as CanvasRenderingContext2D;
-
-const trees: Array<IterableIterator<Branch>> = [];
+const trees: Tree[] = [];
 
 const treeWorker = new Worker('./tree/worker.ts');
-treeWorker.addEventListener('message', ({ data }) => {
-  if (data.length < 10000) {
-    return;
-  }
+treeWorker.addEventListener('message', ({ data: [root, branches] }) => {
+  const buffer = c.cloneNode() as HTMLCanvasElement;
+  const buf = buffer.getContext('2d') as CanvasRenderingContext2D;
 
-  trees.push(data.values());
+  buffer.width = c.width;
+  buffer.height = c.height;
+
+  trees.push({
+    root,
+    branches: branches.values(),
+    buffer,
+    buf,
+  });
+
+  trees.sort(({ root: { y: y1 } }, { root: { y: y2 } }) => y1 - y2);
 });
 
-function drawBranch(b: Branch) {
-  buf.beginPath();
+function drawBranch(context: CanvasRenderingContext2D, b: Branch) {
+  context.beginPath();
 
-  buf.strokeStyle = gradient(buf, b);
-  buf.lineWidth = b.lineWidth;
+  context.strokeStyle = gradient(context, b);
+  context.lineWidth = b.lineWidth;
 
-  buf.moveTo(b.startX, b.startY);
-  buf.lineTo(b.endX, b.endY);
+  context.moveTo(b.startX, b.startY);
+  context.lineTo(b.endX, b.endY);
 
-  buf.stroke();
+  context.stroke();
 }
 
-function drawTree(t: IterableIterator<Branch>) {
-  let b = t.next();
+function drawTree({ branches, buf }: Tree) {
+  let b = branches.next();
   if (b.done) {
     return;
   }
@@ -51,12 +58,12 @@ function drawTree(t: IterableIterator<Branch>) {
     b.value.iteration === iteration &&
     performance.now() - ts < 10 / trees.length
   ) {
-    drawBranch(b.value);
-    b = t.next();
+    drawBranch(buf, b.value);
+    b = branches.next();
   }
 
   if (!b.done) {
-    drawBranch(b.value);
+    drawBranch(buf, b.value);
   }
 }
 
@@ -65,29 +72,27 @@ function draw(/* time: DOMHighResTimeStamp */) {
 
   if (shouldResize()) {
     resize(c, m);
-    buffer.width = c.width;
-    buffer.height = c.height;
 
-    buf.fillStyle = `rgba(0, 0, 0, 0.1)`;
-    buf.fillRect(0, 0, buffer.width, buffer.height);
+    trees.forEach(({ buffer }) => {
+      buffer.width = c.width;
+      buffer.height = c.height;
+    });
   }
 
-  buf.lineCap = 'round';
+  if (pointer.isDown) {
+    const scale = lerp(20, 8, (pointer.y * dpr) / c.height);
 
-  trees.forEach(drawTree);
-  ctx.drawImage(buffer, 0, 0);
+    treeWorker.postMessage({
+      x: pointer.x * dpr,
+      y: pointer.y * dpr,
+      length: min(c.width, c.height) / scale,
+    });
+  }
+
+  trees.forEach(tree => {
+    drawTree(tree);
+    ctx.drawImage(tree.buffer, 0, 0);
+  });
 }
 
 rAF(draw);
-
-on<MouseEvent>('click', ({ clientX, clientY }) => {
-  buf.fillRect(0, 0, buffer.width, buffer.height);
-
-  treeWorker.postMessage({
-    x: clientX * dpr,
-    y: clientY * dpr,
-    length: min(c.width, c.height) / 12,
-    angle: 0,
-    iteration: 0,
-  });
-});

@@ -1,10 +1,13 @@
 export const maxIterations = 20;
 
-export interface Collar {
+export interface Root {
   x: number;
   y: number;
-  angle: number;
   length: number;
+}
+
+export interface Collar extends Root {
+  angle: number;
   iteration: number;
 }
 
@@ -15,6 +18,13 @@ export interface Branch {
   endY: number;
   lineWidth: number;
   iteration: number;
+}
+
+export interface Tree {
+  root: Root;
+  branches: IterableIterator<Branch>;
+  buffer: HTMLCanvasElement;
+  buf: CanvasRenderingContext2D;
 }
 
 export interface Config {

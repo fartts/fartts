@@ -8,7 +8,7 @@ import {
   round,
 } from '../../../lib/core/math';
 
-import { Branch, Collar, Config, maxIterations } from './constants';
+import { Branch, Collar, Config, maxIterations, Root, Tree } from './constants';
 
 function branch({ x, y, angle, length, iteration }: Collar): Branch {
   return {
@@ -51,23 +51,26 @@ function* branches(c: Collar, config: Config): IterableIterator<Branch> {
   }
 }
 
-function tree(root: Collar): Branch[] {
+function tree(root: Root): [Root, Branch[]] {
   const n = round(randomRange(1, 1));
 
   const angle = π * 1.5 + randomRange(-0.2, 0.2);
   const iteration = maxIterations / n;
   const length = root.length / n;
 
-  return Array.from(
-    branches(
-      { ...root, angle, length, iteration },
-      {
-        a: () => randomRange(0.2, 0.4) * n,
-        l: () => randomRange(0.7, 0.9) / n,
-        n: () => n,
-      },
-    ),
-  ).sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1);
+  return [
+    root,
+    Array.from(
+      branches(
+        { ...root, angle, length, iteration },
+        {
+          a: () => randomRange(0.2, 0.4) * n,
+          l: () => randomRange(0.7, 0.9) / n,
+          n: () => n,
+        },
+      ),
+    ).sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1),
+  ];
 }
 
 addEventListener('message', ({ data }) => {
