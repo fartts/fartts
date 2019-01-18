@@ -15,8 +15,8 @@ export function gradient(
   context: CanvasRenderingContext2D,
   { startX, startY, endX, endY, lineWidth, iteration }: Branch,
 ): CanvasGradient {
-  const radians = atan2(endY - startY, endX - startX);
-  const degrees = round(toDegrees(radians)) * -1;
+  const radians = atan2(endY - startY, endX - startX) + π;
+  const degrees = round(toDegrees(radians));
 
   if (!memo[`${degrees}:${iteration}`]) {
     const prev = hsla(degrees, sWave(iteration + 1), lWave(iteration + 1), 1);

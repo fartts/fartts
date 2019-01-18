@@ -6,7 +6,7 @@ import pointer from './pointer';
 import { shouldResize, resize } from './resize';
 import { Branch, Tree } from './tree/constants';
 import { gradient } from './tree/gradient';
-import { lerp, min } from '../../lib/core/math';
+import { lerp, min, random } from '../../lib/core/math';
 
 const m = el('main') as HTMLMainElement;
 
@@ -48,7 +48,7 @@ function drawTree(t: Tree) {
     return;
   }
 
-  t.alpha *= 0.99;
+  t.alpha *= 0.95;
 
   const { iteration } = b.value;
   const ts = performance.now();
@@ -67,6 +67,13 @@ function drawTree(t: Tree) {
   }
 }
 
+function gray98(alpha: number) {
+  return `rgba(250, 250, 250, ${alpha})`;
+}
+
+// const bpm98 = 60000 / 98 / 4;
+// const fps60 = 1000 / 60;
+
 function draw(/* time: DOMHighResTimeStamp */) {
   rAF(draw);
 
@@ -76,12 +83,12 @@ function draw(/* time: DOMHighResTimeStamp */) {
     d.width = c.width;
     d.height = c.height;
 
-    dtx.fillStyle = 'rgba(250, 250, 250, 1)';
+    dtx.fillStyle = gray98(1);
     dtx.fillRect(0, 0, d.width, d.height);
   }
 
-  if (pointer.isDown) {
-    dtx.fillStyle = 'rgba(250, 250, 250, 0.1)';
+  if (pointer.isDown /*  && time % bpm98 < fps60 */) {
+    dtx.fillStyle = gray98(0.1);
     dtx.fillRect(0, 0, d.width, d.height);
 
     const scale = lerp(20, 8, (pointer.y * dpr) / c.height);
@@ -93,7 +100,12 @@ function draw(/* time: DOMHighResTimeStamp */) {
     });
   }
 
-  trees = trees.filter(t => t.alpha > 0.1);
+  if (random() < 0.2) {
+    dtx.fillStyle = gray98(0.01);
+    dtx.fillRect(0, 0, d.width, d.height);
+  }
+
+  trees = trees.filter(t => t.alpha > 0.05);
   trees.forEach(drawTree);
 
   ctx.drawImage(d, 0, 0);

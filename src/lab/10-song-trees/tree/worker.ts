@@ -58,9 +58,9 @@ function tree(root: Root): [Root, Branch[]] {
   const iteration = maxIterations / n;
   const length = root.length / n;
 
-  return [
-    root,
-    Array.from(
+  let b: Branch[] = [];
+  while (b.length < 1000) {
+    b = Array.from(
       branches(
         { ...root, angle, length, iteration },
         {
@@ -69,8 +69,10 @@ function tree(root: Root): [Root, Branch[]] {
           n: () => n,
         },
       ),
-    ).sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1),
-  ];
+    );
+  }
+
+  return [root, b.sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1)];
 }
 
 addEventListener('message', ({ data }) => {
