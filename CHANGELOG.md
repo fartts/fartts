@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/fartts/fartts/compare/v1.15.0...v1.16.0) (2019-01-18)
+
+
+### Features
+
+* **lab/10:** an experiment with git lfs and parcel's bundling of mp3s ([62c71fb](https://github.com/fartts/fartts/commit/62c71fb))
+
 # [1.15.0](https://github.com/fartts/fartts/compare/v1.14.0...v1.15.0) (2019-01-18)
 
 
