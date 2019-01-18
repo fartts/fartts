@@ -23,7 +23,7 @@ treeWorker.addEventListener('message', ({ data: [root, branches] }) => {
   trees.push({
     root,
     branches: branches.values(),
-    alpha: root.y / c.height,
+    life: 1,
   });
 
   trees.sort(({ root: { y: y1 } }, { root: { y: y2 } }) => y1 - y2);
@@ -48,7 +48,7 @@ function drawTree(t: Tree) {
     return;
   }
 
-  t.alpha *= 0.95;
+  t.life *= 0.95;
 
   const { iteration } = b.value;
   const ts = performance.now();
@@ -105,7 +105,7 @@ function draw(/* time: DOMHighResTimeStamp */) {
     dtx.fillRect(0, 0, d.width, d.height);
   }
 
-  trees = trees.filter(t => t.alpha > 0.05);
+  trees = trees.filter(t => t.life > 0.05);
   trees.forEach(drawTree);
 
   ctx.drawImage(d, 0, 0);

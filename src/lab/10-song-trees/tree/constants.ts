@@ -23,7 +23,7 @@ export interface Branch {
 export interface Tree {
   root: Root;
   branches: IterableIterator<Branch>;
-  alpha: number;
+  life: number;
 }
 
 export interface Config {
