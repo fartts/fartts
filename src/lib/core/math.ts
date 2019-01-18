@@ -13,6 +13,7 @@ export const {
   max,
   min,
   PI: π,
+  pow,
   round,
   sin,
   sqrt,
