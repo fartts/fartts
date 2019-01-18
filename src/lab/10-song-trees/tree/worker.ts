@@ -8,7 +8,7 @@ import {
   round,
 } from '../../../lib/core/math';
 
-import { Branch, Collar, Config, maxIterations, Root, Tree } from './constants';
+import { Branch, Collar, Config, maxIterations, Root } from './constants';
 
 function branch({ x, y, angle, length, iteration }: Collar): Branch {
   return {
