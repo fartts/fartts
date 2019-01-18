@@ -1,5 +1,7 @@
 import { on, off } from '../../lib/core/dom';
 
+import song from './song';
+
 let x = 0;
 let y = 0;
 let isDown = false;
@@ -35,6 +37,12 @@ function onMove(event: MouseEvent | TouchEvent) {
 }
 
 on<MouseEvent>('mousedown', event => {
+  if (!song.canPlayThrough) {
+    return;
+  } else {
+    song.play();
+  }
+
   x = event.clientX;
   y = event.clientY;
 
@@ -48,6 +56,12 @@ on<MouseEvent>('mouseup', () => {
 });
 
 on<TouchEvent>('touchstart', event => {
+  if (!song.canPlayThrough) {
+    return;
+  } else {
+    song.play();
+  }
+
   x = (event as TouchEvent).touches[0].clientX;
   y = (event as TouchEvent).touches[0].clientY;
 
