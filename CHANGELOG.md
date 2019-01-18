@@ -1,3 +1,16 @@
+# [1.15.0](https://github.com/fartts/fartts/compare/v1.14.0...v1.15.0) (2019-01-18)
+
+
+### Features
+
+* **lab/10:** adds a config object to branches for some of the variable ranges, it's very computatio ([c6d3e94](https://github.com/fartts/fartts/commit/c6d3e94))
+* **lab/10:** adds alpha to the tree interface to try and track clean up, sorta works, but it's stil ([73f02bf](https://github.com/fartts/fartts/commit/73f02bf))
+* **lab/10:** adds back gradients, click to plant trees ([523afd1](https://github.com/fartts/fartts/commit/523afd1))
+* **lab/10:** drawing trees again, separated the collar/branch data, just white trees for now ([988c336](https://github.com/fartts/fartts/commit/988c336))
+* **lab/10:** it paints now, but it just accumulates memory and slows down super fast ([6fd5e6d](https://github.com/fartts/fartts/commit/6fd5e6d))
+* **lab/10:** run the branch generator in a worker ([1b9e37e](https://github.com/fartts/fartts/commit/1b9e37e))
+* **lab/10:** stubs out a new experiment for the song trees thing ([33cdcf8](https://github.com/fartts/fartts/commit/33cdcf8))
+
 # [1.14.0](https://github.com/fartts/fartts/compare/v1.13.0...v1.14.0) (2019-01-11)
 
 
