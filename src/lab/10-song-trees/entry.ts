@@ -12,7 +12,7 @@ const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
-const trees: Tree[] = [];
+let trees: Tree[] = [];
 
 const treeWorker = new Worker('./tree/worker.ts');
 treeWorker.addEventListener('message', ({ data: [root, branches] }) => {
@@ -27,6 +27,7 @@ treeWorker.addEventListener('message', ({ data: [root, branches] }) => {
     branches: branches.values(),
     buffer,
     buf,
+    alpha: 1,
   });
 
   trees.sort(({ root: { y: y1 } }, { root: { y: y2 } }) => y1 - y2);
@@ -89,8 +90,14 @@ function draw(/* time: DOMHighResTimeStamp */) {
     });
   }
 
+  ctx.clearRect(0, 0, c.width, c.height);
+
+  trees = trees.filter(({ alpha }) => alpha > 0.1);
   trees.forEach(tree => {
     drawTree(tree);
+    tree.alpha -= 0.01;
+
+    ctx.globalAlpha = tree.alpha;
     ctx.drawImage(tree.buffer, 0, 0);
   });
 }

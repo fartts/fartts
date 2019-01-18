@@ -25,6 +25,7 @@ export interface Tree {
   branches: IterableIterator<Branch>;
   buffer: HTMLCanvasElement;
   buf: CanvasRenderingContext2D;
+  alpha: number;
 }
 
 export interface Config {
