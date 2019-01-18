@@ -71,10 +71,10 @@ function gray98(alpha: number) {
   return `rgba(250, 250, 250, ${alpha})`;
 }
 
-// const bpm98 = 60000 / 98 / 4;
-// const fps60 = 1000 / 60;
+const bpm98 = 60000 / 98 / 16;
+const fps60 = 1000 / 60;
 
-function draw(/* time: DOMHighResTimeStamp */) {
+function draw(time: DOMHighResTimeStamp) {
   rAF(draw);
 
   if (shouldResize()) {
@@ -87,7 +87,7 @@ function draw(/* time: DOMHighResTimeStamp */) {
     dtx.fillRect(0, 0, d.width, d.height);
   }
 
-  if (pointer.isDown /*  && time % bpm98 < fps60 */) {
+  if (pointer.isDown && time % bpm98 < fps60) {
     dtx.fillStyle = gray98(0.1);
     dtx.fillRect(0, 0, d.width, d.height);
 
@@ -100,7 +100,7 @@ function draw(/* time: DOMHighResTimeStamp */) {
     });
   }
 
-  if (random() < 0.2) {
+  if (random() < 0.5) {
     dtx.fillStyle = gray98(0.01);
     dtx.fillRect(0, 0, d.width, d.height);
   }
