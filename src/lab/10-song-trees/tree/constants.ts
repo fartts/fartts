@@ -1,3 +1,5 @@
+export const maxIterations = 20;
+
 export interface Collar {
   x: number;
   y: number;

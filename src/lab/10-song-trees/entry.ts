@@ -1,10 +1,11 @@
 import './style.css';
 
-import { rAF, el, on } from '../../lib/core/dom';
+import { rAF, el, on, dpr } from '../../lib/core/dom';
 import { min } from '../../lib/core/math';
 
 import { shouldResize, resize } from './resize';
-import { Branch } from './tree/interfaces';
+import { Branch } from './tree/constants';
+import { gradient } from './tree/gradient';
 
 const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
@@ -24,14 +25,14 @@ treeWorker.addEventListener('message', ({ data }) => {
   trees.push(data.values());
 });
 
-function drawBranch({ startX, startY, endX, endY, lineWidth }: Branch) {
+function drawBranch(b: Branch) {
   buf.beginPath();
 
-  buf.strokeStyle = '#fff';
-  buf.lineWidth = lineWidth;
+  buf.strokeStyle = gradient(buf, b);
+  buf.lineWidth = b.lineWidth;
 
-  buf.moveTo(startX, startY);
-  buf.lineTo(endX, endY);
+  buf.moveTo(b.startX, b.startY);
+  buf.lineTo(b.endX, b.endY);
 
   buf.stroke();
 }
@@ -69,14 +70,6 @@ function draw(/* time: DOMHighResTimeStamp */) {
 
     buf.fillStyle = `rgba(0, 0, 0, 0.1)`;
     buf.fillRect(0, 0, buffer.width, buffer.height);
-
-    treeWorker.postMessage({
-      x: c.width * 0.5,
-      y: c.height * 0.8,
-      length: min(c.width, c.height) / 8,
-      angle: 0,
-      iteration: 0,
-    });
   }
 
   buf.lineCap = 'round';
@@ -87,13 +80,13 @@ function draw(/* time: DOMHighResTimeStamp */) {
 
 rAF(draw);
 
-on<MouseEvent>('click', () => {
+on<MouseEvent>('click', ({ clientX, clientY }) => {
   buf.fillRect(0, 0, buffer.width, buffer.height);
 
   treeWorker.postMessage({
-    x: c.width * 0.5,
-    y: c.height * 0.8,
-    length: min(c.width, c.height) / 8,
+    x: clientX * dpr,
+    y: clientY * dpr,
+    length: min(c.width, c.height) / 12,
     angle: 0,
     iteration: 0,
   });

@@ -6,10 +6,9 @@ import {
   random,
   lerp,
   round,
-  pow,
 } from '../../../lib/core/math';
 
-import { Branch, Collar, Config } from './interfaces';
+import { Branch, Collar, Config, maxIterations } from './constants';
 
 function branch({ x, y, angle, length, iteration }: Collar): Branch {
   return {
@@ -52,7 +51,7 @@ function* branches(c: Collar, config: Config): IterableIterator<Branch> {
   }
 }
 
-function tree(root: Collar, maxIterations = 20): Branch[] {
+function tree(root: Collar): Branch[] {
   const n = round(randomRange(1, 1));
 
   const angle = π * 1.5 + randomRange(-0.2, 0.2);

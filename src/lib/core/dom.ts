@@ -1,4 +1,8 @@
-export const { requestAnimationFrame: rAF, cancelAnimationFrame: cAF } = window;
+export const {
+  requestAnimationFrame: rAF,
+  cancelAnimationFrame: cAF,
+  devicePixelRatio: dpr,
+} = window;
 
 export function el(selectors: string): Element | null {
   return document.querySelector(selectors);
