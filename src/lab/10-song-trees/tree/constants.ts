@@ -1,4 +1,4 @@
-export const maxIterations = 20;
+export const maxIterations = 15;
 
 export interface Root {
   x: number;

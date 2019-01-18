@@ -8,9 +8,12 @@ import { Branch, Tree } from './tree/constants';
 import { gradient } from './tree/gradient';
 import { lerp, min } from '../../lib/core/math';
 
-const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
+
+const c = el('canvas') as HTMLCanvasElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
+const b = c.cloneNode() as HTMLCanvasElement;
+const btx = b.getContext('2d') as CanvasRenderingContext2D;
 
 let trees: Tree[] = [];
 
@@ -46,25 +49,25 @@ function drawBranch(context: CanvasRenderingContext2D, b: Branch) {
 }
 
 function drawTree({ branches, buf }: Tree) {
-  let b = branches.next();
-  if (b.done) {
+  let branch = branches.next();
+  if (branch.done) {
     return;
   }
 
-  const { iteration } = b.value;
+  const { iteration } = branch.value;
   const ts = performance.now();
 
   while (
-    !b.done &&
-    b.value.iteration === iteration &&
+    !branch.done &&
+    branch.value.iteration === iteration &&
     performance.now() - ts < 10 / trees.length
   ) {
-    drawBranch(buf, b.value);
-    b = branches.next();
+    drawBranch(buf, branch.value);
+    branch = branches.next();
   }
 
-  if (!b.done) {
-    drawBranch(buf, b.value);
+  if (!branch.done) {
+    drawBranch(buf, branch.value);
   }
 }
 
@@ -73,6 +76,9 @@ function draw(/* time: DOMHighResTimeStamp */) {
 
   if (shouldResize()) {
     resize(c, m);
+
+    b.width = c.width;
+    b.height = c.height;
 
     trees.forEach(({ buffer }) => {
       buffer.width = c.width;
@@ -90,16 +96,19 @@ function draw(/* time: DOMHighResTimeStamp */) {
     });
   }
 
-  ctx.clearRect(0, 0, c.width, c.height);
+  btx.clearRect(0, 0, c.width, c.height);
 
   trees = trees.filter(({ alpha }) => alpha > 0.1);
   trees.forEach(tree => {
     drawTree(tree);
-    tree.alpha -= 0.01;
+    tree.alpha *= 0.99;
 
-    ctx.globalAlpha = tree.alpha;
-    ctx.drawImage(tree.buffer, 0, 0);
+    btx.globalAlpha = tree.alpha;
+    btx.drawImage(tree.buffer, 0, 0);
   });
+
+  ctx.clearRect(0, 0, c.width, c.height);
+  ctx.drawImage(b, 0, 0);
 }
 
 rAF(draw);
