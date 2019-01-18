@@ -1,4 +1,4 @@
-import { atan2, hypot, toDegrees, round } from '../../../lib/core/math';
+import { atan2, hypot, toDegrees, round, π } from '../../../lib/core/math';
 import { sawWave, sinWave } from '../../../lib/core/wave';
 import { Branch, maxIterations } from './constants';
 
@@ -16,11 +16,12 @@ export function gradient(
   { startX, startY, endX, endY, lineWidth, iteration }: Branch,
 ): CanvasGradient {
   const radians = atan2(endY - startY, endX - startX);
-  const degrees = round(toDegrees(radians));
+  const degrees = round(toDegrees(radians)) * -1;
 
   if (!memo[`${degrees}:${iteration}`]) {
     const prev = hsla(degrees, sWave(iteration + 1), lWave(iteration + 1), 1);
     const color = hsla(degrees, sWave(iteration), lWave(iteration), 1);
+
     const length = hypot(endX - startX, endY - startY);
     const stop = lineWidth / 2 / length;
 

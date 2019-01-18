@@ -1,4 +1,4 @@
-export const maxIterations = 15;
+export const maxIterations = 20;
 
 export interface Root {
   x: number;
@@ -23,8 +23,6 @@ export interface Branch {
 export interface Tree {
   root: Root;
   branches: IterableIterator<Branch>;
-  buffer: HTMLCanvasElement;
-  buf: CanvasRenderingContext2D;
   alpha: number;
 }
 

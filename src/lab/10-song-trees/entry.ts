@@ -12,25 +12,18 @@ const m = el('main') as HTMLMainElement;
 
 const c = el('canvas') as HTMLCanvasElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
-const b = c.cloneNode() as HTMLCanvasElement;
-const btx = b.getContext('2d') as CanvasRenderingContext2D;
+
+const d = c.cloneNode() as HTMLCanvasElement;
+const dtx = d.getContext('2d') as CanvasRenderingContext2D;
 
 let trees: Tree[] = [];
 
 const treeWorker = new Worker('./tree/worker.ts');
 treeWorker.addEventListener('message', ({ data: [root, branches] }) => {
-  const buffer = c.cloneNode() as HTMLCanvasElement;
-  const buf = buffer.getContext('2d') as CanvasRenderingContext2D;
-
-  buffer.width = c.width;
-  buffer.height = c.height;
-
   trees.push({
     root,
     branches: branches.values(),
-    buffer,
-    buf,
-    alpha: 1,
+    alpha: root.y / c.height,
   });
 
   trees.sort(({ root: { y: y1 } }, { root: { y: y2 } }) => y1 - y2);
@@ -41,6 +34,7 @@ function drawBranch(context: CanvasRenderingContext2D, b: Branch) {
 
   context.strokeStyle = gradient(context, b);
   context.lineWidth = b.lineWidth;
+  context.lineCap = 'round';
 
   context.moveTo(b.startX, b.startY);
   context.lineTo(b.endX, b.endY);
@@ -48,26 +42,28 @@ function drawBranch(context: CanvasRenderingContext2D, b: Branch) {
   context.stroke();
 }
 
-function drawTree({ branches, buf }: Tree) {
-  let branch = branches.next();
-  if (branch.done) {
+function drawTree(t: Tree) {
+  let b = t.branches.next();
+  if (b.done) {
     return;
   }
 
-  const { iteration } = branch.value;
+  t.alpha *= 0.99;
+
+  const { iteration } = b.value;
   const ts = performance.now();
 
   while (
-    !branch.done &&
-    branch.value.iteration === iteration &&
+    !b.done &&
+    b.value.iteration === iteration &&
     performance.now() - ts < 10 / trees.length
   ) {
-    drawBranch(buf, branch.value);
-    branch = branches.next();
+    drawBranch(dtx, b.value);
+    b = t.branches.next();
   }
 
-  if (!branch.done) {
-    drawBranch(buf, branch.value);
+  if (!b.done) {
+    drawBranch(dtx, b.value);
   }
 }
 
@@ -77,16 +73,17 @@ function draw(/* time: DOMHighResTimeStamp */) {
   if (shouldResize()) {
     resize(c, m);
 
-    b.width = c.width;
-    b.height = c.height;
+    d.width = c.width;
+    d.height = c.height;
 
-    trees.forEach(({ buffer }) => {
-      buffer.width = c.width;
-      buffer.height = c.height;
-    });
+    dtx.fillStyle = 'rgba(250, 250, 250, 1)';
+    dtx.fillRect(0, 0, d.width, d.height);
   }
 
   if (pointer.isDown) {
+    dtx.fillStyle = 'rgba(250, 250, 250, 0.1)';
+    dtx.fillRect(0, 0, d.width, d.height);
+
     const scale = lerp(20, 8, (pointer.y * dpr) / c.height);
 
     treeWorker.postMessage({
@@ -96,19 +93,10 @@ function draw(/* time: DOMHighResTimeStamp */) {
     });
   }
 
-  btx.clearRect(0, 0, c.width, c.height);
+  trees = trees.filter(t => t.alpha > 0.1);
+  trees.forEach(drawTree);
 
-  trees = trees.filter(({ alpha }) => alpha > 0.1);
-  trees.forEach(tree => {
-    drawTree(tree);
-    tree.alpha *= 0.99;
-
-    btx.globalAlpha = tree.alpha;
-    btx.drawImage(tree.buffer, 0, 0);
-  });
-
-  ctx.clearRect(0, 0, c.width, c.height);
-  ctx.drawImage(b, 0, 0);
+  ctx.drawImage(d, 0, 0);
 }
 
 rAF(draw);
