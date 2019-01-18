@@ -6,30 +6,10 @@ import {
   random,
   lerp,
   round,
-} from '../../lib/core/math';
+  pow,
+} from '../../../lib/core/math';
 
-interface Collar {
-  x: number;
-  y: number;
-  angle: number;
-  length: number;
-  iteration: number;
-}
-
-export interface Branch {
-  startX: number;
-  startY: number;
-  endX: number;
-  endY: number;
-  lineWidth: number;
-  iteration: number;
-}
-
-interface Config {
-  a: () => number;
-  l: () => number;
-  n: () => number;
-}
+import { Branch, Collar, Config } from './interfaces';
 
 function branch({ x, y, angle, length, iteration }: Collar): Branch {
   return {
@@ -72,23 +52,25 @@ function* branches(c: Collar, config: Config): IterableIterator<Branch> {
   }
 }
 
-export function* tree(
-  root: Collar,
-  maxIterations = 20,
-): IterableIterator<Branch> {
-  const angle = π * 1.5 + randomRange(-0.2, 0.2);
+function tree(root: Collar, maxIterations = 20): Branch[] {
   const n = round(randomRange(1, 1));
 
-  yield* Array.from(
+  const angle = π * 1.5 + randomRange(-0.2, 0.2);
+  const iteration = maxIterations / n;
+  const length = root.length / n;
+
+  return Array.from(
     branches(
-      { ...root, angle, iteration: maxIterations },
+      { ...root, angle, length, iteration },
       {
-        a: () => randomRange(0.2, 0.4),
-        l: () => randomRange(0.7, 0.9),
+        a: () => randomRange(0.2, 0.4) * n,
+        l: () => randomRange(0.7, 0.9) / n,
         n: () => n,
       },
     ),
-  )
-    .sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1)
-    .values();
+  ).sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1);
 }
+
+addEventListener('message', ({ data }) => {
+  postMessage(tree(data));
+});

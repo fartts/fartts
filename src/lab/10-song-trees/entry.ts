@@ -1,10 +1,10 @@
 import './style.css';
 
 import { rAF, el, on } from '../../lib/core/dom';
-import { toDegrees, ππ, min, round, randomRange } from '../../lib/core/math';
+import { min } from '../../lib/core/math';
 
 import { shouldResize, resize } from './resize';
-import { tree, Branch } from './tree';
+import { Branch } from './tree/interfaces';
 
 const c = el('canvas') as HTMLCanvasElement;
 const m = el('main') as HTMLMainElement;
@@ -14,6 +14,15 @@ const buffer = c.cloneNode() as HTMLCanvasElement;
 const buf = buffer.getContext('2d') as CanvasRenderingContext2D;
 
 const trees: Array<IterableIterator<Branch>> = [];
+
+const treeWorker = new Worker('./tree/worker.ts');
+treeWorker.addEventListener('message', ({ data }) => {
+  if (data.length < 10000) {
+    return;
+  }
+
+  trees.push(data.values());
+});
 
 function drawBranch({ startX, startY, endX, endY, lineWidth }: Branch) {
   buf.beginPath();
@@ -58,19 +67,16 @@ function draw(/* time: DOMHighResTimeStamp */) {
     buffer.width = c.width;
     buffer.height = c.height;
 
-    // buf.fillStyle = `hsla(${toDegrees((time / 1000) % ππ)}, 50%, 50%, 0.1)`;
     buf.fillStyle = `rgba(0, 0, 0, 0.1)`;
     buf.fillRect(0, 0, buffer.width, buffer.height);
 
-    trees.push(
-      tree({
-        x: c.width * 0.5,
-        y: c.height * 0.8,
-        length: min(c.width, c.height) / 8,
-        angle: 0,
-        iteration: 0,
-      }),
-    );
+    treeWorker.postMessage({
+      x: c.width * 0.5,
+      y: c.height * 0.8,
+      length: min(c.width, c.height) / 8,
+      angle: 0,
+      iteration: 0,
+    });
   }
 
   buf.lineCap = 'round';
@@ -83,16 +89,12 @@ rAF(draw);
 
 on<MouseEvent>('click', () => {
   buf.fillRect(0, 0, buffer.width, buffer.height);
-  trees.push(
-    tree(
-      {
-        x: c.width * 0.5,
-        y: c.height * 0.8,
-        length: min(c.width, c.height) / 8,
-        angle: 0,
-        iteration: 0,
-      },
-      round(randomRange(15, 25)),
-    ),
-  );
+
+  treeWorker.postMessage({
+    x: c.width * 0.5,
+    y: c.height * 0.8,
+    length: min(c.width, c.height) / 8,
+    angle: 0,
+    iteration: 0,
+  });
 });
