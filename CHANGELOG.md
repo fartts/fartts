@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/fartts/fartts/compare/v1.16.0...v1.16.1) (2019-01-24)
+
+
+### Bug Fixes
+
+* **lab/10:** fixes (well, works around) the mobile safari 'canplaythrough' issue ([a62c594](https://github.com/fartts/fartts/commit/a62c594))
+
 # [1.16.0](https://github.com/fartts/fartts/compare/v1.15.0...v1.16.0) (2019-01-18)
 
 
