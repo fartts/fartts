@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/fartts/fartts/compare/v1.16.1...v1.16.2) (2019-01-26)
+
+
+### Bug Fixes
+
+* **lab/10:** make sure the buffer is in a valid state before calling drawImage on it ([2891269](https://github.com/fartts/fartts/commit/2891269))
+
 ## [1.16.1](https://github.com/fartts/fartts/compare/v1.16.0...v1.16.1) (2019-01-24)
 
 
