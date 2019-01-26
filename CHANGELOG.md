@@ -1,3 +1,10 @@
+## [1.16.3](https://github.com/fartts/fartts/compare/v1.16.2...v1.16.3) (2019-01-26)
+
+
+### Bug Fixes
+
+* **lab/10:** another shot in the dark, seen a promise error once or twice, just swallow it ([f3de353](https://github.com/fartts/fartts/commit/f3de353))
+
 ## [1.16.2](https://github.com/fartts/fartts/compare/v1.16.1...v1.16.2) (2019-01-26)
 
 
