@@ -108,7 +108,9 @@ function draw(time: DOMHighResTimeStamp) {
   trees = trees.filter(t => t.life > 0.05);
   trees.forEach(drawTree);
 
-  ctx.drawImage(d, 0, 0);
+  if (d.width && d.height) {
+    ctx.drawImage(d, 0, 0);
+  }
 }
 
 rAF(draw);
