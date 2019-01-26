@@ -22,7 +22,7 @@ song.addEventListener('canplaythrough', () => {
 
 export default {
   play() {
-    song.play();
+    song.play().catch();
   },
 
   get canPlayThrough() {
