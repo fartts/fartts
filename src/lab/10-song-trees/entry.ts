@@ -85,6 +85,17 @@ function draw(time: DOMHighResTimeStamp) {
 
     dtx.fillStyle = gray98(1);
     dtx.fillRect(0, 0, d.width, d.height);
+
+    ctx.drawImage(d, 0, 0);
+    ctx.fillStyle = '#444';
+    ctx.font = `${18 * dpr}px serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('click or tap anywhere to start', c.width / 2, c.height / 2);
+  }
+
+  if (!pointer.didClick) {
+    return;
   }
 
   if (pointer.isDown && time % bpm98 < fps60) {
@@ -110,6 +121,9 @@ function draw(time: DOMHighResTimeStamp) {
 
   if (d.width && d.height) {
     ctx.drawImage(d, 0, 0);
+  } else {
+    console.log('invalid buffer, resizing'); // tslint:disable-line
+    dispatchEvent(new Event('resize'));
   }
 }
 
