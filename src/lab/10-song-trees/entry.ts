@@ -110,6 +110,9 @@ function draw(time: DOMHighResTimeStamp) {
 
   if (d.width && d.height) {
     ctx.drawImage(d, 0, 0);
+  } else {
+    console.log('invalid buffer, resizing'); // tslint:disable-line
+    dispatchEvent(new Event('resize'));
   }
 }
 
