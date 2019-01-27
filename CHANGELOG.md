@@ -1,3 +1,12 @@
+## [1.16.4](https://github.com/fartts/fartts/compare/v1.16.3...v1.16.4) (2019-01-27)
+
+
+### Bug Fixes
+
+* **lab/10:** another stab at fixing the non-rendering canvas in iframe on phones on squarespace issu ([a35f33b](https://github.com/fartts/fartts/commit/a35f33b))
+* **lab/10:** more messing with media events, logging the error name and message makes me realize tha ([4331765](https://github.com/fartts/fartts/commit/4331765))
+* **lab/10:** what a long strange trip this has been ([3f4213b](https://github.com/fartts/fartts/commit/3f4213b))
+
 ## [1.16.3](https://github.com/fartts/fartts/compare/v1.16.2...v1.16.3) (2019-01-26)
 
 
