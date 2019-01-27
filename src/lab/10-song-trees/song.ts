@@ -6,46 +6,15 @@ song.pause();
 
 let canPlayThrough = false;
 
-[
-  'abort',
-  'canplay',
-  'canplaythrough',
-  'durationchange',
-  'emptied',
-  'encrypted',
-  'ended',
-  'error',
-  'interruptbegin',
-  'interruptend',
-  'loadeddata',
-  'loadedmetadata',
-  'loadstart',
-  'mozaudioavailable',
-  'pause',
-  'play',
-  'playing',
-  'progress',
-  'ratechange',
-  'seeked',
-  'seeking',
-  'stalled',
-  'suspend',
-  'timeupdate',
-  'volumechange',
-  'waiting',
-].forEach(eventName => {
-  song.addEventListener(eventName, () => {
-    console.log(eventName);
-  });
-});
-
 song.addEventListener('canplaythrough', () => {
   canPlayThrough = true;
 });
 
 export default {
   play() {
-    song.play();
+    song.play().catch(({ name, message }) => {
+      console.log(name, message); // tslint:disable-line
+    });
   },
 
   get canPlayThrough() {
