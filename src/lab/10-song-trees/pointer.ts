@@ -58,8 +58,6 @@ on<MouseEvent>('mouseup', () => {
 on<TouchEvent>('touchstart', event => {
   if (!song.canPlayThrough) {
     return;
-  } else {
-    song.play();
   }
 
   x = (event as TouchEvent).touches[0].clientX;
@@ -70,6 +68,8 @@ on<TouchEvent>('touchstart', event => {
 });
 
 on<TouchEvent>('touchend', () => {
+  song.play();
+
   isDown = false;
   off<TouchEvent>('touchmove', onMove);
 });

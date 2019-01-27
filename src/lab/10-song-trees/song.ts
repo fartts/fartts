@@ -1,19 +1,42 @@
 import songUrl from './assets/lindenmayr-song.mp3';
 
 const song = new Audio(songUrl);
+song.autoplay = true;
+song.pause();
 
 let canPlayThrough = false;
 
-/**
- * This preposterous hack is because Mobile Safari doesn't trigger
- * 'canplaythrough' until you actually call song.play() which you are not
- * allowed to do outside a UI event so we set it to autoplay and then call
- * song.pause() as soon as it starts loading which then triggers
- * 'canplaythrough' ... why
- */
-song.autoplay = true;
-song.addEventListener('loadstart', () => {
-  song.pause();
+[
+  'abort',
+  'canplay',
+  'canplaythrough',
+  'durationchange',
+  'emptied',
+  'encrypted',
+  'ended',
+  'error',
+  'interruptbegin',
+  'interruptend',
+  'loadeddata',
+  'loadedmetadata',
+  'loadstart',
+  'mozaudioavailable',
+  'pause',
+  'play',
+  'playing',
+  'progress',
+  'ratechange',
+  'seeked',
+  'seeking',
+  'stalled',
+  'suspend',
+  'timeupdate',
+  'volumechange',
+  'waiting',
+].forEach(eventName => {
+  song.addEventListener(eventName, () => {
+    console.log(eventName);
+  });
 });
 
 song.addEventListener('canplaythrough', () => {
@@ -22,7 +45,7 @@ song.addEventListener('canplaythrough', () => {
 
 export default {
   play() {
-    song.play().catch();
+    song.play();
   },
 
   get canPlayThrough() {
