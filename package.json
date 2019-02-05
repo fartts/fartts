@@ -36,7 +36,7 @@
     "@semantic-release/github": "5.2.10",
     "@semantic-release/npm": "5.1.4",
     "@semantic-release/release-notes-generator": "7.1.4",
-    "@types/jest": "23.3.13",
+    "@types/jest": "23.3.14",
     "@types/node": "10.12.21",
     "@types/seedrandom": "2.4.27",
     "commitizen": "3.0.5",
