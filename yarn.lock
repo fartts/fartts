@@ -926,9 +926,9 @@
     into-stream "^4.0.0"
     lodash "^4.17.4"
 
-"@types/jest@23.3.13":
-  version "23.3.13"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.13.tgz#c81484b6f4ca007bb09887ed15ecb3286d58f928"
+"@types/jest@24.0.2":
+  version "24.0.2"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.2.tgz#a10ad017ee020b2dfa97655323dbf1f38f14f588"
 
 "@types/node@10.12.21", "@types/node@^10.11.7":
   version "10.12.21"
