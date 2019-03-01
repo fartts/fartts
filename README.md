@@ -12,6 +12,30 @@
 
 deployed to [a **GitHub** Pages organization site repository](https://github.com/fartts/fartts.github.io), visible at [https://fartts.github.io](https://fartts.github.io)
 
+## Project Details
+
+### What is the project's goal?
+
+### Why is it important?
+
+### Who uses it?
+
+## My Involvement
+
+### Why is it significant to me?
+
+### What contributions have I made to it so far?
+
+## My Plan
+
+### How will I spend my time during the 3 months?
+
+### What do I hope to implement (week by week)?
+
+## Impact
+
+### How will the Sentry Open Source Grant make a difference to me?
+
 ## goals
 
 hmm, this feels weird. I've been thinking about this a lot lately though, so I probably ought to get some of that thinking out of my head to make room for other stuff. Also, it'll be good to get in the habit of documenting stuff like this. Uhh, a list I guess:
