@@ -5,12 +5,101 @@
 
 ---
 
-[![Build Status](https://travis-ci.org/fartts/fartts.svg?branch=master)](https://travis-ci.org/fartts/fartts) [![Website fartts.github.io](https://img.shields.io/website-up-down-green-red/https/fartts.github.io.svg)](https://fartts.github.io)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&identifier=131446158)](https://dependabot.com)<br>[![Maintainability](https://api.codeclimate.com/v1/badges/fcdc1b753d00ada7d241/maintainability)](https://codeclimate.com/github/fartts/fartts/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/fcdc1b753d00ada7d241/test_coverage)](https://codeclimate.com/github/fartts/fartts/test_coverage)<br>[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)<br>[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)<br>[![dependencies Status](https://david-dm.org/fartts/fartts/status.svg)](https://david-dm.org/fartts/fartts) [![devDependencies Status](https://david-dm.org/fartts/fartts/dev-status.svg)](https://david-dm.org/fartts/fartts?type=dev)<br>[![stability: experimental](https://img.shields.io/badge/stability-1%20experimental-ec5315.svg)](https://nodejs.org/api/documentation.html#documentation_stability_index) [![SemVer 2.0.0](https://img.shields.io/badge/semver-2.0.0-brightgreen.svg)](https://semver.org/) [![GitHub package version](https://img.shields.io/github/package-json/v/fartts/fartts.svg)](https://github.com/fartts/fartts/releases/tag/latest)
+[![Build Status](https://travis-ci.org/fartts/fartts.svg?branch=master)](https://travis-ci.org/fartts/fartts) [![Website fartts.github.io](https://img.shields.io/website-up-down-green-red/https/fartts.github.io.svg)](https://fartts.github.io) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&identifier=131446158)](https://dependabot.com)<br>[![Maintainability](https://api.codeclimate.com/v1/badges/fcdc1b753d00ada7d241/maintainability)](https://codeclimate.com/github/fartts/fartts/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/fcdc1b753d00ada7d241/test_coverage)](https://codeclimate.com/github/fartts/fartts/test_coverage)<br>[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)<br>[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)<br>[![dependencies Status](https://david-dm.org/fartts/fartts/status.svg)](https://david-dm.org/fartts/fartts) [![devDependencies Status](https://david-dm.org/fartts/fartts/dev-status.svg)](https://david-dm.org/fartts/fartts?type=dev)<br>[![stability: experimental](https://img.shields.io/badge/stability-1%20experimental-ec5315.svg)](https://nodejs.org/api/documentation.html#documentation_stability_index) [![SemVer 2.0.0](https://img.shields.io/badge/semver-2.0.0-brightgreen.svg)](https://semver.org/) [![GitHub package version](https://img.shields.io/github/package-json/v/fartts/fartts.svg)](https://github.com/fartts/fartts/releases/tag/latest)
 
 ---
 
 deployed to [a **GitHub** Pages organization site repository](https://github.com/fartts/fartts.github.io), visible at [https://fartts.github.io](https://fartts.github.io)
+
+## Project Details
+
+### What is the project's goal?
+
+The goal of 𝑓Art.ᴛꜱ is to create a library of tools for quickly creating games, interactive/digital toys, and generative/procedural art pieces.
+
+### Why is it important?
+
+𝑓Art.ᴛꜱ aims to be the first library of it's kind to offer a code-first approach to this kind of work and to extend the usual "creative coding sketch pad" with features that make it easier to take a concept "all the way to production" leveraging the internet as a distribution platform.
+
+### Who uses it?
+
+𝑓Art.ᴛꜱ is a tool for creative coders. It aims to be easy to use, and thus accessible and productive for first-timers, hobbyists, and game jam participants, but also provide the kind of performance characteristics and low level control required by professional artists and game developers.
+
+## My Involvement
+
+This is my project. It started as a series of tech talks on particle systems in JavaScript and grew into an idea for a cohesive system that brings together the best parts of game development (physics simulation, high performance rendering), generative art (noise functions, evolution, emergent properties), and modern web consumer software development (determinism, testability, continuous integration and deployment).
+
+### Why is it significant to me?
+
+𝑓Art.ᴛꜱ has been a nights, weekends, and passion project for me since it's beginning almost a year ago. I want to create a toolset that takes the approachability of JavaScript libraries like Processing, P5, and Kontra, but extend that functionality to allow programmers (myself included) to easily and frequently (even automatically) publish their work to static site hosting environments (like GitHub Pages, Netlify, and AWS) and as "build artifacts" to various social media platforms (Twitter, Instagram, Behance, and Dribble for example).
+
+### What contributions have I made to it so far?
+
+All the contributions to 𝑓Art.ᴛꜱ so far have been mine. My initial focus has been on various experiments with common abstractions and a unifying API. I've built several experiments to "spike out" some features and in the process pulles several useful bits into the main library. The core library currently consists of abstractions around browser globals (DOM and EventTarget mostly) as well as extensions to to common math operations and re-exporting several native functions for better minification. The vector implimentation consists of 2, 3, and 4 dimensional vector classes that are "swizzled" meaning their components can be rearranged and accessed in ways that are common in GPGPU programs, but historically unavailable in JavaScript. The matrix math library is my next target and I'm hoping to push that complex and memory intensive work into a WebAssembly module built in Rust.
+
+## My Plan
+
+### How will I spend my time during the 3 months?
+
+### What do I hope to implement (week by week)?
+
+#### Week 1
+
+My focus will be on a 2, 3, and 4 dimensional matrix math micro-library, built in Rust, compiled to WebAssembly.
+
+#### Week 2
+
+Integrating the matrix math library with the vector implementation will require some experiments, so this week will be spent doing a lot of matrix transform-related visual explorations.
+
+#### Week 3
+
+This week I'll start on a kind of "world state" object, focusing on querying user input (keyboard keys, mouse buttons and position, touches, gamepads, etc.). My ideal here would be to get to a place where the library efficiently collects and emits a "diff" each frame of changes to state.
+
+#### Week 4
+
+Using the new world state model, I'll take this week to do some more experimentation and exploration. I'll produce some demonstration of the new functionality and iron out any wrinkles.
+
+#### Week 5
+
+Here I'd focus on adding functionality to produce what I've taken to calling "build artifacts". Essentially the system will be able to produce images, GIFs, and video files from user's experiments.
+
+#### Week 6
+
+Once we have build artifacts my focus will shift to automatically publishing those. I already have a Travis CI based approach to publishing updated interactives to GitHub Pages. I'd like add to that by building in integrations to the various social networks starting with Twitter, Instagram, Dribble, and Behance.
+
+#### Week 7
+
+With that in place I'd take this week to solicit feedback from peers and professionals I know working in this space. I'd try to gather as much feedback as possible in the form of GitHub issues or just general impressions.
+
+#### Week 8
+
+Taking in that feedback, I'd hope to take this week to polish any rough edges and fix any issues identified.
+
+#### Week 9
+
+The last several weeks of the project would be focused on game features. Starting with a fixed time step and asynchronous render implementation. This will allow the simulation step to run in a deterministic and reliable way, and give the browser a consistent rendering rate.
+
+#### Week 10
+
+An object pool implimentation will ensure that JavaScript's garbage collector doesn't periodically interupt the running game/simulation and cause "jank".
+
+#### Week 11
+
+This week will see the implementation of abstractions for a generic particle system. Explorations around modeling common patterns (e.g. finite state machines, entity/component systems, and others) will define week 12's work.
+
+#### Week 12
+
+As noted this will probably depend on the work of the past several weeks … if the common patterns can be implimented effectively using particle system semantics, this week will be focused on building out a simple game. Otherwise, the necessary semantics will be added.
+
+#### Week 13
+
+The final week will focus on either building out a simple game from scratch, or on polish and refinement toward a major release.
+
+## Impact
+
+### How will the Sentry Open Source Grant make a difference to me?
+
+This grant will give me the means to not take on any contract work for a full 3 months and focus solely on this project. In the span of 3 months of dedicated focus I think I'd be able to take the project further than I might otherwise in a year. It would be my absolute dream to do so and I thank you for your consideration of my proposal.
 
 ## goals
 
