@@ -853,9 +853,10 @@
   dependencies:
     "@types/jest-diff" "*"
 
-"@types/node@11.9.5":
-  version "11.9.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.5.tgz#011eece9d3f839a806b63973e228f85967b79ed3"
+"@types/node@11.10.2":
+  version "11.10.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.2.tgz#164758d82b9a23bdb5e9ab0caed5daff51484225"
+  integrity sha512-k2LU5alRZjNGvfPz49t4BgJlozAo66QAXceefsS+azidLEMf3pTwo0jZ1OQdg/ncr1rDGwSuj565fFkW0FDpUg==
 
 "@types/node@^10.11.7":
   version "10.12.21"
