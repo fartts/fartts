@@ -89,10 +89,6 @@ function draw(time: DOMHighResTimeStamp) {
     ctx.drawImage(d, 0, 0);
   }
 
-  if (!pointer.didClick) {
-    return;
-  }
-
   if (pointer.isDown && time % bpm98 < fps60) {
     dtx.fillStyle = gray98(0.1);
     dtx.fillRect(0, 0, d.width, d.height);

@@ -76,5 +76,6 @@ function tree(root: Root): [Root, Branch[]] {
 }
 
 addEventListener('message', ({ data }) => {
+  console.log(maxIterations); // tslint:disable-line
   postMessage(tree(data));
 });

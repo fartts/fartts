@@ -1,4 +1,5 @@
-export const maxIterations = 18;
+export const maxIterations = 'ontouchstart' in self ? 8 : 18;
+console.log('ontouchstart' in self); // tslint:disable-line
 
 export interface Root {
   x: number;
