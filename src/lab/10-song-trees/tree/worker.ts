@@ -1,12 +1,4 @@
-import {
-  π,
-  randomRange,
-  cos,
-  sin,
-  random,
-  lerp,
-  round,
-} from '../../../lib/core/math';
+import { π, randomRange, cos, sin, random, lerp } from '../../../lib/core/math';
 
 import Branch from './constants/branch';
 import Collar from './constants/collar';
