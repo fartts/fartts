@@ -1,15 +1,18 @@
 import { el } from '../../lib/core/dom';
 import { max } from '../../lib/core/math';
 
+import { draw } from './crates/pxs/Cargo.toml';
 import './style.css';
 
 const { devicePixelRatio: dpr } = window;
 
 const c = el('canvas') as HTMLCanvasElement;
+const w = 720;
+const h = 480;
 
-c.width = 720 * dpr;
-c.height = 480 * dpr;
-c.style.transform = `scale(${max(720 / c.width, 480 / c.height)})`;
+c.width = w * dpr;
+c.height = h * dpr;
+c.style.transform = `scale(${max(w / c.width, h / c.height)})`;
 
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
-console.log(ctx); // tslint:disable-line
+draw(ctx, c.width, c.height);
