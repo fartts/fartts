@@ -8,7 +8,12 @@ import {
   round,
 } from '../../../lib/core/math';
 
-import { Branch, Collar, Config, maxIterations, Root } from './constants';
+import Branch from './constants/branch';
+import Collar from './constants/collar';
+import Config from './constants/config';
+import Root from './constants/root';
+
+let maxIterations = 0;
 
 function branch({ x, y, angle, length, iteration }: Collar): Branch {
   return {
@@ -52,6 +57,8 @@ function* branches(c: Collar, config: Config): IterableIterator<Branch> {
 }
 
 function tree(root: Root): [Root, Branch[]] {
+  console.log('tree', root);
+
   const n = round(randomRange(1, 1));
 
   const angle = π * 1.5 + randomRange(-0.2, 0.2);
@@ -75,7 +82,12 @@ function tree(root: Root): [Root, Branch[]] {
   return [root, b.sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1)];
 }
 
-addEventListener('message', ({ data }) => {
-  console.log(maxIterations); // tslint:disable-line
-  postMessage(tree(data));
+addEventListener('message', ({ data: { root, iterations } }) => {
+  console.log('worker message', root, iterations);
+
+  if (maxIterations !== iterations) {
+    maxIterations = iterations;
+  }
+
+  postMessage(tree(root));
 });
