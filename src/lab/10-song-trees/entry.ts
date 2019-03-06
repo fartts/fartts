@@ -18,12 +18,10 @@ const d = c.cloneNode() as HTMLCanvasElement;
 const dtx = d.getContext('2d') as CanvasRenderingContext2D;
 
 let trees: Tree[] = [];
-const iterations = 'ontouchstart' in window ? 10 : 18;
+const iterations = 'ontouchstart' in window ? 8 : 18;
 
 const treeWorker = new Worker('./tree/worker.ts');
 treeWorker.addEventListener('message', ({ data: [root, branches] }) => {
-  console.log('entry message', trees.length);
-
   trees.push({
     root,
     branches: branches.values(),

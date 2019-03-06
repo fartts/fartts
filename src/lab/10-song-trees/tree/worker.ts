@@ -43,7 +43,7 @@ function* branches(c: Collar, config: Config): IterableIterator<Branch> {
     };
 
     for (let i = 0; i <= n; ++i) {
-      if (random() < 0.8) {
+      if (random() < 0.85) {
         yield* branches(
           {
             ...nextCollar,
@@ -57,34 +57,29 @@ function* branches(c: Collar, config: Config): IterableIterator<Branch> {
 }
 
 function tree(root: Root): [Root, Branch[]] {
-  console.log('tree', root);
-
-  const n = round(randomRange(1, 1));
+  // const n = round(randomRange(1, 1));
 
   const angle = π * 1.5 + randomRange(-0.2, 0.2);
-  const iteration = maxIterations / n;
-  const length = root.length / n;
+  const iteration = maxIterations /*  / n */;
+  const length = root.length /*  / n */;
 
-  let b: Branch[] = [];
-  while (b.length < 1000) {
-    b = Array.from(
-      branches(
-        { ...root, angle, length, iteration },
-        {
-          a: () => randomRange(0.2, 0.4) * n,
-          l: () => randomRange(0.7, 0.9) / n,
-          n: () => n,
-        },
-      ),
-    );
-  }
+  const b = Array.from(
+    branches(
+      { ...root, angle, length, iteration },
+      {
+        a: () => randomRange(0.2, 0.4) /* * n */,
+        l: () => randomRange(0.7, 0.9) /*  / n */,
+        n: () => 1,
+      },
+    ),
+  );
 
-  return [root, b.sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1)];
+  return b.length < 5
+    ? tree(root) // this tree's too scrimpy, make another
+    : [root, b.sort(({ iteration: i1 }, { iteration: i2 }) => i2 - i1)];
 }
 
 addEventListener('message', ({ data: { root, iterations } }) => {
-  console.log('worker message', root, iterations);
-
   if (maxIterations !== iterations) {
     maxIterations = iterations;
   }

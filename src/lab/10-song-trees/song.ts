@@ -25,7 +25,7 @@ let canPlayThrough = false;
   'stalled',
 ].forEach(eventType => {
   song.addEventListener(eventType, ({ type }: Event) => {
-    console.log(eventType, type); // tslint:disable-line
+    // console.log(eventType, type); // tslint:disable-line
     canPlayThrough =
       canPlayThrough || type === 'canplaythrough' || type === 'loadedmetadata';
   });

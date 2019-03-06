@@ -25,7 +25,6 @@ export default pointer;
 const canvas = el('canvas') as HTMLCanvasElement;
 
 function onMove(event: MouseEvent | TouchEvent) {
-  console.log(event.type); // tslint:disable-line
   if (event.type === 'mousemove') {
     x = (event as MouseEvent).clientX;
     y = (event as MouseEvent).clientY;
@@ -40,7 +39,6 @@ function onMove(event: MouseEvent | TouchEvent) {
 }
 
 canvas.addEventListener('mousedown', event => {
-  console.log(event.type); // tslint:disable-line
   if (!song.canPlayThrough) {
     return;
   }
@@ -59,7 +57,6 @@ canvas.addEventListener('mouseup', () => {
 });
 
 canvas.addEventListener('touchstart', event => {
-  console.log(event.type); // tslint:disable-line
   if (!song.canPlayThrough) {
     return;
   }

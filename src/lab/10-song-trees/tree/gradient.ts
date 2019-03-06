@@ -26,8 +26,9 @@ export function gradient(
 
   const radians = atan2(endY - startY, endX - startX) + π;
   const degrees = round(toDegrees(radians));
+  const key = `${degrees}:${iteration}`;
 
-  if (!memo[`${degrees}:${iteration}`]) {
+  if (!memo[key]) {
     const prev = hsla(degrees, sWave(iteration + 1), lWave(iteration + 1), 1);
     const color = hsla(degrees, sWave(iteration), lWave(iteration), 1);
 
@@ -46,8 +47,8 @@ export function gradient(
     g.addColorStop(0, prev);
     g.addColorStop(stop, color);
 
-    memo[`${degrees}:${iteration}`] = g;
+    memo[key] = g;
   }
 
-  return memo[`${degrees}:${iteration}`];
+  return memo[key];
 }
