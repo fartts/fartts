@@ -29,7 +29,7 @@ before_install:
 
   # get rustup, rustc, cargo, and rustfmt
   - curl https://sh.rustup.rs -sSf | sh
-    rustup component add rustfmt
+  - rustup component add rustfmt
 
 before_script:
   # code climate's coverage reporter
