@@ -33,7 +33,9 @@ before_install:
 
 before_script:
   - rustup component add rustfmt
-  - cargo install wasm-pack
+  - (test -x $HOME/.cargo/bin/wasm-pack || cargo install wasm-pack)
+  - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
+  - cargo install-update -a
 
   # code climate's coverage reporter
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
