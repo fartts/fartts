@@ -15,7 +15,9 @@
     "serve": "yarn build && serve dist",
     "start": "parcel src/lab/{index.html,README.md}",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "jest",
+    "test": "yarn test:rs && yarn test:js",
+    "test:rs": "cargo test",
+    "test:js": "jest",
     "coverage": "open coverage/lcov-report/index.html"
   },
   "engines": {
