@@ -33,7 +33,9 @@ before_install:
 
 before_script:
   - rustup component add rustfmt
-  - cargo install wasm-pack
+  - (test -x $HOME/.cargo/bin/wasm-pack || cargo install wasm-pack)
+  - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
+  - cargo install-update -a
 
   # code climate's coverage reporter
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
@@ -49,7 +51,8 @@ after_success:
   - test $TRAVIS_PULL_REQUEST != "false" && npx semantic-release-github-pr
 
 before_deploy:
-  - yarn build
+  # for some reason the first build fails, @see: https://github.com/parcel-bundler/parcel/issues/1158#issuecomment-470664442
+  - yarn build || yarn build
 
 deploy:
   # deploy a git tag, release notes, bump package.json, update READMEs
