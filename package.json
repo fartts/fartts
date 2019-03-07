@@ -9,7 +9,9 @@
   "scripts": {
     "reset": "yarn clean && rm -rf node_modules/",
     "clean": "rm -rf .cache/ coverage/ dist/",
-    "build": "parcel build src/lab/{index.html,README.md} --public-url /",
+    "build": "yarn build:rs && yarn build:js",
+    "build:rs": "cargo build --release",
+    "build:js": "parcel build src/lab/{index.html,README.md} --public-url /",
     "serve": "yarn build && serve dist",
     "start": "parcel src/lab/{index.html,README.md}",
     "lint": "tslint 'src/**/*.ts'",
