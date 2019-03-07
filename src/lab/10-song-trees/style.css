@@ -15,6 +15,12 @@ main {
   padding: 0;
 }
 
+body,
+main,
+canvas {
+  cursor: pointer;
+}
+
 canvas {
   flex-shrink: 0;
   background: #000;

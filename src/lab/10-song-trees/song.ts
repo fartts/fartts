@@ -4,25 +4,38 @@ const song = new Audio(songUrl);
 
 let canPlayThrough = false;
 
-/**
- * This preposterous hack is because Mobile Safari doesn't trigger
- * 'canplaythrough' until you actually call song.play() which you are not
- * allowed to do outside a UI event so we set it to autoplay and then call
- * song.pause() as soon as it starts loading which then triggers
- * 'canplaythrough' ... why
- */
-song.autoplay = true;
-song.addEventListener('loadstart', () => {
-  song.pause();
-});
-
-song.addEventListener('canplaythrough', () => {
-  canPlayThrough = true;
+[
+  'playing',
+  'waiting',
+  'seeking',
+  'seeked',
+  'ended',
+  'loadedmetadata',
+  'loadeddata',
+  'canplay',
+  'canplaythrough',
+  'durationchange',
+  'timeupdate',
+  'play',
+  'pause',
+  'ratechange',
+  'volumechange',
+  'suspend',
+  'emptied',
+  'stalled',
+].forEach(eventType => {
+  song.addEventListener(eventType, ({ type }: Event) => {
+    // console.log(eventType, type); // tslint:disable-line
+    canPlayThrough =
+      canPlayThrough || type === 'canplaythrough' || type === 'loadedmetadata';
+  });
 });
 
 export default {
   play() {
-    song.play().catch();
+    song.play().catch(({ name, message }) => {
+      console.log(name, message); // tslint:disable-line
+    });
   },
 
   get canPlayThrough() {
