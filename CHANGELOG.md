@@ -1,3 +1,10 @@
+## [1.16.5](https://github.com/fartts/fartts/compare/v1.16.4...v1.16.5) (2019-03-07)
+
+
+### Bug Fixes
+
+* **lab/10:** fix grey flash on click ([d28bd91](https://github.com/fartts/fartts/commit/d28bd91))
+
 ## [1.16.4](https://github.com/fartts/fartts/compare/v1.16.3...v1.16.4) (2019-01-27)
 
 

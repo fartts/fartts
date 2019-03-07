@@ -9,6 +9,8 @@ import Tree from './tree/constants/tree';
 import { gradient } from './tree/gradient';
 import { lerp, min, random } from '../../lib/core/math';
 
+document.addEventListener('touchstart', () => true, true);
+
 const m = el('main') as HTMLMainElement;
 
 const c = el('canvas') as HTMLCanvasElement;
