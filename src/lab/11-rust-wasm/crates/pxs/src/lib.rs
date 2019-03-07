@@ -10,7 +10,8 @@ pub fn draw(ctx: &CanvasRenderingContext2d, w: u32, h: u32) {
     ctx.fill_rect(0.0, 0.0, w.into(), h.into());
 
     ctx.set_fill_style(&JsValue::from_str("white"));
-    ctx.arc((w / 2).into(), (h / 2).into(), 100.0, 0.0, PI * 2.0).unwrap();
+    ctx.arc((w / 2).into(), (h / 2).into(), 100.0, 0.0, PI * 2.0)
+        .unwrap();
     ctx.fill();
 }
 
