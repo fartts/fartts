@@ -1,13 +1,9 @@
-language:
-  - node_js
-  - rust
-
-node_js: 10.15.1
+language: rust
 rust: 1.33.0
 
 cache:
-  - yarn
   - cargo
+  - yarn
 
 env:
   global:
@@ -29,10 +25,8 @@ before_install:
     export PATH=$HOME/.yarn/bin:$PATH;
     fi
 
-  # get rustup, rustc, cargo, and rustfmt
-  - rustup component add rustfmt
-
 before_script:
+  - rustup component add rustfmt
   # code climate's coverage reporter
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
     > ./cc-test-reporter
