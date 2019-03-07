@@ -9,6 +9,7 @@
   "scripts": {
     "clean": "rm -rf .cache/ coverage/ dist/ node_modules/",
     "build": "parcel build src/lab/{index.html,README.md} --public-url /",
+    "serve": "yarn build && serve dist",
     "start": "parcel src/lab/{index.html,README.md}",
     "lint": "tslint 'src/**/*.ts'",
     "test": "jest",

@@ -1,4 +1,4 @@
-import { on, off } from '../../lib/core/dom';
+import { el } from '../../lib/core/dom';
 
 import song from './song';
 
@@ -22,6 +22,8 @@ const pointer = {
 
 export default pointer;
 
+const canvas = el('canvas') as HTMLCanvasElement;
+
 function onMove(event: MouseEvent | TouchEvent) {
   if (event.type === 'mousemove') {
     x = (event as MouseEvent).clientX;
@@ -36,40 +38,38 @@ function onMove(event: MouseEvent | TouchEvent) {
   }
 }
 
-on<MouseEvent>('mousedown', event => {
+canvas.addEventListener('mousedown', event => {
   if (!song.canPlayThrough) {
     return;
-  } else {
-    song.play();
   }
+  song.play();
 
   x = event.clientX;
   y = event.clientY;
 
   isDown = true;
-  on<MouseEvent>('mousemove', onMove);
+  canvas.addEventListener('mousemove', onMove);
 });
 
-on<MouseEvent>('mouseup', () => {
+canvas.addEventListener('mouseup', () => {
   isDown = false;
-  off<MouseEvent>('mousemove', onMove);
+  canvas.removeEventListener('mousemove', onMove);
 });
 
-on<TouchEvent>('touchstart', event => {
+canvas.addEventListener('touchstart', event => {
   if (!song.canPlayThrough) {
     return;
-  } else {
-    song.play();
   }
+  song.play();
 
   x = (event as TouchEvent).touches[0].clientX;
   y = (event as TouchEvent).touches[0].clientY;
 
   isDown = true;
-  on<TouchEvent>('touchmove', onMove);
+  canvas.addEventListener('touchmove', onMove);
 });
 
-on<TouchEvent>('touchend', () => {
+canvas.addEventListener('touchend', () => {
   isDown = false;
-  off<TouchEvent>('touchmove', onMove);
+  canvas.removeEventListener('touchmove', onMove);
 });

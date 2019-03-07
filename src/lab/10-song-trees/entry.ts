@@ -4,7 +4,8 @@ import { rAF, el, dpr } from '../../lib/core/dom';
 import pointer from './pointer';
 
 import { shouldResize, resize } from './resize';
-import { Branch, Tree } from './tree/constants';
+import Branch from './tree/constants/branch';
+import Tree from './tree/constants/tree';
 import { gradient } from './tree/gradient';
 import { lerp, min, random } from '../../lib/core/math';
 
@@ -17,6 +18,7 @@ const d = c.cloneNode() as HTMLCanvasElement;
 const dtx = d.getContext('2d') as CanvasRenderingContext2D;
 
 let trees: Tree[] = [];
+const iterations = 'ontouchstart' in window ? 8 : 18;
 
 const treeWorker = new Worker('./tree/worker.ts');
 treeWorker.addEventListener('message', ({ data: [root, branches] }) => {
@@ -32,7 +34,7 @@ treeWorker.addEventListener('message', ({ data: [root, branches] }) => {
 function drawBranch(context: CanvasRenderingContext2D, b: Branch) {
   context.beginPath();
 
-  context.strokeStyle = gradient(context, b);
+  context.strokeStyle = gradient(context, b, iterations);
   context.lineWidth = b.lineWidth;
   context.lineCap = 'round';
 
@@ -85,6 +87,8 @@ function draw(time: DOMHighResTimeStamp) {
 
     dtx.fillStyle = gray98(1);
     dtx.fillRect(0, 0, d.width, d.height);
+
+    ctx.drawImage(d, 0, 0);
   }
 
   if (pointer.isDown && time % bpm98 < fps60) {
@@ -94,9 +98,12 @@ function draw(time: DOMHighResTimeStamp) {
     const scale = lerp(20, 8, (pointer.y * dpr) / c.height);
 
     treeWorker.postMessage({
-      x: pointer.x * dpr,
-      y: pointer.y * dpr,
-      length: min(c.width, c.height) / scale,
+      root: {
+        x: pointer.x * dpr,
+        y: pointer.y * dpr,
+        length: min(c.width, c.height) / scale,
+      },
+      iterations,
     });
   }
 
@@ -110,6 +117,9 @@ function draw(time: DOMHighResTimeStamp) {
 
   if (d.width && d.height) {
     ctx.drawImage(d, 0, 0);
+  } else {
+    console.log('invalid buffer, resizing'); // tslint:disable-line
+    dispatchEvent(new Event('resize'));
   }
 }
 
