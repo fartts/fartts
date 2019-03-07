@@ -1,0 +1,4 @@
+[workspace]
+members = [
+  "src/lab/11-rust-wasm/crates/pxs"
+]

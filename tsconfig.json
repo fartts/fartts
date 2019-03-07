@@ -12,7 +12,7 @@
       "scripthost",
       "webworker"
     ],
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
     "noImplicitAny": true,
