@@ -1,3 +1,13 @@
+# [1.17.0](https://github.com/fartts/fartts/compare/v1.16.5...v1.17.0) (2019-03-07)
+
+
+### Features
+
+* **lab/11:** add a rust/wasm module that paints the canvas red ([47ab505](https://github.com/fartts/fartts/commit/47ab505))
+* **lab/11:** add boilerplate for a new experiment ([6922f03](https://github.com/fartts/fartts/commit/6922f03))
+* **lab/11:** draw a white dot in the middle of the canvas ([a7fcfb4](https://github.com/fartts/fartts/commit/a7fcfb4))
+* **lab/11:** resize the canvas and rendering context ([05b07fc](https://github.com/fartts/fartts/commit/05b07fc))
+
 ## [1.16.5](https://github.com/fartts/fartts/compare/v1.16.4...v1.16.5) (2019-03-07)
 
 
