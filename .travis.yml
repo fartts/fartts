@@ -3,7 +3,9 @@ language: node_js
 node_js:
   - 10.15.1
 
-cache: yarn
+cache:
+  - yarn
+  - cargo
 
 env:
   global:
@@ -24,6 +26,10 @@ before_install:
     curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION;
     export PATH=$HOME/.yarn/bin:$PATH;
     fi
+
+  # get rustup, rustc, cargo, and rustfmt
+  - curl https://sh.rustup.rs -sSf | sh
+    rustup component add rustfmt
 
 before_script:
   # code climate's coverage reporter
