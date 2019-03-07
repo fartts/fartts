@@ -1,7 +1,9 @@
-language: node_js
+language:
+  - node_js
+  - rust
 
-node_js:
-  - 10.15.1
+node_js: 10.15.1
+rust: 1.33.0
 
 cache:
   - yarn
@@ -28,7 +30,6 @@ before_install:
     fi
 
   # get rustup, rustc, cargo, and rustfmt
-  - curl https://sh.rustup.rs -sSf | sh
   - rustup component add rustfmt
 
 before_script:
