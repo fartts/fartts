@@ -14,7 +14,7 @@ module.exports = {
       {
         message: `\
 [<%= nextRelease.version %>]\
-(https://github.com/fartts/superfluity/tree/<%= nextRelease.version%>)\
+(https://github.com/fartts/fartts/tree/<%= nextRelease.version%>)\
 - <%= new Date().toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'short',
