@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/fartts/fartts/compare/v1.17.0...v1.18.0) (2019-03-08)
+
+
+### Features
+
+* **none:** adding an empty feature to get a version bump to hide my mistake ([3671b24](https://github.com/fartts/fartts/commit/3671b24))
+
 # [1.17.0](https://github.com/fartts/fartts/compare/v1.16.5...v1.17.0) (2019-03-07)
 
 
