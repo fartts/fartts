@@ -61,7 +61,7 @@ const defaultScreenOptions: ScreenOptions = {
   containerSelector: 'main',
   canvasSelector: 'canvas',
   contextType: '2d',
-  pixelScale: 10,
+  pixelScale: 1,
   canvasSizing: 'cover',
 };
 
