@@ -12,13 +12,13 @@ function on(
   target.addEventListener(type, listener, useCapture);
 }
 
-function stepUp(step = 1, start = 0) {
-  if (start % step === 0) {
-    // start is already a multiple of step, bail early
-    return start;
+function step(by = 1, from = 0) {
+  if (from % by === 0) {
+    // "from" is already a multiple/step of "by", we're done
+    return from;
   }
 
-  return start + (step - (start % step));
+  return from + (by - (from % by));
 }
 
 const { devicePixelRatio: dpr } = window;
@@ -32,15 +32,16 @@ on(window, 'resize', () => {
   w = main.clientWidth;
   h = main.clientHeight;
 
-  const scale = 80;
-  const sw = stepUp(scale, w);
-  const sh = stepUp(scale, h);
+  const scale = 10;
+  const sw = step(scale, w);
+  const sh = step(scale, h);
 
   canvas.width = (sw * dpr) / scale;
   canvas.height = (sh * dpr) / scale;
-  canvas.style.transform = `scale(${(1 / dpr) * scale})`;
 
-  console.log((1 / dpr) * scale, max(w / canvas.width, h / canvas.height));
+  const cover = max(w / canvas.width, h / canvas.height);
+  // const contain = min(w / canvas.width, h / canvas.height);
+  canvas.style.transform = `scale(${cover})`;
 });
 window.dispatchEvent(new Event('resize'));
 
