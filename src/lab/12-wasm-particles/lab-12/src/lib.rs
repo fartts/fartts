@@ -19,7 +19,7 @@ cfg_if! {
     }
 }
 
-// let mut rs: f64 = 0.0;
+// let mut rs: 'static f64 = 0.0;
 
 #[wasm_bindgen]
 pub fn update() {
