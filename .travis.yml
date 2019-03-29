@@ -34,10 +34,8 @@ before_install:
 
   - yarn install
 
-install:
-  - rustup target add wasm32-unknown-unknown
-
 before_script:
+  - rustup target add wasm32-unknown-unknown
   - rustup component add rustfmt
   - (test -x $HOME/.cargo/bin/wasm-pack || cargo install wasm-pack)
   - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
@@ -52,13 +50,11 @@ before_script:
 script:
   - yarn lint
   - yarn test
+  # for some reason the first build fails, @see: https://github.com/parcel-bundler/parcel/issues/1158#issuecomment-470664442
+  - yarn build || yarn build
 
 after_success:
   - test $TRAVIS_PULL_REQUEST != "false" && npx semantic-release-github-pr
-
-before_deploy:
-  # for some reason the first build fails, @see: https://github.com/parcel-bundler/parcel/issues/1158#issuecomment-470664442
-  - yarn build || yarn build
 
 deploy:
   # deploy a git tag, release notes, bump package.json, update READMEs
