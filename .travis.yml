@@ -34,6 +34,9 @@ before_install:
 
   - yarn install
 
+install:
+  - rustup target add wasm32-unknown-unknown
+
 before_script:
   - rustup component add rustfmt
   - (test -x $HOME/.cargo/bin/wasm-pack || cargo install wasm-pack)
