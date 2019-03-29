@@ -6,6 +6,7 @@ extern crate mut_static;
 extern crate wasm_bindgen;
 extern crate web_sys;
 
+mod state;
 mod utils;
 
 use cfg_if::cfg_if;
@@ -14,6 +15,8 @@ use std::f64::consts::PI;
 use wasm_bindgen::prelude::*;
 use web_sys::CanvasRenderingContext2d;
 
+use state::State;
+
 cfg_if! {
     // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
     // allocator.
@@ -21,17 +24,6 @@ cfg_if! {
         extern crate wee_alloc;
         #[global_allocator]
         static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-    }
-}
-
-// let mut rs: 'static f64 = 0.0;
-pub struct State {
-    pub t: f32,
-}
-
-impl State {
-    pub fn new() -> State {
-        State { t: 0.0 }
     }
 }
 
