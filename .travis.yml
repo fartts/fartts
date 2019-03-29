@@ -5,7 +5,10 @@ cache:
   cargo: true
   directories:
     - $HOME/.cache/yarn
+    - $HOME/.npm
     - node_modules
+    - $TRAVIS_BUILD_DIR/node_modules
+    - $TRAVIS_BUILD_DIR/.cache
 
 env:
   global:
@@ -30,6 +33,9 @@ before_install:
     fi
 
   - yarn install
+
+install:
+  - rustup target add wasm32-unknown-unknown
 
 before_script:
   - rustup component add rustfmt
