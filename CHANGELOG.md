@@ -1,3 +1,16 @@
+# [1.19.0](https://github.com/fartts/fartts/compare/v1.18.0...v1.19.0) (2019-03-29)
+
+
+### Features
+
+* **lab/12:** 2 different crates in 2 different labs ([d94d23e](https://github.com/fartts/fartts/commit/d94d23e))
+* **lab/12:** add 10,000 black particles, it's rough, but it sorta works ([d95e6a1](https://github.com/fartts/fartts/commit/d95e6a1))
+* **lab/12:** add global mutable state to Rust ([d22f561](https://github.com/fartts/fartts/commit/d22f561))
+* **lab/12:** create a screen state closure, keep a store up to date and expose getters ([e16c30a](https://github.com/fartts/fartts/commit/e16c30a))
+* **lab/12:** it breaths! ([92fe124](https://github.com/fartts/fartts/commit/92fe124))
+* **lab/12:** just dinking around with how to get resize data into some kind of world state ([65a1c22](https://github.com/fartts/fartts/commit/65a1c22))
+* **lab/12:** makes the confetti colored, sort of string shaped, transparent ([8e816eb](https://github.com/fartts/fartts/commit/8e816eb))
+
 # [1.18.0](https://github.com/fartts/fartts/compare/v1.17.0...v1.18.0) (2019-03-08)
 
 
