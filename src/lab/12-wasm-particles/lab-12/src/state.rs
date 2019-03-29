@@ -56,16 +56,27 @@ pub struct State {
 
 impl State {
     pub fn new() -> State {
-        let mut p = Vec::new();
+        State {
+            t: 0.0,
+            p: Vec::new(),
+        }
+    }
 
-        for _ in 0..10_000 {
-            let a = PI * 2.0 * random::<f64>();
-            let r = 20.0 * random::<f64>();
-            let px = a.cos() * r;
-            let py = a.sin() * r;
-            p.push(Particle::new(0.0, 0.0, px, py))
+    pub fn update(&mut self, t: f64) {
+        self.t = t;
+
+        if self.p.len() < 10_000 {
+            for _ in 0..10 {
+                let a = PI * 2.0 * random::<f64>();
+                let r = 20.0 * random::<f64>();
+                let px = a.cos() * r;
+                let py = a.sin() * r;
+                self.p.push(Particle::new(0.0, 0.0, px, py));
+            }
         }
 
-        State { t: 0.0, p: p }
+        for p in self.p.iter_mut() {
+            p.update();
+        }
     }
 }
