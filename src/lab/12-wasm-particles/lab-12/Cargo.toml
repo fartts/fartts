@@ -32,6 +32,7 @@ wee_alloc = { version = "0.4.3", optional = true }
 [dependencies.web-sys]
 version = "0.3.17"
 features = [
+  'console',
   'CanvasRenderingContext2d',
 ]
 

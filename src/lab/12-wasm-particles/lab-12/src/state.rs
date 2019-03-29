@@ -31,15 +31,15 @@ impl Particle {
             self.curr_pos.y - self.prev_pos.y,
         );
 
-        let next_vel = Vec2::new(prev_vel.x, prev_vel.y + 0.1); // gravity
-        let next_vel = Vec2::new(next_vel.x * 0.99, next_vel.y * 0.99); // drag
+        let next_vel = Vec2::new(prev_vel.x, prev_vel.y + 0.15); // gravity
+        let next_vel = Vec2::new(next_vel.x * 0.99, next_vel.y * 0.995); // drag
 
         self.prev_pos = Vec2::new(self.curr_pos.x, self.curr_pos.y);
         self.curr_pos = Vec2::new(self.curr_pos.x + next_vel.x, self.curr_pos.y + next_vel.y);
 
-        if self.curr_pos.y > 1000.0 {
+        if self.curr_pos.y > 2_000.0 {
             let a = PI * 2.0 * random::<f64>();
-            let r = 10.0 * random::<f64>();
+            let r = 20.0 * random::<f64>();
             let px = a.cos() * r;
             let py = a.sin() * r;
 
@@ -58,9 +58,9 @@ impl State {
     pub fn new() -> State {
         let mut p = Vec::new();
 
-        for _ in 0..10000 {
+        for _ in 0..10_000 {
             let a = PI * 2.0 * random::<f64>();
-            let r = 10.0 * random::<f64>();
+            let r = 20.0 * random::<f64>();
             let px = a.cos() * r;
             let py = a.sin() * r;
             p.push(Particle::new(0.0, 0.0, px, py))
