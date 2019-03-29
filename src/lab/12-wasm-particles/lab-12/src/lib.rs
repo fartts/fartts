@@ -40,24 +40,25 @@ lazy_static! {
 }
 
 #[wasm_bindgen]
-pub extern "C" fn update(t: f32) {
+pub fn update(t: f32) {
     let mut state = STATE.write().unwrap();
-    state.t = t;
+    state.t = t / 500.0;
 }
 
 #[wasm_bindgen]
-pub extern "C" fn draw(ctx: &CanvasRenderingContext2d, w: u32, h: u32) {
+pub fn draw(ctx: &CanvasRenderingContext2d, w: u32, h: u32) {
     let state = STATE.read().unwrap();
 
-    let s = f64::from(state.t.sin()) + 1.0;
-    let tw = f64::from(w) / 3.0;
-    let th = f64::from(h) / 3.0;
-    let r = tw.min(th) * s;
+    let s = (f64::from(state.t.sin()) + 1.0) / 2.0;
+    let tw = f64::from(w) / 6.0;
+    let th = f64::from(h) / 6.0;
+    let r = tw.min(th) + tw.min(th) * s;
 
     ctx.set_fill_style(&JsValue::from_str("red"));
     ctx.fill_rect(0.0, 0.0, w.into(), h.into());
 
     ctx.set_fill_style(&JsValue::from_str("white"));
+    ctx.begin_path();
     ctx.arc(f64::from(w) / 2.0, f64::from(h) / 2.0, r, 0.0, PI * 2.0)
         .unwrap();
     ctx.fill();

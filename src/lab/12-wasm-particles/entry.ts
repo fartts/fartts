@@ -31,11 +31,10 @@ function frame(t: DOMHighResTimeStamp) {
   overTime = min(overTime, 1000);
 
   while (overTime >= stepTime) {
-    update(currentTime, stepTime);
+    update(currentTime);
     overTime -= stepTime;
   }
 
-  // render(overTime / stepTime);
   draw(s.context, s.canvasWidth, s.canvasHeight);
 }
 
