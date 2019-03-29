@@ -34,14 +34,14 @@ lazy_static! {
 #[wasm_bindgen]
 pub fn update(t: f32) {
     let mut state = STATE.write().unwrap();
-    state.t = t / 500.0;
+    state.t = t;
 }
 
 #[wasm_bindgen]
 pub fn draw(ctx: &CanvasRenderingContext2d, w: u32, h: u32) {
     let state = STATE.read().unwrap();
 
-    let s = (f64::from(state.t.sin()) + 1.0) / 2.0;
+    let s = (f64::from((state.t / 500.0).sin()) + 1.0) / 2.0;
     let tw = f64::from(w) / 6.0;
     let th = f64::from(h) / 6.0;
     let r = tw.min(th) + tw.min(th) * s;
