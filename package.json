@@ -13,7 +13,7 @@
     "serve": "yarn build && serve dist",
     "start": "parcel src/lab/{index.html,README.md}",
     "lint": "yarn lint:rs && yarn lint:ts",
-    "lint:rs": "cargo fmt -- --check",
+    "lint:rs": "cargo fmt --all -- --check && cargo clippy",
     "lint:ts": "tslint 'src/**/*.ts'",
     "test": "yarn test:rs && yarn test:ts",
     "test:rs": "cargo test",
