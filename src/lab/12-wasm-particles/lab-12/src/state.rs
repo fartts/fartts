@@ -8,7 +8,7 @@ pub struct Vec2 {
 
 impl Vec2 {
     pub fn new(x: f64, y: f64) -> Vec2 {
-        Vec2 { x: x, y: y }
+        Vec2 { x, y }
     }
 }
 
@@ -38,10 +38,10 @@ impl Particle {
         self.curr_pos = Vec2::new(self.curr_pos.x + next_vel.x, self.curr_pos.y + next_vel.y);
 
         if self.curr_pos.y > 2_000.0 {
-            let a = PI * 2.0 * random::<f64>();
+            let angle = PI * 2.0 * random::<f64>();
             let r = 20.0 * random::<f64>();
-            let px = a.cos() * r;
-            let py = a.sin() * r;
+            let px = angle.cos() * r;
+            let py = angle.sin() * r;
 
             self.prev_pos = Vec2::new(px, py);
             self.curr_pos = Vec2::new(0.0, 0.0);
@@ -54,23 +54,25 @@ pub struct State {
     pub p: Vec<Particle>,
 }
 
-impl State {
-    pub fn new() -> State {
-        State {
+impl Default for State {
+    fn default() -> Self {
+        Self {
             t: 0.0,
             p: Vec::new(),
         }
     }
+}
 
+impl State {
     pub fn update(&mut self, t: f64) {
         self.t = t;
 
         if self.p.len() < 10_000 {
             for _ in 0..10 {
-                let a = PI * 2.0 * random::<f64>();
+                let angle = PI * 2.0 * random::<f64>();
                 let r = 20.0 * random::<f64>();
-                let px = a.cos() * r;
-                let py = a.sin() * r;
+                let px = angle.cos() * r;
+                let py = angle.sin() * r;
                 self.p.push(Particle::new(0.0, 0.0, px, py));
             }
         }

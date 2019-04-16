@@ -29,7 +29,7 @@ cfg_if! {
 }
 
 lazy_static! {
-    pub static ref STATE: MutStatic<State> = { MutStatic::from(State::new()) };
+    pub static ref STATE: MutStatic<State> = { MutStatic::from(State::default()) };
 }
 
 #[wasm_bindgen]
@@ -51,7 +51,7 @@ pub fn draw(ctx: &CanvasRenderingContext2d, w: u32, h: u32) {
     let sh = f64::from(h) / 6.0;
 
     // sine and radius (for the big white circle)
-    let s = (f64::from((state.t / 500.0).sin()) + 1.0) / 2.0;
+    let s = ((state.t / 500.0).sin() + 1.0) / 2.0;
     let r = sw.min(sh) + sw.min(sh) * s;
 
     // background fill
@@ -67,7 +67,7 @@ pub fn draw(ctx: &CanvasRenderingContext2d, w: u32, h: u32) {
     // all the 'particles'
     for p in state.p.iter().filter(|p| p.curr_pos.y < hh) {
         let curr_vel = Vec2::new(p.curr_pos.x - p.prev_pos.x, p.curr_pos.y - p.prev_pos.y);
-        let a = curr_vel.y.atan2(curr_vel.x);
+        let angle = curr_vel.y.atan2(curr_vel.x);
 
         // particle width and height
         let pw = 60.0;
@@ -77,13 +77,16 @@ pub fn draw(ctx: &CanvasRenderingContext2d, w: u32, h: u32) {
         let hpw = pw / 2.0;
         let hph = ph / 2.0;
 
-        let hsl = format!("hsla({}, 80%, 50%, 35%)", (180.0 + a * 180.0 / PI).floor());
+        let hsl = format!(
+            "hsla({}, 80%, 50%, 35%)",
+            (180.0 + angle * 180.0 / PI).floor()
+        );
 
         ctx.set_fill_style(&JsValue::from_str(&hsl));
 
         ctx.save();
         ctx.translate(hw + p.curr_pos.x, hh + p.curr_pos.y).unwrap();
-        ctx.rotate(a).unwrap();
+        ctx.rotate(angle).unwrap();
         ctx.fill_rect(-hpw, -hph, pw, ph);
         ctx.restore();
     }
