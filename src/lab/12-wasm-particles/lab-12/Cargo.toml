@@ -27,10 +27,10 @@ console_error_panic_hook = { version = "0.1.6", optional = true }
 # allocator, however.
 #
 # Unfortunately, `wee_alloc` requires nightly Rust when targeting wasm for now.
-wee_alloc = { version = "0.4.3", optional = true }
+wee_alloc = { version = "0.4.4", optional = true }
 
 [dependencies.web-sys]
-version = "0.3.17"
+version = "0.3.19"
 features = [
   'console',
   'CanvasRenderingContext2d',

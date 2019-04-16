@@ -8,10 +8,10 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = "0.2.38"
+wasm-bindgen = "0.2.42"
 
 [dependencies.web-sys]
-version = "0.3.15"
+version = "0.3.19"
 features = [
   'CanvasRenderingContext2d',
 ]
