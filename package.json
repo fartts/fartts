@@ -52,7 +52,7 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "24.7.1",
     "parcel-bundler": "1.12.3",
-    "parcel-plugin-wasm.rs": "1.2.8",
+    "parcel-plugin-wasm-pack": "1.0.1",
     "prettier": "1.17.0",
     "semantic-release": "15.13.12",
     "semantic-release-github-pr": "https://github.com/mysterycommand/semantic-release-github-pr.git#fix/34-and-35",
