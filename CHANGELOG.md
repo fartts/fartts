@@ -1,3 +1,10 @@
+## [1.19.2](https://github.com/fartts/fartts/compare/v1.19.1...v1.19.2) (2019-04-16)
+
+
+### Bug Fixes
+
+* **src/lib/core/wave.ts:** add a CurriedWaveFunction type so that TS knows the types of the argument ([558408e](https://github.com/fartts/fartts/commit/558408e))
+
 ## [1.19.1](https://github.com/fartts/fartts/compare/v1.19.0...v1.19.1) (2019-04-16)
 
 

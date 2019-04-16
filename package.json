@@ -1,6 +1,6 @@
 {
   "name": "@fartts/fartts",
-  "version": "1.19.1",
+  "version": "1.19.2",
   "description": "𝑓(unctional)Art(-making).ᴛ(ype)ꜱ(cript) - an experiment by [Matt Hayes](https://github.com/mysterycommand)",
   "repository": "https://github.com/fartts/fartts.git",
   "author": "Matt Hayes <matt@mysterycommand.com>",
@@ -58,9 +58,9 @@
     "semantic-release-github-pr": "https://github.com/mysterycommand/semantic-release-github-pr.git#fix/34-and-35",
     "serve": "11.0.0",
     "ts-jest": "24.0.2",
-    "tslint": "5.15.0",
+    "tslint": "5.16.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.0.1",
-    "typescript": "3.3.4000"
+    "typescript": "3.4.3"
   }
 }
