@@ -4,10 +4,15 @@ rust: stable
 cache:
   cargo: true
   directories:
+    # cache yarn
     - $HOME/.cache/yarn
+
+    # cache npm
     - $HOME/.npm
     - node_modules
     - $TRAVIS_BUILD_DIR/node_modules
+
+    # cache parcel
     - $TRAVIS_BUILD_DIR/.cache
 
 env:
