@@ -54,7 +54,7 @@
     "parcel-bundler": "1.12.3",
     "parcel-plugin-wasm.rs": "1.2.8",
     "prettier": "1.17.0",
-    "semantic-release": "15.13.10",
+    "semantic-release": "15.13.12",
     "semantic-release-github-pr": "https://github.com/mysterycommand/semantic-release-github-pr.git#fix/34-and-35",
     "serve": "11.0.0",
     "ts-jest": "24.0.2",
