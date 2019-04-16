@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/fartts/fartts/compare/v1.19.0...v1.19.1) (2019-04-16)
+
+
+### Bug Fixes
+
+* **package.json:** add the patched version of the sr-gh-pr plugin ([6fcbc8c](https://github.com/fartts/fartts/commit/6fcbc8c))
+
 # [1.19.0](https://github.com/fartts/fartts/compare/v1.18.0...v1.19.0) (2019-03-29)
 
 
