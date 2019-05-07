@@ -8,7 +8,12 @@ use web_sys::{console, CanvasRenderingContext2d};
 
 #[wasm_bindgen]
 pub fn draw(ctx: &CanvasRenderingContext2d, w: u32, h: u32) {
-    console::log_1(ctx);
+    // If the `console_error_panic_hook` feature is enabled this will set a
+    // panic hook, otherwise it will do nothing.
+    utils::set_panic_hook();
+
+    console::log_1(ctx); // just kind of a sanity check
+
     ctx.set_fill_style(&JsValue::from_str("red"));
     ctx.fill_rect(0.0, 0.0, w.into(), h.into());
 

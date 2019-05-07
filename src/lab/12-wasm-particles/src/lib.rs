@@ -34,6 +34,10 @@ lazy_static! {
 
 #[wasm_bindgen]
 pub fn update(t: f64) {
+    // If the `console_error_panic_hook` feature is enabled this will set a
+    // panic hook, otherwise it will do nothing.
+    utils::set_panic_hook();
+
     let mut state = STATE.write().unwrap();
     state.update(t);
 }
