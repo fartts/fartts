@@ -1,9 +1,5 @@
 [workspace]
 members = [
   "src/lab/11-rust-wasm/crates/lab-11",
-  "src/lab/12-wasm-particles/lab-12"
+  "src/lab/12-wasm-particles/lab-12",
 ]
-
-[profile.release]
-# Tell `rustc` to optimize for small code size.
-opt-level = "s"

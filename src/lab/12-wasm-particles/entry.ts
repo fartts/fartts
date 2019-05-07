@@ -1,5 +1,5 @@
 import { screen } from './screen';
-import { update, draw } from './lab-12/Cargo.toml';
+import { update, draw } from './lab-12/src/lib.rs';
 
 import './style.css';
 import { rAF } from '../../lib/core/dom';

@@ -1,7 +1,7 @@
 import { el } from '../../lib/core/dom';
 import { max } from '../../lib/core/math';
 
-import { draw } from './crates/lab-11/Cargo.toml';
+import { draw } from './crates/lab-11/src/lib.rs';
 import './style.css';
 
 const { devicePixelRatio: dpr } = window;
