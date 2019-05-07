@@ -1,5 +1,7 @@
 extern crate wasm_bindgen;
 
+mod utils;
+
 use std::f64::consts::PI;
 use wasm_bindgen::prelude::*;
 use web_sys::{console, CanvasRenderingContext2d};
