@@ -1,3 +1,10 @@
+## [1.19.3](https://github.com/fartts/fartts/compare/v1.19.2...v1.19.3) (2019-05-08)
+
+
+### Bug Fixes
+
+* **package.json:** bump to 2.0.0 hopefully don't double run rustup update ([4d01760](https://github.com/fartts/fartts/commit/4d01760))
+
 ## [1.19.2](https://github.com/fartts/fartts/compare/v1.19.1...v1.19.2) (2019-04-16)
 
 
