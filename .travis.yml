@@ -60,8 +60,7 @@ before_script:
 script:
   - yarn lint
   - yarn test
-  # for some reason the first build fails, @see: https://github.com/parcel-bundler/parcel/issues/1158#issuecomment-470664442
-  - PARCEL_WORKERS=1 yarn build
+  - yarn build
 
 after_success:
   - test $TRAVIS_PULL_REQUEST != "false" && npx semantic-release-github-pr
