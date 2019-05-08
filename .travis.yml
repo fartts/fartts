@@ -4,10 +4,15 @@ rust: stable
 cache:
   cargo: true
   directories:
+    # cache yarn
     - $HOME/.cache/yarn
+
+    # cache npm
     - $HOME/.npm
     - node_modules
     - $TRAVIS_BUILD_DIR/node_modules
+
+    # cache parcel
     - $TRAVIS_BUILD_DIR/.cache
 
 env:
@@ -17,7 +22,19 @@ env:
     - secure: TzFxRXCc9oqlXn9eHmdP21WX4FrN77/H96V6iAXn7w+8ug2rklpYgzsIk/4bLZHUtu0G/FsQ3Ar3jhBToM4VrqNdjZBgYJYvsBTctP6R7W/vyI/ib3Erfuj06PxRjJdEdG7epVwkz/YQv2Spx66CDNq6ufLbMNsmq5v1VJIBU1w5w6yjIC0onOHFOeRvFAfypD9Axxq1YZtp35PXM4iIuOqVSiyCKZhaos+WYGP8C24sMr1Y9olD/6VXwVKCgoD0dorGnS7s+egM1HLDu2fx5ClOsKPhh91IzYSNNCCMrF+Fbtq3cgzmzPsHyOOxLIAW78alm5OXRXWH/3tp3laLxqrqXKr7GDDMI6fpflKdk9pz55MSQVIrHhqQcXAJtNR4m1CzszYDiLf9wb20taSyo3TCK3D2vTWi3Ym8UmtCdn/oGnZ4g73cYEp6YbBrph1MTs0ulNc5t54/1e9KUbUjWxEuzDtBHtYsYg3CQ1rDmVn6GxpvBNCJcpGGg5JUlgtMdvtENAmiba0WwwOytY54TAJs7kSeT34fI3XOVaoXJsLyqjDeOlQO1uXEzQ2lqXgKDIRDInyJA+joN5mFDQPD9YJ8vOKot3by2m3931Ao2tmQ8jRWgPXPCiIhCH74FP1hm5GSq+A4o17YP2SW7ZWW1W8r8oM1rvvC+s85Z6mKZWA=
 
 before_install:
+  # add node version, read from .nvmrc
   - nvm install
+
+  # add components and targets
+  - rustup component add clippy
+  - rustup component add rustfmt
+  - rustup target add wasm32-unknown-unknown
+
+  # get wasm-pack, wasm-bindgen, install-update
+  - (test -x $HOME/.cargo/bin/wasm-pack || cargo install wasm-pack)
+  - (test -x $HOME/.cargo/bin/wasm-bindgen || cargo install wasm-bindgen-cli)
+  - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
+  - cargo install-update -a
 
   # get the right npm version
   - NPM_VERSION=`node -pe "require('./package.json').engines.npm"`
@@ -35,12 +52,6 @@ before_install:
   - yarn install
 
 before_script:
-  - rustup target add wasm32-unknown-unknown
-  - rustup component add rustfmt
-  - (test -x $HOME/.cargo/bin/wasm-pack || cargo install wasm-pack)
-  - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
-  - cargo install-update -a
-
   # code climate's coverage reporter
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
     > ./cc-test-reporter
@@ -50,8 +61,7 @@ before_script:
 script:
   - yarn lint
   - yarn test
-  # for some reason the first build fails, @see: https://github.com/parcel-bundler/parcel/issues/1158#issuecomment-470664442
-  - yarn build || yarn build
+  - yarn build
 
 after_success:
   - test $TRAVIS_PULL_REQUEST != "false" && npx semantic-release-github-pr

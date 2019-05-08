@@ -47,10 +47,10 @@ export function wave(
 }
 
 type CurriedWaveFunction = (
-  p: number,
-  min: number,
-  max: number,
-  o: number,
+  p?: number,
+  min?: number,
+  max?: number,
+  o?: number,
 ) => WaveFunction;
 
 export const [cosWave, sawWave, sinWave, triWave]: CurriedWaveFunction[] = [
