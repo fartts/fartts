@@ -1,3 +1,10 @@
+## [1.19.4](https://github.com/fartts/fartts/compare/v1.19.3...v1.19.4) (2019-05-09)
+
+
+### Bug Fixes
+
+* **package.json:** bump parcel-plugin-wasm-pack, hopefully this re-fixes the multi-Rust install issu ([a6c73dd](https://github.com/fartts/fartts/commit/a6c73dd))
+
 ## [1.19.3](https://github.com/fartts/fartts/compare/v1.19.2...v1.19.3) (2019-05-08)
 
 
