@@ -21,4 +21,4 @@ web-sys = { version = "0.3.20", features = [ "console", "CanvasRenderingContext2
 wee_alloc = { version = "0.4.4", optional = true }
 
 [dev-dependencies]
-wasm-bindgen-test = "0.2"
+wasm-bindgen-test = "0.2.43"
