@@ -2,4 +2,5 @@
 members = [
   "src/lab/11-rust-wasm",
   "src/lab/12-wasm-particles",
+  "src/lab/13-game-of-life",
 ]
