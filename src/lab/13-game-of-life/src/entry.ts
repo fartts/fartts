@@ -1,4 +1,4 @@
-import { run } from './lib.rs';
+import { main } from './lib.rs';
 import './style.css';
 
-run();
+main();

@@ -19,12 +19,12 @@ cfg_if! {
 }
 
 #[wasm_bindgen]
-pub fn run() {
+pub fn main() {
     // If the `console_error_panic_hook` feature is enabled this will set a
     // panic hook, otherwise it will do nothing.
     utils::set_panic_hook();
 
-    console::log_1(&JsValue::from_str("run"));
+    console::log_1(&JsValue::from_str("main"));
 }
 
 #[cfg(test)]
