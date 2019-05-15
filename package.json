@@ -15,9 +15,7 @@
     "lint": "yarn lint:rs && yarn lint:ts",
     "lint:rs": "cargo fmt --all -- --check && cargo clippy",
     "lint:ts": "tslint 'src/**/*.ts'",
-    "test": "yarn test:rs && yarn test:ts",
-    "test:rs": "cargo test",
-    "test:ts": "jest",
+    "test": "cargo test && jest",
     "coverage": "open coverage/lcov-report/index.html",
     "lab": "node ./src/cli"
   },
@@ -47,6 +45,7 @@
     "@types/jest": "24.0.12",
     "@types/node": "12.0.0",
     "@types/seedrandom": "2.4.28",
+    "babel-jest": "24.8.0",
     "commitizen": "3.1.1",
     "cz-conventional-changelog": "2.1.0",
     "glslify-bundle": "5.1.1",
