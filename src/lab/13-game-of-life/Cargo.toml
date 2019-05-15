@@ -14,7 +14,7 @@ default = ["console_error_panic_hook", "wee_alloc"]
 cfg-if = "0.1.7"
 console_error_panic_hook = { version = "0.1.6", optional = true }
 wasm-bindgen = "0.2.43"
-web-sys = { version = "0.3.20", features = [ "console", "CanvasRenderingContext2d" ] }
+web-sys = { version = "0.3.20", features = [ "console" ] }
 wee_alloc = { version = "0.4.4", optional = true }
 
 [dev-dependencies]
