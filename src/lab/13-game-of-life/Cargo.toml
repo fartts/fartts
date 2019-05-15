@@ -22,9 +22,7 @@ features = [
   "console",
   "Document",
   "Element",
-  "HtmlElement",
   "HtmlCanvasElement",
-  "Node",
   "Window",
 ]
 

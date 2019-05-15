@@ -2,19 +2,19 @@ use std::fmt;
 
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum Cell {
+pub enum Cell {
     Dead = 0,
     Live = 1,
 }
 
 pub struct Universe {
-    width: u32,
-    height: u32,
-    cells: Vec<Cell>,
+    pub width: u32,
+    pub height: u32,
+    pub cells: Vec<Cell>,
 }
 
 impl Universe {
-    fn get_index(&self, row: u32, col: u32) -> usize {
+    pub fn get_index(&self, row: u32, col: u32) -> usize {
         (row * self.width + col) as usize
     }
 
