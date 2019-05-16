@@ -1,11 +1,11 @@
 [package]
-name = "13-game-of-life"
+name = "game-of-life"
 version = "0.1.0"
 authors = ["Matt Hayes <matt@mysterycommand.com>"]
 edition = "2018"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [features]
 default = ["console_error_panic_hook", "wee_alloc"]
