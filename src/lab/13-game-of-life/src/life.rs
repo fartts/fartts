@@ -1,4 +1,6 @@
 use std::fmt;
+use wasm_bindgen::prelude::*;
+use web_sys::CanvasRenderingContext2d;
 
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -14,31 +16,28 @@ pub struct Universe {
 }
 
 impl Universe {
-    pub fn get_index(&self, row: u32, col: u32) -> usize {
-        (row * self.width + col) as usize
-    }
+    pub fn new() -> Universe {
+        let width = 24;
+        let height = 24;
 
-    fn live_neighbors(&self, row: u32, col: u32) -> u8 {
-        let mut n = 0;
-
-        for delta_row in [self.height - 1, 0, 1].iter().cloned() {
-            for delta_col in [self.width - 1, 0, 1].iter().cloned() {
-                if delta_row == 0 && delta_col == 0 {
-                    continue;
+        let cells = (0..width * height)
+            .map(|i| {
+                if i % 2 == 0 || i % 7 == 0 {
+                    Cell::Live
+                } else {
+                    Cell::Dead
                 }
+            })
+            .collect();
 
-                let neighbor_row = (row + delta_row) % self.height;
-                let neighbor_col = (col + delta_col) % self.width;
-                let i = self.get_index(neighbor_row, neighbor_col);
-
-                n += self.cells[i] as u8;
-            }
+        Universe {
+            width,
+            height,
+            cells,
         }
-
-        n
     }
 
-    pub fn tick(&mut self) {
+    pub fn update(&mut self) {
         let mut next = self.cells.clone();
 
         for row in 0..self.height {
@@ -62,29 +61,53 @@ impl Universe {
         self.cells = next;
     }
 
-    pub fn new() -> Universe {
-        let width = 24;
-        let height = 24;
+    pub fn render(&self, context: &CanvasRenderingContext2d) {
+        let size = 1;
+        let dead = JsValue::from_str("orange");
+        let live = JsValue::from_str("yellow");
 
-        let cells = (0..width * height)
-            .map(|i| {
-                if i % 2 == 0 || i % 7 == 0 {
-                    Cell::Live
+        for row in 0..self.height {
+            for col in 0..self.width {
+                let i = self.get_index(row, col);
+
+                context.set_fill_style(if self.cells[i] == Cell::Dead {
+                    &dead
                 } else {
-                    Cell::Dead
-                }
-            })
-            .collect();
+                    &live
+                });
 
-        Universe {
-            width,
-            height,
-            cells,
+                context.fill_rect(
+                    (col * (size + 1) + 1).into(),
+                    (row * (size + 1) + 1).into(),
+                    size.into(),
+                    size.into(),
+                );
+            }
         }
     }
 
-    pub fn render(&self) -> String {
-        self.to_string()
+    fn get_index(&self, row: u32, col: u32) -> usize {
+        (row * self.width + col) as usize
+    }
+
+    fn live_neighbors(&self, row: u32, col: u32) -> u8 {
+        let mut neighbors = 0;
+
+        for delta_row in [self.height - 1, 0, 1].iter().cloned() {
+            for delta_col in [self.width - 1, 0, 1].iter().cloned() {
+                if delta_row == 0 && delta_col == 0 {
+                    continue;
+                }
+
+                let neighbor_row = (row + delta_row) % self.height;
+                let neighbor_col = (col + delta_col) % self.width;
+                let i = self.get_index(neighbor_row, neighbor_col);
+
+                neighbors += self.cells[i] as u8;
+            }
+        }
+
+        neighbors
     }
 }
 
