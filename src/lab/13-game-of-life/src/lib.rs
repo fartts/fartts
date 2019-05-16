@@ -7,7 +7,7 @@ mod life;
 mod util;
 
 use dom::{canvas, ctx, raf};
-use life::Universe;
+pub use life::Universe;
 use std::cell::RefCell;
 use std::rc::Rc;
 use util::set_panic_hook;
@@ -20,7 +20,7 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-pub fn main() -> Result<(), JsValue> {
+pub fn run() -> Result<(), JsValue> {
     set_panic_hook();
 
     let canvas = canvas()?;
