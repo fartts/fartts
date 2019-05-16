@@ -16,10 +16,7 @@ pub struct Universe {
 }
 
 impl Universe {
-    pub fn new() -> Universe {
-        let width = 24;
-        let height = 24;
-
+    pub fn new(width: u32, height: u32) -> Universe {
         let cells = (0..width * height)
             .map(|i| {
                 if i % 2 == 0 || i % 7 == 0 {
@@ -62,7 +59,7 @@ impl Universe {
     }
 
     pub fn render(&self, context: &CanvasRenderingContext2d) {
-        let size = 1;
+        let size = 5;
         let dead = JsValue::from_str("orange");
         let live = JsValue::from_str("yellow");
 

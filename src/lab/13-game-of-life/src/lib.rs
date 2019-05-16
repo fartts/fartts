@@ -26,10 +26,13 @@ pub fn run() -> Result<(), JsValue> {
     let canvas = canvas()?;
     let context = ctx(&canvas)?;
 
+    let mut uni = Universe::new((canvas.width() / 6).into(), (canvas.height() / 6).into());
+
+    canvas.set_width(canvas.width() + 1);
+    canvas.set_height(canvas.height() + 1);
+
     context.set_fill_style(&JsValue::from_str("red"));
     context.fill_rect(0.0, 0.0, canvas.width().into(), canvas.height().into());
-
-    let mut uni = Universe::new();
 
     let f = Rc::new(RefCell::new(None));
     let g = f.clone();
