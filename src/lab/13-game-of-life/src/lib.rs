@@ -6,12 +6,14 @@ mod dom;
 mod life;
 mod util;
 
-use dom::{canvas, ctx, raf};
+use dom::{caf, canvas, /* container, */ ctx, raf};
 pub use life::Universe;
 use std::cell::RefCell;
 use std::rc::Rc;
 use util::set_panic_hook;
 use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
+use web_sys::{console, MouseEvent};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -19,31 +21,120 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+// #[derive(PartialEq, PartialOrd)]
+// struct Num(f64);
+//
+// impl Num {
+//     fn new(val: f64) -> Option<Num> {
+//         if val.is_nan() {
+//             None
+//         } else {
+//             Some(Num(val))
+//         }
+//     }
+// }
+//
+// impl Eq for Num {}
+// impl Ord for Num {
+//     fn cmp(&self, other: &Num) -> cmp::Ordering {
+//         self.partial_cmp(other).unwrap()
+//     }
+// }
+//
+// impl fmt::Display for Num {
+//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+//         write!(f, "{}", self)?;
+//         Ok(())
+//     }
+// }
+
+// fn step(from: i32, by: i32) -> i32 {
+//     match from % by {
+//         0 => from,
+//         _ => from + (by - (from % by)),
+//     }
+// }
+
 #[wasm_bindgen]
 pub fn run() -> Result<(), JsValue> {
     set_panic_hook();
 
+    let cell_size = 6;
+
+    // let container = container()?;
     let canvas = canvas()?;
     let context = ctx(&canvas)?;
 
-    let mut uni = Universe::new((canvas.width() / 6).into(), (canvas.height() / 6).into());
+    // let dpr = dpr();
+    // let container_width = container.client_width();
+    // let container_height = container.client_height();
 
-    canvas.set_width(canvas.width() + 1);
-    canvas.set_height(canvas.height() + 1);
+    // let scaled_width = step(container_width.into(), cell_size);
+    // let scaled_height = step(container_height.into(), cell_size);
+
+    // canvas.set_width(((scaled_width * dpr) / cell_size) as u32);
+    // canvas.set_height(((scaled_height * dpr) / cell_size) as u32);
+
+    let mut uni = Universe::new(
+        canvas.width() / (cell_size as u32),
+        canvas.height() / (cell_size as u32),
+    );
+
+    // let width_ratio = container_width as f64 / canvas.width() as f64;
+    // let height_ratio = container_height as f64 / canvas.height() as f64;
+
+    // canvas.set_width(canvas.width() + 1);
+    // canvas.set_height(canvas.height() + 1);
+
+    // console::log_1(&JsValue::from_str(&format!("{}", width_ratio)));
+    // console::log_1(&JsValue::from_str(&format!("{}", height_ratio)));
+    // console::log_1(&JsValue::from_str(&format!(
+    //     "{}",
+    //     width_ratio > height_ratio
+    // )));
+
+    // canvas.style().set_property(
+    //     "transform",
+    //     &format!(
+    //         "scale({})",
+    //         if width_ratio > height_ratio {
+    //             width_ratio
+    //         } else {
+    //             height_ratio
+    //         }
+    //     ),
+    // )?;
 
     context.set_fill_style(&JsValue::from_str("red"));
     context.fill_rect(0.0, 0.0, canvas.width().into(), canvas.height().into());
 
+    let mut i: i32 = 0;
     let f = Rc::new(RefCell::new(None));
     let g = f.clone();
 
     *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
-        raf(f.borrow().as_ref().unwrap());
+        i = raf(f.borrow().as_ref().unwrap());
         uni.update();
-        uni.render(&context);
+        uni.render(&context, cell_size as u32);
     }) as Box<FnMut()>));
 
-    raf(g.borrow().as_ref().unwrap());
+    // i = raf(g.borrow().as_ref().unwrap());
+
+    {
+        let closure = Closure::wrap(Box::new(move |_event: MouseEvent| {
+            console::log_1(&JsValue::from_str(&format!("i: {}", i)));
+
+            if i == 0 {
+                i = raf(g.borrow().as_ref().unwrap());
+            } else {
+                caf(i);
+                i = 0;
+            }
+        }) as Box<dyn FnMut(_)>);
+
+        canvas.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref())?;
+        closure.forget();
+    }
 
     Ok(())
 }

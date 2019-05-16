@@ -1,6 +1,6 @@
 use std::fmt;
 use wasm_bindgen::prelude::*;
-use web_sys::CanvasRenderingContext2d;
+use web_sys::{console, CanvasRenderingContext2d};
 
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -17,6 +17,9 @@ pub struct Universe {
 
 impl Universe {
     pub fn new(width: u32, height: u32) -> Universe {
+        console::log_1(&JsValue::from_str(&format!("{}x{}", width, height)));
+        console::log_1(&JsValue::from_str(&format!("cells: {}", width * height)));
+
         let cells = (0..width * height)
             .map(|i| {
                 if i % 2 == 0 || i % 7 == 0 {
@@ -58,8 +61,7 @@ impl Universe {
         self.cells = next;
     }
 
-    pub fn render(&self, context: &CanvasRenderingContext2d) {
-        let size = 5;
+    pub fn render(&self, context: &CanvasRenderingContext2d, size: u32) {
         let dead = JsValue::from_str("orange");
         let live = JsValue::from_str("yellow");
 
