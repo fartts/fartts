@@ -21,33 +21,6 @@ use web_sys::{console, MouseEvent};
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-// #[derive(PartialEq, PartialOrd)]
-// struct Num(f64);
-//
-// impl Num {
-//     fn new(val: f64) -> Option<Num> {
-//         if val.is_nan() {
-//             None
-//         } else {
-//             Some(Num(val))
-//         }
-//     }
-// }
-//
-// impl Eq for Num {}
-// impl Ord for Num {
-//     fn cmp(&self, other: &Num) -> cmp::Ordering {
-//         self.partial_cmp(other).unwrap()
-//     }
-// }
-//
-// impl fmt::Display for Num {
-//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-//         write!(f, "{}", self)?;
-//         Ok(())
-//     }
-// }
-
 fn step(from: i32, by: i32) -> i32 {
     match from % by {
         0 => from,
