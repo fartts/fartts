@@ -76,10 +76,10 @@ impl Universe {
                 });
 
                 context.fill_rect(
-                    (col * (size + 1) + 1).into(),
-                    (row * (size + 1) + 1).into(),
-                    size.into(),
-                    size.into(),
+                    (col * size + 1).into(),
+                    (row * size + 1).into(),
+                    (size - 2).into(),
+                    (size - 2).into(),
                 );
             }
         }

@@ -6,7 +6,7 @@ mod dom;
 mod life;
 mod util;
 
-use dom::{caf, canvas, /* container, */ ctx, raf};
+use dom::{caf, canvas, container, ctx, dpr, raf};
 pub use life::Universe;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -48,62 +48,71 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 //     }
 // }
 
-// fn step(from: i32, by: i32) -> i32 {
-//     match from % by {
-//         0 => from,
-//         _ => from + (by - (from % by)),
-//     }
-// }
+fn step(from: i32, by: i32) -> i32 {
+    match from % by {
+        0 => from,
+        _ => from + (by - (from % by)),
+    }
+}
 
 #[wasm_bindgen]
 pub fn run() -> Result<(), JsValue> {
     set_panic_hook();
 
-    let cell_size = 6;
+    let cell_size = 10;
 
-    // let container = container()?;
+    let container = container()?;
     let canvas = canvas()?;
     let context = ctx(&canvas)?;
 
-    // let dpr = dpr();
-    // let container_width = container.client_width();
-    // let container_height = container.client_height();
+    let dpr = dpr();
+    let container_width = container.client_width();
+    let container_height = container.client_height();
 
-    // let scaled_width = step(container_width.into(), cell_size);
-    // let scaled_height = step(container_height.into(), cell_size);
+    console::log_1(&JsValue::from_str(&format!("dpr: {}", dpr)));
+    console::log_1(&JsValue::from_str(&format!(
+        "container_width: {}",
+        container_width
+    )));
+    console::log_1(&JsValue::from_str(&format!(
+        "container_height: {}",
+        container_height
+    )));
 
-    // canvas.set_width(((scaled_width * dpr) / cell_size) as u32);
-    // canvas.set_height(((scaled_height * dpr) / cell_size) as u32);
+    let scaled_width = step(container_width.into(), cell_size);
+    let scaled_height = step(container_height.into(), cell_size);
+
+    console::log_1(&JsValue::from_str(&format!(
+        "scaled_width: {}",
+        scaled_width
+    )));
+    console::log_1(&JsValue::from_str(&format!(
+        "scaled_height: {}",
+        scaled_height
+    )));
+
+    canvas.set_width(((scaled_width * dpr as i32) / cell_size) as u32);
+    canvas.set_height(((scaled_height * dpr as i32) / cell_size) as u32);
 
     let mut uni = Universe::new(
         canvas.width() / (cell_size as u32),
         canvas.height() / (cell_size as u32),
     );
 
-    // let width_ratio = container_width as f64 / canvas.width() as f64;
-    // let height_ratio = container_height as f64 / canvas.height() as f64;
+    let width_ratio = container_width as f64 / canvas.width() as f64;
+    let height_ratio = container_height as f64 / canvas.height() as f64;
 
-    // canvas.set_width(canvas.width() + 1);
-    // canvas.set_height(canvas.height() + 1);
-
-    // console::log_1(&JsValue::from_str(&format!("{}", width_ratio)));
-    // console::log_1(&JsValue::from_str(&format!("{}", height_ratio)));
-    // console::log_1(&JsValue::from_str(&format!(
-    //     "{}",
-    //     width_ratio > height_ratio
-    // )));
-
-    // canvas.style().set_property(
-    //     "transform",
-    //     &format!(
-    //         "scale({})",
-    //         if width_ratio > height_ratio {
-    //             width_ratio
-    //         } else {
-    //             height_ratio
-    //         }
-    //     ),
-    // )?;
+    canvas.style().set_property(
+        "transform",
+        &format!(
+            "scale({})",
+            if width_ratio > height_ratio {
+                width_ratio
+            } else {
+                height_ratio
+            }
+        ),
+    )?;
 
     context.set_fill_style(&JsValue::from_str("red"));
     context.fill_rect(0.0, 0.0, canvas.width().into(), canvas.height().into());
