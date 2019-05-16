@@ -59,7 +59,7 @@ fn step(from: i32, by: i32) -> i32 {
 pub fn run() -> Result<(), JsValue> {
     set_panic_hook();
 
-    let cell_size = 10;
+    let cell_size = 5;
 
     let container = container()?;
     let canvas = canvas()?;
