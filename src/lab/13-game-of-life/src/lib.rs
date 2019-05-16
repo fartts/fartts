@@ -21,17 +21,17 @@ use web_sys::{window, CanvasRenderingContext2d, Document, Element, HtmlCanvasEle
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 fn win() -> Window {
-    window().expect("should have a window")
+    window().expect("window to exist")
 }
 
 fn doc() -> Document {
-    win().document().expect("should have a document")
+    win().document().expect("window.document to exist")
 }
 
 fn raf(f: &Closure<FnMut()>) {
     win()
         .request_animation_frame(f.as_ref().unchecked_ref())
-        .expect("should register requestAnimationFrame");
+        .expect("window.requestAnimationFrame to exist");
 }
 
 fn canvas() -> Result<HtmlCanvasElement, Element> {
@@ -41,10 +41,8 @@ fn canvas() -> Result<HtmlCanvasElement, Element> {
         .dyn_into::<HtmlCanvasElement>()
 }
 
-fn context() -> Result<CanvasRenderingContext2d, Object> {
-    canvas()
-        .map_err(|_| ())
-        .unwrap()
+fn ctx(canvas: &HtmlCanvasElement) -> Result<CanvasRenderingContext2d, Object> {
+    canvas
         .get_context("2d")
         .unwrap()
         .unwrap()
@@ -55,15 +53,15 @@ fn context() -> Result<CanvasRenderingContext2d, Object> {
 pub fn main() -> Result<(), JsValue> {
     set_panic_hook();
 
-    let canvas = canvas().map_err(|_| ()).unwrap();
-    let context = context().unwrap();
+    let canvas = canvas()?;
+    let context = ctx(&canvas)?;
 
     context.set_fill_style(&JsValue::from_str("red"));
     context.fill_rect(0.0, 0.0, canvas.width().into(), canvas.height().into());
 
     let mut uni = Universe::new();
 
-    let size = 5;
+    let size = 1;
     let dead = JsValue::from_str("orange");
     let live = JsValue::from_str("yellow");
 
