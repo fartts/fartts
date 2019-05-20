@@ -1,7 +1,7 @@
 import seedRandom from 'seedrandom';
-
 const name = '@fartts/fartts';
 export const random = seedRandom(name);
+
 export const {
   abs,
   acos,

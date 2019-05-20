@@ -19,7 +19,7 @@ let deltaTime = 0;
 export default function loop(
   update: UpdateFunction,
   render: RenderFunction,
-): { start: () => void; stop: () => void } {
+): { isRunning: boolean; start: () => void; stop: () => void } {
   function tick(time: DOMHighResTimeStamp) {
     frameId = rAF(tick);
 
@@ -40,6 +40,10 @@ export default function loop(
   }
 
   return {
+    get isRunning() {
+      return frameId !== -1;
+    },
+
     start() {
       if (frameId !== -1) {
         return;
