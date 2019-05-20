@@ -2,17 +2,8 @@ import './style.css';
 
 import { el, on, off, rAF } from '../../../lib/core/dom';
 import { shouldResize, resize } from './resize';
-import {
-  π,
-  cos,
-  sin,
-  randomRange,
-  random,
-  toDegrees,
-  ππ,
-  hypot,
-  max,
-} from '../../../lib/core/math';
+import { π, cos, sin, toDegrees, ππ, hypot, max } from '../../../lib/core/math';
+import { randomRange, random } from '../../../lib/core/rand';
 import { sawWave, sinWave } from '../../../lib/core/wave';
 
 const c = el('canvas') as HTMLCanvasElement;
