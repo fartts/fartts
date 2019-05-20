@@ -1,5 +1,4 @@
 use js_sys::Object;
-use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::{
     window, CanvasRenderingContext2d, Document, Element, HtmlCanvasElement, HtmlElement, Window,
@@ -15,18 +14,6 @@ pub fn dpr() -> f64 {
 
 pub fn doc() -> Document {
     win().document().expect("window.document to exist")
-}
-
-pub fn raf(f: &Closure<FnMut()>) -> i32 {
-    win()
-        .request_animation_frame(f.as_ref().unchecked_ref())
-        .expect("window.requestAnimationFrame to exist")
-}
-
-pub fn caf(f: i32) {
-    win()
-        .cancel_animation_frame(f)
-        .expect("window.cancelAnimationFrame to exist")
 }
 
 pub fn container() -> Result<HtmlElement, Element> {

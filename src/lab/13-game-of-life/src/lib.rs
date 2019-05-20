@@ -135,19 +135,11 @@ impl Sim {
         Ok(())
     }
 
-    // , current_time: f64, delta_time: f64
-    pub fn update(&mut self) {
-        // console::log_1(&JsValue::from_str(&format!(
-        //     "current_time: {}",
-        //     current_time
-        // )));
-        // console::log_1(&JsValue::from_str(&format!("delta_time: {}", delta_time)));
+    pub fn update(&mut self, _current_time: f64, _delta_time: f64) {
         self.uni.update();
     }
 
-    // , frame_ratio: f64
-    pub fn render(&mut self) {
-        // console::log_1(&JsValue::from_str(&format!("frame_ratio: {}", frame_ratio)));
+    pub fn render(&mut self, _frame_ratio: f64) {
         self.uni.render(&self.ctx, self.cell_size as u32);
     }
 }
