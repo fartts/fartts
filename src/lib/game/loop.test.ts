@@ -15,18 +15,22 @@ describe('@fartts/lib/loop', () => {
   test('update and render', () => {
     const update = jest.fn();
     const render = jest.fn();
-    const { start, stop } = loop(update, render);
+    const game = loop(update, render);
+
+    expect(game.isRunning).toBe(false);
 
     // multiple calls have no effect
-    start();
-    start();
+    game.start();
+    game.start();
 
+    expect(game.isRunning).toBe(true);
     jest.advanceTimersByTime(stepTime * 3);
 
     // multiple calls have no effect
-    stop();
-    stop();
+    game.stop();
+    game.stop();
 
+    expect(game.isRunning).toBe(false);
     expect(update).toHaveBeenCalledTimes(1);
     expect(update).toHaveBeenCalledWith(expect.any(Number), stepTime);
 
