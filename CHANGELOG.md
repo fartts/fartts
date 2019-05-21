@@ -1,3 +1,15 @@
+# [1.20.0](https://github.com/fartts/fartts/compare/v1.19.4...v1.20.0) (2019-05-21)
+
+
+### Features
+
+* **cli:** add a new micro-CLI for creating new experiments ([7827513](https://github.com/fartts/fartts/commit/7827513))
+* **lab/13:** allow a limited kind of live drawing, need more ui controls ... they're stubbed in for ([15d4440](https://github.com/fartts/fartts/commit/15d4440))
+* **lab/13:** boilerplate for a new experiment ([9984d0b](https://github.com/fartts/fartts/commit/9984d0b))
+* **lab/13:** compiles, but panics at runtime ... first pass at adding a rAF in Rust ([e8189e6](https://github.com/fartts/fartts/commit/e8189e6))
+* **lab/13:** first pass, game of life, rendering to console ([c9b4f3e](https://github.com/fartts/fartts/commit/c9b4f3e))
+* **lab/13:** it works! ([1e8a40b](https://github.com/fartts/fartts/commit/1e8a40b))
+
 ## [1.19.4](https://github.com/fartts/fartts/compare/v1.19.3...v1.19.4) (2019-05-09)
 
 
