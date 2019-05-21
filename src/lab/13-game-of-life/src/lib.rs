@@ -30,6 +30,7 @@ pub struct Sim {
     uni: Universe,
     cell_size: i32,
     dpr: f64,
+    canvas_scale: f64,
 
     container: HtmlElement,
     canvas: HtmlCanvasElement,
@@ -41,8 +42,9 @@ impl Sim {
     pub fn new() -> Result<Sim, JsValue> {
         set_panic_hook();
 
-        let cell_size = 10;
+        let cell_size = 8;
         let dpr = dpr();
+        let canvas_scale = 1f64;
 
         let container = container()?;
         let canvas = canvas()?;
@@ -53,6 +55,7 @@ impl Sim {
             uni,
             cell_size,
             dpr,
+            canvas_scale,
 
             container,
             canvas,
@@ -113,18 +116,15 @@ impl Sim {
 
         let width_ratio = container_width as f64 / self.canvas.width() as f64;
         let height_ratio = container_height as f64 / self.canvas.height() as f64;
+        self.canvas_scale = if width_ratio > height_ratio {
+            width_ratio
+        } else {
+            height_ratio
+        };
 
-        self.canvas.style().set_property(
-            "transform",
-            &format!(
-                "scale({})",
-                if width_ratio > height_ratio {
-                    width_ratio
-                } else {
-                    height_ratio
-                }
-            ),
-        )?;
+        self.canvas
+            .style()
+            .set_property("transform", &format!("scale({})", self.canvas_scale))?;
 
         self.ctx.set_fill_style(&JsValue::from_str("red"));
         self.ctx.fill_rect(
@@ -156,6 +156,18 @@ impl Sim {
     }
 
     pub fn render(&mut self, _frame_ratio: f64) {
+        self.uni.render(&self.ctx, self.cell_size as u32);
+    }
+
+    pub fn draw(&mut self, client_x: f64, client_y: f64) {
+        let rect = self.canvas.get_bounding_client_rect();
+
+        let x = ((client_x - rect.x()) / self.canvas_scale / (self.cell_size as f64)) as u32;
+        let y = ((client_y - rect.y()) / self.canvas_scale / (self.cell_size as f64)) as u32;
+
+        // console::log_1(&JsValue::from_str(&format!("{}x{}", x, y)));
+
+        self.uni.set_cells(&[(y, x)]);
         self.uni.render(&self.ctx, self.cell_size as u32);
     }
 }
