@@ -1,8 +1,2 @@
 @import '../../src/styles/base.css';
-
-main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-flow: column;
-}
+@import '../../src/styles/cover.css';

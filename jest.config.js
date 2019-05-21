@@ -17,8 +17,9 @@ module.exports = {
   moduleNameMapper: {
     '^.+\\.s?css$': 'identity-obj-proxy',
   },
-  testMatch: ['<rootDir>/src/lib/**/?(*.)test?(s).ts'],
+  testMatch: ['<rootDir>/src/{cli,lib}/?(**/)?(*.)test?(s).{j,t}s'],
   transform: {
+    '^.+\\.js$': 'babel-jest',
     '^.+\\.ts$': 'ts-jest',
   },
 };

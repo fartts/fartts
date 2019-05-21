@@ -7,7 +7,8 @@ import { shouldResize, resize } from './resize';
 import Branch from './tree/constants/branch';
 import Tree from './tree/constants/tree';
 import { gradient } from './tree/gradient';
-import { lerp, min, random } from '../../../lib/core/math';
+import { lerp, min } from '../../../lib/core/math';
+import { random } from '../../../lib/core/rand';
 
 document.addEventListener('touchstart', () => true, true);
 

@@ -15,10 +15,9 @@
     "lint": "yarn lint:rs && yarn lint:ts",
     "lint:rs": "cargo fmt --all -- --check && cargo clippy",
     "lint:ts": "tslint 'src/**/*.ts'",
-    "test": "yarn test:rs && yarn test:ts",
-    "test:rs": "cargo test",
-    "test:ts": "jest",
-    "coverage": "open coverage/lcov-report/index.html"
+    "test": "cargo test && jest",
+    "coverage": "open coverage/lcov-report/index.html",
+    "lab": "node ./src/cli"
   },
   "engines": {
     "node": "10.15.3",
@@ -36,6 +35,7 @@
   "devDependencies": {
     "@babel/core": "7.4.4",
     "@babel/preset-typescript": "7.3.3",
+    "@iarna/toml": "2.2.3",
     "@semantic-release/changelog": "3.0.2",
     "@semantic-release/commit-analyzer": "6.1.0",
     "@semantic-release/git": "7.0.8",
@@ -45,12 +45,14 @@
     "@types/jest": "24.0.13",
     "@types/node": "12.0.2",
     "@types/seedrandom": "2.4.28",
+    "babel-jest": "24.8.0",
     "commitizen": "3.1.1",
     "cz-conventional-changelog": "2.1.0",
     "glslify-bundle": "5.1.1",
     "glslify-deps": "1.3.1",
     "identity-obj-proxy": "3.0.0",
     "jest": "24.8.0",
+    "lodash": "4.17.11",
     "parcel-bundler": "1.12.3",
     "parcel-plugin-wasm-pack": "2.0.2",
     "prettier": "1.17.1",
