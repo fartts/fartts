@@ -10,7 +10,7 @@ use dom::{canvas, container, ctx, dpr};
 pub use life::{Cell, Universe};
 use util::set_panic_hook;
 use wasm_bindgen::prelude::*;
-use web_sys::{console, CanvasRenderingContext2d, HtmlCanvasElement, HtmlElement};
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, HtmlElement};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -41,7 +41,7 @@ impl Sim {
     pub fn new() -> Result<Sim, JsValue> {
         set_panic_hook();
 
-        let cell_size = 5;
+        let cell_size = 10;
         let dpr = dpr();
 
         let container = container()?;
@@ -68,32 +68,48 @@ impl Sim {
         let container_width = self.container.client_width();
         let container_height = self.container.client_height();
 
-        console::log_1(&JsValue::from_str(&format!("dpr: {}", self.dpr)));
-        console::log_1(&JsValue::from_str(&format!(
-            "container_width: {}",
-            container_width
-        )));
-        console::log_1(&JsValue::from_str(&format!(
-            "container_height: {}",
-            container_height
-        )));
+        // console::log_1(&JsValue::from_str(&format!("dpr: {}", self.dpr)));
+        // console::log_1(&JsValue::from_str(&format!(
+        //     "container_width: {}",
+        //     container_width
+        // )));
+        // console::log_1(&JsValue::from_str(&format!(
+        //     "container_height: {}",
+        //     container_height
+        // )));
 
         let scaled_width = step(container_width.into(), self.cell_size);
         let scaled_height = step(container_height.into(), self.cell_size);
 
-        console::log_1(&JsValue::from_str(&format!(
-            "scaled_width: {}",
-            scaled_width
-        )));
-        console::log_1(&JsValue::from_str(&format!(
-            "scaled_height: {}",
-            scaled_height
-        )));
+        // console::log_1(&JsValue::from_str(&format!(
+        //     "scaled_width: {}",
+        //     scaled_width
+        // )));
+        // console::log_1(&JsValue::from_str(&format!(
+        //     "scaled_height: {}",
+        //     scaled_height
+        // )));
 
-        self.canvas
-            .set_width(((scaled_width * self.dpr as i32) / self.cell_size) as u32);
-        self.canvas
-            .set_height(((scaled_height * self.dpr as i32) / self.cell_size) as u32);
+        let uni_width = step(
+            (scaled_width * self.dpr as i32) / self.cell_size,
+            self.cell_size,
+        );
+        let uni_height = step(
+            (scaled_height * self.dpr as i32) / self.cell_size,
+            self.cell_size,
+        );
+
+        self.canvas.set_width(uni_width as u32);
+        self.canvas.set_height(uni_height as u32);
+
+        // console::log_1(&JsValue::from_str(&format!(
+        //     "canvas.width: {}",
+        //     self.canvas.width()
+        // )));
+        // console::log_1(&JsValue::from_str(&format!(
+        //     "canvas.height: {}",
+        //     self.canvas.height()
+        // )));
 
         let width_ratio = container_width as f64 / self.canvas.width() as f64;
         let height_ratio = container_height as f64 / self.canvas.height() as f64;

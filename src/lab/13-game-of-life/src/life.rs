@@ -1,6 +1,6 @@
 use std::fmt;
 use wasm_bindgen::prelude::*;
-use web_sys::{console, CanvasRenderingContext2d};
+use web_sys::CanvasRenderingContext2d;
 
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -17,9 +17,6 @@ pub struct Universe {
 
 impl Universe {
     pub fn new(width: u32, height: u32) -> Universe {
-        console::log_1(&JsValue::from_str(&format!("{}x{}", width, height)));
-        console::log_1(&JsValue::from_str(&format!("cells: {}", width * height)));
-
         let cells = (0..width * height)
             .map(|i| {
                 if i % 2 == 0 || i % 7 == 0 {
@@ -88,11 +85,23 @@ impl Universe {
     pub fn set_width(&mut self, width: u32) {
         self.width = width;
         self.cells = (0..width * self.height).map(|_| Cell::Dead).collect();
+
+        // console::log_1(&JsValue::from_str(&format!("{}x{}", width, self.height)));
+        // console::log_1(&JsValue::from_str(&format!(
+        //     "cells: {}",
+        //     width * self.height
+        // )));
     }
 
     pub fn set_height(&mut self, height: u32) {
         self.height = height;
         self.cells = (0..self.width * height).map(|_| Cell::Dead).collect();
+
+        // console::log_1(&JsValue::from_str(&format!("{}x{}", self.width, height)));
+        // console::log_1(&JsValue::from_str(&format!(
+        //     "cells: {}",
+        //     self.width * height
+        // )));
     }
 
     pub fn get_cells(&self) -> &[Cell] {

@@ -18,6 +18,14 @@ on<UIEvent>('resize', (event: UIEvent) => {
   sim.resize();
 });
 
-on<MouseEvent>('click', (event: MouseEvent) => {
+on<MouseEvent>('click', (/* event: MouseEvent */) => {
   main.isRunning ? main.stop() : main.start();
+  // sim.update(performance.now(), 1000 / 16);
+  // sim.render(1);
+});
+
+on<TouchEvent>('touchstart', (/* event: TouchEvent */) => {
+  main.isRunning ? main.stop() : main.start();
+  // sim.update(performance.now(), 1000 / 16);
+  // sim.render(1);
 });
