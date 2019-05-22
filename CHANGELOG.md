@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/fartts/fartts/compare/v1.20.0...v1.20.1) (2019-05-22)
+
+
+### Performance Improvements
+
+* **lab/13/lib.rs:** now that scroll/pinch/zoom is effectively squashed, we can do a lot less math t ([7eb39bf](https://github.com/fartts/fartts/commit/7eb39bf))
+
 # [1.20.0](https://github.com/fartts/fartts/compare/v1.19.4...v1.20.0) (2019-05-21)
 
 
