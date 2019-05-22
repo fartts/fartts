@@ -6,7 +6,7 @@ mod dom;
 mod life;
 mod util;
 
-use dom::{canvas, container, ctx, dpr, win};
+use dom::{canvas, container, ctx, dpr};
 pub use life::{Cell, Universe};
 use util::set_panic_hook;
 use wasm_bindgen::prelude::*;
@@ -162,14 +162,8 @@ impl Sim {
     pub fn draw(&mut self, client_x: f64, client_y: f64) {
         let canvas_rect = self.canvas.get_bounding_client_rect();
 
-        let offset_x = client_x - canvas_rect.x() - win().scroll_x().unwrap();
-        let offset_y = client_y - canvas_rect.y() - win().scroll_y().unwrap();
-
-        let percent_x = offset_x / (self.canvas.width() as f64 * self.canvas_scale);
-        let percent_y = offset_y / (self.canvas.height() as f64 * self.canvas_scale);
-
-        let x = (percent_x * (self.canvas.width() as f64 / self.cell_size as f64)) as u32;
-        let y = (percent_y * (self.canvas.height() as f64 / self.cell_size as f64)) as u32;
+        let x = ((client_x - canvas_rect.x()) / self.canvas_scale / (self.cell_size as f64)) as u32;
+        let y = ((client_y - canvas_rect.y()) / self.canvas_scale / (self.cell_size as f64)) as u32;
 
         // console::log_1(&JsValue::from_str(&format!("{}x{}", x, y)));
 
