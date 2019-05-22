@@ -1,3 +1,11 @@
+# [1.21.0](https://github.com/fartts/fartts/compare/v1.20.1...v1.21.0) (2019-05-22)
+
+
+### Features
+
+* **cli:** add the ability to update the index as well ([aa95c2f](https://github.com/fartts/fartts/commit/aa95c2f))
+* **cli:** updates the main index too now ([f79e58c](https://github.com/fartts/fartts/commit/f79e58c)), closes [#504](https://github.com/fartts/fartts/issues/504)
+
 ## [1.20.1](https://github.com/fartts/fartts/compare/v1.20.0...v1.20.1) (2019-05-22)
 
 
