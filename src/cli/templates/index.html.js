@@ -10,7 +10,7 @@ module.exports = ({ labNumber }) => `\
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>𝑓Art.ᴛꜱ - ${labNumber}</title>
+    <title>&#x1D453;Art.&#x1D1B;&#xA731; - ${labNumber}</title>
   </head>
 
   <body>
