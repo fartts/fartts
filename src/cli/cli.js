@@ -74,7 +74,14 @@ async function updateCargo(labDir) {
     },
   });
 
-  return writeFile(cargoPath, cargoContents);
+  return writeFile(cargoPath, cargoContents).catch(() => {
+    console.warn(
+      `file already exists at ${path.relative(
+        process.cwd(),
+        cargoPath,
+      )} skipping`,
+    );
+  });
 }
 
 async function updateIndex(labName, labNumber) {
@@ -87,7 +94,14 @@ async function updateIndex(labName, labNumber) {
   );
   const indexContents = prettier.format(index.html(), { parser: 'html' });
 
-  return writeFile(indexPath, indexContents);
+  return writeFile(indexPath, indexContents).catch(() => {
+    console.warn(
+      `file already exists at ${path.relative(
+        process.cwd(),
+        indexPath,
+      )} skipping`,
+    );
+  });
 }
 
 module.exports = async function cli(args) {
