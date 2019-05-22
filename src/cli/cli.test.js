@@ -48,7 +48,9 @@ describe('cli', () => {
   });
 
   it("tries to write if the file doesn't exist", async () => {
-    fs.writeFile.mockImplementation((path, contents, callback) => callback());
+    fs.writeFile.mockImplementation((path, contents, options, callback) =>
+      callback(),
+    );
 
     await cli(['test']);
 
@@ -57,13 +59,13 @@ describe('cli', () => {
   });
 
   it("doesn't try to write if the file exists", async () => {
-    fs.writeFile.mockImplementation((path, contents, callback) =>
+    fs.writeFile.mockImplementation((path, contents, options, callback) =>
       callback({ code: 'EEXIST' }),
     );
 
     await cli(['test']);
 
     expect(writeFileSpy).toHaveBeenCalledTimes(8);
-    expect(consoleWarnSpy).toHaveBeenCalledTimes(8);
+    expect(consoleWarnSpy).toHaveBeenCalledTimes(6);
   });
 });
