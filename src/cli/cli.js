@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
-const { parse, stringify } = require('@iarna/toml');
 const { kebabCase } = require('lodash');
+const { parse, stringify } = require('@iarna/toml');
 
 const labDir = path.join(__dirname, '../lab');
 const files = {
@@ -17,18 +17,39 @@ const files = {
 
 const exists = util.promisify(fs.exists);
 const mkdir = util.promisify(fs.mkdir);
+const readdir = util.promisify(fs.readdir);
+const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
-async function writeFromTemplate(relPath, tpl) {
-  const filePath = path.join(experimentDir, relPath);
-  const fileDir = path.dirname(filePath);
-  const fileContents = tpl({ name: experimentName });
+async function createLab(labName) {
+  const { length } = await readdir(labDir);
 
-  if (!(await exists(fileDir))) {
+  const experimentName = kebabCase(`${length - 3}${labName}`);
+  const experimentDir = path.join(labDir, experimentName);
+
+  const entries = Object.entries(files);
+  for (const [relPath, tpl] of entries) {
+    const filePath = path.join(experimentDir, relPath);
+    const fileContents = tpl({ labName, experimentName });
+
+    await createFile(filePath, fileContents);
+  }
+
+  await updateCargo(experimentDir);
+
+  return;
+}
+
+async function createFile(filePath, fileContents) {
+  const fileDir = path.dirname(filePath);
+
+  const dirExists = await exists(fileDir);
+  if (!dirExists) {
     await mkdir(fileDir);
   }
 
-  if (await exists(filePath)) {
+  const pathExists = await exists(filePath);
+  if (pathExists) {
     console.warn(
       `file already exists at ${path.relative(
         process.cwd(),
@@ -42,34 +63,27 @@ async function writeFromTemplate(relPath, tpl) {
   return writeFile(filePath, fileContents);
 }
 
-module.exports = function cli(args) {
-  args.forEach(arg => {
-    const { length } = fs.readdirSync(labDir);
-    const experimentName = kebabCase(`${length - 3}${arg}`);
-    const experimentDir = path.join(labDir, experimentName);
+async function updateCargo(experimentDir) {
+  const cargoPath = path.join(process.cwd(), 'Cargo.toml');
+  const cargo = parse(await readFile(cargoPath));
 
-    const entries = Object.entries(files);
-    for (const [relPath, tpl] of entries) {
-      await writeFromTemplate(relPath, tpl);
-    }
-
-    const cargoPath = path.join(process.cwd(), 'Cargo.toml');
-    const {
-      workspace: { members },
-    } = parse(fs.readFileSync(cargoPath));
-
-    fs.writeFileSync(
-      cargoPath,
-      stringify({
-        workspace: {
-          members: [
-            ...new Set([
-              ...members,
-              path.relative(process.cwd(), experimentDir),
-            ]),
-          ],
-        },
-      }),
-    );
+  const {
+    workspace: { members },
+  } = cargo;
+  const cargoContents = stringify({
+    ...cargo,
+    workspace: {
+      members: [
+        ...new Set([...members, path.relative(process.cwd(), experimentDir)]),
+      ],
+    },
   });
+
+  return writeFile(cargoPath, cargoContents);
+}
+
+module.exports = async function cli(labNames) {
+  for (const labName of labNames) {
+    await createLab(labName);
+  }
 };
