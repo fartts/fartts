@@ -33,7 +33,7 @@
     "seedrandom": "3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.4.4",
+    "@babel/core": "7.4.5",
     "@babel/preset-typescript": "7.3.3",
     "@iarna/toml": "2.2.3",
     "@semantic-release/changelog": "3.0.2",
