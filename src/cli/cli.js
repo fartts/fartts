@@ -50,7 +50,7 @@ async function createFile(filePath, fileContents) {
     await mkdir(fileDir);
   } catch {}
 
-  return writeFile(filePath, fileContents).catch(() => {
+  return writeFile(filePath, fileContents, { flag: 'wx' }).catch(() => {
     console.warn(
       `file already exists at ${path.relative(
         process.cwd(),
@@ -74,14 +74,9 @@ async function updateCargo(labDir) {
     },
   });
 
-  return writeFile(cargoPath, cargoContents).catch(() => {
-    console.warn(
-      `file already exists at ${path.relative(
-        process.cwd(),
-        cargoPath,
-      )} skipping`,
-    );
-  });
+  return writeFile(cargoPath, cargoContents, { flag: 'w' }).catch(
+    () => undefined,
+  );
 }
 
 async function updateIndex(labName, labNumber) {
@@ -94,14 +89,9 @@ async function updateIndex(labName, labNumber) {
   );
   const indexContents = prettier.format(index.html(), { parser: 'html' });
 
-  return writeFile(indexPath, indexContents).catch(() => {
-    console.warn(
-      `file already exists at ${path.relative(
-        process.cwd(),
-        indexPath,
-      )} skipping`,
-    );
-  });
+  return writeFile(indexPath, indexContents, { flag: 'w' }).catch(
+    () => undefined,
+  );
 }
 
 module.exports = async function cli(args) {
