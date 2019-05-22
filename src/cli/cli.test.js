@@ -7,55 +7,65 @@ members = [
   "src/lab/12-wasm-particles",
   "src/lab/13-game-of-life",
 ]
+
+[profile.release]
+# optimize for size
+# @see: https://doc.rust-lang.org/cargo/reference/manifest.html#the-profile-sections
+opt-level = "s"
 `;
 
-jest.mock('fs', () => ({
-  existsSync: jest.fn(() => false),
-  mkdirSync: jest.fn(() => true),
-  readdirSync: jest.fn(() => ({ length: 17 })),
-  readFileSync: jest.fn(() => mockToml),
-  writeFileSync: jest.fn((path, contents) => ({
-    path,
-    contents,
-  })),
-}));
+jest.mock('fs');
+
+fs.mkdir.mockImplementation((path, options, callback) => callback());
+fs.readdir.mockImplementation((path, callback) =>
+  callback(null, { length: 17 }),
+);
+fs.readFile.mockImplementation((path, callback) => callback(null, mockToml));
 
 const cli = require('./cli');
 
 describe('cli', () => {
   const origConsoleWarn = console.warn;
+  let writeFileSpy;
+  let consoleWarnSpy;
 
   beforeAll(() => {
     console.warn = jest.fn();
+  });
+
+  beforeEach(() => {
+    writeFileSpy = jest.spyOn(fs, 'writeFile');
+    consoleWarnSpy = jest.spyOn(console, 'warn');
+  });
+
+  afterEach(() => {
+    writeFileSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
   });
 
   afterAll(() => {
     console.warn = origConsoleWarn;
   });
 
-  it("tries to write if the file doesn't exist", () => {
-    const writeFileSyncSpy = jest.spyOn(fs, 'writeFileSync');
-    const consoleWarnSpy = jest.spyOn(console, 'warn');
-    cli(['test']);
+  it("tries to write if the file doesn't exist", async () => {
+    fs.writeFile.mockImplementation((path, contents, options, callback) =>
+      callback(),
+    );
 
-    expect(writeFileSyncSpy).toHaveBeenCalledTimes(7);
+    await cli(['test']);
+
+    expect(writeFileSpy).toHaveBeenCalledTimes(8);
     expect(consoleWarnSpy).toHaveBeenCalledTimes(0);
-
-    writeFileSyncSpy.mockRestore();
-    consoleWarnSpy.mockRestore();
   });
 
-  it("doesn't try to write if the file exists", () => {
-    fs.existsSync.mockReturnValue(true);
+  it("doesn't try to write if the file exists", async () => {
+    fs.writeFile.mockImplementation((path, contents, options, callback) =>
+      callback({ code: 'EEXIST' }),
+    );
 
-    const writeFileSyncSpy = jest.spyOn(fs, 'writeFileSync');
-    const consoleWarnSpy = jest.spyOn(console, 'warn');
-    cli(['test']);
+    await cli(['test']);
 
-    expect(writeFileSyncSpy).toHaveBeenCalledTimes(1);
+    expect(writeFileSpy).toHaveBeenCalledTimes(8);
     expect(consoleWarnSpy).toHaveBeenCalledTimes(6);
-
-    writeFileSyncSpy.mockRestore();
-    consoleWarnSpy.mockRestore();
   });
 });

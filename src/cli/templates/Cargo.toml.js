@@ -1,23 +1,28 @@
-module.exports = ({ name }) => `\
+module.exports = ({ labName }) => `\
 [package]
-name = "${name}"
+name = "${labName}"
 version = "0.1.0"
 authors = ["Matt Hayes <matt@mysterycommand.com>"]
 edition = "2018"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [features]
 default = ["console_error_panic_hook", "wee_alloc"]
 
 [dependencies]
-cfg-if = "0.1.7"
 console_error_panic_hook = { version = "0.1.6", optional = true }
-wasm-bindgen = "0.2.43"
-web-sys = { version = "0.3.20", features = [ "console" ] }
+js-sys = "0.3.22"
+wasm-bindgen = "0.2.45"
 wee_alloc = { version = "0.4.4", optional = true }
 
+[dependencies.web-sys]
+version = "0.3.22"
+features = [
+  "console",
+]
+
 [dev-dependencies]
-wasm-bindgen-test = "0.2.43"
+wasm-bindgen-test = "0.2.45"
 `;
