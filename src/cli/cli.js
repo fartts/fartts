@@ -4,9 +4,10 @@ const util = require('util');
 
 const cheerio = require('cheerio');
 const { kebabCase, words } = require('lodash');
+const prettier = require('prettier');
 const { parse, stringify } = require('@iarna/toml');
 
-const labDir = path.join(__dirname, '../lab');
+const labsDir = path.join(__dirname, '../lab');
 const files = {
   'Cargo.toml': require('./templates/Cargo.toml.js'),
   'index.html': require('./templates/index.html.js'),
@@ -23,22 +24,22 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
 async function createLab(arg) {
-  const { length } = await readdir(labDir);
+  const { length } = await readdir(labsDir);
 
   const labName = kebabCase(arg);
-  const experimentName = kebabCase(`${length - 3}-${labName}`);
-  const experimentDir = path.join(labDir, experimentName);
+  const labNumber = kebabCase(`${length - 3}-${labName}`);
+  const labDir = path.join(labsDir, labNumber);
 
   const entries = Object.entries(files);
   for (const [relPath, tpl] of entries) {
-    const filePath = path.join(experimentDir, relPath);
-    const fileContents = tpl({ labName, experimentName });
+    const filePath = path.join(labDir, relPath);
+    const fileContents = tpl({ labName, labNumber });
 
     await createFile(filePath, fileContents);
   }
 
-  await updateCargo(experimentDir);
-  await updateIndex(labName, experimentDir);
+  await updateCargo(labDir);
+  await updateIndex(labName, labNumber);
 
   return;
 }
@@ -66,7 +67,7 @@ async function createFile(filePath, fileContents) {
   return writeFile(filePath, fileContents);
 }
 
-async function updateCargo(experimentDir) {
+async function updateCargo(labDir) {
   const cargoPath = path.join(process.cwd(), 'Cargo.toml');
   const cargo = parse(await readFile(cargoPath));
 
@@ -76,26 +77,26 @@ async function updateCargo(experimentDir) {
   const cargoContents = stringify({
     ...cargo,
     workspace: {
-      members: [
-        ...new Set([...members, path.relative(process.cwd(), experimentDir)]),
-      ],
+      members: [...new Set([...members, path.relative(process.cwd(), labDir)])],
     },
   });
 
   return writeFile(cargoPath, cargoContents);
 }
 
-async function updateIndex(labName, experimentName) {
-  const indexPath = path.join(labDir, 'index.html');
+async function updateIndex(labName, labNumber) {
+  const indexPath = path.join(labsDir, 'index.html');
   const index = cheerio.load(await readFile(indexPath));
 
-  index('ul').append(
-    `<li><a href="./${experimentName}/index.html">${words(labName)}</a></li>`,
+  const linkText = words(labName).join(' ');
+  const indexContents = prettier.format(
+    index('ul')
+      .append(`<li><a href="./${labNumber}/index.html">${linkText}</a></li>`)
+      .html(),
+    { parser: 'html' },
   );
 
-  console.log(index.html());
-
-  return;
+  return writeFile(indexPath, indexContents);
 }
 
 module.exports = async function cli(args) {

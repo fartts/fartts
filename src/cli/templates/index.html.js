@@ -1,4 +1,4 @@
-module.exports = ({ experimentName }) => `\
+module.exports = ({ labNumber }) => `\
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +10,7 @@ module.exports = ({ experimentName }) => `\
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>𝑓Art.ᴛꜱ - ${experimentName}</title>
+    <title>𝑓Art.ᴛꜱ - ${labNumber}</title>
   </head>
 
   <body>
