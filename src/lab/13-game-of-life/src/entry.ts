@@ -23,11 +23,15 @@ let pointerDown = false;
 function mousePointer(event: MouseEvent) {
   event.preventDefault();
   pointerDown = event.buttons !== 0;
+  pointerDown ? main.stop() : main.start();
+  mousePointerMove(event);
 }
 
 function touchPointer(event: TouchEvent) {
   event.preventDefault();
   pointerDown = event.touches.length !== 0;
+  pointerDown ? main.stop() : main.start();
+  touchPointerMove(event);
 }
 
 function mousePointerMove(event: MouseEvent) {
@@ -61,7 +65,7 @@ function touchPointerMove(event: TouchEvent) {
     },
   );
 
-  sim.draw(clientX, clientY);
+  sim.draw(clientX / touches.length, clientY / touches.length);
 }
 
 on<MouseEvent>('mousedown', mousePointer);
