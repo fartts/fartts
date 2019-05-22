@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
+const cheerio = require('cheerio');
 const { kebabCase } = require('lodash');
 const { parse, stringify } = require('@iarna/toml');
 
@@ -36,6 +37,7 @@ async function createLab(labName) {
   }
 
   await updateCargo(experimentDir);
+  await updateIndex(labName, experimentDir);
 
   return;
 }
@@ -80,6 +82,12 @@ async function updateCargo(experimentDir) {
   });
 
   return writeFile(cargoPath, cargoContents);
+}
+
+async function updateIndex(labName, experimentDir) {
+  const indexPath = path.join(labDir, 'index.html');
+  console.log(indexPath);
+  return;
 }
 
 module.exports = async function cli(labNames) {
