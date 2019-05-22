@@ -3,7 +3,7 @@ const path = require('path');
 const util = require('util');
 
 const cheerio = require('cheerio');
-const { kebabCase } = require('lodash');
+const { kebabCase, words } = require('lodash');
 const { parse, stringify } = require('@iarna/toml');
 
 const labDir = path.join(__dirname, '../lab');
@@ -22,10 +22,11 @@ const readdir = util.promisify(fs.readdir);
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
-async function createLab(labName) {
+async function createLab(arg) {
   const { length } = await readdir(labDir);
 
-  const experimentName = kebabCase(`${length - 3}${labName}`);
+  const labName = kebabCase(arg);
+  const experimentName = kebabCase(`${length - 3}-${labName}`);
   const experimentDir = path.join(labDir, experimentName);
 
   const entries = Object.entries(files);
@@ -84,14 +85,21 @@ async function updateCargo(experimentDir) {
   return writeFile(cargoPath, cargoContents);
 }
 
-async function updateIndex(labName, experimentDir) {
+async function updateIndex(labName, experimentName) {
   const indexPath = path.join(labDir, 'index.html');
-  console.log(indexPath);
+  const index = cheerio.load(await readFile(indexPath));
+
+  index('ul').append(
+    `<li><a href="./${experimentName}/index.html">${words(labName)}</a></li>`,
+  );
+
+  console.log(index.html());
+
   return;
 }
 
-module.exports = async function cli(labNames) {
-  for (const labName of labNames) {
-    await createLab(labName);
+module.exports = async function cli(args) {
+  for (const arg of args) {
+    await createLab(arg);
   }
 };
