@@ -17,7 +17,6 @@ const files = {
   'src/utils.rs': require('./templates/src/utils.rs.js'),
 };
 
-const exists = util.promisify(fs.exists);
 const mkdir = util.promisify(fs.mkdir);
 const readdir = util.promisify(fs.readdir);
 const readFile = util.promisify(fs.readFile);
@@ -47,24 +46,18 @@ async function createLab(arg) {
 async function createFile(filePath, fileContents) {
   const fileDir = path.dirname(filePath);
 
-  const dirExists = await exists(fileDir);
-  if (!dirExists) {
+  try {
     await mkdir(fileDir);
-  }
+  } catch {}
 
-  const pathExists = await exists(filePath);
-  if (pathExists) {
+  return writeFile(filePath, fileContents).catch(() => {
     console.warn(
       `file already exists at ${path.relative(
         process.cwd(),
         filePath,
       )} skipping`,
     );
-
-    return;
-  }
-
-  return writeFile(filePath, fileContents);
+  });
 }
 
 async function updateCargo(labDir) {
