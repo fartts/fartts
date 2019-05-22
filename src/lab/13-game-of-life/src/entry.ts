@@ -1,5 +1,5 @@
 import { Sim } from './lib.rs';
-import { on, el } from '../../../lib/core/dom';
+import { el } from '../../../lib/core/dom';
 import loop from '../../../lib/game/loop';
 import './style.css';
 
@@ -12,11 +12,6 @@ const main = loop(
     sim.render(lag);
   },
 );
-
-on<UIEvent>('resize', (event: UIEvent) => {
-  main.stop();
-  sim.resize();
-});
 
 let pointerDown = false;
 
@@ -45,7 +40,7 @@ function mousePointerMove(event: MouseEvent) {
 }
 
 function touchPointerMove(event: TouchEvent) {
-  // event.preventDefault();
+  event.preventDefault();
   if (!pointerDown) {
     return;
   }
@@ -68,21 +63,28 @@ function touchPointerMove(event: TouchEvent) {
   sim.draw(clientX / touches.length, clientY / touches.length);
 }
 
-on<MouseEvent>('mousedown', mousePointer);
-on<MouseEvent>('mouseup', mousePointer);
-on<MouseEvent>('mouseenter', mousePointer);
-on<MouseEvent>('mouseleave', mousePointer);
-on<MouseEvent>('mousemove', mousePointerMove);
+function on<
+  T extends EventTarget,
+  U extends keyof DocumentEventMap,
+  V = (this: T, event: DocumentEventMap[U]) => any
+>(target: T, forEvent: U, listener: V) {
+  target.addEventListener(forEvent, (listener as unknown) as EventListener);
+}
 
-on<TouchEvent>('touchstart', touchPointer);
-on<TouchEvent>('touchend', touchPointer);
-on<TouchEvent>('touchmove', touchPointerMove);
+const canvas = el('canvas') as HTMLCanvasElement;
 
-// (el('#play-pause') as HTMLInputElement).addEventListener(
-//   'change',
-//   (event: Event) => {
-//     (event.target as HTMLInputElement).checked ? main.start() : main.stop();
-//   },
-// );
+on(canvas, 'mousedown', mousePointer);
+on(canvas, 'mouseup', mousePointer);
+on(canvas, 'mouseenter', mousePointer);
+on(canvas, 'mouseleave', mousePointer);
+on(canvas, 'mousemove', mousePointerMove);
+on(canvas, 'touchstart', touchPointer);
+on(canvas, 'touchend', touchPointer);
+on(canvas, 'touchmove', touchPointerMove);
+
+on(window, 'resize', () => {
+  main.stop();
+  sim.resize();
+});
 
 main.start();
