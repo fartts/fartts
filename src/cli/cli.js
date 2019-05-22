@@ -82,12 +82,10 @@ async function updateIndex(labName, labNumber) {
   const index = cheerio.load(await readFile(indexPath));
 
   const linkText = words(labName).join(' ');
-  const indexContents = prettier.format(
-    index('ul')
-      .append(`<li><a href="./${labNumber}/index.html">${linkText}</a></li>`)
-      .html(),
-    { parser: 'html' },
+  index('ul').append(
+    `<li><a href="./${labNumber}/index.html">${linkText}</a></li>`,
   );
+  const indexContents = prettier.format(index.html(), { parser: 'html' });
 
   return writeFile(indexPath, indexContents);
 }
