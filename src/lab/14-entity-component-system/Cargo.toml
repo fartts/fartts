@@ -1,7 +1,12 @@
 [package]
 name = "entity-component-system"
 version = "0.1.0"
+description = "entity component system"
+repository = "git@github.com:fartts/fartts.git"
 authors = ["Matt Hayes <matt@mysterycommand.com>"]
+license = "(MIT OR Apache-2.0)"
+categories = ["entity", "component", "system"]
+readme = "../../../README.md"
 edition = "2018"
 
 [lib]
