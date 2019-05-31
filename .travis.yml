@@ -78,7 +78,7 @@ deploy:
   - provider: pages
     repo: fartts/fartts.github.io
     target_branch: master
-    github_token: '$GH_TOKEN'
+    github_token: $GH_TOKEN
     allow_empty_commit: true
     skip_cleanup: true
     keep_history: true
