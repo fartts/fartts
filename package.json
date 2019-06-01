@@ -43,7 +43,7 @@
     "@semantic-release/npm": "5.1.7",
     "@semantic-release/release-notes-generator": "7.1.4",
     "@types/jest": "24.0.13",
-    "@types/node": "12.0.3",
+    "@types/node": "12.0.4",
     "@types/seedrandom": "2.4.28",
     "babel-jest": "24.8.0",
     "cheerio": "1.0.0-rc.3",
@@ -60,7 +60,7 @@
     "semantic-release": "15.13.12",
     "semantic-release-github-pr": "https://github.com/mysterycommand/semantic-release-github-pr.git#fix/34-and-35",
     "ts-jest": "24.0.2",
-    "tslint": "5.16.0",
+    "tslint": "5.17.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.0.1",
     "typescript": "3.5.1"
