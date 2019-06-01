@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "reset": "yarn clean node_modules/",
+    "reset": "yarn clean node_modules/ && yarn install",
     "clean": "cargo clean && rm -rf .cache/ coverage/ dist/",
     "build": "parcel build src/lab/{index.html,README.md} --public-url /",
     "serve": "yarn build && npx serve dist",
