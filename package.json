@@ -56,7 +56,7 @@
     "lodash": "4.17.11",
     "parcel-bundler": "1.12.3",
     "parcel-plugin-wasm-pack": "3.0.2",
-    "prettier": "1.17.1",
+    "prettier": "1.18.1",
     "semantic-release": "15.13.12",
     "semantic-release-github-pr": "https://github.com/mysterycommand/semantic-release-github-pr.git#fix/34-and-35",
     "serve": "11.0.1",
