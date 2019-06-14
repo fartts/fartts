@@ -7,10 +7,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "reset": "yarn clean node_modules/",
+    "reset": "yarn clean node_modules/ && yarn install",
     "clean": "cargo clean && rm -rf .cache/ coverage/ dist/",
     "build": "parcel build src/lab/{index.html,README.md} --public-url /",
-    "serve": "yarn build && serve dist",
+    "serve": "yarn build && npx serve dist",
     "start": "parcel src/lab/{index.html,README.md}",
     "lint": "yarn lint:rs && yarn lint:ts",
     "lint:rs": "cargo fmt --all -- --check && cargo clippy",
@@ -20,9 +20,9 @@
     "lab": "node ./src/cli"
   },
   "engines": {
-    "node": "10.15.3",
+    "node": "10.16.0",
     "npm": "6.9.0",
-    "yarn": "1.15.2"
+    "yarn": "1.16.0"
   },
   "config": {
     "commitizen": {
@@ -59,7 +59,6 @@
     "prettier": "1.17.1",
     "semantic-release": "15.13.16",
     "semantic-release-github-pr": "https://github.com/mysterycommand/semantic-release-github-pr.git#fix/34-and-35",
-    "serve": "11.0.1",
     "ts-jest": "24.0.2",
     "tslint": "5.17.0",
     "tslint-config-prettier": "1.18.0",
