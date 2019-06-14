@@ -2,10 +2,8 @@
 members = [
   "src/lab/11-rust-wasm",
   "src/lab/12-wasm-particles",
-  "src/lab/13-game-of-life",
+  "src/lab/13-game-of-life"
 ]
 
 [profile.release]
-# optimize for size
-# @see: https://doc.rust-lang.org/cargo/reference/manifest.html#the-profile-sections
 opt-level = "s"
