@@ -71,9 +71,7 @@ function setterFor<V extends Float32Array>(
           throw new Error(
             [
               'Dimension mismatch',
-              `Cannot assign ${
-                value.length
-              }-component value: ${value} to ${length}-component key ${key}`,
+              `Cannot assign ${value.length}-component value: ${value} to ${length}-component key ${key}`,
             ].join('\n'),
           );
         }
