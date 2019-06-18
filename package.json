@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
+    "@babel/plugin-syntax-import-meta": "7.2.0",
     "@babel/preset-typescript": "7.3.3",
     "@iarna/toml": "2.2.3",
     "@semantic-release/changelog": "3.0.4",
