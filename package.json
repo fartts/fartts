@@ -59,7 +59,6 @@
     "parcel-plugin-wasm-pack": "3.0.4",
     "prettier": "1.18.2",
     "semantic-release": "15.13.18",
-    "semantic-release-github-pr": "https://github.com/mysterycommand/semantic-release-github-pr.git#fix/34-and-35",
     "ts-jest": "24.0.2",
     "tslint": "5.18.0",
     "tslint-config-prettier": "1.18.0",
