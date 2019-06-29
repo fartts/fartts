@@ -1,3 +1,17 @@
+# [1.22.0](https://github.com/fartts/fartts/compare/v1.21.0...v1.22.0) (2019-06-29)
+
+
+### Bug Fixes
+
+* **package.json:** bump yarn engine, marking it a fix so it increments semver ([c358eda](https://github.com/fartts/fartts/commit/c358eda)), closes [#510](https://github.com/fartts/fartts/issues/510)
+
+
+### Features
+
+* **lab/14:** new lab created with `yarn lab entity-component-system` ... <3<3<3 ([feea1ca](https://github.com/fartts/fartts/commit/feea1ca))
+* **lab/index:** add the expanded definition of fartts in an abbr tag/title ([458cd2a](https://github.com/fartts/fartts/commit/458cd2a))
+* **lab/index:** link to the source repo ([cfb4847](https://github.com/fartts/fartts/commit/cfb4847))
+
 # [1.21.0](https://github.com/fartts/fartts/compare/v1.20.1...v1.21.0) (2019-05-22)
 
 
