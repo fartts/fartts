@@ -4,6 +4,11 @@
     "tslint:recommended",
     "tslint-config-prettier"
   ],
+  "linterOptions": {
+    "exclude": [
+      "**/node_modules/**"
+    ]
+  },
   "rules": {
     "interface-name": false,
     "object-literal-sort-keys": false,
