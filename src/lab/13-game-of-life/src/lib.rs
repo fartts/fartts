@@ -81,8 +81,8 @@ impl Sim {
         //     container_height
         // )));
 
-        let scaled_width = step(container_width.into(), self.cell_size);
-        let scaled_height = step(container_height.into(), self.cell_size);
+        let scaled_width = step(container_width, self.cell_size);
+        let scaled_height = step(container_height, self.cell_size);
 
         // console::log_1(&JsValue::from_str(&format!(
         //     "scaled_width: {}",
@@ -114,8 +114,8 @@ impl Sim {
         //     self.canvas.height()
         // )));
 
-        let width_ratio = container_width as f64 / self.canvas.width() as f64;
-        let height_ratio = container_height as f64 / self.canvas.height() as f64;
+        let width_ratio = f64::from(container_width) / f64::from(self.canvas.width());
+        let height_ratio = f64::from(container_height) / f64::from(self.canvas.height());
         self.canvas_scale = if width_ratio > height_ratio {
             width_ratio
         } else {
@@ -162,8 +162,10 @@ impl Sim {
     pub fn draw(&mut self, client_x: f64, client_y: f64) {
         let canvas_rect = self.canvas.get_bounding_client_rect();
 
-        let x = ((client_x - canvas_rect.x()) / self.canvas_scale / (self.cell_size as f64)) as u32;
-        let y = ((client_y - canvas_rect.y()) / self.canvas_scale / (self.cell_size as f64)) as u32;
+        let x =
+            ((client_x - canvas_rect.x()) / self.canvas_scale / f64::from(self.cell_size)) as u32;
+        let y =
+            ((client_y - canvas_rect.y()) / self.canvas_scale / f64::from(self.cell_size)) as u32;
 
         // console::log_1(&JsValue::from_str(&format!("{}x{}", x, y)));
 
