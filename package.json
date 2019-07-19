@@ -21,8 +21,8 @@
   },
   "engines": {
     "node": "10.16.0",
-    "npm": "6.9.0",
-    "yarn": "1.16.0"
+    "npm": "6.10.1",
+    "yarn": "1.17.3"
   },
   "config": {
     "commitizen": {
