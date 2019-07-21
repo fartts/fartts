@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/fartts/fartts/compare/v1.22.0...v1.22.1) (2019-07-21)
+
+
+### Bug Fixes
+
+* **package.json, yarn.lock:** bump parcel-plugin-wasm-pack ([bd905a5](https://github.com/fartts/fartts/commit/bd905a5))
+
 # [1.22.0](https://github.com/fartts/fartts/compare/v1.21.0...v1.22.0) (2019-06-29)
 
 
