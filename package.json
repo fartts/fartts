@@ -20,8 +20,8 @@
     "lab": "node ./src/cli"
   },
   "engines": {
-    "node": "10.16.0",
-    "npm": "6.10.1",
+    "node": "10.16.3",
+    "npm": "6.11.2",
     "yarn": "1.17.3"
   },
   "config": {
