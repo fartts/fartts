@@ -9,12 +9,12 @@ const { parse, stringify } = require('@iarna/toml');
 
 const labsDir = path.join(__dirname, '../lab');
 const files = {
-  'Cargo.toml': require('./templates/Cargo.toml.js'),
-  'index.html': require('./templates/index.html.js'),
-  'src/entry.ts': require('./templates/src/entry.ts.js'),
-  'src/lib.rs': require('./templates/src/lib.rs.js'),
-  'src/style.css': require('./templates/src/style.css.js'),
-  'src/utils.rs': require('./templates/src/utils.rs.js'),
+  'Cargo.toml': require('./templates/wasm/Cargo.toml.js/index.js'),
+  'index.html': require('./templates/wasm/index.html.js/index.js'),
+  'src/entry.ts': require('./templates/wasm/src/entry.ts.js'),
+  'src/lib.rs': require('./templates/wasm/src/lib.rs.js'),
+  'src/style.css': require('./templates/wasm/src/style.css.js'),
+  'src/utils.rs': require('./templates/wasm/src/utils.rs.js'),
 };
 
 const mkdir = util.promisify(fs.mkdir);
