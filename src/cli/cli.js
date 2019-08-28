@@ -5,6 +5,10 @@ const commonFiles = {
   'src/style.css': require('./templates/common/src/style-css'),
 };
 
+const tsFiles = {
+  'src/entry.ts': require('./templates/ts/src/entry-ts'),
+};
+
 const wasmFiles = {
   'Cargo.toml': require('./templates/wasm/Cargo-toml'),
   'src/entry.ts': require('./templates/wasm/src/entry-ts'),
@@ -13,6 +17,10 @@ const wasmFiles = {
 };
 
 const files = {
+  ts: {
+    ...commonFiles,
+    ...tsFiles,
+  },
   wasm: {
     ...commonFiles,
     ...wasmFiles,
