@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "update": "rustup update && cargo install-update -a",
     "reset": "yarn clean node_modules/ && yarn install",
     "clean": "cargo clean && rm -rf .cache/ coverage/ dist/",
     "build": "parcel build src/lab/{index.html,README.md} --public-url /",
