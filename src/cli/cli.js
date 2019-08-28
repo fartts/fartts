@@ -28,6 +28,13 @@ const files = {
 };
 
 module.exports = async function cli([cmd, ...args]) {
+  const cmds = Object.keys(files);
+  if (!cmds.includes(cmd)) {
+    console.error(`\
+Unsupported subcommand: ${cmd}, expected one of: ${cmds.join(', ')}
+`);
+  }
+
   for (const arg of args) {
     await createLab(files[cmd], arg, { isWasm: cmd === 'wasm' });
   }
