@@ -52,7 +52,7 @@ describe('cli', () => {
       callback(),
     );
 
-    await cli(['test']);
+    await cli(['wasm', 'test']);
 
     expect(writeFileSpy).toHaveBeenCalledTimes(8);
     expect(consoleWarnSpy).toHaveBeenCalledTimes(0);
@@ -63,7 +63,7 @@ describe('cli', () => {
       callback({ code: 'EEXIST' }),
     );
 
-    await cli(['test']);
+    await cli(['wasm', 'test']);
 
     expect(writeFileSpy).toHaveBeenCalledTimes(8);
     expect(consoleWarnSpy).toHaveBeenCalledTimes(6);
