@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/fartts/fartts/compare/v1.22.1...v1.23.0) (2019-08-28)
+
+
+### Features
+
+* **cli:** add ts templates and sub-command ([f7ea6ca](https://github.com/fartts/fartts/commit/f7ea6ca))
+
 ## [1.22.1](https://github.com/fartts/fartts/compare/v1.22.0...v1.22.1) (2019-07-21)
 
 
