@@ -1,4 +1,5 @@
 import { rAF, el } from '../../../lib/core/dom';
+
 import resizer from './resizer';
 
 import './style.css';
