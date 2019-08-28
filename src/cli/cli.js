@@ -21,6 +21,6 @@ const files = {
 
 module.exports = async function cli([cmd, ...args]) {
   for (const arg of args) {
-    await createLab(files[cmd], arg, { updateCargo: cmd === 'wasm' });
+    await createLab(files[cmd], arg, { isWasm: cmd === 'wasm' });
   }
 };
