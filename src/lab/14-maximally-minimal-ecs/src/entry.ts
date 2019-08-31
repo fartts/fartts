@@ -20,10 +20,25 @@ const hsl = (h = round(random() * 360), s = 60, l = 40) =>
  * @see: https://gist.github.com/mysterycommand/c78c5dc6446dda940d49b36ee6529c45
  * @see: https://kyren.github.io/2018/09/14/rustconf-talk.html#back-to-the-beginning
  */
+interface Vec2 {
+  x: number;
+  y: number;
+}
+
 type ComponentFactory = () => [string, {}];
+type Positions = Map<number, Vec2>;
+type Velocities = Map<number, Vec2>;
 
 const entities: number[] = [];
 const components = new Map<string, Map<number, {}>>();
+
+const size = 10;
+let rows = floor(c.height / size);
+let cols = floor(c.width / size);
+let j = -1;
+
+let positions: Positions;
+let velocities: Velocities;
 
 function createEntity() {
   const id = entities.length;
@@ -44,11 +59,6 @@ function createEntities(count: number, componentFactories: ComponentFactory[]) {
   }
 }
 
-const size = 10;
-let rows = floor(c.height / size);
-let cols = floor(c.width / size);
-let j = -1;
-
 function positionFactory(): [string, {}] {
   ++j;
   const v = (c.height - rows * size) / 2;
@@ -62,12 +72,6 @@ function positionFactory(): [string, {}] {
     },
   ];
 }
-
-interface Position {
-  x: number;
-  y: number;
-}
-let positions: Map<number, Position>;
 
 rAF(function step(/* ts: DOMHighResTimeStamp */) {
   rAF(step);
@@ -84,7 +88,7 @@ rAF(function step(/* ts: DOMHighResTimeStamp */) {
     j = -1;
 
     createEntities(rows * cols, [positionFactory]);
-    positions = components.get('position') as Map<number, Position>;
+    positions = components.get('position') as Positions;
   }
 
   ctx.strokeStyle = `1px solid ${hsl(0, 0, 0)}`;
