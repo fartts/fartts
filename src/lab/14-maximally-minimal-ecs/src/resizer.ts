@@ -34,7 +34,7 @@ function resize(container: HTMLElement, target: ResizeableElement, scale = 1) {
   shouldResize = false;
 }
 
-export default {
+export const resizer = {
   get shouldResize() {
     return shouldResize;
   },

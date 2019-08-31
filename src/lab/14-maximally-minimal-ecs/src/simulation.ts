@@ -1,0 +1,88 @@
+const { floor } = Math;
+
+/**
+ * here is my ecs implementation, it should solve some cases:
+ *
+ * 1. boids
+ *    - a resource/shared component (center of mass?)
+ *    - a position/velocity, updated by a system according to boid rules
+ * 2. fireworks
+ *    - active component
+ *    - position/velocity
+ *    - pooled/recycled when they go offscreen
+ *
+ * @see: https://gist.github.com/mysterycommand/c78c5dc6446dda940d49b36ee6529c45
+ * @see: https://kyren.github.io/2018/09/14/rustconf-talk.html#back-to-the-beginning
+ */
+interface Vec2 {
+  x: number;
+  y: number;
+}
+
+type ComponentFactory = () => [string, {}];
+type Positions = Map<number, Vec2>;
+// type Velocities = Map<number, Vec2>;
+
+const entities: number[] = [];
+const components = new Map<string, Map<number, {}>>();
+
+const size = 10;
+let positions: Positions;
+// let velocities: Velocities;
+
+function createEntity() {
+  const id = entities.length;
+  entities[id] = id;
+  return id;
+}
+
+function createEntities(count: number, componentFactories: ComponentFactory[]) {
+  for (let i = 0; i < count; ++i) {
+    const id = createEntity();
+
+    componentFactories.forEach(factory => {
+      const [name, data] = factory();
+      components.has(name)
+        ? (components.get(name) as Map<number, {}>).set(id, data)
+        : components.set(name, new Map<number, {}>().set(id, data));
+    });
+  }
+}
+
+export function create(width: number, height: number) {
+  // reset entites here
+  const rows = floor(height / size);
+  const cols = floor(width / size);
+  let j = -1;
+
+  createEntities(rows * cols, [
+    () => {
+      ++j;
+      const v = (height - rows * size) / 2;
+      const h = (width - cols * size) / 2;
+
+      return [
+        'position',
+        {
+          x: h + (j % cols) * size + size / 2,
+          y: v + floor(j / cols) * size + size / 2,
+        },
+      ];
+    },
+  ]);
+  positions = components.get('position') as Positions;
+}
+
+export function update(ts: DOMHighResTimeStamp) {
+  console.log(ts);
+}
+
+export function render(ctx: CanvasRenderingContext2D) {
+  positions.forEach(({ x, y }) => {
+    ctx.beginPath();
+    ctx.moveTo(x - size / 4, y);
+    ctx.lineTo(x + size / 4, y);
+    ctx.closePath();
+    ctx.stroke();
+  });
+}
