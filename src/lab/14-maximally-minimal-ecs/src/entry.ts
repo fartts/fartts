@@ -27,6 +27,7 @@ rAF(function step(ts: DOMHighResTimeStamp) {
 
   update(ts);
 
+  ctx.fillRect(0, 0, c.width, c.height);
   ctx.strokeStyle = `1px solid ${hsl(0, 0, 0)}`;
   render(ctx);
 });
