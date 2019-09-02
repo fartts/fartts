@@ -1,4 +1,4 @@
-const { floor, PI: π } = Math;
+const { floor, PI: π, random } = Math;
 const ππ = π * 2;
 
 /**
@@ -66,7 +66,7 @@ function createEntities(count: number, factories: Factory[]) {
 // insert & remove
 // attach & detach
 // add & remove
-// create & delete (or destroy)
+// create & destroy
 // produce & consume
 // make & break (or kill)
 // activate & deactivate
@@ -92,7 +92,10 @@ export function create(width: number, height: number) {
   };
 
   const rotationFactory: Factory = () => {
-    return ['rotation', { currentRotation: 0, rotationSpeed: 0.005 }];
+    return [
+      'rotation',
+      { currentRotation: 0, rotationSpeed: random() * 0.02 - 0.01 },
+    ];
   };
 
   createEntities(rows * cols, [positionFactory, rotationFactory]);
@@ -132,4 +135,8 @@ export function render(ctx: CanvasRenderingContext2D) {
   });
 }
 
-export function remove() {}
+export function remove() {
+  entities.splice(0);
+  components.set('position', new Map());
+  components.set('rotation', new Map());
+}
