@@ -13,8 +13,18 @@ const c = el('canvas') as HTMLCanvasElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 const scale = 10;
 
+let ft = 0; // first time
+let pt = 0; // previous time
+let ct: DOMHighResTimeStamp; // current time
+let dt: DOMHighResTimeStamp; // delta time
+
 rAF(function step(ts: DOMHighResTimeStamp) {
   rAF(step);
+
+  ft || (ft = ts); // tslint:disable-line no-unused-expression
+  ct = ts - ft;
+  dt = ct - pt;
+  pt = ct;
 
   if (resizer.shouldResize) {
     resizer.resize(m, c, scale);
@@ -25,7 +35,7 @@ rAF(function step(ts: DOMHighResTimeStamp) {
     create(c.width, c.height);
   }
 
-  update(ts);
+  update(dt);
 
   ctx.fillRect(0, 0, c.width, c.height);
   ctx.strokeStyle = `1px solid ${hsl(0, 0, 0)}`;

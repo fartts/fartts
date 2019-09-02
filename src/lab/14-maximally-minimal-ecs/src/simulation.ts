@@ -92,7 +92,7 @@ export function create(width: number, height: number) {
   };
 
   const rotationFactory: Factory = () => {
-    return ['rotation', { currentRotation: 0, rotationSpeed: 0.05 }];
+    return ['rotation', { currentRotation: 0, rotationSpeed: 0.005 }];
   };
 
   createEntities(rows * cols, [positionFactory, rotationFactory]);
@@ -101,10 +101,10 @@ export function create(width: number, height: number) {
   rotations = components.get('rotation') as Rotations;
 }
 
-export function update(/* ts: DOMHighResTimeStamp */) {
+export function update(dt: DOMHighResTimeStamp) {
   rotations.forEach(({ currentRotation, rotationSpeed }, key, map) => {
     map.set(key, {
-      currentRotation: (currentRotation + rotationSpeed) % ππ,
+      currentRotation: (currentRotation + rotationSpeed * dt) % ππ,
       rotationSpeed,
     });
   });
