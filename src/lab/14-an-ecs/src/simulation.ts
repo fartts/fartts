@@ -34,7 +34,7 @@ type Rotations = Map<
 const entities: number[] = [];
 const components = new Map<string, Map<number, {}>>();
 
-const size = 10;
+const size = 50;
 let positions: Positions;
 let rotations: Rotations;
 // let velocities: Velocities;

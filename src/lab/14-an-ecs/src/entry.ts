@@ -11,7 +11,7 @@ const hsl = (h = round(random() * 360), s = 60, l = 40) =>
 const m = el('main') as HTMLElement;
 const c = el('canvas') as HTMLCanvasElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
-const scale = 10;
+const scale = 2;
 
 let ft = 0; // first time
 let pt = 0; // previous time
@@ -47,6 +47,6 @@ rAF(function step(ts: DOMHighResTimeStamp) {
   }
 
   ctx.fillRect(0, 0, c.width, c.height);
-  ctx.strokeStyle = `1px solid ${hsl(0, 0, 0)}`;
+  ctx.strokeStyle = hsl(0, 0, 0);
   render(ctx /* , ot / it */);
 });
