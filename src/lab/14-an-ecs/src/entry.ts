@@ -22,6 +22,7 @@ let dt: DOMHighResTimeStamp; // delta time
 let ot = 0; // over time
 const it = 1_000 / 60; // ideal time
 
+const hue = round(random() * 360);
 let fillGradient: CanvasGradient;
 let strokeGradient: CanvasGradient;
 
@@ -40,18 +41,17 @@ rAF(function step(ts: DOMHighResTimeStamp) {
     const { width: w, height: h } = c;
     const hw = w / 2;
     const hh = h / 2;
-    const hue = round(random() * 360);
 
     fillGradient = ctx.createRadialGradient(hw, hh, 0, hw, hh, max(hw, hh));
     fillGradient.addColorStop(0, hsl(hue));
-    fillGradient.addColorStop(1, hsl((hue + 60) % 360));
+    fillGradient.addColorStop(1, hsl((hue + 30) % 360));
     ctx.fillStyle = fillGradient;
 
     strokeGradient = ctx.createRadialGradient(hw, hh, 0, hw, hh, max(hw, hh));
     strokeGradient.addColorStop(0, hsl((hue + 180) % 360));
-    strokeGradient.addColorStop(1, hsl((hue + 240) % 360));
+    strokeGradient.addColorStop(1, hsl((hue + 210) % 360));
     ctx.strokeStyle = strokeGradient;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 5;
 
     ctx.fillRect(0, 0, w, h);
 
