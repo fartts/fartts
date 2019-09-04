@@ -114,6 +114,8 @@ export function update(dt: DOMHighResTimeStamp) {
 }
 
 export function render(ctx: CanvasRenderingContext2D) {
+  ctx.beginPath();
+
   positions.forEach(({ x, y }, key) => {
     ctx.save();
 
@@ -125,14 +127,13 @@ export function render(ctx: CanvasRenderingContext2D) {
       }).currentRotation,
     );
 
-    ctx.beginPath();
     ctx.moveTo(-size / 4, 0);
     ctx.lineTo(size / 4, 0);
-    ctx.closePath();
-    ctx.stroke();
 
     ctx.restore();
   });
+
+  ctx.stroke();
 }
 
 export function remove() {
