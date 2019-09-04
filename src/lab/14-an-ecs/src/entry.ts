@@ -1,4 +1,5 @@
-import { rAF, el } from '../../../lib/core/dom';
+import { rAF } from '../../../lib/core/dom';
+import { c, ctx, m } from './page';
 import { resizer } from './resizer';
 import { create, update, render, remove } from './simulation';
 
@@ -8,9 +9,6 @@ const { max, random, round } = Math;
 const hsl = (h = round(random() * 360), s = 60, l = 40) =>
   `hsl(${h}, ${s}%, ${l}%)`;
 
-const m = el('main') as HTMLElement;
-const c = el('canvas') as HTMLCanvasElement;
-const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 const scale = 2;
 
 let ft = 0; // first time

@@ -1,3 +1,5 @@
+import { input } from './input';
+
 const { floor, PI: π, random } = Math;
 const ππ = π * 2;
 
