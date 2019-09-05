@@ -1,6 +1,6 @@
 import { input } from './input';
 
-const { floor, PI: π, pow, random, sqrt } = Math;
+const { floor, min, PI: π, pow, random, round, sqrt } = Math;
 const ππ = π * 2;
 
 /**
@@ -28,7 +28,8 @@ type Rotations = Map<
   number,
   {
     currentRotation: number;
-    rotationSpeed: number;
+    currentRotationSpeed: number;
+    initialRotationSpeed: number;
   }
 >;
 // type Velocities = Map<number, Vec2>;
@@ -64,6 +65,8 @@ function createEntities(count: number, factories: Factory[]) {
   }
 }
 
+const maxRotationSpeed = 0.01;
+
 // deploy & recall
 // insert & remove
 // attach & detach
@@ -94,9 +97,15 @@ export function create(width: number, height: number) {
   };
 
   const rotationFactory: Factory = () => {
+    const r = round(random()) === 0 ? -maxRotationSpeed : maxRotationSpeed;
+
     return [
       'rotation',
-      { currentRotation: 0, rotationSpeed: random() * 0.02 - 0.01 },
+      {
+        currentRotation: 0,
+        currentRotationSpeed: r,
+        initialRotationSpeed: r,
+      },
     ];
   };
 
@@ -106,28 +115,31 @@ export function create(width: number, height: number) {
   rotations = components.get('rotation') as Rotations;
 }
 
-function dist(x0: number, y0: number, x1: number, y1: number) {
-  return sqrt(pow(x1 - x0, 2) + pow(y1 - y0, 2));
-}
-
 export function update(dt: DOMHighResTimeStamp) {
-  rotations.forEach(({ currentRotation, rotationSpeed }, key, map) => {
-    const pos = positions.get(key) as {
-      x: number;
-      y: number;
-    };
+  rotations.forEach(
+    (
+      { currentRotation, currentRotationSpeed, initialRotationSpeed },
+      key,
+      map,
+    ) => {
+      const { x: x0, y: y0 } = positions.get(key) as {
+        x: number;
+        y: number;
+      };
+      const { mouseDown, mouseX: x1, mouseY: y1 } = input;
 
-    map.set(key, {
-      currentRotation: (currentRotation + rotationSpeed * dt) % ππ,
-      rotationSpeed:
-        rotationSpeed *
-        (input.mouseDown
-          ? dist(pos.x, pos.y, input.mouseX, input.mouseY) < 100
-            ? 1.1
-            : 1.001
-          : 0.999),
-    });
-  });
+      const dist = sqrt(pow(x1 - x0, 2) + pow(y1 - y0, 2));
+      const r = mouseDown ? 300 : 100;
+      const d = 1 - min(dist, r) / (r * 2);
+      const speed = initialRotationSpeed * d;
+
+      map.set(key, {
+        currentRotation: (currentRotation + currentRotationSpeed * dt) % ππ,
+        currentRotationSpeed: d > 0.5 ? speed : currentRotationSpeed * 0.99,
+        initialRotationSpeed,
+      });
+    },
+  );
 }
 
 export function render(ctx: CanvasRenderingContext2D) {
@@ -140,7 +152,7 @@ export function render(ctx: CanvasRenderingContext2D) {
     ctx.rotate(
       (rotations.get(key) as {
         currentRotation: number;
-        rotationSpeed: number;
+        currentRotationSpeed: number;
       }).currentRotation,
     );
 
