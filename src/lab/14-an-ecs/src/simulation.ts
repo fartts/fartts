@@ -1,6 +1,6 @@
 import { input } from './input';
 
-const { floor, PI: π, random } = Math;
+const { floor, PI: π, pow, random, sqrt } = Math;
 const ππ = π * 2;
 
 /**
@@ -106,11 +106,26 @@ export function create(width: number, height: number) {
   rotations = components.get('rotation') as Rotations;
 }
 
+function dist(x0: number, y0: number, x1: number, y1: number) {
+  return sqrt(pow(x1 - x0, 2) + pow(y1 - y0, 2));
+}
+
 export function update(dt: DOMHighResTimeStamp) {
   rotations.forEach(({ currentRotation, rotationSpeed }, key, map) => {
+    const pos = positions.get(key) as {
+      x: number;
+      y: number;
+    };
+
     map.set(key, {
       currentRotation: (currentRotation + rotationSpeed * dt) % ππ,
-      rotationSpeed,
+      rotationSpeed:
+        rotationSpeed *
+        (input.mouseDown
+          ? dist(pos.x, pos.y, input.mouseX, input.mouseY) < 100
+            ? 1.1
+            : 1.001
+          : 0.999),
     });
   });
 }
