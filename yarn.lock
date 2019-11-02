@@ -8629,10 +8629,10 @@ seedrandom@3.0.5:
   resolved "https://registry.yarnpkg.com/seedrandom/-/seedrandom-3.0.5.tgz#54edc85c95222525b0c7a6f6b3543d8e0b3aa0a7"
   integrity sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==
 
-semantic-release@15.13.28:
-  version "15.13.28"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.13.28.tgz#c47457fafd5bf11f1722a708fa8b897d42837762"
-  integrity sha512-TqmRAsTFPq+hi0LjccUIHIknpW2wBPqVZWc/fVBBeeokuZ+wfGcP/Vo8nKci7VTHBl0D/EAu6gNvo343dKjWUA==
+semantic-release@15.13.29:
+  version "15.13.29"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.13.29.tgz#7573f5b1252e8d19251f53f5c850527125442ae1"
+  integrity sha512-nHqcPdo635spnsUj9XGnmvXcaA2FbI3Xt4KXGIQr+dl2HWE8zJh9g57YKVn7Lx9n+4fZgk/xRR5QrE7ixMoZXg==
   dependencies:
     "@semantic-release/commit-analyzer" "^6.1.0"
     "@semantic-release/error" "^2.2.0"
