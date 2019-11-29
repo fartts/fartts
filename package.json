@@ -37,7 +37,7 @@
   "devDependencies": {
     "@babel/core": "7.7.4",
     "@babel/preset-env": "7.7.1",
-    "@babel/preset-typescript": "7.7.2",
+    "@babel/preset-typescript": "7.7.4",
     "@iarna/toml": "2.2.3",
     "@semantic-release/changelog": "3.0.5",
     "@semantic-release/commit-analyzer": "6.3.3",
