@@ -46,7 +46,7 @@
     "@semantic-release/npm": "5.3.4",
     "@semantic-release/release-notes-generator": "7.3.5",
     "@types/jest": "24.0.23",
-    "@types/node": "12.12.20",
+    "@types/node": "13.5.1",
     "@types/seedrandom": "2.4.28",
     "babel-jest": "24.9.0",
     "cheerio": "1.0.0-rc.3",
