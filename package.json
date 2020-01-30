@@ -21,9 +21,9 @@
     "lab": "node ./src/cli"
   },
   "engines": {
-    "node": "12.13.1",
-    "npm": "6.13.1",
-    "yarn": "1.19.2"
+    "node": ">=12",
+    "npm": "6.13.7",
+    "yarn": "1.21.1"
   },
   "config": {
     "commitizen": {
@@ -31,13 +31,13 @@
     }
   },
   "dependencies": {
-    "core-js": "3.5.0",
+    "core-js": "3.6.4",
     "seedrandom": "3.0.5"
   },
   "devDependencies": {
-    "@babel/core": "7.7.5",
-    "@babel/preset-env": "7.7.6",
-    "@babel/preset-typescript": "7.7.4",
+    "@babel/core": "7.8.4",
+    "@babel/preset-env": "7.8.4",
+    "@babel/preset-typescript": "7.8.3",
     "@iarna/toml": "2.2.3",
     "@semantic-release/changelog": "3.0.6",
     "@semantic-release/commit-analyzer": "6.3.3",
@@ -46,7 +46,7 @@
     "@semantic-release/npm": "5.3.4",
     "@semantic-release/release-notes-generator": "7.3.5",
     "@types/jest": "25.1.1",
-    "@types/node": "12.12.20",
+    "@types/node": "13.5.2",
     "@types/seedrandom": "2.4.28",
     "babel-jest": "24.9.0",
     "cheerio": "1.0.0-rc.3",
@@ -60,11 +60,11 @@
     "parcel-bundler": "1.12.4",
     "parcel-plugin-wasm-pack": "5.0.1",
     "prettier": "1.19.1",
-    "semantic-release": "15.13.31",
+    "semantic-release": "15.14.0",
     "ts-jest": "24.2.0",
     "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",
-    "tslint-plugin-prettier": "2.0.1",
-    "typescript": "3.7.3"
+    "tslint-plugin-prettier": "2.1.0",
+    "typescript": "3.7.5"
   }
 }
