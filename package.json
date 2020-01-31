@@ -39,7 +39,7 @@
     "@babel/preset-env": "7.8.4",
     "@babel/preset-typescript": "7.8.3",
     "@iarna/toml": "2.2.3",
-    "@semantic-release/changelog": "3.0.6",
+    "@semantic-release/changelog": "5.0.0",
     "@semantic-release/commit-analyzer": "6.3.3",
     "@semantic-release/git": "7.0.18",
     "@semantic-release/github": "5.5.5",
