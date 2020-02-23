@@ -5,7 +5,7 @@ import { shouldResize, resize } from './resize';
 import { sinStep } from '../../../lib/core/step';
 
 const c = el('canvas') as HTMLCanvasElement;
-const m = el('main') as HTMLMainElement;
+const m = el('main') as HTMLElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
 const channels = 4;
