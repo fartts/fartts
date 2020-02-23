@@ -1,3 +1,12 @@
+# [1.25.0](https://github.com/fartts/fartts/compare/v1.24.0...v1.25.0) (2020-02-23)
+
+
+### Features
+
+* **lab/15:** a new lab to duplicate the growth dwitter ([8c64a21](https://github.com/fartts/fartts/commit/8c64a21e28cea58cefd72c86028647ea23c2e221))
+* **lab/15:** reimplement growth dweet, add flowers ([621375b](https://github.com/fartts/fartts/commit/621375bb2c2cef04b6616d8ce1d8ec3ab22af123))
+* **lab/15:** spike out a little lab ([6f9f7f4](https://github.com/fartts/fartts/commit/6f9f7f468e86934762cb5e96bbf8b8fb539d7b98))
+
 # [1.24.0](https://github.com/fartts/fartts/compare/v1.23.0...v1.24.0) (2019-09-05)
 
 
