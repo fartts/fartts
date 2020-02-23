@@ -1,4 +1,13 @@
 import { el, rAF } from '../../../lib/core/dom';
+import {
+  random,
+  randomRange,
+  randomBool,
+  randomInt,
+} from '../../../lib/core/rand';
+
+import { attend } from './events';
+import { resize } from './resize';
 
 import './style.css';
 
@@ -40,14 +49,74 @@ import './style.css';
  * @see https://www.dwitter.net/d/17559
  */
 
+const main = el<HTMLElement>('main');
 const canvas = el<HTMLCanvasElement>('canvas');
-const context = canvas?.getContext('2d');
+const context = canvas.getContext('2d');
 
 if (!context) {
   throw new Error("Couldn't get a `CanvasRenderingContext2D`");
 }
 
-rAF(function tick(/* t: DOMHighResTimeStamp */) {
+let shouldResize = true;
+
+attend(window, 'resize', () => {
+  shouldResize = true;
+});
+
+const scale = 8;
+let ft: number;
+
+const flowers = [
+  `hsla(60, 90%, 60%, 1)`,
+  `hsla(30, 90%, 50%, 1)`,
+  `hsla(0, 80%, 60%, 1)`,
+  `hsla(290, 80%, 50%, 1)`,
+  `hsla(320, 80%, 50%, 1)`,
+  `hsla(200, 80%, 70%, 1)`,
+];
+
+rAF(function tick(t: DOMHighResTimeStamp) {
   rAF(tick);
-  context.font = '25em';
+
+  ft || (ft = t); // tslint:disable-line:no-unused-expression
+
+  if (shouldResize) {
+    resize(main, canvas, scale);
+    shouldResize = false;
+    ft = t;
+  }
+
+  const nt = t - ft;
+  const s = nt / 1_000;
+  const { width: w, height: h } = canvas;
+
+  if (s === 0) {
+    const hw = w / 2;
+    const hh = h / 2;
+
+    context.clearRect(0, 0, w, h);
+
+    context.font = '4em"'; // this double quote in here is magic
+    context.fillStyle = '#fff';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+
+    context.fillText('plantlife', hw, hh);
+    return;
+  }
+
+  for (let i = 500; i > 0; --i) {
+    const x = w * scale * random();
+    const y = h * scale * random();
+    const [r, g, b, a] = context.getImageData(x, y, 1, 1).data;
+
+    if (a /* && y < 750 - s * 7 */) {
+      context.fillStyle =
+        r < 40 && g > 120 && b < 40 && randomBool()
+          ? flowers[randomInt(flowers.length)]
+          : `hsla(${100 + 40 * random()}, ${50 + 20 * random()}%, ${20 +
+              30 * random()}%, 1)`;
+      context.fillRect(x - 1 - randomRange(-2, 2), y - 6 * random(), 2, 2);
+    }
+  }
 });
