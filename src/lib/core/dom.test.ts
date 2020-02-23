@@ -8,6 +8,8 @@ describe('@fartts/lib/dom', () => {
     expect(querySelectorSpy).toHaveBeenCalledTimes(1);
     expect(querySelectorSpy).toHaveBeenCalledWith('body');
     expect(body).toBeInstanceOf(HTMLBodyElement);
+
+    expect(() => el('foo')).toThrow(`Couldn't get "foo" element`);
   });
 
   test('on', () => {

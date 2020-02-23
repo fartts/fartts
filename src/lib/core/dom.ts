@@ -4,8 +4,14 @@ export const {
   devicePixelRatio: dpr,
 } = window;
 
-export function el(selectors: string): Element | null {
-  return document.querySelector(selectors);
+export function el<T extends Element>(selectors: string): T {
+  const element = document.querySelector<T>(selectors);
+
+  if (!element) {
+    throw new Error(`Couldn't get "${selectors}" element`);
+  }
+
+  return element;
 }
 
 type Listener<T extends Event> = (event: T) => void;
