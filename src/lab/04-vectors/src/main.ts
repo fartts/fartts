@@ -16,7 +16,7 @@ import vert from './shaders/vert.glsl';
 import frag from './shaders/frag.glsl';
 import { slice } from '../../../lib/core/util';
 
-const m = el('main') as HTMLMainElement;
+const m = el('main') as HTMLElement;
 const c = el('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,

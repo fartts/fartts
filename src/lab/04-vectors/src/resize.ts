@@ -12,10 +12,7 @@ function next(a: number, b: number): number {
 
 let shouldResize = true;
 
-export default function resize(
-  c: HTMLCanvasElement,
-  m: HTMLMainElement,
-): boolean {
+export default function resize(c: HTMLCanvasElement, m: HTMLElement): boolean {
   if (!shouldResize) {
     return false;
   }

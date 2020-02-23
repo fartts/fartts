@@ -39,7 +39,7 @@ Object.defineProperties(
 type AnyVec = Vec2 | Vec3 | Vec4;
 type AnyVecType = typeof Vec2 | typeof Vec3 | typeof Vec4;
 
-type Components = Array<number | number[] | Float32Array>;
+type Components = (number | number[] | Float32Array)[];
 type Factory<V extends AnyVec> = (...args: Components) => V;
 
 function createFactory<V extends AnyVec>(
