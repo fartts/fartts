@@ -134,7 +134,7 @@ const circles = [
   radius: sinStep(duration, 1, 31, (duration / 2) * (i / length)),
 }));
 
-rAF(function tick(time) {
+rAF(function tick(time: DOMHighResTimeStamp) {
   rAF(tick);
 
   if (shouldResize()) {
