@@ -7,7 +7,7 @@ import { randomRange, random, randomBool } from '../../../lib/core/rand';
 import { sawWave, sinWave } from '../../../lib/core/wave';
 
 const c = el('canvas') as HTMLCanvasElement;
-const m = el('main') as HTMLMainElement;
+const m = el('main') as HTMLElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
 const buffer = c.cloneNode() as HTMLCanvasElement;
