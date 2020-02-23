@@ -98,7 +98,7 @@ let treeX = c.width * 0.5;
 let treeY = c.height * 0.8;
 let treeScale = min(c.width, c.height) / 8;
 
-let trees: Array<IterableIterator<Branch>> = [];
+let trees: IterableIterator<Branch>[] = [];
 let isDrawing = false;
 
 function tick() {
