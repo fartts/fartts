@@ -7,7 +7,7 @@ import { randomRange, random, randomBool } from '../../../lib/core/rand';
 import { sawWave, sinWave } from '../../../lib/core/wave';
 
 const c = el('canvas') as HTMLCanvasElement;
-const m = el('main') as HTMLMainElement;
+const m = el('main') as HTMLElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;
 
 const buffer = c.cloneNode() as HTMLCanvasElement;
@@ -98,7 +98,7 @@ let treeX = c.width * 0.5;
 let treeY = c.height * 0.8;
 let treeScale = min(c.width, c.height) / 8;
 
-let trees: Array<IterableIterator<Branch>> = [];
+let trees: IterableIterator<Branch>[] = [];
 let isDrawing = false;
 
 function tick() {

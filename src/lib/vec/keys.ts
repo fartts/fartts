@@ -1,16 +1,16 @@
 /**
  * ## toKeyIndexPairs
  *
- * @param {Array<[string, number]>} acc
+ * @param {[string, number][]} acc
  * @param {string} key
  * @param {number} i
- * @returns {Array<[string, number]>}
+ * @returns {[string, number][]}
  */
 function toKeyIndexPairs(
-  acc: Array<[string, number]>,
+  acc: [string, number][],
   key: string,
   i: number,
-): Array<[string, number]> {
+): [string, number][] {
   return [...acc, [key, i]];
 }
 
@@ -24,7 +24,7 @@ function toKeyIndexPairs(
 export function toKeyIndexMap(baseKeys: string[][]) {
   return new Map(
     baseKeys.reduce(
-      (acc: Array<[string, number]>, keys) => [
+      (acc: [string, number][], keys) => [
         ...acc,
         ...keys.reduce(toKeyIndexPairs, []),
       ],

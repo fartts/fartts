@@ -13,7 +13,7 @@ const { isInteger } = Number;
 const el = (s: string) => document.querySelector(s);
 const on = (e: string, fn: EventListener) => window.addEventListener(e, fn);
 
-const m = el('main') as HTMLMainElement;
+const m = el('main') as HTMLElement;
 const c = el('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,

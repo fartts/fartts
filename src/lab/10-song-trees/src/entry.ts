@@ -12,7 +12,7 @@ import { random } from '../../../lib/core/rand';
 
 document.addEventListener('touchstart', () => true, true);
 
-const m = el('main') as HTMLMainElement;
+const m = el('main') as HTMLElement;
 
 const c = el('canvas') as HTMLCanvasElement;
 const ctx = c.getContext('2d') as CanvasRenderingContext2D;

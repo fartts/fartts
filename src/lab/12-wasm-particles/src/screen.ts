@@ -74,7 +74,7 @@ export function screen(opts?: Partial<ScreenOptions>): Screen {
     canvasSizing,
   } = { ...defaultScreenOptions, ...opts };
 
-  const container = el(containerSelector) as HTMLMainElement;
+  const container = el(containerSelector) as HTMLElement;
   const canvas = el(canvasSelector) as HTMLCanvasElement;
   const context = canvas.getContext(contextType) as CanvasRenderingContext2D;
 

@@ -21,7 +21,7 @@ import {
   WaveFunction,
 } from '../../../lib/core/wave';
 
-const m = el('main') as HTMLMainElement;
+const m = el('main') as HTMLElement;
 const c = el('canvas') as HTMLCanvasElement;
 const gl = c.getContext('webgl', {
   antialias: false,
