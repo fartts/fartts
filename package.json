@@ -55,7 +55,7 @@
     "glslify-bundle": "5.1.1",
     "glslify-deps": "1.3.1",
     "identity-obj-proxy": "3.0.0",
-    "jest": "25.2.0",
+    "jest": "25.2.1",
     "lodash": "4.17.15",
     "parcel-bundler": "1.12.4",
     "parcel-plugin-wasm-pack": "5.0.1",
