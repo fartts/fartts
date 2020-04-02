@@ -48,7 +48,7 @@
     "@types/jest": "25.1.4",
     "@types/node": "13.9.8",
     "@types/seedrandom": "2.4.28",
-    "babel-jest": "25.2.4",
+    "babel-jest": "25.2.6",
     "cheerio": "1.0.0-rc.3",
     "commitizen": "4.0.3",
     "cz-conventional-changelog": "3.1.0",
