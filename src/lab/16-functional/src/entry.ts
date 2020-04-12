@@ -1,6 +1,6 @@
 import { el, rAF } from '../../../lib/core/dom';
 
-import { attend } from './events';
+import { on } from './events';
 import { resize } from './resize';
 
 import './style.css';
@@ -15,7 +15,7 @@ if (!context) {
 
 let shouldResize = true;
 
-attend(window, 'resize', () => {
+on(window, 'resize', () => {
   shouldResize = true;
 });
 

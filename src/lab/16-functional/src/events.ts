@@ -2,10 +2,7 @@ type Listener<K extends keyof HTMLElementEventMap> = (
   event: HTMLElementEventMap[K],
 ) => void;
 
-export function attend<
-  T extends EventTarget,
-  U extends keyof HTMLElementEventMap
->(
+export function on<T extends EventTarget, U extends keyof HTMLElementEventMap>(
   target: T,
   forEvent: U,
   listener: Listener<U>,
@@ -14,10 +11,7 @@ export function attend<
   target.addEventListener(forEvent, listener as EventListener, options);
 }
 
-export function ignore<
-  T extends EventTarget,
-  U extends keyof HTMLElementEventMap
->(
+export function off<T extends EventTarget, U extends keyof HTMLElementEventMap>(
   target: T,
   forEvent: U,
   listener: Listener<U>,
