@@ -51,9 +51,52 @@ type Particle = {
   ppos: Vector;
 };
 
-const particles: Particle[] = [];
+type Constraint = {
+  a: Particle;
+  b: Particle;
+};
 
-const update = (dt: number) => {};
+const particles: Particle[] = [];
+const constraints: Constraint[] = [];
+
+const step = 10;
+const stepCoef = 1 / step;
+
+const update = (dt: number) => {
+  particles.forEach((p, i) => {
+    const v: Vector = {
+      x: (p.cpos.x - p.ppos.x) * 0.9,
+      y: (p.cpos.y - p.ppos.y) * 0.9,
+    };
+
+    p.ppos.x = p.cpos.x;
+    p.ppos.y = p.cpos.y;
+
+    p.cpos.x += v.x;
+    p.cpos.y += v.y;
+  });
+
+  for (let i = 0; i < step; ++i) {
+    constraints.forEach(({ a, b }) => {
+      const n: Vector = {
+        x: a.cpos.x - b.cpos.x,
+        y: a.cpos.y - b.cpos.y,
+      };
+
+      const m = n.x * n.x + n.y * n.y;
+      const s = ((100 * 100 - m) / m) * 0.9 * stepCoef;
+      n.x *= s;
+      n.y *= s;
+
+      // TODO: @mysterycommand - pin constrain particles[0] to mouse position
+      // a.cpos.x += n.x;
+      // a.cpos.y += n.y;
+
+      b.cpos.x -= n.x;
+      b.cpos.y -= n.y;
+    });
+  }
+};
 
 const render = (ctx: CanvasRenderingContext2D) => {
   ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
@@ -64,6 +107,13 @@ const render = (ctx: CanvasRenderingContext2D) => {
     ctx.ellipse(cpos.x, cpos.y, 5, 5, 0, 0, ππ);
     ctx.stroke();
   });
+
+  constraints.forEach(({ a, b }) => {
+    ctx.beginPath();
+    ctx.moveTo(a.cpos.x, a.cpos.y);
+    ctx.lineTo(b.cpos.x, b.cpos.y);
+    ctx.stroke();
+  });
 };
 
 on(canvas, 'mousemove', ({ clientX, clientY }) => {
@@ -71,8 +121,8 @@ on(canvas, 'mousemove', ({ clientX, clientY }) => {
     return;
   }
 
-  particles[0].cpos.x = clientX / canvasScale;
-  particles[0].cpos.y = clientY / canvasScale;
+  particles[0].cpos.x = particles[0].ppos.x = clientX / canvasScale;
+  particles[0].cpos.y = particles[0].ppos.y = clientY / canvasScale;
 });
 
 const tick = (time: DOMHighResTimeStamp) => {
@@ -100,18 +150,28 @@ const tick = (time: DOMHighResTimeStamp) => {
   if (normalTime === 0) {
     // first frame, do setup stuff here
     particles.length = 0;
-    particles.push({
+    constraints.length = 0;
+
+    const a: Particle = {
       cpos: { x: w / 2, y: h / 2 },
       ppos: { x: w / 2, y: h / 2 },
-    });
+    };
 
     const dir = random() * ππ;
     const x = sin(dir) * 100;
     const y = cos(dir) * 100;
 
-    particles.push({
+    const b: Particle = {
       cpos: { x: w / 2 + x, y: h / 2 + y },
       ppos: { x: w / 2 + x, y: h / 2 + y },
+    };
+
+    particles.push(a);
+    particles.push(b);
+
+    constraints.push({
+      a,
+      b,
     });
   }
 
