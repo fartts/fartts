@@ -42,4 +42,9 @@ const tick = (time: DOMHighResTimeStamp) => {
   }
 
   // every subsequent frame
+
+  // append
+  // select
+  // update
+  // remove
 };
