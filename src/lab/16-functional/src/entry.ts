@@ -1,7 +1,7 @@
 import './style.css';
 
 import { el, rAF } from '../../../lib/core/dom';
-import { ππ, max } from '../../../lib/core/math';
+import { ππ, max, sin, cos, random } from '../../../lib/core/math';
 
 import { on } from './events';
 import { resize } from './resize';
@@ -29,7 +29,7 @@ const getCanvasScale = () => {
 
 let canvasScale = getCanvasScale();
 
-const scale = 4;
+const pixelScale = 4;
 const frameTime = 1_000 / 60;
 
 let firstTime: number;
@@ -56,9 +56,13 @@ const particles: Particle[] = [];
 const update = (dt: number) => {};
 
 const render = (ctx: CanvasRenderingContext2D) => {
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
+  ctx.lineWidth = 1;
+
   particles.forEach(({ cpos }) => {
     ctx.beginPath();
     ctx.ellipse(cpos.x, cpos.y, 5, 5, 0, 0, ππ);
+    ctx.stroke();
   });
 };
 
@@ -77,7 +81,7 @@ const tick = (time: DOMHighResTimeStamp) => {
   firstTime || (firstTime = time); // tslint:disable-line:no-unused-expression
 
   if (shouldResize) {
-    resize(main, canvas, scale);
+    resize(main, canvas, pixelScale);
     shouldResize = false;
 
     canvasScale = getCanvasScale();
@@ -100,6 +104,15 @@ const tick = (time: DOMHighResTimeStamp) => {
       cpos: { x: w / 2, y: h / 2 },
       ppos: { x: w / 2, y: h / 2 },
     });
+
+    const dir = random() * ππ;
+    const x = sin(dir) * 100;
+    const y = cos(dir) * 100;
+
+    particles.push({
+      cpos: { x: w / 2 + x, y: h / 2 + y },
+      ppos: { x: w / 2 + x, y: h / 2 + y },
+    });
   }
 
   // every subsequent frame
@@ -109,10 +122,7 @@ const tick = (time: DOMHighResTimeStamp) => {
   }
 
   context.clearRect(0, 0, w, h);
-  context.strokeStyle = 'rgba(0, 0, 0, 0.35)';
-  context.lineWidth = 1;
   render(context);
-  context.stroke();
 
   previousTime = normalTime;
 };
