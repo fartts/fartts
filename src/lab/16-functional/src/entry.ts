@@ -1,9 +1,10 @@
+import './style.css';
+
 import { el, rAF } from '../../../lib/core/dom';
+import { ππ, max } from '../../../lib/core/math';
 
 import { on } from './events';
 import { resize } from './resize';
-
-import './style.css';
 
 const main = el<HTMLElement>('main');
 const canvas = el<HTMLCanvasElement>('canvas');
@@ -19,8 +20,51 @@ on(window, 'resize', () => {
   shouldResize = true;
 });
 
-const scale = 8;
+const scale = 4;
+const frameTime = 1_000 / 60;
+
 let firstTime: number;
+let previousTime: number;
+let overTime: number;
+
+// append
+// select
+// update
+// remove
+
+type Vector = {
+  x: number;
+  y: number;
+};
+
+type Particle = {
+  cpos: Vector;
+  ppos: Vector;
+};
+
+const particles: Particle[] = [];
+
+const update = (dt: number) => {};
+
+const render = (ctx: CanvasRenderingContext2D) => {
+  particles.forEach(({ cpos }) => {
+    ctx.beginPath();
+    ctx.ellipse(cpos.x, cpos.y, 5, 5, 0, 0, ππ);
+  });
+};
+
+on(canvas, 'mousemove', ({ clientX, clientY }) => {
+  if (!particles[0]) {
+    return;
+  }
+
+  const { clientWidth: w, clientHeight: h } = main;
+  const { width, height } = canvas;
+  const s = max(w / width, h / height);
+
+  particles[0].cpos.x = clientX / s;
+  particles[0].cpos.y = clientY / s;
+});
 
 const tick = (time: DOMHighResTimeStamp) => {
   rAF(tick);
@@ -30,21 +74,40 @@ const tick = (time: DOMHighResTimeStamp) => {
   if (shouldResize) {
     resize(main, canvas, scale);
     shouldResize = false;
+
     firstTime = time;
+    previousTime = 0;
+    overTime = 0;
   }
 
   const normalTime = time - firstTime;
+  const deltaTime = normalTime - previousTime;
   const { width: w, height: h } = canvas;
+
+  overTime += deltaTime;
 
   if (normalTime === 0) {
     // first frame, do setup stuff here
-    context.clearRect(0, 0, w, h);
+    particles.length = 0;
+    particles.push({
+      cpos: { x: w / 2, y: h / 2 },
+      ppos: { x: w / 2, y: h / 2 },
+    });
   }
 
   // every subsequent frame
+  while (overTime >= frameTime) {
+    update(frameTime);
+    overTime -= frameTime;
+  }
 
-  // append
-  // select
-  // update
-  // remove
+  context.clearRect(0, 0, w, h);
+  context.strokeStyle = 'rgba(0, 0, 0, 0.35)';
+  context.lineWidth = 1;
+  render(context);
+  context.stroke();
+
+  previousTime = normalTime;
 };
+
+rAF(tick);
