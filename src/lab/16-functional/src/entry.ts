@@ -20,6 +20,15 @@ on(window, 'resize', () => {
   shouldResize = true;
 });
 
+const getCanvasScale = () => {
+  const { clientWidth: mw, clientHeight: mh } = main;
+  const { width: cw, height: ch } = canvas;
+
+  return max(mw / cw, mh / ch);
+};
+
+let canvasScale = getCanvasScale();
+
 const scale = 4;
 const frameTime = 1_000 / 60;
 
@@ -58,12 +67,8 @@ on(canvas, 'mousemove', ({ clientX, clientY }) => {
     return;
   }
 
-  const { clientWidth: w, clientHeight: h } = main;
-  const { width, height } = canvas;
-  const s = max(w / width, h / height);
-
-  particles[0].cpos.x = clientX / s;
-  particles[0].cpos.y = clientY / s;
+  particles[0].cpos.x = clientX / canvasScale;
+  particles[0].cpos.y = clientY / canvasScale;
 });
 
 const tick = (time: DOMHighResTimeStamp) => {
@@ -74,6 +79,8 @@ const tick = (time: DOMHighResTimeStamp) => {
   if (shouldResize) {
     resize(main, canvas, scale);
     shouldResize = false;
+
+    canvasScale = getCanvasScale();
 
     firstTime = time;
     previousTime = 0;
