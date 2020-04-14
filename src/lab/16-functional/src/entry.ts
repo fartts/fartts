@@ -51,10 +51,7 @@ type Particle = {
   ppos: Vector;
 };
 
-type Constraint = {
-  a: Particle;
-  b: Particle;
-};
+type Constraint = [Particle, Particle];
 
 const particles: Particle[] = [];
 const constraints: Constraint[] = [];
@@ -63,7 +60,7 @@ const step = 10;
 const stepCoef = 1 / step;
 
 const update = (dt: number) => {
-  particles.forEach((p, i) => {
+  particles.forEach((p) => {
     const v: Vector = {
       x: (p.cpos.x - p.ppos.x) * 0.9,
       y: (p.cpos.y - p.ppos.y) * 0.9,
@@ -77,7 +74,7 @@ const update = (dt: number) => {
   });
 
   for (let i = 0; i < step; ++i) {
-    constraints.forEach(({ a, b }) => {
+    constraints.forEach(([a, b]) => {
       const n: Vector = {
         x: a.cpos.x - b.cpos.x,
         y: a.cpos.y - b.cpos.y,
@@ -108,7 +105,7 @@ const render = (ctx: CanvasRenderingContext2D) => {
     ctx.stroke();
   });
 
-  constraints.forEach(({ a, b }) => {
+  constraints.forEach(([a, b]) => {
     ctx.beginPath();
     ctx.moveTo(a.cpos.x, a.cpos.y);
     ctx.lineTo(b.cpos.x, b.cpos.y);
@@ -157,22 +154,28 @@ const tick = (time: DOMHighResTimeStamp) => {
       ppos: { x: w / 2, y: h / 2 },
     };
 
-    const dir = random() * ππ;
-    const x = sin(dir) * 100;
-    const y = cos(dir) * 100;
+    const bx = sin(random() * ππ) * 100;
+    const by = cos(random() * ππ) * 100;
 
     const b: Particle = {
-      cpos: { x: w / 2 + x, y: h / 2 + y },
-      ppos: { x: w / 2 + x, y: h / 2 + y },
+      cpos: { x: w / 2 + bx, y: h / 2 + by },
+      ppos: { x: w / 2 + bx, y: h / 2 + by },
+    };
+
+    const cx = sin(random() * ππ) * 100;
+    const cy = cos(random() * ππ) * 100;
+
+    const c: Particle = {
+      cpos: { x: b.cpos.x + cx, y: b.cpos.y + cy },
+      ppos: { x: b.ppos.x + cx, y: b.ppos.y + cy },
     };
 
     particles.push(a);
     particles.push(b);
+    particles.push(c);
 
-    constraints.push({
-      a,
-      b,
-    });
+    constraints.push([a, b]);
+    constraints.push([b, c]);
   }
 
   // every subsequent frame
