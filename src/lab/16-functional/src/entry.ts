@@ -59,19 +59,36 @@ const constraints: Constraint[] = [];
 const step = 10;
 const stepCoef = 1 / step;
 
+const drag = 0.9;
+const grav: Vector = {
+  x: 0,
+  y: 1,
+};
+
+const length = 20;
+const stiffness = 0.5;
+
 const update = (dt: number) => {
   particles.forEach((p) => {
     const v: Vector = {
-      x: (p.cpos.x - p.ppos.x) * 0.9,
-      y: (p.cpos.y - p.ppos.y) * 0.9,
+      x: (p.cpos.x - p.ppos.x) * drag,
+      y: (p.cpos.y - p.ppos.y) * drag,
     };
 
     p.ppos.x = p.cpos.x;
     p.ppos.y = p.cpos.y;
 
+    p.cpos.x += grav.x;
+    p.cpos.y += grav.y;
+
     p.cpos.x += v.x;
     p.cpos.y += v.y;
   });
+
+  if (particles[0]) {
+    particles[0].cpos.x = canvas.width / 2;
+    particles[0].cpos.y = canvas.height / 2;
+  }
 
   for (let i = 0; i < step; ++i) {
     constraints.forEach(([a, b]) => {
@@ -81,13 +98,12 @@ const update = (dt: number) => {
       };
 
       const m = n.x * n.x + n.y * n.y;
-      const s = ((100 * 100 - m) / m) * 0.9 * stepCoef;
+      const s = ((length * length - m) / m) * stiffness * stepCoef;
       n.x *= s;
       n.y *= s;
 
-      // TODO: @mysterycommand - pin constrain particles[0] to mouse position
-      // a.cpos.x += n.x;
-      // a.cpos.y += n.y;
+      a.cpos.x += n.x;
+      a.cpos.y += n.y;
 
       b.cpos.x -= n.x;
       b.cpos.y -= n.y;
@@ -113,14 +129,14 @@ const render = (ctx: CanvasRenderingContext2D) => {
   });
 };
 
-on(canvas, 'mousemove', ({ clientX, clientY }) => {
-  if (!particles[0]) {
-    return;
-  }
+// on(canvas, 'mousemove', ({ clientX, clientY }) => {
+//   if (!particles[0]) {
+//     return;
+//   }
 
-  particles[0].cpos.x = particles[0].ppos.x = clientX / canvasScale;
-  particles[0].cpos.y = particles[0].ppos.y = clientY / canvasScale;
-});
+//   particles[0].cpos.x = particles[0].ppos.x = clientX / canvasScale;
+//   particles[0].cpos.y = particles[0].ppos.y = clientY / canvasScale;
+// });
 
 const tick = (time: DOMHighResTimeStamp) => {
   rAF(tick);
@@ -154,16 +170,16 @@ const tick = (time: DOMHighResTimeStamp) => {
       ppos: { x: w / 2, y: h / 2 },
     };
 
-    const bx = sin(random() * ππ) * 100;
-    const by = cos(random() * ππ) * 100;
+    const bx = sin(random() * ππ) * length;
+    const by = cos(random() * ππ) * length;
 
     const b: Particle = {
       cpos: { x: w / 2 + bx, y: h / 2 + by },
       ppos: { x: w / 2 + bx, y: h / 2 + by },
     };
 
-    const cx = sin(random() * ππ) * 100;
-    const cy = cos(random() * ππ) * 100;
+    const cx = sin(random() * ππ) * length;
+    const cy = cos(random() * ππ) * length;
 
     const c: Particle = {
       cpos: { x: b.cpos.x + cx, y: b.cpos.y + cy },
