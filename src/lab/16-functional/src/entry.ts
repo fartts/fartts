@@ -1,10 +1,11 @@
 import './style.css';
 
 import { el, rAF } from '../../../lib/core/dom';
-import { ππ, max, sin, cos, random } from '../../../lib/core/math';
+import { ππ, max, sin, cos, random, atan2 } from '../../../lib/core/math';
 
 import { on } from './events';
 import { resize } from './resize';
+import { sinWave, cosWave } from '../../../lib/core/wave';
 
 const main = el<HTMLElement>('main');
 const canvas = el<HTMLCanvasElement>('canvas');
@@ -62,13 +63,16 @@ const stepCoef = 1 / step;
 const drag = 0.9;
 const grav: Vector = {
   x: 0,
-  y: 1,
+  y: 0.1,
 };
 
-const length = 20;
-const stiffness = 0.5;
+const length = 15;
+const stiffness = 0.9;
 
-const update = (dt: number) => {
+const xw = sinWave(750, 254, 284);
+const yw = cosWave(750, 269, 249);
+
+const update = (t: number, dt: number) => {
   particles.forEach((p) => {
     const v: Vector = {
       x: (p.cpos.x - p.ppos.x) * drag,
@@ -88,6 +92,11 @@ const update = (dt: number) => {
   if (particles[0]) {
     particles[0].cpos.x = canvas.width / 2;
     particles[0].cpos.y = canvas.height / 2;
+  }
+
+  if (particles[2]) {
+    particles[2].cpos.x = xw(t);
+    particles[2].cpos.y = yw(t);
   }
 
   for (let i = 0; i < step; ++i) {
@@ -122,20 +131,28 @@ const render = (ctx: CanvasRenderingContext2D) => {
   });
 
   constraints.forEach(([a, b]) => {
+    ctx.save();
+    ctx.translate(a.cpos.x, a.cpos.y);
+    ctx.rotate(atan2(b.cpos.y - a.cpos.y, b.cpos.x - a.cpos.x));
+
     ctx.beginPath();
-    ctx.moveTo(a.cpos.x, a.cpos.y);
-    ctx.lineTo(b.cpos.x, b.cpos.y);
+    ctx.moveTo(0, 4);
+    ctx.lineTo(length, 4);
+    ctx.moveTo(0, -4);
+    ctx.lineTo(length, -4);
     ctx.stroke();
+
+    ctx.restore();
   });
 };
 
 // on(canvas, 'mousemove', ({ clientX, clientY }) => {
-//   if (!particles[0]) {
+//   if (!particles[2]) {
 //     return;
 //   }
 
-//   particles[0].cpos.x = particles[0].ppos.x = clientX / canvasScale;
-//   particles[0].cpos.y = particles[0].ppos.y = clientY / canvasScale;
+//   particles[2].cpos.x = particles[2].ppos.x = clientX / canvasScale;
+//   particles[2].cpos.y = particles[2].ppos.y = clientY / canvasScale;
 // });
 
 const tick = (time: DOMHighResTimeStamp) => {
@@ -196,12 +213,20 @@ const tick = (time: DOMHighResTimeStamp) => {
 
   // every subsequent frame
   while (overTime >= frameTime) {
-    update(frameTime);
+    update(normalTime, frameTime);
     overTime -= frameTime;
   }
 
   context.clearRect(0, 0, w, h);
   render(context);
+
+  // context.fillStyle = 'red';
+  //
+  // for (let i = 0; i < 1_000; i += frameTime * 10) {
+  //   context.beginPath();
+  //   context.ellipse(xw(normalTime + i), yw(normalTime + i), 1, 1, 0, 0, ππ);
+  //   context.fill();
+  // }
 
   previousTime = normalTime;
 };
