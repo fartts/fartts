@@ -60,7 +60,7 @@
     "parcel-bundler": "1.12.4",
     "parcel-plugin-wasm-pack": "5.0.1",
     "prettier": "2.0.4",
-    "semantic-release": "17.0.5",
+    "semantic-release": "17.0.6",
     "ts-jest": "25.3.1",
     "tslint": "6.1.1",
     "tslint-config-prettier": "1.18.0",
