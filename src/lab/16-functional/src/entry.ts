@@ -1,7 +1,18 @@
 import './style.css';
 
 import { el, rAF } from '../../../lib/core/dom';
-import { ππ, max, sin, cos, random, atan2 } from '../../../lib/core/math';
+import {
+  π,
+  ππ,
+  max,
+  sin,
+  cos,
+  random,
+  atan2,
+  toDegrees,
+  min,
+  abs,
+} from '../../../lib/core/math';
 import { sinWave, cosWave } from '../../../lib/core/wave';
 
 import { on } from './events';
@@ -76,8 +87,33 @@ let yw = cosWave(
   canvas.height / 2 + length * 2 - 10,
 );
 
+const rotate: (v: Vector, o: Vector, a: number) => Vector = (v, o, a) => ({
+  x: (v.x - o.x) * cos(a) - (v.y - o.y) * sin(a) + o.x,
+  y: (v.x - o.x) * sin(a) + (v.y - o.y) * cos(a) + o.y,
+});
+
+const angula: (a: Particle, b: Particle, c: Particle) => void = (a, b, c) => {
+  const x1 = a.cpos.x - b.cpos.x;
+  const y1 = a.cpos.y - b.cpos.y;
+
+  const x2 = c.cpos.x - b.cpos.x;
+  const y2 = c.cpos.y - b.cpos.y;
+
+  const angle = (atan2(x1 * y2 - y1 * x2, x1 * x2 + y1 * y2) + ππ) % ππ;
+
+  if (angle < π * 0.8 || ππ * 0.8 < angle) {
+    const diff = min(abs(angle - π), abs(ππ * 0.9 - angle)) * stiffness;
+
+    a.cpos = rotate(a.cpos, b.cpos, diff);
+    c.cpos = rotate(c.cpos, b.cpos, -diff);
+
+    b.cpos = rotate(b.cpos, a.cpos, diff);
+    b.cpos = rotate(b.cpos, c.cpos, -diff);
+  }
+};
+
 const update = (t: number, dt: number) => {
-  particles.forEach((p) => {
+  particles.forEach((p, i) => {
     const v: Vector = {
       x: (p.cpos.x - p.ppos.x) * drag,
       y: (p.cpos.y - p.ppos.y) * drag,
@@ -93,31 +129,33 @@ const update = (t: number, dt: number) => {
     p.cpos.y += v.y;
   });
 
-  if (particles[0]) {
-    particles[0].cpos.x = canvas.width / 2;
-    particles[0].cpos.y = canvas.height / 2;
+  const [a, b, c, d, e, f] = particles;
+
+  if (a) {
+    a.cpos.x = canvas.width / 2;
+    a.cpos.y = canvas.height / 2;
   }
 
-  if (particles[2]) {
-    particles[2].cpos.x = xw(t);
-    particles[2].cpos.y = yw(t);
+  if (c) {
+    c.cpos.x = xw(t);
+    c.cpos.y = yw(t);
   }
 
-  if (particles[3]) {
-    particles[3].cpos.x = canvas.width / 2 + 5;
-    particles[3].cpos.y = canvas.height / 2;
+  if (d) {
+    d.cpos.x = canvas.width / 2 + 5;
+    d.cpos.y = canvas.height / 2;
   }
 
-  if (particles[5]) {
-    particles[5].cpos.x = xw(t + 375) + 5;
-    particles[5].cpos.y = yw(t + 375);
+  if (f) {
+    f.cpos.x = xw(t + 375) + 5;
+    f.cpos.y = yw(t + 375);
   }
 
   for (let i = 0; i < step; ++i) {
-    constraints.forEach(([a, b]) => {
+    constraints.forEach(([g, h]) => {
       const n: Vector = {
-        x: a.cpos.x - b.cpos.x,
-        y: a.cpos.y - b.cpos.y,
+        x: g.cpos.x - h.cpos.x,
+        y: g.cpos.y - h.cpos.y,
       };
 
       const m = n.x * n.x + n.y * n.y;
@@ -125,26 +163,32 @@ const update = (t: number, dt: number) => {
       n.x *= s;
       n.y *= s;
 
-      a.cpos.x += n.x;
-      a.cpos.y += n.y;
+      g.cpos.x += n.x;
+      g.cpos.y += n.y;
 
-      b.cpos.x -= n.x;
-      b.cpos.y -= n.y;
+      h.cpos.x -= n.x;
+      h.cpos.y -= n.y;
     });
   }
+
+  angula(a, b, c);
+  angula(d, e, f);
 };
 
 const render = (ctx: CanvasRenderingContext2D) => {
-  ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
   ctx.lineWidth = 1;
 
-  particles.forEach(({ cpos }) => {
+  particles.forEach(({ cpos }, i) => {
+    ctx.strokeStyle = i < 3 ? 'rgb(255, 0, 0, 0.5)' : 'rgb(0, 0, 255, 0.5)';
+
     ctx.beginPath();
     ctx.ellipse(cpos.x, cpos.y, 5, 5, 0, 0, ππ);
     ctx.stroke();
   });
 
-  constraints.forEach(([a, b]) => {
+  constraints.forEach(([a, b], i) => {
+    ctx.strokeStyle = i < 2 ? 'rgb(255, 0, 0, 0.5)' : 'rgb(0, 0, 255, 0.5)';
+
     ctx.save();
     ctx.translate(a.cpos.x, a.cpos.y);
     ctx.rotate(atan2(b.cpos.y - a.cpos.y, b.cpos.x - a.cpos.x));
@@ -161,13 +205,37 @@ const render = (ctx: CanvasRenderingContext2D) => {
 };
 
 // on(canvas, 'mousemove', ({ clientX, clientY }) => {
-//   if (!particles[2]) {
+//   if (!particles[5]) {
 //     return;
 //   }
 
-//   particles[2].cpos.x = particles[2].ppos.x = clientX / canvasScale;
-//   particles[2].cpos.y = particles[2].ppos.y = clientY / canvasScale;
+//   particles[5].cpos.x = particles[5].ppos.x = clientX / canvasScale;
+//   particles[5].cpos.y = particles[5].ppos.y = clientY / canvasScale;
 // });
+
+const leg: (x: number, y: number) => void = (x, y) => {
+  const a: Particle = {
+    cpos: { x, y },
+    ppos: { x, y },
+  };
+
+  const b: Particle = {
+    cpos: { x, y: y + length },
+    ppos: { x, y: y + length },
+  };
+
+  const c: Particle = {
+    cpos: { x, y: y + length * 2 },
+    ppos: { x, y: y + length * 2 },
+  };
+
+  particles.push(a);
+  particles.push(b);
+  particles.push(c);
+
+  constraints.push([a, b]);
+  constraints.push([b, c]);
+};
 
 const tick = (time: DOMHighResTimeStamp) => {
   rAF(tick);
@@ -202,61 +270,8 @@ const tick = (time: DOMHighResTimeStamp) => {
     particles.length = 0;
     constraints.length = 0;
 
-    const a: Particle = {
-      cpos: { x: w / 2, y: h / 2 },
-      ppos: { x: w / 2, y: h / 2 },
-    };
-
-    const bx = sin(random() * ππ) * length;
-    const by = cos(random() * ππ) * length;
-
-    const b: Particle = {
-      cpos: { x: w / 2 + bx, y: h / 2 + by },
-      ppos: { x: w / 2 + bx, y: h / 2 + by },
-    };
-
-    const cx = sin(random() * ππ) * length;
-    const cy = cos(random() * ππ) * length;
-
-    const c: Particle = {
-      cpos: { x: b.cpos.x + cx, y: b.cpos.y + cy },
-      ppos: { x: b.ppos.x + cx, y: b.ppos.y + cy },
-    };
-
-    particles.push(a);
-    particles.push(b);
-    particles.push(c);
-
-    constraints.push([a, b]);
-    constraints.push([b, c]);
-
-    const d: Particle = {
-      cpos: { x: w / 2 + 5, y: h / 2 },
-      ppos: { x: w / 2 + 5, y: h / 2 },
-    };
-
-    const ex = sin(random() * ππ) * length;
-    const ey = cos(random() * ππ) * length;
-
-    const e: Particle = {
-      cpos: { x: w / 2 + ex, y: h / 2 + ey },
-      ppos: { x: w / 2 + ex, y: h / 2 + ey },
-    };
-
-    const fx = sin(random() * ππ) * length;
-    const fy = cos(random() * ππ) * length;
-
-    const f: Particle = {
-      cpos: { x: b.cpos.x + fx, y: b.cpos.y + fy },
-      ppos: { x: b.ppos.x + fx, y: b.ppos.y + fy },
-    };
-
-    particles.push(d);
-    particles.push(e);
-    particles.push(f);
-
-    constraints.push([d, e]);
-    constraints.push([e, f]);
+    leg(w / 2, h / 2);
+    leg(w / 2 + 5, h / 2);
   }
 
   // every subsequent frame
