@@ -2,10 +2,10 @@ import './style.css';
 
 import { el, rAF } from '../../../lib/core/dom';
 import { ππ, max, sin, cos, random, atan2 } from '../../../lib/core/math';
+import { sinWave, cosWave } from '../../../lib/core/wave';
 
 import { on } from './events';
 import { resize } from './resize';
-import { sinWave, cosWave } from '../../../lib/core/wave';
 
 const main = el<HTMLElement>('main');
 const canvas = el<HTMLCanvasElement>('canvas');
