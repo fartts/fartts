@@ -30,7 +30,7 @@ const getCanvasScale = () => {
 
 let canvasScale = getCanvasScale();
 
-const pixelScale = 4;
+const pixelScale = 12;
 const frameTime = 1_000 / 60;
 
 let firstTime: number;
@@ -69,8 +69,12 @@ const grav: Vector = {
 const length = 15;
 const stiffness = 0.9;
 
-const xw = sinWave(750, 254, 284);
-const yw = cosWave(750, 269, 249);
+let xw = sinWave(750, canvas.width / 2 - 14, canvas.width / 2 + 16);
+let yw = cosWave(
+  750,
+  canvas.height / 2 + length * 2,
+  canvas.height / 2 + length * 2 - 10,
+);
 
 const update = (t: number, dt: number) => {
   particles.forEach((p) => {
@@ -97,6 +101,16 @@ const update = (t: number, dt: number) => {
   if (particles[2]) {
     particles[2].cpos.x = xw(t);
     particles[2].cpos.y = yw(t);
+  }
+
+  if (particles[3]) {
+    particles[3].cpos.x = canvas.width / 2 + 5;
+    particles[3].cpos.y = canvas.height / 2;
+  }
+
+  if (particles[5]) {
+    particles[5].cpos.x = xw(t + 375) + 5;
+    particles[5].cpos.y = yw(t + 375);
   }
 
   for (let i = 0; i < step; ++i) {
@@ -165,6 +179,12 @@ const tick = (time: DOMHighResTimeStamp) => {
     shouldResize = false;
 
     canvasScale = getCanvasScale();
+    xw = sinWave(750, canvas.width / 2 - 14, canvas.width / 2 + 16);
+    yw = cosWave(
+      750,
+      canvas.height / 2 + length * 2,
+      canvas.height / 2 + length * 2 - 10,
+    );
 
     firstTime = time;
     previousTime = 0;
@@ -209,6 +229,34 @@ const tick = (time: DOMHighResTimeStamp) => {
 
     constraints.push([a, b]);
     constraints.push([b, c]);
+
+    const d: Particle = {
+      cpos: { x: w / 2 + 5, y: h / 2 },
+      ppos: { x: w / 2 + 5, y: h / 2 },
+    };
+
+    const ex = sin(random() * ππ) * length;
+    const ey = cos(random() * ππ) * length;
+
+    const e: Particle = {
+      cpos: { x: w / 2 + ex, y: h / 2 + ey },
+      ppos: { x: w / 2 + ex, y: h / 2 + ey },
+    };
+
+    const fx = sin(random() * ππ) * length;
+    const fy = cos(random() * ππ) * length;
+
+    const f: Particle = {
+      cpos: { x: b.cpos.x + fx, y: b.cpos.y + fy },
+      ppos: { x: b.ppos.x + fx, y: b.ppos.y + fy },
+    };
+
+    particles.push(d);
+    particles.push(e);
+    particles.push(f);
+
+    constraints.push([d, e]);
+    constraints.push([e, f]);
   }
 
   // every subsequent frame
@@ -221,7 +269,6 @@ const tick = (time: DOMHighResTimeStamp) => {
   render(context);
 
   // context.fillStyle = 'red';
-  //
   // for (let i = 0; i < 1_000; i += frameTime * 10) {
   //   context.beginPath();
   //   context.ellipse(xw(normalTime + i), yw(normalTime + i), 1, 1, 0, 0, ππ);
