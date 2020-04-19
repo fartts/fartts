@@ -1,18 +1,7 @@
 import './style.css';
 
 import { el, rAF } from '../../../lib/core/dom';
-import {
-  π,
-  ππ,
-  max,
-  sin,
-  cos,
-  random,
-  atan2,
-  toDegrees,
-  min,
-  abs,
-} from '../../../lib/core/math';
+import { π, ππ, max, sin, cos, atan2, min, abs } from '../../../lib/core/math';
 import { sinWave, cosWave } from '../../../lib/core/wave';
 
 import { on } from './events';
@@ -39,6 +28,7 @@ const getCanvasScale = () => {
   return max(mw / cw, mh / ch);
 };
 
+// @ts-ignore
 let canvasScale = getCanvasScale();
 
 const pixelScale = 12;
@@ -280,7 +270,8 @@ const tick = (time: DOMHighResTimeStamp) => {
     overTime -= frameTime;
   }
 
-  context.clearRect(0, 0, w, h);
+  context.fillStyle = 'white';
+  context.fillRect(0, 0, w, h);
   render(context);
 
   // context.fillStyle = 'red';
@@ -294,3 +285,45 @@ const tick = (time: DOMHighResTimeStamp) => {
 };
 
 rAF(tick);
+
+if ('MediaRecorder' in window && MediaRecorder.isTypeSupported('video/webm')) {
+  const button = document.createElement('button');
+  button.innerText = 'WEBM';
+
+  button.addEventListener('click', () => {
+    // @ts-ignore
+    const stream = canvas.captureStream(60);
+    const recorder = new MediaRecorder(stream, {
+      mimeType: 'video/webm',
+      videoBitsPerSecond: 10_000_000,
+    });
+    const chunks: BlobPart[] = [];
+
+    recorder.ondataavailable = (event) => chunks.push(event.data);
+    recorder.onstop = () => {
+      const blob = new Blob(chunks, {
+        type: 'video/webm',
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+
+      a.setAttribute('href', url);
+      a.setAttribute('download', 'legs.webm');
+      a.setAttribute('target', '_blank');
+      a.style.display = 'none';
+
+      document.body.appendChild(a);
+
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+
+    (() => {
+      recorder.start();
+      setTimeout(() => recorder.stop(), 750);
+    })();
+  });
+
+  main.appendChild(button);
+}
