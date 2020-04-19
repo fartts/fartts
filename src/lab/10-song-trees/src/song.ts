@@ -23,7 +23,7 @@ let canPlayThrough = false;
   'suspend',
   'emptied',
   'stalled',
-].forEach(eventType => {
+].forEach((eventType) => {
   song.addEventListener(eventType, ({ type }: Event) => {
     // console.log(eventType, type); // tslint:disable-line
     canPlayThrough =

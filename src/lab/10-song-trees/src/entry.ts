@@ -115,7 +115,7 @@ function draw(time: DOMHighResTimeStamp) {
     dtx.fillRect(0, 0, d.width, d.height);
   }
 
-  trees = trees.filter(t => t.life > 0.05);
+  trees = trees.filter((t) => t.life > 0.05);
   trees.forEach(drawTree);
 
   if (d.width && d.height) {

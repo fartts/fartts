@@ -8,7 +8,7 @@ const main = loop(
   (t, dt) => {
     sim.update(t, dt);
   },
-  lag => {
+  (lag) => {
     sim.render(lag);
   },
 );

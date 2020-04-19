@@ -38,7 +38,7 @@ function onMove(event: MouseEvent | TouchEvent) {
   }
 }
 
-canvas.addEventListener('mousedown', event => {
+canvas.addEventListener('mousedown', (event) => {
   if (!song.canPlayThrough) {
     return;
   }
@@ -56,7 +56,7 @@ canvas.addEventListener('mouseup', () => {
   canvas.removeEventListener('mousemove', onMove);
 });
 
-canvas.addEventListener('touchstart', event => {
+canvas.addEventListener('touchstart', (event) => {
   if (!song.canPlayThrough) {
     return;
   }

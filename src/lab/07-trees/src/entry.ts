@@ -116,7 +116,7 @@ function onPointerMove(event: MouseEvent | TouchEvent) {
   }
 }
 
-on<MouseEvent>('mousedown', event => {
+on<MouseEvent>('mousedown', (event) => {
   treeX = event.offsetX;
   treeY = event.offsetY;
 
@@ -129,7 +129,7 @@ on<MouseEvent>('mouseup', () => {
   off<MouseEvent>('mousemove', onPointerMove);
 });
 
-on<TouchEvent>('touchstart', event => {
+on<TouchEvent>('touchstart', (event) => {
   const s = max(m.clientWidth / c.width, m.clientHeight / c.height);
 
   treeX = (event as TouchEvent).touches[0].clientX / s;

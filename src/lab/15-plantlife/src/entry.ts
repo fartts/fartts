@@ -114,8 +114,9 @@ rAF(function tick(t: DOMHighResTimeStamp) {
       context.fillStyle =
         r < 40 && g > 120 && b < 40 && randomBool()
           ? flowers[randomInt(flowers.length)]
-          : `hsla(${100 + 40 * random()}, ${50 + 20 * random()}%, ${20 +
-              30 * random()}%, 1)`;
+          : `hsla(${100 + 40 * random()}, ${50 + 20 * random()}%, ${
+              20 + 30 * random()
+            }%, 1)`;
       context.fillRect(x - 1 - randomRange(-2, 2), y - 6 * random(), 2, 2);
     }
   }

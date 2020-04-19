@@ -59,14 +59,14 @@ function onMouseDown(event: MouseEvent) {
   pointerX = event.clientX * dpr;
   pointerY = event.clientY * dpr;
 
-  handles.forEach(handle => {
+  handles.forEach((handle) => {
     handle.isDragging =
       hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius;
   });
 }
 
 function onMouseUp() {
-  handles.forEach(handle => {
+  handles.forEach((handle) => {
     handle.isDragging = false;
   });
 }
@@ -76,7 +76,7 @@ function onMouseMove(event: MouseEvent) {
   pointerY = event.clientY * dpr;
 
   m.style.cursor = handles.some(
-    handle => hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius,
+    (handle) => hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius,
   )
     ? 'pointer'
     : 'default';
@@ -86,14 +86,14 @@ function onTouchStart(event: TouchEvent) {
   pointerX = event.touches[0].clientX * dpr;
   pointerY = event.touches[0].clientY * dpr;
 
-  handles.forEach(handle => {
+  handles.forEach((handle) => {
     handle.isDragging =
       hypot(pointerX - handle.x, pointerY - handle.y) < handleRadius;
   });
 }
 
 function onTouchEnd() {
-  handles.forEach(handle => {
+  handles.forEach((handle) => {
     handle.isDragging = false;
   });
 }
@@ -115,7 +115,7 @@ function drawShadow() {
   ctx.strokeStyle = 'hsl(0,0%,40%)';
   ctx.strokeRect(hw, hh - hs, graphSize, graphSize);
 
-  handles.forEach(handle => {
+  handles.forEach((handle) => {
     ctx.beginPath();
     ctx.arc(handle.sx, handle.sy, handleRadius, 0, ππ);
     ctx.moveTo(hw + abs(hw - handle.ox), handle.oy);
@@ -140,7 +140,7 @@ function drawGraph() {
   ctx.strokeStyle = 'hsl(0,0%,90%)';
   ctx.strokeRect(hw - graphSize, hh - hs, graphSize, graphSize);
 
-  handles.forEach(handle => {
+  handles.forEach((handle) => {
     if (handle.isDragging) {
       handle.x = min(max(hw - graphSize, lerp(handle.x, pointerX, 0.5)), hw);
       handle.y = lerp(handle.y, pointerY, 0.5);
@@ -195,7 +195,7 @@ function draw(/* ts: number */) {
     handles[1].ox = hw;
     handles[1].oy = hh - hs;
 
-    handles.forEach(handle => {
+    handles.forEach((handle) => {
       handle.sx = hw + abs(hw - handle.x);
       handle.sy = handle.oy + handle.oy - handle.y;
     });

@@ -104,7 +104,7 @@ let isDrawing = false;
 function tick() {
   isDrawing = true;
 
-  trees.forEach(t => {
+  trees.forEach((t) => {
     let b = t.next();
 
     if (!b.done) {

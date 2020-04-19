@@ -31,7 +31,7 @@ function getterFor<V extends Float32Array>(
         return getByKey<V>(this, key, map);
       }
     : function get(this: V) {
-        const args = key.split('').map(k => getByKey<V>(this, k, map));
+        const args = key.split('').map((k) => getByKey<V>(this, k, map));
         return new Vec[length - 2](args);
       };
 }

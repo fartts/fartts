@@ -52,7 +52,7 @@ function createEntities(count: number, factories: Factory[]) {
   for (let i = 0; i < count; ++i) {
     const id = createEntity();
 
-    factories.forEach(factory => {
+    factories.forEach((factory) => {
       const [name, data] = factory();
 
       const component = components.has(name)
