@@ -1,32 +1,11 @@
-import { el, rAF, cAF } from '../../../../lib/core/dom';
+import { rAF, cAF } from '../../../../lib/core/dom';
 
-import { on } from '../events';
-import { resize } from '../resize';
+import { env, handleResize } from './env';
 
 interface PlaybackState {
   isPlaying: () => boolean;
   start: () => void;
   stop: () => void;
-}
-
-const main = el<HTMLElement>('main');
-const canvas = el<HTMLCanvasElement>('canvas');
-const context = canvas.getContext('2d');
-
-if (!context) {
-  throw new Error("Couldn't get a `CanvasRenderingContext2D`");
-}
-
-const pixelScale = 12;
-let shouldResize = true;
-
-on(window, 'resize', () => {
-  shouldResize = true;
-});
-
-if (shouldResize) {
-  resize(main, canvas, pixelScale);
-  shouldResize = false;
 }
 
 export const loop: (
@@ -44,11 +23,7 @@ export const loop: (
 
   const tick = (time: DOMHighResTimeStamp) => {
     frameId = rAF(tick);
-
-    if (shouldResize) {
-      resize(main, canvas, pixelScale);
-      shouldResize = false;
-    }
+    handleResize();
 
     const normalTime = time - firstTime;
     const deltaTime = normalTime - previousTime;
@@ -60,7 +35,7 @@ export const loop: (
       overTime -= frameTime;
     }
 
-    render(context);
+    render(env.context);
     previousTime = normalTime;
   };
 
