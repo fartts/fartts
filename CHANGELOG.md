@@ -1,3 +1,17 @@
+# [1.26.0](https://github.com/fartts/fartts/compare/v1.25.0...v1.26.0) (2020-04-19)
+
+
+### Features
+
+* a second constraint ([97fd4e1](https://github.com/fartts/fartts/commit/97fd4e13dd189a73db7b97757e901f920b95dc79))
+* a second leg, size-independendant waves ([854b7b4](https://github.com/fartts/fartts/commit/854b7b4a06f69f2b77e0429fc1c97a62d29b2d26))
+* it's not much, but it's something ([ca3644b](https://github.com/fartts/fartts/commit/ca3644b56712e310b3edea8df9f9c1d4de824398))
+* poc, it sorta works! ([f05c678](https://github.com/fartts/fartts/commit/f05c6780278875c718f3e2b8f75d6d23cec1e688))
+* rough, but it's doing stuff at least ([2c2eb1a](https://github.com/fartts/fartts/commit/2c2eb1ac3009a24c426d61ceadcabc728bd5965c))
+* **lab/16:** boilerplate ... is this really a feature? ([720e7f3](https://github.com/fartts/fartts/commit/720e7f39e530eac8532b3833f0b1845c650ad690))
+* **lab/16:** yarn lab ts functional ([3b76cd6](https://github.com/fartts/fartts/commit/3b76cd63f00950a7757ec1c460f185f242021dee))
+* **package.json:** add fp-ts ([10cc4ad](https://github.com/fartts/fartts/commit/10cc4ad62597f2f048931671fbfc58e8163d50fc))
+
 # [1.25.0](https://github.com/fartts/fartts/compare/v1.24.0...v1.25.0) (2020-02-23)
 
 
