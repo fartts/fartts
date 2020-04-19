@@ -10,6 +10,7 @@ export const {
   min,
   PI: π,
   pow,
+  random,
   round,
   sin,
   sqrt,

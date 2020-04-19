@@ -53,8 +53,8 @@ function tree(root: Root): [Root, Branch[]] {
   // const n = round(randomRange(1, 1));
 
   const angle = π * 1.5 + randomRange(-0.2, 0.2);
-  const iteration = maxIterations /*  / n */;
-  const length = root.length /*  / n */;
+  const iteration = maxIterations; /*  / n */
+  const length = root.length; /*  / n */
 
   const b = Array.from(
     branches(

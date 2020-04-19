@@ -75,10 +75,7 @@ const points = [cosWave, sawWave, sinWave, triWave].reduce(
 
     return [
       ...components,
-      ...new Array(steps)
-        .fill(0)
-        .map(toVectors)
-        .reduce(toComponents, []),
+      ...new Array(steps).fill(0).map(toVectors).reduce(toComponents, []),
     ];
   },
   [],
@@ -118,7 +115,7 @@ function init(): void {
 }
 
 function update(t: number /* , dt: number */): void {
-  travellerComponents = travellers.map(fn => fn(t));
+  travellerComponents = travellers.map((fn) => fn(t));
 }
 
 function render(/* lag: number */): void {
