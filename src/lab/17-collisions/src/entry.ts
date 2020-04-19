@@ -1,60 +1,37 @@
 import './style.css';
 
-import { el, rAF } from '../../../lib/core/dom';
+import { loop } from './game/loop';
 
 import { on } from './events';
-import { resize } from './resize';
 
-const main = el<HTMLElement>('main');
-const canvas = el<HTMLCanvasElement>('canvas');
-const context = canvas.getContext('2d');
-
-if (!context) {
-  throw new Error("Couldn't get a `CanvasRenderingContext2D`");
-}
-
-const pixelScale = 12;
-let shouldResize = true;
-
-const frameTime = 1_000 / 60;
-let firstTime = 0;
-let previousTime = 0;
-let overTime = 0;
-
-on(window, 'resize', () => {
-  shouldResize = true;
-});
-
-const tick = (time: DOMHighResTimeStamp) => {
-  rAF(tick);
-
-  firstTime || (firstTime = time); // tslint:disable-line:no-unused-expression
-
-  if (shouldResize) {
-    resize(main, canvas, pixelScale);
-    shouldResize = false;
-
-    firstTime = time;
-    previousTime = 0;
-    overTime = 0;
-  }
-
-  const normalTime = time - firstTime;
-  const deltaTime = normalTime - previousTime;
-  overTime += deltaTime;
-
-  if (normalTime === 0) {
-    // create();
-  }
-
-  while (overTime >= frameTime) {
-    previousTime += frameTime;
-    // update(previousTime, frameTime);
-    overTime -= frameTime;
-  }
-
-  // render(context);
-  previousTime = normalTime;
+const state = {
+  mouseX: 0,
+  mouseY: 0,
+  mouseDown: false,
 };
 
-rAF(tick);
+const create: () => void = () => {
+  // console.log('create');
+};
+
+const update: (t: number, dt: number) => void = (t, dt) => {
+  // console.log('update', t, dt);
+};
+
+const render: (ctx: CanvasRenderingContext2D) => void = (ctx) => {
+  // console.log('render', ctx);
+};
+
+const { isPlaying, start, stop } = loop(create, update, render);
+
+on(window, 'keyup', (event) => {
+  if (event.key === ' ') {
+    isPlaying() ? stop() : start();
+  }
+});
+
+on(window, 'mousemove', (event) => {
+  state.mouseX = event.clientX;
+  state.mouseY = event.clientY;
+  state.mouseDown = event.buttons === 1;
+});
