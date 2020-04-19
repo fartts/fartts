@@ -4,7 +4,7 @@ import { env, handleResize } from './game/env';
 import { loop } from './game/loop';
 
 import { on } from './events';
-import { lerp, random } from '../../../lib/core/math';
+import { lerp, random, ππ } from '../../../lib/core/math';
 
 interface Vec2 {
   x: number;
@@ -68,6 +68,10 @@ const render: (ctx: CanvasRenderingContext2D) => void = (ctx) => {
     ctx.moveTo(a.x, a.y);
     ctx.lineTo(b.x, b.y);
   });
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.ellipse(state.mouseX, state.mouseY, 10, 10, 0, 0, ππ);
   ctx.stroke();
 };
 
