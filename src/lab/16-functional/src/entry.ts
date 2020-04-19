@@ -1,18 +1,7 @@
 import './style.css';
 
 import { el, rAF } from '../../../lib/core/dom';
-import {
-  π,
-  ππ,
-  max,
-  sin,
-  cos,
-  random,
-  atan2,
-  toDegrees,
-  min,
-  abs,
-} from '../../../lib/core/math';
+import { π, ππ, max, sin, cos, atan2, min, abs } from '../../../lib/core/math';
 import { sinWave, cosWave } from '../../../lib/core/wave';
 
 import { on } from './events';
