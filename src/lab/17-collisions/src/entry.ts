@@ -113,6 +113,7 @@ const update: (t: number, dt: number) => void = (t, dt) => {
     const i = poiv([a, b], line);
     return isNaN(i.x) || isNaN(i.y) ? acc : acc.concat(i);
   }, []);
+
   if (state.intersections.length) {
     const pen =
       size(subv(state.intersections[0], player.ppos)) /
