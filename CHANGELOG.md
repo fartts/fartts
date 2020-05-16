@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/fartts/fartts/compare/v1.26.0...v1.27.0) (2020-05-16)
+
+
+### Features
+
+* **lab/16:** add a WEBM button ([31aec56](https://github.com/fartts/fartts/commit/31aec560e3ad043b9b7733edaee5028fa372ded7))
+
 # [1.26.0](https://github.com/fartts/fartts/compare/v1.25.0...v1.26.0) (2020-04-19)
 
 
