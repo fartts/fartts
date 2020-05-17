@@ -1,5 +1,9 @@
-import { hypot, lerp, random } from '../../../lib/core/math';
-import { Particle, State, Vec2 } from './types';
+import { hypot } from '../../../../lib/core/math';
+
+export interface Vec2 {
+  x: number;
+  y: number;
+}
 
 export const vec2: (x: number, y: number) => Vec2 = (x, y) => ({ x, y });
 
@@ -29,22 +33,3 @@ export const poiv: (a: [Vec2, Vec2], b: [Vec2, Vec2]) => Vec2 = (
     ? addv(a, muls(subv(b, a), lambda))
     : vec2(NaN, NaN);
 };
-
-export const particle: (x: number, y: number) => Particle = (x, y) => ({
-  cpos: vec2(x, y),
-  ppos: vec2(x, y),
-});
-
-export const state: State = {
-  mouse: particle(0, 0),
-  mouseDown: false,
-  keys: [],
-
-  bounds: [],
-  intersections: [],
-  gravity: vec2(0, 0.2),
-  player: particle(0, 0),
-};
-
-export const rng: (a: number, b: number) => number = (a, b) =>
-  lerp(a, b, random());
