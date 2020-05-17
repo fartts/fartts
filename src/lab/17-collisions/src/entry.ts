@@ -1,72 +1,23 @@
 import './style.css';
 
-import { env, handleResize } from './game/env';
-import { loop } from './game/loop';
+import { max, ππ } from '../../../lib/core/math';
 
 import { on } from './events';
-import { lerp, random, ππ, max, hypot } from '../../../lib/core/math';
-
-interface Vec2 {
-  x: number;
-  y: number;
-}
-
-interface Particle {
-  cpos: Vec2;
-  ppos: Vec2;
-}
-
-interface State {
-  mouse: Particle;
-  mouseDown: boolean;
-  keys: string[];
-
-  bounds: [Vec2, Vec2][];
-  intersections: Vec2[];
-  gravity: Vec2;
-  player: Particle;
-}
-
-const vec2: (x: number, y: number) => Vec2 = (x, y) => ({ x, y });
-
-const copy: (v: Vec2) => Vec2 = (v) => vec2(v.x, v.y);
-const addv: (a: Vec2, b: Vec2) => Vec2 = (a, b) => vec2(a.x + b.x, a.y + b.y);
-const subv: (a: Vec2, b: Vec2) => Vec2 = (a, b) => vec2(a.x - b.x, a.y - b.y);
-const muls: (a: Vec2, s: number) => Vec2 = (a, s) => vec2(a.x * s, a.y * s);
-const size: (v: Vec2) => number = ({ x, y }) => hypot(x, y);
-
-const poiv: (a: [Vec2, Vec2], b: [Vec2, Vec2]) => Vec2 = ([a, b], [c, d]) => {
-  const det = (b.x - a.x) * (d.y - c.y) - (d.x - c.x) * (b.y - a.y);
-
-  if (det === 0) {
-    return vec2(NaN, NaN);
-  }
-
-  const lambda = ((d.y - c.y) * (d.x - a.x) + (c.x - d.x) * (d.y - a.y)) / det;
-  const gamma = ((a.y - b.y) * (d.x - a.x) + (b.x - a.x) * (d.y - a.y)) / det;
-
-  return 0 < lambda && lambda < 1 && 0 < gamma && gamma < 1
-    ? addv(a, muls(subv(b, a), lambda))
-    : vec2(NaN, NaN);
-};
-
-const particle: (x: number, y: number) => Particle = (x, y) => ({
-  cpos: vec2(x, y),
-  ppos: vec2(x, y),
-});
-
-const state: State = {
-  mouse: particle(0, 0),
-  mouseDown: false,
-  keys: [],
-
-  bounds: [],
-  intersections: [],
-  gravity: vec2(0, 0.2),
-  player: particle(0, 0),
-};
-
-const rng: (a: number, b: number) => number = (a, b) => lerp(a, b, random());
+import { env, handleResize } from './game/env';
+import { loop } from './game/loop';
+import { Vec2 } from './types';
+import {
+  vec2,
+  copy,
+  addv,
+  subv,
+  muls,
+  size,
+  poiv,
+  particle,
+  state,
+  rng,
+} from './utils';
 
 const create: () => void = () => {
   const { width, height } = env.canvas;
