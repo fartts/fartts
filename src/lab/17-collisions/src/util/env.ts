@@ -16,6 +16,9 @@ if (!context) {
   throw new Error("Couldn't get a `CanvasRenderingContext2D`");
 }
 
+main.style.width = '800px';
+main.style.height = '800px';
+
 const pixelScale = 12;
 let shouldResize = true;
 
