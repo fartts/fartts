@@ -1435,10 +1435,10 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/dom-mediacapture-record@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@types/dom-mediacapture-record/-/dom-mediacapture-record-1.0.5.tgz#63abc431b95e6af31d3c2c4392e1f31fd0b753c8"
-  integrity sha512-15z4KlDUIm1AZmfCw0qK5ejIRSAvRpsr27X7ybiD+6EQlBWCF7BueYI+PPwqK/1jXaNkFQoK2gTByN0V7X+FEg==
+"@types/dom-mediacapture-record@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/dom-mediacapture-record/-/dom-mediacapture-record-1.0.6.tgz#37624219f180fc517b99a266512b6209352dd1ba"
+  integrity sha512-N7+dsk8WPIvC59xZfbtvuTxfZI0I21uBLehhbz5Kx4Da9K26IdzqNuVX3ldWAxzYLVIsXr82MK9nlsKLxmka9A==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.3"
