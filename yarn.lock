@@ -956,11 +956,6 @@
     update-notifier "^2.2.0"
     yargs "^8.0.2"
 
-"@iarna/toml@2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.3.tgz#f060bf6eaafae4d56a7dac618980838b0696e2ab"
-  integrity sha512-FmuxfCuolpLl0AnQ2NHSzoUKWEJDFl63qXjzdoWBVyFCXzMGm1spBzk7LeHNoVCiWCF7mRVms9e6jEV9+MoPbg==
-
 "@iarna/toml@2.2.5", "@iarna/toml@^2.2.0":
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
@@ -2765,12 +2760,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-command-exists@1.2.8:
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.8.tgz#715acefdd1223b9c9b37110a149c6392c2852291"
-  integrity sha512-PM54PkseWbiiD/mMsbvW351/u+dafwTJ0ye2qB60G1aGQP9j3xK2gmMDc+R34L3nDtx4qMCitXT75mkbkGJDLw==
-
-command-exists@^1.2.6:
+command-exists@1.2.9, command-exists@^1.2.6:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.9.tgz#c50725af3808c8ab0260fd60b01fbfa25b954f69"
   integrity sha512-LTQ/SGc+s0Xc0Fu5WaKnR0YiygZkm9eKFvyS+fRsU7/ZWFF8ykFM6Pc9aCVf1+xasOOZpO3BAVgVrKvsqKHV7w==
@@ -7815,15 +7805,15 @@ parcel-bundler@1.12.4:
     v8-compile-cache "^2.0.0"
     ws "^5.1.1"
 
-parcel-plugin-wasm-pack@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/parcel-plugin-wasm-pack/-/parcel-plugin-wasm-pack-5.0.1.tgz#f254a34475e7b1118df4d2a1ec107ea5b0d92a3d"
-  integrity sha512-pqLLvF2zhyg2H99kYV7esAInkIPNG6d70bs/4IsrCuBGu9oO23v163z4qoXrLONtCj6vFuebeg+GuCfaPR2qZQ==
+parcel-plugin-wasm-pack@6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/parcel-plugin-wasm-pack/-/parcel-plugin-wasm-pack-6.0.1.tgz#0ab076793036a5cc68df39125a0165e21f7f7b2c"
+  integrity sha512-b9sGtTxtCxPX67HQTVEDiqqq0rnjur/Ru/XvmGfZRg84cHTa2X+4RovLOERWPVxZAGxALeLfojh1AscKNwjCZQ==
   dependencies:
-    "@iarna/toml" "2.2.3"
+    "@iarna/toml" "2.2.5"
     "@parcel/fs" "1.11.0"
     "@parcel/logger" "1.11.1"
-    command-exists "1.2.8"
+    command-exists "1.2.9"
 
 parent-module@^1.0.0:
   version "1.0.1"

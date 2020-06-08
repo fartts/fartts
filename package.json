@@ -59,7 +59,7 @@
     "jest": "26.0.1",
     "lodash": "4.17.15",
     "parcel-bundler": "1.12.4",
-    "parcel-plugin-wasm-pack": "5.0.1",
+    "parcel-plugin-wasm-pack": "6.0.1",
     "prettier": "2.0.5",
     "semantic-release": "17.0.8",
     "ts-jest": "26.1.0",
