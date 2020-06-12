@@ -1,6 +1,6 @@
 {
   "name": "@fartts/fartts",
-  "version": "1.27.0",
+  "version": "1.27.1",
   "description": "𝑓(unctional)Art(-making).ᴛ(ype)ꜱ(cript) - an experiment by [Matt Hayes](https://github.com/mysterycommand)",
   "repository": "https://github.com/fartts/fartts.git",
   "author": "Matt Hayes <matt@mysterycommand.com>",
@@ -35,8 +35,8 @@
     "seedrandom": "3.0.5"
   },
   "devDependencies": {
-    "@babel/core": "7.10.1",
-    "@babel/preset-env": "7.10.1",
+    "@babel/core": "7.10.2",
+    "@babel/preset-env": "7.10.2",
     "@babel/preset-typescript": "7.10.1",
     "@iarna/toml": "2.2.5",
     "@semantic-release/changelog": "5.0.1",
@@ -46,8 +46,8 @@
     "@semantic-release/npm": "7.0.5",
     "@semantic-release/release-notes-generator": "9.0.1",
     "@types/dom-mediacapture-record": "1.0.6",
-    "@types/jest": "25.2.3",
-    "@types/node": "14.0.5",
+    "@types/jest": "26.0.0",
+    "@types/node": "14.0.13",
     "@types/seedrandom": "2.4.28",
     "babel-jest": "26.0.1",
     "cheerio": "1.0.0-rc.3",
@@ -59,13 +59,13 @@
     "jest": "26.0.1",
     "lodash": "4.17.15",
     "parcel-bundler": "1.12.4",
-    "parcel-plugin-wasm-pack": "5.0.1",
+    "parcel-plugin-wasm-pack": "6.0.1",
     "prettier": "2.0.5",
     "semantic-release": "17.0.8",
-    "ts-jest": "26.0.0",
+    "ts-jest": "26.1.0",
     "tslint": "6.1.2",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.3.0",
-    "typescript": "3.9.3"
+    "typescript": "3.9.5"
   }
 }

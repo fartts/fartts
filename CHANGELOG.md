@@ -1,3 +1,10 @@
+## [1.27.1](https://github.com/fartts/fartts/compare/v1.27.0...v1.27.1) (2020-06-04)
+
+
+### Bug Fixes
+
+* **build:** fix package names ([70b6850](https://github.com/fartts/fartts/commit/70b6850540e4079cb60b0b464bf8fcde9677022a))
+
 # [1.27.0](https://github.com/fartts/fartts/compare/v1.26.0...v1.27.0) (2020-05-16)
 
 
