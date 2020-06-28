@@ -22,6 +22,18 @@ export const render: (ctx: CanvasRenderingContext2D) => void = (ctx) => {
   ctx.ellipse(player.cpos.x, player.cpos.y, 13, 13, 0, 0, ππ);
   mouseDown ? ctx.fill() : ctx.stroke();
 
+  ctx.strokeStyle = ctx.fillStyle = 'cyan';
+  ctx.beginPath();
+  ctx.moveTo(player.cpos.x - 3, player.cpos.y);
+  ctx.lineTo(player.cpos.x + 3, player.cpos.y);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(player.cpos.x, player.cpos.y + 3);
+  ctx.lineTo(player.cpos.x, player.cpos.y - 3);
+  ctx.stroke();
+
+  ctx.strokeStyle = ctx.fillStyle = 'black';
   ctx.beginPath();
   ctx.moveTo(player.ppos.x, player.ppos.y);
   ctx.lineTo(player.cpos.x, player.cpos.y);
