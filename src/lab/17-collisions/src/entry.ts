@@ -2,12 +2,14 @@ import { max } from '../../../lib/core/math';
 import { vec2 } from '../../../lib/vec';
 
 import { on } from './events';
+
 import { create } from './game/create';
 import { render } from './game/render';
+
 import { env, handleResize } from './util/env';
 import { loop } from './util/loop';
 import { state } from './util/state';
-import { addv, copy, muls, poiv, size, subv, Vec2 } from './util/vec2';
+import { addv, copy, poiv, size, subv, Vec2 } from './util/vec2';
 
 import './style.css';
 
@@ -16,28 +18,42 @@ const update: (t: number, dt: number) => void = (t, dt) => {
   const { /* mouse, */ bounds, gravity, player } = state;
 
   const cvel = addv(subv(player.cpos, player.ppos), gravity);
-  let npos = addv(player.cpos, cvel);
+  const npos = addv(player.cpos, cvel);
 
-  // const line: [Vec2, Vec2] = [vec2(width * 0.5, height * 0.5), mouse.cpos];
-  const line: [Vec2, Vec2] = [player.ppos, npos];
-  state.intersections = bounds.reduce<Vec2[]>((acc, [a, b]) => {
-    const ipos = poiv([a, b], line);
+  // const move: [Vec2, Vec2] = [vec2(width * 0.5, height * 0.5), mouse.cpos];
+  const proj: [Vec2, Vec2] = [player.cpos, npos];
+  state.intersections = bounds.reduce<[[Vec2, Vec2], [Vec2, Vec2], Vec2][]>(
+    (acc, line) => {
+      const ipos = poiv(line, proj);
+      if (!(isNaN(ipos.x) || isNaN(ipos.y))) {
+        acc.push([line, proj, ipos]);
+      }
 
-    if (!(isNaN(ipos.x) || isNaN(ipos.y))) {
-      acc.push(ipos);
-    }
+      // const jpos = poiv(line, move);
+      // if (!(isNaN(jpos.x) || isNaN(jpos.y))) {
+      //   acc.push([line, move, jpos]);
+      // }
 
-    return acc;
-  }, []);
+      return acc;
+    },
+    [],
+  );
 
   if (state.intersections.length) {
-    const ipos = state.intersections[0];
-    const pen = size(subv(ipos, player.ppos)) / size(subv(npos, player.ppos));
-    npos = addv(player.cpos, muls(cvel, -pen));
-  }
+    const [a, , ipos] = state.intersections[0];
 
-  player.ppos = copy(player.cpos);
-  player.cpos = copy(npos);
+    const pens = size(subv(npos, ipos)) / size(subv(npos, player.cpos));
+    console.log(pens, size(subv(a[0], ipos)), size(subv(a[1], ipos)));
+
+    // const pen = size(subv(ipos, player.ppos)) / size(subv(npos, player.ppos));
+    // npos = addv(player.cpos, muls(cvel, -pen));
+
+    player.ppos = copy(ipos);
+    player.cpos = copy(ipos);
+  } else {
+    player.ppos = copy(player.cpos);
+    player.cpos = copy(npos);
+  }
 
   if (state.intersections.length) {
     // stop();
