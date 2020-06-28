@@ -1,7 +1,60 @@
-import { ππ } from '../../../../lib/core/math';
+import { ππ, hypot } from '../../../../lib/core/math';
 
 import { env } from '../util/env';
 import { state } from '../util/state';
+import { Vec2, Line, adds, addv } from '../util/vec2';
+
+const es = 12 / env.scale;
+
+// radii: large, medium, small
+const rl = 13 * es;
+const rm = 8 * es;
+const rs = 5 * es;
+
+// sizes: cross, plus
+const sc = 3 * es;
+const sp = hypot(sc, sc);
+
+const line: (ctx: CanvasRenderingContext2D, a: Vec2, b: Vec2) => void = (
+  ctx,
+  a,
+  b,
+) => {
+  ctx.beginPath();
+  ctx.moveTo(a.x, a.y);
+  ctx.lineTo(b.x, b.y);
+  ctx.stroke();
+};
+
+const chain: (ctx: CanvasRenderingContext2D, lines: Line[]) => void = (
+  ctx,
+  lines,
+) => {
+  ctx.beginPath();
+  lines.forEach(([a, b]) => {
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+  });
+  ctx.stroke();
+};
+
+const cross: (ctx: CanvasRenderingContext2D, v: Vec2, s: number) => void = (
+  ctx,
+  v,
+  s,
+) => {
+  line(ctx, adds(v, -s), adds(v, s));
+  line(ctx, addv(v, { x: -s, y: s }), addv(v, { x: s, y: -s }));
+};
+
+const plus: (ctx: CanvasRenderingContext2D, v: Vec2, s: number) => void = (
+  ctx,
+  v,
+  s,
+) => {
+  line(ctx, addv(v, { x: 0, y: -s }), addv(v, { x: 0, y: s }));
+  line(ctx, addv(v, { x: -s, y: 0 }), addv(v, { x: s, y: 0 }));
+};
 
 export const render: (ctx: CanvasRenderingContext2D) => void = (ctx) => {
   const { width, height } = env.canvas;
@@ -9,56 +62,32 @@ export const render: (ctx: CanvasRenderingContext2D) => void = (ctx) => {
 
   ctx.clearRect(0, 0, width, height);
 
-  ctx.beginPath();
   ctx.strokeStyle = ctx.fillStyle = 'black';
-  bounds.forEach(([a, b]) => {
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(b.x, b.y);
-  });
-  ctx.stroke();
+  chain(ctx, bounds);
 
-  ctx.beginPath();
   ctx.strokeStyle = ctx.fillStyle = 'black';
-  ctx.ellipse(player.cpos.x, player.cpos.y, 13, 13, 0, 0, ππ);
+  ctx.beginPath();
+  ctx.ellipse(player.cpos.x, player.cpos.y, rl, rl, 0, 0, ππ);
   mouseDown ? ctx.fill() : ctx.stroke();
 
   ctx.strokeStyle = ctx.fillStyle = 'cyan';
-  ctx.beginPath();
-  ctx.moveTo(player.cpos.x - 3, player.cpos.y);
-  ctx.lineTo(player.cpos.x + 3, player.cpos.y);
-  ctx.stroke();
+  plus(ctx, player.cpos, sp);
 
-  ctx.beginPath();
-  ctx.moveTo(player.cpos.x, player.cpos.y + 3);
-  ctx.lineTo(player.cpos.x, player.cpos.y - 3);
-  ctx.stroke();
-
-  ctx.strokeStyle = ctx.fillStyle = 'black';
-  ctx.beginPath();
-  ctx.moveTo(player.ppos.x, player.ppos.y);
-  ctx.lineTo(player.cpos.x, player.cpos.y);
-  ctx.stroke();
-
-  ctx.beginPath();
   ctx.strokeStyle = ctx.fillStyle = 'blue';
-  ctx.ellipse(mouse.cpos.x, mouse.cpos.y, 8, 8, 0, 0, ππ);
+  ctx.beginPath();
+  ctx.ellipse(mouse.cpos.x, mouse.cpos.y, rm, rm, 0, 0, ππ);
   mouseDown ? ctx.fill() : ctx.stroke();
 
-  ctx.beginPath();
   ctx.strokeStyle = ctx.fillStyle = 'red';
-  ctx.ellipse(mouse.ppos.x, mouse.ppos.y, 5, 5, 0, 0, ππ);
+  ctx.beginPath();
+  ctx.ellipse(mouse.ppos.x, mouse.ppos.y, rs, rs, 0, 0, ππ);
   mouseDown ? ctx.fill() : ctx.stroke();
 
   ctx.strokeStyle = ctx.fillStyle = 'green';
-  intersections.forEach(({ x, y }) => {
-    ctx.beginPath();
-    ctx.moveTo(x - 3, y - 3);
-    ctx.lineTo(x + 3, y + 3);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(x - 3, y + 3);
-    ctx.lineTo(x + 3, y - 3);
-    ctx.stroke();
+  intersections.forEach(([, , ipos]) => {
+    cross(ctx, ipos, sc);
   });
+
+  ctx.strokeStyle = ctx.fillStyle = 'magenta';
+  line(ctx, player.ppos, player.cpos);
 };
