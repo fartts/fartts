@@ -5,6 +5,8 @@ export interface Vec2 {
   y: number;
 }
 
+export type Line = [Vec2, Vec2];
+
 export const vec2: (x: number, y: number) => Vec2 = (x, y) => ({ x, y });
 
 export const copy: (v: Vec2) => Vec2 = (v) => vec2(v.x, v.y);
@@ -15,16 +17,19 @@ export const addv: (a: Vec2, b: Vec2) => Vec2 = (a, b) =>
 export const subv: (a: Vec2, b: Vec2) => Vec2 = (a, b) =>
   vec2(a.x - b.x, a.y - b.y);
 
+export const dotp: (a: Vec2, b: Vec2) => number = (a, b) =>
+  a.x * b.x + a.y * b.y;
+
+export const crsp: (a: Vec2, b: Vec2) => number = (a, b) =>
+  a.x * b.y - a.y * b.x;
+
+export const adds: (a: Vec2, s: number) => Vec2 = (a, s) =>
+  vec2(a.x + s, a.y + s);
+
 export const muls: (a: Vec2, s: number) => Vec2 = (a, s) =>
   vec2(a.x * s, a.y * s);
 
 export const size: (v: Vec2) => number = ({ x, y }) => hypot(x, y);
-
-export const dotp: (a: Vec2, b: Vec2) => number = (a, b) =>
-  a.x * b.x + a.y * b.y;
-
-export const crss: (a: Vec2, b: Vec2) => number = (a, b) =>
-  a.x * b.y - a.y * b.x;
 
 export const nrml: (v: Vec2) => Vec2 = (v) => muls(v, 1 / size(v));
 
@@ -42,7 +47,7 @@ export const poiv: (a: [Vec2, Vec2], b: [Vec2, Vec2]) => Vec2 = (
   const ab = subv(b, a);
   const cd = subv(d, c);
 
-  const det = crss(ab, cd);
+  const det = crsp(ab, cd);
 
   if (det === 0) {
     // the two segments are parallel and do not intersect
