@@ -7,6 +7,7 @@ interface Env {
   main: HTMLElement;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
+  scale: number;
 }
 
 const main = el<HTMLElement>('main');
@@ -19,7 +20,7 @@ if (!context) {
 main.style.width = '800px';
 main.style.height = '800px';
 
-const pixelScale = 12;
+const scale = 1;
 let shouldResize = true;
 
 export const handleResize = () => {
@@ -27,7 +28,7 @@ export const handleResize = () => {
     return;
   }
 
-  resize(main, canvas, pixelScale);
+  resize(main, canvas, scale);
   shouldResize = false;
 };
 
@@ -39,4 +40,5 @@ export const env: Env = {
   main,
   canvas,
   context,
+  scale,
 };
