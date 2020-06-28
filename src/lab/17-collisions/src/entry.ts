@@ -21,20 +21,27 @@ const update: (t: number, dt: number) => void = (t, dt) => {
   // const line: [Vec2, Vec2] = [vec2(width * 0.5, height * 0.5), mouse.cpos];
   const line: [Vec2, Vec2] = [player.ppos, npos];
   state.intersections = bounds.reduce<Vec2[]>((acc, [a, b]) => {
-    const i = poiv([a, b], line);
-    return isNaN(i.x) || isNaN(i.y) ? acc : acc.concat(i);
+    const ipos = poiv([a, b], line);
+
+    if (!(isNaN(ipos.x) || isNaN(ipos.y))) {
+      acc.push(ipos);
+    }
+
+    return acc;
   }, []);
 
   if (state.intersections.length) {
-    const pen =
-      size(subv(state.intersections[0], player.ppos)) /
-      size(subv(npos, player.ppos));
-    npos = addv(player.cpos, muls(cvel, 1 - pen));
-    stop();
+    const ipos = state.intersections[0];
+    const pen = size(subv(ipos, player.ppos)) / size(subv(npos, player.ppos));
+    npos = addv(player.cpos, muls(cvel, -pen));
   }
 
   player.ppos = copy(player.cpos);
   player.cpos = copy(npos);
+
+  if (state.intersections.length) {
+    // stop();
+  }
 };
 
 const { isPlaying, start, stop } = loop(create, update, render);
