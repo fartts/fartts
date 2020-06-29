@@ -9,10 +9,32 @@ import { render } from './game/render';
 import { env, handleResize } from './util/env';
 import { loop } from './util/loop';
 import { state } from './util/state';
-import { addv, copy, poiv, size, subv, Vec2 } from './util/vec2';
+import {
+  addv,
+  copy,
+  poiv,
+  size,
+  subv,
+  Vec2,
+  muls,
+  perp,
+  nrml,
+  dotp,
+} from './util/vec2';
 
 import './style.css';
 
+/**
+ * trying to figure out point-line, and eventually circle-line collision with
+ * Verlet integration ... it sorta works, but the point slides through joints
+ * and the collision response isn't right
+ *
+ * @param t - time (ms since loop start)
+ * @param dt - delta time (fixed, 60 / 1_000)
+ *
+ * @see https://ericleong.me/research/circle-line/
+ * @see https://www.metanetsoftware.com/technique/tutorialA.html
+ */
 const update: (t: number, dt: number) => void = (t, dt) => {
   // const { width, height } = env.canvas;
   const { /* mouse, */ bounds, gravity, player } = state;
@@ -40,24 +62,43 @@ const update: (t: number, dt: number) => void = (t, dt) => {
   );
 
   if (state.intersections.length) {
-    const [a, , ipos] = state.intersections[0];
+    // this is: `[bound: Line, proj: Line, poi: Vec2]`
+    const [[a, b], [c, d], i] = state.intersections[0];
 
-    const pens = size(subv(npos, ipos)) / size(subv(npos, player.cpos));
-    console.log(pens, size(subv(a[0], ipos)), size(subv(a[1], ipos)));
+    // a.k.a. `cvel`
+    const v = subv(d, c);
+    // normal vector to the collided bound
+    const n = nrml(perp(subv(b, a)));
 
-    // const pen = size(subv(ipos, player.ppos)) / size(subv(npos, player.ppos));
-    // npos = addv(player.cpos, muls(cvel, -pen));
+    // penetration percent (0 - 1)
+    const pens = size(subv(d, i)) / size(v);
 
-    player.ppos = copy(ipos);
-    player.cpos = copy(ipos);
+    /**
+     * reflected position
+     *
+     * @see https://math.stackexchange.com/a/13263
+     * @see https://math.stackexchange.com/a/3340378
+     * @see https://gamedev.stackexchange.com/a/113394
+     * @see https://gamedev.stackexchange.com/a/23674
+     */
+    const rpos = addv(i, muls(subv(v, muls(n, 2 * dotp(v, n))), 1 - pens));
+
+    // make previous position the point of impact
+    player.ppos = copy(i);
+
+    // the new current position is the reflected position
+    player.cpos = rpos;
+
+    // // for debugging in the renderer
+    // player.cpos = copy(i);
   } else {
     player.ppos = copy(player.cpos);
     player.cpos = copy(npos);
   }
 
-  if (state.intersections.length) {
-    // stop();
-  }
+  // if (state.intersections.length) {
+  //   stop();
+  // }
 };
 
 const { isPlaying, start, stop } = loop(create, update, render);
