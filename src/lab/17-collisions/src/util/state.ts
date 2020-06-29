@@ -1,5 +1,6 @@
 import { vec2 } from '../../../../lib/vec';
 
+import { env } from '../util/env';
 import { Particle, particle } from './particle';
 import { Line, Vec2 } from './vec2';
 
@@ -21,6 +22,6 @@ export const state: State = {
 
   bounds: [],
   intersections: [],
-  gravity: vec2(0, 0.5),
+  gravity: vec2(0, 6 / env.scale),
   player: particle(0, 0),
 };
