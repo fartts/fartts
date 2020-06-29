@@ -20,7 +20,7 @@ if (!context) {
 main.style.width = '800px';
 main.style.height = '800px';
 
-const scale = 1;
+const scale = 12;
 let shouldResize = true;
 
 export const handleResize = () => {
