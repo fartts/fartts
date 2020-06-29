@@ -33,6 +33,8 @@ export const size: (v: Vec2) => number = ({ x, y }) => hypot(x, y);
 
 export const nrml: (v: Vec2) => Vec2 = (v) => muls(v, 1 / size(v));
 
+export const perp: (v: Vec2) => Vec2 = ({ x, y }) => vec2(y, -x);
+
 /**
  * point of intesection (between two line segments)
  *
