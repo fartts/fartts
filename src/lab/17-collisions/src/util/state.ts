@@ -1,6 +1,7 @@
-import { Particle, particle } from './particle';
-import { Vec2, Line } from './vec2';
 import { vec2 } from '../../../../lib/vec';
+
+import { Particle, particle } from './particle';
+import { Line, Vec2 } from './vec2';
 
 export interface State {
   mouse: Particle;
@@ -20,6 +21,6 @@ export const state: State = {
 
   bounds: [],
   intersections: [],
-  gravity: vec2(0, 5),
+  gravity: vec2(0, 0.5),
   player: particle(0, 0),
 };
