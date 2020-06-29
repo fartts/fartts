@@ -1,8 +1,8 @@
-import { ππ, hypot } from '../../../../lib/core/math';
+import { hypot, ππ } from '../../../../lib/core/math';
 
 import { env } from '../util/env';
 import { state } from '../util/state';
-import { Vec2, Line, adds, addv } from '../util/vec2';
+import { adds, addv, Line, Vec2 } from '../util/vec2';
 
 const es = 12 / env.scale;
 
@@ -84,8 +84,18 @@ export const render: (ctx: CanvasRenderingContext2D) => void = (ctx) => {
   mouseDown ? ctx.fill() : ctx.stroke();
 
   ctx.strokeStyle = ctx.fillStyle = 'green';
-  intersections.forEach(([, , ipos]) => {
+  intersections.forEach(([[a, b], [c, d], ipos]) => {
     cross(ctx, ipos, sc);
+
+    // // debugging
+    // const v = subv(d, c);
+    // const n = nrml(perp(subv(b, a)));
+
+    // ctx.strokeStyle = ctx.fillStyle = 'orange';
+    // line(ctx, ipos, addv(ipos, muls(nrml(perp(subv(a, ipos))), 100)));
+
+    // ctx.strokeStyle = ctx.fillStyle = 'teal';
+    // line(ctx, ipos, addv(ipos, subv(v, muls(n, 2 * dotp(v, n)))));
   });
 
   ctx.strokeStyle = ctx.fillStyle = 'magenta';
