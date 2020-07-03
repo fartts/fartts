@@ -13,7 +13,18 @@ module.exports = async function updateIndex(labName, labNumber) {
 
   const linkText = words(labName).join(' ');
   index('ul').append(
-    `<li><a href="./${labNumber}/index.html">${linkText}</a></li>`,
+    `
+      <li>
+        <a href="./${labNumber}/index.html">
+          <span>
+            <i>${linkText}</i>
+          </span>
+        </a>
+      </li>
+    `
+      .split('\n')
+      .map((line) => line.trim())
+      .join(''),
   );
   const indexContents = prettier.format(index.html(), { parser: 'html' });
 
