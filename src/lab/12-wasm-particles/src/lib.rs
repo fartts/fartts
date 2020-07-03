@@ -29,7 +29,7 @@ cfg_if! {
 }
 
 lazy_static! {
-    pub static ref STATE: MutStatic<State> = { MutStatic::from(State::default()) };
+    pub static ref STATE: MutStatic<State> = MutStatic::from(State::default());
 }
 
 #[wasm_bindgen]
