@@ -4,22 +4,22 @@
     "declaration": false,
     "esModuleInterop": true,
     "lib": [
-      "dom",
-      "dom.iterable",
-      "es2015",
-      "es2016",
-      "es2017",
-      "es2018",
-      "esnext",
-      "webworker"
+      "DOM",
+      "DOM.Iterable",
+      "ES2015",
+      "ES2016",
+      "ES2017",
+      "ES2018",
+      "ESNext",
+      "WebWorker"
     ],
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "noEmit": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "strict": true,
-    "target": "es2015",
+    "target": "ES2015",
     "skipLibCheck": true
   },
   "exclude": [
