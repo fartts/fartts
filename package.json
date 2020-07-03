@@ -18,7 +18,8 @@
     "lint:ts": "tslint 'src/**/*.ts'",
     "test": "cargo test && jest",
     "coverage": "open coverage/lcov-report/index.html",
-    "lab": "node ./src/cli"
+    "lab": "node ./src/cli",
+    "screenshots": "ts-node --project scripts/tsconfig.json scripts/screenshots.ts"
   },
   "engines": {
     "node": ">=12",
