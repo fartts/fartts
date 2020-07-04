@@ -1,3 +1,11 @@
+# [1.28.0](https://github.com/fartts/fartts/compare/v1.27.1...v1.28.0) (2020-07-03)
+
+
+### Features
+
+* **lab:** add screenshots for all my experiments so far, some are fine, some need some help ([adb59b8](https://github.com/fartts/fartts/commit/adb59b833f73580a6d63237a156f098d82fe03ee))
+* **lab:** final html/css tweaks, update the cli script ([caf82d0](https://github.com/fartts/fartts/commit/caf82d07b2a8488597bc141918463bfe242c697e))
+
 ## [1.27.1](https://github.com/fartts/fartts/compare/v1.27.0...v1.27.1) (2020-06-04)
 
 
