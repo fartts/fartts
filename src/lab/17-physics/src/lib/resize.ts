@@ -1,4 +1,6 @@
-import { dpr, max } from './browser-utils';
+import { max } from '../../../../lib/core/math';
+
+import { dpr } from './browser-utils';
 
 interface ResizeableElement extends HTMLElement {
   width: number;

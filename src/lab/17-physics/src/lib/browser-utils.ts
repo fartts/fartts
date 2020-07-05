@@ -4,9 +4,6 @@ export const {
   devicePixelRatio: dpr,
 } = window;
 
-export const { max, min, PI: π } = Math;
-export const ππ = 2 * π;
-
 export const el = <T extends Element>(selectors: string): T => {
   const element = document.querySelector<T>(selectors);
   if (element !== null) return element;
