@@ -1,4 +1,4 @@
-import { atan2, min, toDegrees, ππ } from '../../../lib/core/math';
+import { atan2, min, toDegrees, ππ, cos, sin } from '../../../lib/core/math';
 import { cosWave, sinWave } from '../../../lib/core/wave';
 
 import { el, on, raf } from './lib/browser-utils';
@@ -43,15 +43,47 @@ const update = (t: number, _dt: number) => {
   py = yWave(t);
 };
 
+const plus = (x: number, y: number, r: number) => {
+  context.beginPath();
+  context.moveTo(x - r, y);
+  context.lineTo(x + r, y);
+  context.moveTo(x, y - r);
+  context.lineTo(x, y + r);
+  context.stroke();
+};
+
 const render = (_lag: number) => {
   const { width: w, height: h } = canvas;
+
   const hw = w / 2;
   const hh = h / 2;
   const r = min(w, h) / 4;
 
-  context.fillStyle = `hsla(${toDegrees(atan2(py, px))}, 80%, 50%, 0.65)`;
+  const a = atan2(py, px);
+  const x0 = hw - cos(a) * r + px;
+  const y0 = hh - sin(a) * r + py;
+  const x1 = hw + cos(a) * r + px;
+  const y1 = hh + sin(a) * r + py;
+
+  const gradient = context.createLinearGradient(x0, y0, x1, y1);
+  const hue = toDegrees(a);
+
+  const j = 42;
+  for (let i = 0; i < j; i += 2) {
+    gradient.addColorStop(
+      i / (j - 1),
+      `hsla(${(hue + ((360 / j) * i) / 14) % 360}, 80%, 50%, 0.85)`,
+    );
+    gradient.addColorStop((i + 1) / j, 'transparent');
+  }
+
+  context.fillStyle = gradient;
   context.ellipse(hw + px, hh + py, r, r, 0, 0, ππ);
   context.fill();
+
+  context.strokeStyle = 'transparent';
+  plus(x0, y0, 1.5);
+  plus(x1, y1, 1.5);
 };
 
 const tick = (realTime: DOMHighResTimeStamp) => {
