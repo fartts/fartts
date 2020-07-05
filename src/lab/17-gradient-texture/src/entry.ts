@@ -10,7 +10,7 @@ const main = el<HTMLElement>('main');
 const canvas = el<HTMLCanvasElement>('canvas');
 const context = canvas.getContext('2d', {
   alpha: false,
-  desynchronized: true,
+  // desynchronized: true,
 });
 
 if (!context) {
@@ -112,3 +112,45 @@ const tick = (realTime: DOMHighResTimeStamp) => {
 };
 
 frameId = raf(tick);
+
+if ('MediaRecorder' in window && MediaRecorder.isTypeSupported('video/webm')) {
+  const button = document.createElement('button');
+  button.innerText = 'WEBM';
+
+  button.addEventListener('click', () => {
+    // @ts-ignore
+    const stream = canvas.captureStream(30);
+    const recorder = new MediaRecorder(stream, {
+      mimeType: 'video/webm',
+      videoBitsPerSecond: 100_000_000,
+    });
+    const chunks: BlobPart[] = [];
+
+    recorder.ondataavailable = (event) => chunks.push(event.data);
+    recorder.onstop = () => {
+      const blob = new Blob(chunks, {
+        type: 'video/webm',
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+
+      a.setAttribute('href', url);
+      a.setAttribute('download', 'gradient-texture.webm');
+      a.setAttribute('target', '_blank');
+      a.style.display = 'none';
+
+      document.body.appendChild(a);
+
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+
+    (() => {
+      recorder.start();
+      setTimeout(() => recorder.stop(), p);
+    })();
+  });
+
+  main.appendChild(button);
+}
