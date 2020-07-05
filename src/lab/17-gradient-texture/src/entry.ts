@@ -77,6 +77,9 @@ const render = (_lag: number) => {
     gradient.addColorStop((i + 1) / j, 'transparent');
   }
 
+  context.fillStyle = 'black';
+  context.fillRect(0, 0, w, h);
+
   context.fillStyle = gradient;
   context.ellipse(hw + px, hh + py, r, r, 0, 0, ππ);
   context.fill();
