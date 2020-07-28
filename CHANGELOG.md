@@ -1,3 +1,10 @@
+## [1.29.1](https://github.com/fartts/fartts/compare/v1.29.0...v1.29.1) (2020-07-28)
+
+
+### Bug Fixes
+
+* empty fix to bump the minor version ([0a67255](https://github.com/fartts/fartts/commit/0a6725595dc94df1abbc10bb2b77466b4ee7bc1b))
+
 # [1.29.0](https://github.com/fartts/fartts/compare/v1.28.0...v1.29.0) (2020-07-05)
 
 
