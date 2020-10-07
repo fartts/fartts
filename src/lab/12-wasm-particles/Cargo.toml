@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 default = ["console_error_panic_hook", "wee_alloc"]
 
 [dependencies]
-cfg-if = "0.1.10"
+cfg-if = "1.0.0"
 console_error_panic_hook = { version = "0.1.6", optional = true }
 lazy_static = "1.4.0"
 mut_static = "5.0.0"
