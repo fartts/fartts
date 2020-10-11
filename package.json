@@ -64,7 +64,7 @@
     "parcel-plugin-wasm-pack": "6.0.1",
     "prettier": "2.1.2",
     "puppeteer": "5.3.1",
-    "semantic-release": "17.1.2",
+    "semantic-release": "17.2.0",
     "ts-jest": "26.4.1",
     "ts-node": "9.0.0",
     "tslint": "6.1.3",
