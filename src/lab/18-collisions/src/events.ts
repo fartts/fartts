@@ -15,7 +15,7 @@ export function off<T extends EventTarget, U extends keyof HTMLElementEventMap>(
   target: T,
   forEvent: U,
   listener: Listener<U>,
-  options: boolean | AddEventListenerOptions = false,
+  options: boolean | EventListenerOptions = false,
 ) {
   target.removeEventListener(forEvent, listener as EventListener, options);
 }
