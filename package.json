@@ -63,7 +63,7 @@
     "parcel-bundler": "1.12.4",
     "parcel-plugin-wasm-pack": "6.0.1",
     "prettier": "2.1.2",
-    "puppeteer": "5.4.0",
+    "puppeteer": "5.4.1",
     "semantic-release": "17.2.1",
     "ts-jest": "26.4.3",
     "ts-node": "9.0.0",
