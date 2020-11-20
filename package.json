@@ -62,7 +62,7 @@
     "lodash": "4.17.20",
     "parcel-bundler": "1.12.4",
     "parcel-plugin-wasm-pack": "6.0.1",
-    "prettier": "2.1.2",
+    "prettier": "2.2.0",
     "puppeteer": "5.5.0",
     "semantic-release": "17.2.4",
     "ts-jest": "26.4.4",
