@@ -2566,10 +2566,10 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-"cheerio-select@github:cheeriojs/cheerio-select":
-  version "0.0.0"
-  uid b98d6200519fe229904f2ae39ea44ed8e6d19182
-  resolved "https://codeload.github.com/cheeriojs/cheerio-select/tar.gz/b98d6200519fe229904f2ae39ea44ed8e6d19182"
+cheerio-select-tmp@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/cheerio-select-tmp/-/cheerio-select-tmp-0.1.0.tgz#cfa11dd0a8e2f2b74a5cb6adeaac7f8fd95c0c42"
+  integrity sha512-kx/pq9hxLo6FhjiYqUheSOV0Eb729ZwkXXPrPTeK6kl/VMgaUlsYoAOv3nOJZcHk++V9pI17YNNngtbLVPTB9A==
   dependencies:
     css-select "^3.1.2"
     css-what "^4.0.0"
@@ -2577,12 +2577,12 @@ chardet@^0.7.0:
     domhandler "^4.0.0"
     domutils "^2.4.4"
 
-cheerio@1.0.0-rc.4:
-  version "1.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.4.tgz#a0e60d686400a3017bb2effeca503ce6b4bde83d"
-  integrity sha512-cpDpxhXN2XTyN7Zq28jSjjRk/mi6j0PDDmhEdwGN7di0WqHzp8/y+XWyU1KrZ2MZgrB7AwSj7d8AQ5Vi64dBMw==
+cheerio@1.0.0-rc.5:
+  version "1.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.5.tgz#88907e1828674e8f9fee375188b27dadd4f0fa2f"
+  integrity sha512-yoqps/VCaZgN4pfXtenwHROTp8NG6/Hlt4Jpz2FEP0ZJQ+ZUkVDd0hAPDNKhj3nakpfPt/CNs57yEtxD1bXQiw==
   dependencies:
-    cheerio-select "github:cheeriojs/cheerio-select"
+    cheerio-select-tmp "^0.1.0"
     dom-serializer "~1.2.0"
     domhandler "^4.0.0"
     entities "~2.1.0"
