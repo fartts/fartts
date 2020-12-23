@@ -12,7 +12,7 @@ module.exports = async function createLab(files, arg, { isWasm }) {
   const { length } = await readdir(labsDir);
 
   const labName = kebabCase(arg);
-  const labNumber = kebabCase(`${length - 3}-${labName}`);
+  const labNumber = kebabCase(`${length - 4}-${labName}`);
   const labDir = path.join(labsDir, labNumber);
 
   const entries = Object.entries(files);
