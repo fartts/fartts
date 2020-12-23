@@ -1,3 +1,25 @@
+# [1.30.0](https://github.com/fartts/fartts/compare/v1.29.1...v1.30.0) (2020-12-23)
+
+
+### Bug Fixes
+
+* use correct typing for off ([76b4065](https://github.com/fartts/fartts/commit/76b406535d45f82d442877c3bbe9f272c0bba32c))
+
+
+### Features
+
+* **lab/17:** a fixed timestep is not trivial ([e9dea06](https://github.com/fartts/fartts/commit/e9dea06ccb22c458f7984a4f847257c8734202e5))
+* **lab/17:** add an ellipse where the mouse is ([9ba6279](https://github.com/fartts/fartts/commit/9ba6279f5b62211f20bf1d8c7f406202a5cf43e3))
+* **lab/17:** adds some stuff, collision detection, but the restitution doesn't work yet ([9028b99](https://github.com/fartts/fartts/commit/9028b997058172256c9bbd9b13feb183c4267feb))
+* **lab/17:** loop gets it's own module, input/state in the entry ([79c2902](https://github.com/fartts/fartts/commit/79c2902e04740a71c00146d2c9ad0c6a855dc75d))
+* **lab/17:** set up the loop boilerplate stuff ([47a4f3c](https://github.com/fartts/fartts/commit/47a4f3c2183d8b263cc87ad7914e7ea318d11bac))
+* **lab/17:** split env stuff out ... I don't love it ([9b653c4](https://github.com/fartts/fartts/commit/9b653c44fa709ca7484d821551640f9dd52f7098))
+* **lab/17/env:** export scale as part of env ([9af8169](https://github.com/fartts/fartts/commit/9af8169a4a3ef303fc46fe31ca0ffe487a072458))
+* **lab/17/vec2:** add a perp(endicular) function, it's clockwise ([d751e2f](https://github.com/fartts/fartts/commit/d751e2feabca736bc20fac37fb8338511aac8368))
+* **lab/17/vec2:** add dot and cross product and a normalize function ([5e27da1](https://github.com/fartts/fartts/commit/5e27da1e49cd288e52ec2da7ee52bc35f5998189))
+* **lab/18:** add my collisions experiment, and a screenshot for it ([8e6e4e8](https://github.com/fartts/fartts/commit/8e6e4e8491d0d8090a18714b647b3589d241d3a0))
+* **yarn lab ts collisions:** add a new lab to work out collision stuff ([546a9be](https://github.com/fartts/fartts/commit/546a9be9860976e1c56779f6e574e40be99d77b1))
+
 ## [1.29.1](https://github.com/fartts/fartts/compare/v1.29.0...v1.29.1) (2020-07-28)
 
 
