@@ -35,7 +35,7 @@ import './style.css';
  * @see https://ericleong.me/research/circle-line/
  * @see https://www.metanetsoftware.com/technique/tutorialA.html
  */
-const update: (t: number, dt: number) => void = (t, dt) => {
+const update: (t: number, dt: number) => void = (/* t, dt */) => {
   // const { width, height } = env.canvas;
   const { /* mouse, */ bounds, gravity, player } = state;
 

@@ -21,7 +21,7 @@ function toKeyIndexPairs(
  * @param {string[][]} baseKeys
  * @returns {Map<string, number>}
  */
-export function toKeyIndexMap(baseKeys: string[][]) {
+export function toKeyIndexMap(baseKeys: string[][]): Map<string, number> {
   return new Map(
     baseKeys.reduce(
       (acc: [string, number][], keys) => [
@@ -60,7 +60,7 @@ function* toSwizzled(keys: string[], key = '', depth = 4): Iterable<string> {
  * @param {string[][]} baseKeys
  * @returns {Set<string>}
  */
-export function toSwizzledSet(baseKeys: string[][]) {
+export function toSwizzledSet(baseKeys: string[][]): Set<string> {
   return new Set(
     baseKeys.reduce(
       (acc: string[], keys) => [...acc, ...Array.from(toSwizzled(keys))],

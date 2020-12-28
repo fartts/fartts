@@ -7,7 +7,7 @@ export function on<T extends EventTarget, U extends keyof HTMLElementEventMap>(
   forEvent: U,
   listener: Listener<U>,
   options: boolean | AddEventListenerOptions = false,
-) {
+): void {
   target.addEventListener(forEvent, listener as EventListener, options);
 }
 
@@ -16,6 +16,6 @@ export function off<T extends EventTarget, U extends keyof HTMLElementEventMap>(
   forEvent: U,
   listener: Listener<U>,
   options: boolean | EventListenerOptions = false,
-) {
+): void {
   target.removeEventListener(forEvent, listener as EventListener, options);
 }

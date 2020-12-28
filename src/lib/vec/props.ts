@@ -80,7 +80,9 @@ function setterFor<V extends Float32Array>(
       };
 }
 
-export function createProps<V extends Float32Array>(baseKeys: string[][]) {
+export function createProps<V extends Float32Array>(
+  baseKeys: string[][],
+): PropertyDescriptorMap {
   const swizzledSet = toSwizzledSet(baseKeys);
   const keyIndexMap = toKeyIndexMap(baseKeys);
 

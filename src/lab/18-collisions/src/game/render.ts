@@ -84,7 +84,9 @@ export const render: (ctx: CanvasRenderingContext2D) => void = (ctx) => {
   mouseDown ? ctx.fill() : ctx.stroke();
 
   ctx.strokeStyle = ctx.fillStyle = 'green';
-  intersections.forEach(([[a, b], [c, d], ipos]) => {
+
+  // prettier-ignore
+  intersections.forEach(([/* [a, b] */, /* [c, d] */, ipos]) => {
     cross(ctx, ipos, sc);
 
     // // debugging

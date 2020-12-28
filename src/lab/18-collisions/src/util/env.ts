@@ -23,7 +23,7 @@ main.style.height = '800px';
 const scale = 12;
 let shouldResize = true;
 
-export const handleResize = () => {
+export const handleResize = (): void => {
   if (!shouldResize) {
     return;
   }

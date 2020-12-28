@@ -159,7 +159,7 @@ function draw(t: number): void {
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array(points.map((xy, i) => xy(t))),
+    new Float32Array(points.map((xy /* , i */) => xy(t))),
     gl.STATIC_DRAW,
   );
 

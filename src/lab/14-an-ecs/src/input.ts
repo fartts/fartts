@@ -36,13 +36,13 @@ attend(c, 'mouseup', ({ buttons }) => {
 });
 
 export const input = {
-  get mouseX() {
+  get mouseX(): number {
     return mouseX;
   },
-  get mouseY() {
+  get mouseY(): number {
     return mouseY;
   },
-  get mouseDown() {
+  get mouseDown(): boolean {
     return mouseDown;
   },
 };

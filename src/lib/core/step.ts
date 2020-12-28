@@ -30,7 +30,7 @@ export function step(
   return (t: number) => floor(waveFn(t));
 }
 
-export const cosStep = (...args: number[]) => step(cos, ...args);
-export const sawStep = (...args: number[]) => step(saw, ...args);
-export const sinStep = (...args: number[]) => step(sin, ...args);
-export const triStep = (...args: number[]) => step(tri, ...args);
+export const cosStep = (...args: number[]): WaveFunction => step(cos, ...args);
+export const sawStep = (...args: number[]): WaveFunction => step(saw, ...args);
+export const sinStep = (...args: number[]): WaveFunction => step(sin, ...args);
+export const triStep = (...args: number[]): WaveFunction => step(tri, ...args);

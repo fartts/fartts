@@ -3,7 +3,7 @@ module.exports = {
   trailingComma: 'all',
   overrides: [
     {
-      files: ['ts*.json'],
+      files: ['.eslintrc.json', 'tsconfig.json'],
       options: { parser: 'json-stringify' },
     },
   ],

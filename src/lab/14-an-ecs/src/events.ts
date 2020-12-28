@@ -10,7 +10,7 @@ export function attend<
   forEvent: U,
   listener: Listener<U>,
   options: boolean | AddEventListenerOptions = false,
-) {
+): void {
   target.addEventListener(forEvent, listener as EventListener, options);
 }
 
@@ -22,6 +22,6 @@ export function ignore<
   forEvent: U,
   listener: Listener<U>,
   options: boolean | AddEventListenerOptions = false,
-) {
+): void {
   target.removeEventListener(forEvent, listener as EventListener, options);
 }

@@ -89,7 +89,7 @@ const buffer = gl.createBuffer();
 let a = 0;
 let didResize = false;
 
-function draw(t: number) {
+function draw(/* t: number */) {
   requestAnimationFrame(draw);
 
   if (didResize) {

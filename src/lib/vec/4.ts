@@ -8,7 +8,7 @@ class Vec4 extends Float32Array {
   //   return Float32Array;
   // }
 
-  public toString() {
+  public toString(): string {
     return `vec${Vec4.dimensions}(${super.toString()})`;
   }
 }

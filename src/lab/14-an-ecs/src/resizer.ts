@@ -20,7 +20,11 @@ function nearest(multipleOf = 1, startingAt = 0) {
     : startingAt;
 }
 
-function resize(container: HTMLElement, target: ResizeableElement, scale = 1) {
+function resize(
+  container: HTMLElement,
+  target: ResizeableElement,
+  scale = 1,
+): void {
   const { clientHeight: h, clientWidth: w } = container;
 
   const width = nearest(scale, w);
@@ -35,7 +39,7 @@ function resize(container: HTMLElement, target: ResizeableElement, scale = 1) {
 }
 
 export const resizer = {
-  get shouldResize() {
+  get shouldResize(): boolean {
     return shouldResize;
   },
   resize,
