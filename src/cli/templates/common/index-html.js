@@ -14,7 +14,7 @@ module.exports = ({ labNumber }) => `\
   </head>
 
   <body>
-    <main role="main">
+    <main>
       <canvas></canvas>
     </main>
     <script src="./src/entry.ts"></script>
