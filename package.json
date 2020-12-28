@@ -15,7 +15,7 @@
     "start": "parcel src/lab/{index.html,README.md}",
     "lint": "yarn lint:rs && yarn lint:ts",
     "lint:rs": "cargo fmt --all -- --check && cargo clippy",
-    "lint:ts": "tslint 'src/**/*.ts'",
+    "lint:ts": "eslint 'src/**/*.ts'",
     "test": "cargo test && jest",
     "coverage": "open coverage/lcov-report/index.html",
     "lab": "node ./src/cli",
