@@ -17,7 +17,7 @@ module.exports = ({ labNumber }) => `\
     <main>
       <canvas></canvas>
     </main>
-    <script src="./src/entry.ts"></script>
+    <script src="./src/entry.ts" defer></script>
   </body>
 </html>
 `;
