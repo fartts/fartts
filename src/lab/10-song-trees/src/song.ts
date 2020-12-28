@@ -32,13 +32,13 @@ let canPlayThrough = false;
 });
 
 export default {
-  play() {
+  play(): void {
     song.play().catch(({ name, message }) => {
       console.log(name, message); // tslint:disable-line
     });
   },
 
-  get canPlayThrough() {
+  get canPlayThrough(): boolean {
     return canPlayThrough;
   },
 };

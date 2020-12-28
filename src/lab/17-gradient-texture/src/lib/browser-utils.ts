@@ -11,13 +11,15 @@ export const el = <T extends Element>(selectors: string): T => {
   throw new Error(`Couldn't get "${selectors}" element`);
 };
 
-interface Listener<K extends keyof HTMLElementEventMap> extends EventListener {
-  (event: HTMLElementEventMap[K]): void;
+interface EventMap extends HTMLElementEventMap, DocumentEventMap {}
+
+interface Listener<K extends keyof EventMap> extends EventListener {
+  (event: EventMap[K]): void;
 }
 
 type Toggler = <
   T extends EventTarget,
-  U extends keyof HTMLElementEventMap,
+  U extends keyof EventMap,
   V extends EventListenerOptions
 >(
   target: T,

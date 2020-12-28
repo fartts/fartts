@@ -131,7 +131,7 @@ canvasContext.useProgram(prog);
 
 let a = 0;
 
-function draw(t: number) {
+function draw(/* t: number */) {
   requestAnimationFrame(draw);
 
   a = (a + 1) % 360;

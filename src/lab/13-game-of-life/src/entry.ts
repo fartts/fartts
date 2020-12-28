@@ -66,7 +66,7 @@ function touchPointerMove(event: TouchEvent) {
 function on<
   T extends EventTarget,
   U extends keyof DocumentEventMap,
-  V = (this: T, event: DocumentEventMap[U]) => any
+  V = (this: T, event: DocumentEventMap[U]) => void
 >(target: T, forEvent: U, listener: V) {
   target.addEventListener(forEvent, (listener as unknown) as EventListener);
 }

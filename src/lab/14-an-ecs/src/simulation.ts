@@ -22,7 +22,7 @@ interface Vec2 {
   y: number;
 }
 
-type Factory = () => [string, {}];
+type Factory = () => [string, unknown];
 type Positions = Map<number, Vec2>;
 type Rotations = Map<
   number,
@@ -35,7 +35,7 @@ type Rotations = Map<
 // type Velocities = Map<number, Vec2>;
 
 const entities: number[] = [];
-const components = new Map<string, Map<number, {}>>();
+const components = new Map<string, Map<number, unknown>>();
 
 const size = 50;
 let positions: Positions;
@@ -56,8 +56,8 @@ function createEntities(count: number, factories: Factory[]) {
       const [name, data] = factory();
 
       const component = components.has(name)
-        ? (components.get(name) as Map<number, {}>)
-        : new Map<number, {}>();
+        ? (components.get(name) as Map<number, unknown>)
+        : new Map<number, unknown>();
 
       component.set(id, data);
       components.set(name, component);
@@ -76,7 +76,7 @@ const maxRotationSpeed = 0.01;
 // make & break (or kill)
 // activate & deactivate
 // enable & disable
-export function create(width: number, height: number) {
+export function create(width: number, height: number): void {
   // reset entites here
   const rows = floor(height / size);
   const cols = floor(width / size);
@@ -115,7 +115,7 @@ export function create(width: number, height: number) {
   rotations = components.get('rotation') as Rotations;
 }
 
-export function update(dt: DOMHighResTimeStamp) {
+export function update(dt: DOMHighResTimeStamp): void {
   rotations.forEach(
     (
       { currentRotation, currentRotationSpeed, initialRotationSpeed },
@@ -142,7 +142,7 @@ export function update(dt: DOMHighResTimeStamp) {
   );
 }
 
-export function render(ctx: CanvasRenderingContext2D) {
+export function render(ctx: CanvasRenderingContext2D): void {
   ctx.beginPath();
 
   positions.forEach(({ x, y }, key) => {
@@ -165,7 +165,7 @@ export function render(ctx: CanvasRenderingContext2D) {
   ctx.stroke();
 }
 
-export function remove() {
+export function remove(): void {
   entities.splice(0);
   components.set('position', new Map());
   components.set('rotation', new Map());

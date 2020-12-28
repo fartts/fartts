@@ -54,8 +54,12 @@ type CurriedWaveFunction = (
 ) => WaveFunction;
 
 export const [cosWave, sawWave, sinWave, triWave]: CurriedWaveFunction[] = [
-  (p = 1000, min = -1, max = 1, o = 0) => wave(cos, p, min, max, o),
-  (p = 1000, min = -1, max = 1, o = 0) => wave(saw, p, min, max, o),
-  (p = 1000, min = -1, max = 1, o = 0) => wave(sin, p, min, max, o),
-  (p = 1000, min = -1, max = 1, o = 0) => wave(tri, p, min, max, o),
+  (p = 1000, min = -1, max = 1, o = 0): WaveFunction =>
+    wave(cos, p, min, max, o),
+  (p = 1000, min = -1, max = 1, o = 0): WaveFunction =>
+    wave(saw, p, min, max, o),
+  (p = 1000, min = -1, max = 1, o = 0): WaveFunction =>
+    wave(sin, p, min, max, o),
+  (p = 1000, min = -1, max = 1, o = 0): WaveFunction =>
+    wave(tri, p, min, max, o),
 ];

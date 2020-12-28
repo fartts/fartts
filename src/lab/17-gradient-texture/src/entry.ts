@@ -1,10 +1,16 @@
 import { atan2, min, toDegrees, ππ, cos, sin } from '../../../lib/core/math';
 import { cosWave, sinWave } from '../../../lib/core/wave';
 
-import { el, on, raf } from './lib/browser-utils';
+import { caf, el, on, raf } from './lib/browser-utils';
 import { resize } from './lib/resize';
 
 import './style.css';
+
+declare global {
+  interface HTMLCanvasElement {
+    captureStream(frameRate?: number): MediaStream;
+  }
+}
 
 const main = el<HTMLElement>('main');
 const canvas = el<HTMLCanvasElement>('canvas');
@@ -38,7 +44,7 @@ const yWave = sinWave(p, -3, 3);
 let px = xWave(0);
 let py = yWave(0);
 
-const update = (t: number, _dt: number) => {
+const update = (t: number /* , dt: number */) => {
   px = xWave(t);
   py = yWave(t);
 };
@@ -52,7 +58,7 @@ const plus = (x: number, y: number, r: number) => {
   context.stroke();
 };
 
-const render = (_lag: number) => {
+const render = (/* lag: number */) => {
   const { width: w, height: h } = canvas;
 
   const hw = w / 2;
@@ -102,23 +108,30 @@ const tick = (realTime: DOMHighResTimeStamp) => {
   }
 
   while (overTime >= frameTime) {
-    update(time, frameTime);
+    update(time /* , frameTime */);
     overTime -= frameTime;
   }
 
-  render(overTime / frameTime);
+  render(/* overTime / frameTime */);
 
   prevTime = time;
 };
 
 frameId = raf(tick);
 
+on(window, 'visibilitychange', () => {
+  caf(frameId);
+
+  if (!document.hidden) {
+    frameId = raf(tick);
+  }
+});
+
 if ('MediaRecorder' in window && MediaRecorder.isTypeSupported('video/webm')) {
   const button = document.createElement('button');
   button.innerText = 'WEBM';
 
   button.addEventListener('click', () => {
-    // @ts-ignore
     const stream = canvas.captureStream(30);
     const recorder = new MediaRecorder(stream, {
       mimeType: 'video/webm',

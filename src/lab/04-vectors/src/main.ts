@@ -93,7 +93,7 @@ function getParticle() {
 
 const particles: IParticle[] = new Array(50)
   .fill(true)
-  .reduce((acc, _, i) => acc.concat(getParticle()), []);
+  .reduce((acc /* , , i */) => acc.concat(getParticle()), []);
 
 const getPoints = (dt: number) =>
   particles.reduce((acc: number[], p) => {
@@ -148,7 +148,7 @@ function update(t: number, dt: number): void {
   points = getPoints(dt);
 }
 
-function render(lag: number): void {
+function render(/* lag: number */): void {
   if (resize(c, m)) {
     setUniforms(c.width, c.height);
   }
