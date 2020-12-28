@@ -1,3 +1,10 @@
+## [1.30.1](https://github.com/fartts/fartts/compare/v1.30.0...v1.30.1) (2020-12-27)
+
+
+### Bug Fixes
+
+* **lock:** upgrade transitive deps, hopefully fix some security issues ([63e4bed](https://github.com/fartts/fartts/commit/63e4bed4d7624f9613103079539704464ea05c64))
+
 # [1.30.0](https://github.com/fartts/fartts/compare/v1.29.1...v1.30.0) (2020-12-23)
 
 
