@@ -2,6 +2,6 @@
 @import '../../src/styles/cover.css';
 
 canvas {
-  width: 800px;
-  height: 800px;
+  width: 100%;
+  height: 100%;
 }
