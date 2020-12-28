@@ -16,7 +16,7 @@ export function resize(
   container: HTMLElement,
   target: ResizeableElement,
   scale = 1,
-) {
+): void {
   const { clientHeight: h, clientWidth: w } = container;
 
   const width = nearest(scale, w);

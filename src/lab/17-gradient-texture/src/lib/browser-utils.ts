@@ -17,7 +17,7 @@ interface Listener<K extends keyof HTMLElementEventMap> extends EventListener {
 
 type Toggler = <
   T extends EventTarget,
-  U extends keyof HTMLElementEventMap,
+  U extends keyof HTMLElementEventMap | keyof DocumentEventMap,
   V extends EventListenerOptions
 >(
   target: T,

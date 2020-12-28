@@ -1,7 +1,15 @@
 import './style.css';
 
 import { el, rAF } from '../../../lib/core/dom';
-import { π, ππ, max, sin, cos, atan2, min, abs } from '../../../lib/core/math';
+import {
+  π,
+  ππ,
+  /* max, */ sin,
+  cos,
+  atan2,
+  min,
+  abs,
+} from '../../../lib/core/math';
 import { sinWave, cosWave } from '../../../lib/core/wave';
 
 import { on } from './events';
@@ -21,15 +29,14 @@ on(window, 'resize', () => {
   shouldResize = true;
 });
 
-const getCanvasScale = () => {
-  const { clientWidth: mw, clientHeight: mh } = main;
-  const { width: cw, height: ch } = canvas;
+// const getCanvasScale = () => {
+//   const { clientWidth: mw, clientHeight: mh } = main;
+//   const { width: cw, height: ch } = canvas;
 
-  return max(mw / cw, mh / ch);
-};
+//   return max(mw / cw, mh / ch);
+// };
 
-// @ts-ignore
-let canvasScale = getCanvasScale();
+// let canvasScale = getCanvasScale();
 
 const pixelScale = 12;
 const frameTime = 1_000 / 60;
@@ -102,8 +109,8 @@ const angula: (a: Particle, b: Particle, c: Particle) => void = (a, b, c) => {
   }
 };
 
-const update = (t: number, dt: number) => {
-  particles.forEach((p, i) => {
+const update = (t: number /* , dt: number */) => {
+  particles.forEach((p /* , i */) => {
     const v: Vector = {
       x: (p.cpos.x - p.ppos.x) * drag,
       y: (p.cpos.y - p.ppos.y) * drag,
@@ -236,7 +243,7 @@ const tick = (time: DOMHighResTimeStamp) => {
     resize(main, canvas, pixelScale);
     shouldResize = false;
 
-    canvasScale = getCanvasScale();
+    // canvasScale = getCanvasScale();
     xw = sinWave(750, canvas.width / 2 - 14, canvas.width / 2 + 16);
     yw = cosWave(
       750,
@@ -266,7 +273,7 @@ const tick = (time: DOMHighResTimeStamp) => {
 
   // every subsequent frame
   while (overTime >= frameTime) {
-    update(normalTime, frameTime);
+    update(normalTime /* , frameTime */);
     overTime -= frameTime;
   }
 

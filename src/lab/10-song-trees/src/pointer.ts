@@ -7,15 +7,15 @@ let y = 0;
 let isDown = false;
 
 const pointer = {
-  get x() {
+  get x(): number {
     return x;
   },
 
-  get y() {
+  get y(): number {
     return y;
   },
 
-  get isDown() {
+  get isDown(): boolean {
     return isDown;
   },
 };

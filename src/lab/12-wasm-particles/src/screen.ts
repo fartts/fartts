@@ -28,7 +28,7 @@ function on(
   target: EventTarget,
   type: string,
   listener: EventListener,
-  useCapture: boolean = false,
+  useCapture = false,
 ) {
   target.addEventListener(type, listener, useCapture);
 }

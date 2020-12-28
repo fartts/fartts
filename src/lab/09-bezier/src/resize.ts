@@ -12,7 +12,7 @@ on('resize', () => {
   didResizeWindow = true;
 });
 
-export function shouldResize() {
+export function shouldResize(): boolean {
   return didResizeWindow;
 }
 
