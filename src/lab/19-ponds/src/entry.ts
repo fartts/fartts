@@ -77,22 +77,28 @@ const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
 const pond = () => {
   const { width: w, height: h } = canvas;
 
-  const rw = w * 0.8;
-  const rh = h * 0.8;
+  const rectWidth = w * 0.8;
+  const rectHeight = h * 0.8;
 
-  const hw = w / 2;
-  const hh = h / 2;
+  const halfWidth = w / 2;
+  const halfHeight = h / 2;
 
-  const r = min(hw, hh) * 0.4;
-  const line = min(rw, rh) * 0.025;
-  const circ = ππ * r + (rw - r * 2) * 2 + (rh - r * 2) * 2;
-  const dash = circ / 30;
+  const r = min(halfWidth, halfHeight) * 0.4;
+  const lineWidth = min(rectWidth, rectHeight) * 0.025;
+  const C = ππ * r + (rectWidth - r * 2) * 2 + (rectHeight - r * 2) * 2;
+  const dash = C / 30;
 
   ctx.strokeStyle = 'hsl(50, 10%, 90%)';
-  ctx.lineWidth = line;
+  ctx.lineWidth = lineWidth;
   ctx.setLineDash([dash * (17 / 32), dash * (15 / 32)]);
 
-  roundRect(hw - rw / 2, hh - rh / 2, rw, rh, r);
+  roundRect(
+    halfWidth - rectWidth / 2,
+    halfHeight - rectHeight / 2,
+    rectWidth,
+    rectHeight,
+    r,
+  );
   ctx.stroke();
 };
 
