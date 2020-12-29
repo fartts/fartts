@@ -3,6 +3,34 @@ import type { AppState } from './types';
 
 const hπ = π / 2;
 
+export const topLeft = (
+  { ctx }: Pick<AppState, 'ctx'>,
+  x: number,
+  y: number,
+  r: number,
+): void => ctx.arc(x, y, r, π, π + hπ);
+
+export const topRight = (
+  { ctx }: Pick<AppState, 'ctx'>,
+  x: number,
+  y: number,
+  r: number,
+): void => ctx.arc(x, y, r, π + hπ, 0);
+
+export const bottomRight = (
+  { ctx }: Pick<AppState, 'ctx'>,
+  x: number,
+  y: number,
+  r: number,
+): void => ctx.arc(x, y, r, 0, hπ);
+
+export const bottomLeft = (
+  { ctx }: Pick<AppState, 'ctx'>,
+  x: number,
+  y: number,
+  r: number,
+): void => ctx.arc(x, y, r, hπ, π);
+
 /**
  * apparently this is coming to canvas at some point
  * @see https://www.chromestatus.com/feature/5678204184428544
@@ -19,22 +47,20 @@ export const roundRect = (
   ctx.beginPath();
 
   // top left
-  ctx.arc(x + r, y + r, r, π, π + hπ);
+  topLeft({ ctx }, x + r, y + r, r);
   ctx.lineTo(x + w - r, y);
 
   // top right
-  ctx.arc(x + w - r, y + r, r, π + hπ, 0);
+  topRight({ ctx }, x + w - r, y + r, r);
   ctx.lineTo(x + w, y + h - r);
 
   // bottom right
-  ctx.arc(x + w - r, y + h - r, r, 0, hπ);
+  bottomRight({ ctx }, x + w - r, y + h - r, r);
   ctx.lineTo(x + w - r, y + h);
 
   // bottom left
-  ctx.arc(x + r, y + h - r, r, hπ, π);
+  bottomLeft({ ctx }, x + r, y + h - r, r);
   ctx.lineTo(x, y + r);
-
-  ctx.closePath();
 };
 
 export const gridRect = (
