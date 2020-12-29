@@ -1,4 +1,5 @@
 import { ceil, floor, min, ππ } from '../../../lib/core/math';
+import { step } from '../../../lib/core/step';
 import { el, on } from './dom-utils';
 import { gridRect, roundRect } from './drawing-utils';
 import './style.css';
@@ -42,7 +43,7 @@ const getState = (): AppState => {
 
   const lineWidth = min(rectWidth, rectHeight) * 0.025;
   const C = ππ * r + (rectWidth - r * 2) * 2 + (rectHeight - r * 2) * 2;
-  const dash = C / 30;
+  const dash = C / 38;
 
   return {
     ctx,
@@ -76,6 +77,7 @@ const pond = (state: AppState) => {
     rectHeight,
     lineWidth,
     dash,
+    step,
     r,
   } = state;
 
@@ -91,6 +93,11 @@ const pond = (state: AppState) => {
     rectHeight,
     r,
   );
+  ctx.stroke();
+
+  const C = ππ * step;
+  ctx.setLineDash([(C / 8) * (17 / 32), (C / 8) * (15 / 32)]);
+  roundRect(state, halfWidth - step, halfHeight - step, step * 2, step * 2, r);
   ctx.stroke();
 };
 
