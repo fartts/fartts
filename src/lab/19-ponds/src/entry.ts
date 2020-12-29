@@ -90,8 +90,8 @@ const pond = () => {
 
   ctx.strokeStyle = 'hsl(50, 10%, 90%)';
   ctx.lineWidth = lineWidth;
-  ctx.setLineDash([dash * (17 / 32), dash * (15 / 32)]);
 
+  ctx.setLineDash([dash * (17 / 32), dash * (15 / 32)]);
   roundRect(
     halfWidth - rectWidth / 2,
     halfHeight - rectHeight / 2,
@@ -102,9 +102,40 @@ const pond = () => {
   ctx.stroke();
 };
 
+const grid = () => {
+  const { width: w, height: h } = canvas;
+
+  const rectWidth = w * 0.8;
+  const rectHeight = h * 0.8;
+
+  const halfWidth = w / 2;
+  const halfHeight = h / 2;
+
+  const step = min(halfWidth, halfHeight) * 0.4;
+
+  ctx.strokeStyle = 'hsl(0, 0%, 20%)';
+  ctx.lineWidth = 1;
+
+  ctx.setLineDash([]);
+  ctx.beginPath();
+
+  for (let i = 0; i < rectWidth; i += step) {
+    ctx.moveTo(halfWidth - rectWidth / 2 + i, 0);
+    ctx.lineTo(halfWidth - rectWidth / 2 + i, h);
+  }
+
+  for (let j = 0; j < rectHeight; j += step) {
+    ctx.moveTo(0, halfHeight - rectHeight / 2 + j);
+    ctx.lineTo(w, halfHeight - rectHeight / 2 + j);
+  }
+
+  ctx.stroke();
+};
+
 const draw = () => {
   bkgd();
   pond();
+  grid();
 };
 
 on(window, 'resize', resize);
