@@ -74,6 +74,22 @@ const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
   ctx.closePath();
 };
 
+const gridRect = (x: number, y: number, w: number, h: number, s: number) => {
+  const { width: cw, height: ch } = canvas;
+
+  ctx.beginPath();
+
+  for (let i = 0; i < w; i += s) {
+    ctx.moveTo(x + i, 0);
+    ctx.lineTo(x + i, ch);
+  }
+
+  for (let j = 0; j < h; j += s) {
+    ctx.moveTo(0, y + j);
+    ctx.lineTo(cw, y + j);
+  }
+};
+
 const pond = () => {
   const { width: w, height: h } = canvas;
 
@@ -111,24 +127,19 @@ const grid = () => {
   const halfWidth = w / 2;
   const halfHeight = h / 2;
 
-  const step = min(halfWidth, halfHeight) * 0.4;
+  const step = min(halfWidth, halfHeight) * 0.2;
 
   ctx.strokeStyle = 'hsl(0, 0%, 20%)';
   ctx.lineWidth = 1;
 
   ctx.setLineDash([]);
-  ctx.beginPath();
-
-  for (let i = 0; i < rectWidth; i += step) {
-    ctx.moveTo(halfWidth - rectWidth / 2 + i, 0);
-    ctx.lineTo(halfWidth - rectWidth / 2 + i, h);
-  }
-
-  for (let j = 0; j < rectHeight; j += step) {
-    ctx.moveTo(0, halfHeight - rectHeight / 2 + j);
-    ctx.lineTo(w, halfHeight - rectHeight / 2 + j);
-  }
-
+  gridRect(
+    halfWidth - rectWidth / 2,
+    halfHeight - rectHeight / 2,
+    rectWidth,
+    rectHeight,
+    step,
+  );
   ctx.stroke();
 };
 
