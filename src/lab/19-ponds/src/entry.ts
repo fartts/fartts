@@ -1,40 +1,8 @@
-import { floor, min, π, ππ } from '../../../lib/core/math';
+import { ceil, floor, min, ππ } from '../../../lib/core/math';
+import { el, on } from './dom-utils';
+import { gridRect, roundRect } from './drawing-utils';
 import './style.css';
-
-interface Listener<T extends keyof DocumentEventMap> extends EventListener {
-  (event: DocumentEventMap[T]): void;
-}
-
-interface State {
-  ctx: CanvasRenderingContext2D;
-  canvasWidth: number;
-  canvasHeight: number;
-  safeWidth: number;
-  safeHeight: number;
-  halfWidth: number;
-  halfHeight: number;
-  r: number;
-  step: number;
-  rectWidth: number;
-  rectHeight: number;
-  lineWidth: number;
-  C: number;
-  dash: number;
-}
-
-const hπ = π / 2;
-
-const el = <T extends keyof HTMLElementTagNameMap>(
-  selector: T,
-): HTMLElementTagNameMap[T] =>
-  document.querySelector(selector) ?? document.createElement(selector);
-
-const on = <T extends EventTarget, U extends keyof DocumentEventMap>(
-  target: T,
-  forEvent: U,
-  listener: Listener<U>,
-  options: boolean | AddEventListenerOptions = false,
-): void => target.addEventListener(forEvent, listener, options);
+import type { AppState } from './types';
 
 const canvas = el('canvas');
 const ctx = canvas.getContext('2d');
@@ -44,80 +12,20 @@ if (!ctx) {
 }
 
 const resize = () => {
-  const { innerWidth: w, innerHeight: h } = window;
-  const dw = floor(w * 2);
-  const dh = floor(h * 2);
+  const { innerWidth, innerHeight } = window;
+  const doubleWidth = ceil(innerWidth * 2);
+  const doubleHeight = ceil(innerHeight * 2);
 
-  canvas.width = dw;
-  canvas.height = dh;
-  canvas.style.width = `${dw}px`;
-  canvas.style.height = `${dh}px`;
+  canvas.width = doubleWidth;
+  canvas.height = doubleHeight;
+  canvas.style.width = `${doubleWidth}px`;
+  canvas.style.height = `${doubleHeight}px`;
   canvas.style.transform = 'scale(0.5)';
 
   draw();
 };
 
-const bkgd = ({ ctx, canvasWidth, canvasHeight }: State) => {
-  ctx.fillStyle = 'hsl(100, 40%, 60%)';
-  ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-};
-
-/**
- * apparently this is coming to canvas at some point
- * @see https://www.chromestatus.com/feature/5678204184428544
- * @see https://github.com/fserb/canvas2D/blob/master/spec/roundrect.md
- */
-const roundRect = (
-  { ctx }: State,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  r: number,
-) => {
-  ctx.beginPath();
-
-  // top left
-  ctx.arc(x + r, y + r, r, π, π + hπ);
-  ctx.lineTo(x + w - r, y);
-
-  // top right
-  ctx.arc(x + w - r, y + r, r, π + hπ, 0);
-  ctx.lineTo(x + w, y + h - r);
-
-  // bottom right
-  ctx.arc(x + w - r, y + h - r, r, 0, hπ);
-  ctx.lineTo(x + w - r, y + h);
-
-  // bottom left
-  ctx.arc(x + r, y + h - r, r, hπ, π);
-  ctx.lineTo(x, y + r);
-
-  ctx.closePath();
-};
-
-const gridRect = (
-  { ctx, canvasWidth, canvasHeight }: State,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  s: number,
-) => {
-  ctx.beginPath();
-
-  for (let i = 0; i <= w; i += s) {
-    ctx.moveTo(x + i, 0);
-    ctx.lineTo(x + i, canvasHeight);
-  }
-
-  for (let j = 0; j <= h; j += s) {
-    ctx.moveTo(0, y + j);
-    ctx.lineTo(canvasWidth, y + j);
-  }
-};
-
-const getState = (): State => {
+const getState = (): AppState => {
   const { width: canvasWidth, height: canvasHeight } = canvas;
 
   const safeWidth = canvasWidth * 0.8;
@@ -154,7 +62,12 @@ const getState = (): State => {
   };
 };
 
-const pond = (state: State) => {
+const bkgd = ({ ctx, canvasWidth, canvasHeight }: AppState) => {
+  ctx.fillStyle = 'hsl(100, 40%, 60%)';
+  ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+};
+
+const pond = (state: AppState) => {
   const {
     ctx,
     halfWidth,
@@ -166,7 +79,6 @@ const pond = (state: State) => {
     r,
   } = state;
 
-  // draw a pond
   ctx.strokeStyle = 'hsl(50, 10%, 90%)';
   ctx.lineWidth = lineWidth;
 
@@ -182,10 +94,9 @@ const pond = (state: State) => {
   ctx.stroke();
 };
 
-const grid = (state: State) => {
+const grid = (state: AppState) => {
   const { ctx, halfWidth, halfHeight, rectWidth, rectHeight, step } = state;
 
-  // draw a grid
   ctx.strokeStyle = 'hsl(0, 0%, 20%)';
   ctx.lineWidth = 1;
 
