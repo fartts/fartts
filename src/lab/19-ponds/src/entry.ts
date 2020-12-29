@@ -79,12 +79,12 @@ const gridRect = (x: number, y: number, w: number, h: number, s: number) => {
 
   ctx.beginPath();
 
-  for (let i = 0; i < w; i += s) {
+  for (let i = 0; i <= w; i += s) {
     ctx.moveTo(x + i, 0);
     ctx.lineTo(x + i, ch);
   }
 
-  for (let j = 0; j < h; j += s) {
+  for (let j = 0; j <= h; j += s) {
     ctx.moveTo(0, y + j);
     ctx.lineTo(cw, y + j);
   }
@@ -93,17 +93,23 @@ const gridRect = (x: number, y: number, w: number, h: number, s: number) => {
 const pond = () => {
   const { width: w, height: h } = canvas;
 
-  const rectWidth = w * 0.8;
-  const rectHeight = h * 0.8;
+  const safeWidth = w * 0.8;
+  const safeHeight = h * 0.8;
 
   const halfWidth = w / 2;
   const halfHeight = h / 2;
 
-  const r = min(halfWidth, halfHeight) * 0.4;
+  const r = min(halfWidth, halfHeight) * 0.2;
+  const step = r;
+
+  const rectWidth = floor(safeWidth / step) * step;
+  const rectHeight = floor(safeHeight / step) * step;
+
   const lineWidth = min(rectWidth, rectHeight) * 0.025;
   const C = ππ * r + (rectWidth - r * 2) * 2 + (rectHeight - r * 2) * 2;
   const dash = C / 30;
 
+  // draw a pond
   ctx.strokeStyle = 'hsl(50, 10%, 90%)';
   ctx.lineWidth = lineWidth;
 
@@ -116,19 +122,8 @@ const pond = () => {
     r,
   );
   ctx.stroke();
-};
 
-const grid = () => {
-  const { width: w, height: h } = canvas;
-
-  const rectWidth = w * 0.8;
-  const rectHeight = h * 0.8;
-
-  const halfWidth = w / 2;
-  const halfHeight = h / 2;
-
-  const step = min(halfWidth, halfHeight) * 0.2;
-
+  // draw a grid
   ctx.strokeStyle = 'hsl(0, 0%, 20%)';
   ctx.lineWidth = 1;
 
@@ -146,7 +141,6 @@ const grid = () => {
 const draw = () => {
   bkgd();
   pond();
-  grid();
 };
 
 on(window, 'resize', resize);
