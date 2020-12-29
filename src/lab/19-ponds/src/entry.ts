@@ -47,6 +47,10 @@ const bkgd = () => {
   ctx.fillRect(0, 0, w, h);
 };
 
+/**
+ * apparently this is coming to canvas at some point
+ * @see https://github.com/fserb/canvas2D/blob/master/spec/roundrect.md
+ */
 const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
   ctx.beginPath();
 
