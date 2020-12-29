@@ -49,6 +49,7 @@ const bkgd = () => {
 
 /**
  * apparently this is coming to canvas at some point
+ * @see https://www.chromestatus.com/feature/5678204184428544
  * @see https://github.com/fserb/canvas2D/blob/master/spec/roundrect.md
  */
 const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
