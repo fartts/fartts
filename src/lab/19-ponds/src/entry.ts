@@ -1,4 +1,4 @@
-import { ceil, floor, min, random, ππ } from '../../../lib/core/math';
+import { ceil, floor, min, random, round, ππ } from '../../../lib/core/math';
 import { el, on } from './dom-utils';
 import { gridRect, roundRect } from './drawing-utils';
 import './style.css';
@@ -37,52 +37,57 @@ const resize = () => {
  */
 const allowedNeighbors: {
   [k: string]: {
-    [l: string]: string;
+    up: string;
+    right: string;
+    down: string;
+    left: string;
   };
 } = {
   '╭': {
-    t: '∙─╯╰',
-    r: '─╮╯',
-    b: '│╯╰',
-    l: '∙│╯╮',
+    up: '∙─╯╰',
+    right: '─╮╯',
+    down: '│╯╰',
+    left: '∙│╯╮',
   },
   '╮': {
-    t: '∙─╯╰',
-    r: '∙│╭╰',
-    b: '│╯╰',
-    l: '╭╰─',
+    up: '∙─╯╰',
+    right: '∙│╭╰',
+    down: '│╯╰',
+    left: '╭╰─',
   },
   '╯': {
-    t: '│╮╭',
-    r: '∙│╭╰',
-    b: '∙─╮╭',
-    l: '╭╰─',
+    up: '│╮╭',
+    right: '∙│╭╰',
+    down: '∙─╮╭',
+    left: '╭╰─',
   },
   '╰': {
-    t: '│╮╭',
-    r: '─╮╯',
-    b: '∙─╮╭',
-    l: '∙│╯╮',
+    up: '│╮╭',
+    right: '─╮╯',
+    down: '∙─╮╭',
+    left: '∙│╯╮',
   },
   '│': {
-    t: '│╮╭',
-    r: '∙│╭╰',
-    b: '│╯╰',
-    l: '∙│╯╮',
+    up: '│╮╭',
+    right: '∙│╭╰',
+    down: '│╯╰',
+    left: '∙│╯╮',
   },
   '─': {
-    t: '∙─╯╰',
-    r: '─╮╯',
-    b: '∙─╮╭',
-    l: '╭╰─',
+    up: '∙─╯╰',
+    right: '─╮╯',
+    down: '∙─╮╭',
+    left: '╭╰─',
   },
   '∙': {
-    t: '∙─╯╰',
-    r: '∙│╭╰',
-    b: '∙─╮╭',
-    l: '∙│╯╮',
+    up: '∙─╯╰',
+    right: '∙│╭╰',
+    down: '∙─╮╭',
+    left: '∙│╯╮',
   },
 };
+
+const chance = (n: number) => random() < n;
 
 const k = 10;
 const neighbors: string[][] = [];
@@ -96,23 +101,65 @@ for (let i = 0; i < k; ++i) {
 
 for (let i = 1; i < k - 1; ++i) {
   for (let j = 1; j < k - 1; ++j) {
-    const t = allowedNeighbors[neighbors[i + 1]?.[j]]?.t ?? '';
-    const r = allowedNeighbors[neighbors[i][j - 1]]?.r ?? '';
-    const b = allowedNeighbors[neighbors[i - 1]?.[j]]?.b ?? '';
-    const l = allowedNeighbors[neighbors[i][j + 1]]?.l ?? '';
+    const neighborUp = neighbors[i - 1]?.[j];
+    const neighborRight = neighbors[i][j + 1];
+    const neighborDown = neighbors[i + 1]?.[j];
+    const neighborLeft = neighbors[i][j - 1];
 
-    const n = t
-      .concat(r, b, l)
+    const allowedUp = allowedNeighbors[neighborDown]?.up ?? '';
+    const allowedRight = allowedNeighbors[neighborLeft]?.right ?? '';
+    const allowedDown = allowedNeighbors[neighborUp]?.down ?? '';
+    const allowedLeft = allowedNeighbors[neighborRight]?.left ?? '';
+
+    const n = (allowedUp + allowedRight + allowedDown + allowedLeft)
       .split('')
-      .filter((c) => {
-        let m = true;
-        t && (m = m && t.includes(c));
-        r && (m = m && r.includes(c));
-        b && (m = m && b.includes(c));
-        l && (m = m && l.includes(c));
-        return m;
-      })
+      .filter(
+        (c) =>
+          (allowedUp ? allowedUp.includes(c) : true) &&
+          (allowedRight ? allowedRight.includes(c) : true) &&
+          (allowedDown ? allowedDown.includes(c) : true) &&
+          (allowedLeft ? allowedLeft.includes(c) : true),
+      )
       .join('');
+
+    if (
+      (neighborRight === '│' ||
+        neighborLeft === '│' ||
+        neighborUp === '─' ||
+        neighborDown === '─') &&
+      n.includes('∙')
+    ) {
+      if (chance(7 / 10)) {
+        neighbors[i][j] = '∙';
+        continue;
+      }
+    }
+    if (
+      (neighborRight === '∙' ||
+        neighborLeft === '∙' ||
+        neighborUp === '∙' ||
+        neighborDown === '∙') &&
+      n.includes('∙')
+    ) {
+      if (chance(7 / 10)) {
+        neighbors[i][j] = '∙';
+        continue;
+      }
+    }
+
+    if ((neighborUp === '│' || neighborDown === '│') && n.includes('│')) {
+      if (chance(5 / 10)) {
+        neighbors[i][j] = '│';
+        continue;
+      }
+    }
+
+    if ((neighborRight === '─' || neighborLeft === '─') && n.includes('─')) {
+      if (chance(5 / 10)) {
+        neighbors[i][j] = '─';
+        continue;
+      }
+    }
 
     neighbors[i][j] = n.charAt(floor(random() * n.length));
   }
