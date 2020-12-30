@@ -4,7 +4,7 @@ import { join } from 'path';
 
 import puppeteer, { Browser } from 'puppeteer';
 
-const baseUrl = 'http://localhost:1234';
+const baseUrl = 'http://localhost:5000';
 
 const getExperimentUrls = async (browser: Browser) => {
   const page = await browser.newPage();
