@@ -1,4 +1,4 @@
-import { ceil, floor, min, random, round, ππ } from '../../../lib/core/math';
+import { ceil, floor, min, random, ππ } from '../../../lib/core/math';
 import { el, on } from './dom-utils';
 import { gridRect, roundRect } from './drawing-utils';
 import './style.css';
@@ -27,12 +27,12 @@ const resize = () => {
 
 /**
  * ```
- *  ╭──╮
- * ╭╯  ╰╮
- * │ ╭╮ │
- * │ ╰╯ │
- * ╰╮  ╭╯
- *  ╰──╯
+ * ∙ ╭ ─ ─ ╮ ∙
+ * ╭ ╯ ∙ ∙ ╰ ╮
+ * │ ∙ ╭ ╮ ∙ │
+ * │ ∙ ╰ ╯ ∙ │
+ * ╰ ╮ ∙ ∙ ╭ ╯
+ * ∙ ╰ ─ ─ ╯ ∙
  * ```
  */
 const allowedNeighbors: {
@@ -106,6 +106,12 @@ for (let i = 1; i < k - 1; ++i) {
     const neighborDown = neighbors[i + 1]?.[j];
     const neighborLeft = neighbors[i][j - 1];
 
+    /**
+     * this might be kind of confusing to future me, but I'm using "downward
+     * neighbor" to get the "upward constraint" and so on, because this is
+     * working top to bottom and left to right it's mostly downward and right-
+     * ward constraints
+     */
     const allowedUp = allowedNeighbors[neighborDown]?.up ?? '';
     const allowedRight = allowedNeighbors[neighborLeft]?.right ?? '';
     const allowedDown = allowedNeighbors[neighborUp]?.down ?? '';
@@ -115,13 +121,15 @@ for (let i = 1; i < k - 1; ++i) {
       .split('')
       .filter(
         (c) =>
-          (allowedUp ? allowedUp.includes(c) : true) &&
-          (allowedRight ? allowedRight.includes(c) : true) &&
-          (allowedDown ? allowedDown.includes(c) : true) &&
-          (allowedLeft ? allowedLeft.includes(c) : true),
+          // only check for includes if the constraint is a non-empty string
+          (allowedUp !== '' ? allowedUp.includes(c) : true) &&
+          (allowedRight !== '' ? allowedRight.includes(c) : true) &&
+          (allowedDown !== '' ? allowedDown.includes(c) : true) &&
+          (allowedLeft !== '' ? allowedLeft.includes(c) : true),
       )
       .join('');
 
+    // prefer empty spaces as neighbors to straight lines
     if (
       (neighborRight === '│' ||
         neighborLeft === '│' ||
@@ -134,6 +142,8 @@ for (let i = 1; i < k - 1; ++i) {
         continue;
       }
     }
+
+    // prefer empty spaces as neighbors to empty spaces
     if (
       (neighborRight === '∙' ||
         neighborLeft === '∙' ||
@@ -147,6 +157,7 @@ for (let i = 1; i < k - 1; ++i) {
       }
     }
 
+    // prefer continuing vertical lines
     if ((neighborUp === '│' || neighborDown === '│') && n.includes('│')) {
       if (chance(5 / 10)) {
         neighbors[i][j] = '│';
@@ -154,6 +165,7 @@ for (let i = 1; i < k - 1; ++i) {
       }
     }
 
+    // prefer continuing horizontal lines
     if ((neighborRight === '─' || neighborLeft === '─') && n.includes('─')) {
       if (chance(5 / 10)) {
         neighbors[i][j] = '─';
