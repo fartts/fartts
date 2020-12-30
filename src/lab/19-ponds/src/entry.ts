@@ -1,5 +1,4 @@
-import { ceil, floor, min, ππ } from '../../../lib/core/math';
-import { step } from '../../../lib/core/step';
+import { ceil, floor, min, random, ππ } from '../../../lib/core/math';
 import { el, on } from './dom-utils';
 import { gridRect, roundRect } from './drawing-utils';
 import './style.css';
@@ -25,6 +24,103 @@ const resize = () => {
 
   draw();
 };
+
+/**
+ * ```
+ *  ╭──╮
+ * ╭╯  ╰╮
+ * │ ╭╮ │
+ * │ ╰╯ │
+ * ╰╮  ╭╯
+ *  ╰──╯
+ * ```
+ */
+const allowedNeighbors: {
+  [k: string]: {
+    [l: string]: string;
+  };
+} = {
+  '╭': {
+    t: '∙─╯╰',
+    r: '─╮╯',
+    b: '│╯╰',
+    l: '∙│╯╮',
+  },
+  '╮': {
+    t: '∙─╯╰',
+    r: '∙│╭╰',
+    b: '│╯╰',
+    l: '╭╰─',
+  },
+  '╯': {
+    t: '│╮╭',
+    r: '∙│╭╰',
+    b: '∙─╮╭',
+    l: '╭╰─',
+  },
+  '╰': {
+    t: '│╮╭',
+    r: '─╮╯',
+    b: '∙─╮╭',
+    l: '∙│╯╮',
+  },
+  '│': {
+    t: '│╮╭',
+    r: '∙│╭╰',
+    b: '│╯╰',
+    l: '∙│╯╮',
+  },
+  '─': {
+    t: '∙─╯╰',
+    r: '─╮╯',
+    b: '∙─╮╭',
+    l: '╭╰─',
+  },
+  '∙': {
+    t: '∙─╯╰',
+    r: '∙│╭╰',
+    b: '∙─╮╭',
+    l: '∙│╯╮',
+  },
+};
+
+const k = 8;
+const neighbors: string[][] = [];
+for (let i = 0; i < k; ++i) {
+  neighbors[i] = [];
+  for (let j = 0; j < k; ++j) {
+    const t = allowedNeighbors[neighbors[i + 1]?.[j]]?.t ?? '∙';
+    const r = allowedNeighbors[neighbors[i][j - 1]]?.r ?? '∙';
+    const b = allowedNeighbors[neighbors[i - 1]?.[j]]?.b ?? '∙';
+    const l = allowedNeighbors[neighbors[i][j + 1]]?.l ?? '∙';
+
+    const n = r
+      .concat(b)
+      .split('')
+      .filter((c) => {
+        if (i === k - 1 && j === k - 1) {
+          return (
+            t.includes(c) && r.includes(c) && b.includes(c) && l.includes(c)
+          );
+        }
+
+        if (i === k - 1) {
+          return t.includes(c) && r.includes(c) && b.includes(c);
+        }
+
+        if (j === k - 1) {
+          return r.includes(c) && b.includes(c) && l.includes(c);
+        }
+
+        return r.includes(c) && b.includes(c);
+      })
+      .join('');
+
+    neighbors[i][j] = n.charAt(floor(random() * n.length));
+  }
+}
+
+console.log(neighbors.map((row) => row.join('')).join('\n'));
 
 const getState = (): AppState => {
   const { width: canvasWidth, height: canvasHeight } = canvas;
