@@ -84,35 +84,33 @@ const allowedNeighbors: {
   },
 };
 
-const k = 8;
+const k = 10;
 const neighbors: string[][] = [];
 for (let i = 0; i < k; ++i) {
   neighbors[i] = [];
   for (let j = 0; j < k; ++j) {
-    const t = allowedNeighbors[neighbors[i + 1]?.[j]]?.t ?? '∙';
-    const r = allowedNeighbors[neighbors[i][j - 1]]?.r ?? '∙';
-    const b = allowedNeighbors[neighbors[i - 1]?.[j]]?.b ?? '∙';
-    const l = allowedNeighbors[neighbors[i][j + 1]]?.l ?? '∙';
+    neighbors[i][j] =
+      i === 0 || j === 0 || i === k - 1 || j === k - 1 ? '∙' : '';
+  }
+}
 
-    const n = r
-      .concat(b)
+for (let i = 1; i < k - 1; ++i) {
+  for (let j = 1; j < k - 1; ++j) {
+    const t = allowedNeighbors[neighbors[i + 1]?.[j]]?.t ?? '';
+    const r = allowedNeighbors[neighbors[i][j - 1]]?.r ?? '';
+    const b = allowedNeighbors[neighbors[i - 1]?.[j]]?.b ?? '';
+    const l = allowedNeighbors[neighbors[i][j + 1]]?.l ?? '';
+
+    const n = t
+      .concat(r, b, l)
       .split('')
       .filter((c) => {
-        if (i === k - 1 && j === k - 1) {
-          return (
-            t.includes(c) && r.includes(c) && b.includes(c) && l.includes(c)
-          );
-        }
-
-        if (i === k - 1) {
-          return t.includes(c) && r.includes(c) && b.includes(c);
-        }
-
-        if (j === k - 1) {
-          return r.includes(c) && b.includes(c) && l.includes(c);
-        }
-
-        return r.includes(c) && b.includes(c);
+        let m = true;
+        t && (m = m && t.includes(c));
+        r && (m = m && r.includes(c));
+        b && (m = m && b.includes(c));
+        l && (m = m && l.includes(c));
+        return m;
       })
       .join('');
 
@@ -120,7 +118,7 @@ for (let i = 0; i < k; ++i) {
   }
 }
 
-console.log(neighbors.map((row) => row.join('')).join('\n'));
+console.log(neighbors.map((row) => row.join(' ')).join('\n'));
 
 const getState = (): AppState => {
   const { width: canvasWidth, height: canvasHeight } = canvas;
