@@ -29,7 +29,7 @@ const getExperimentUrls = async (browser: Browser) => {
 
       const page = await browser.newPage();
       await page.goto(join(baseUrl, url));
-      await page.waitFor(1_000);
+      await page.waitForTimeout(1_000);
 
       await page.setViewport({
         width: 1_920,
