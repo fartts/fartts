@@ -36,22 +36,20 @@ const resize = () => {
 const getState = (): AppState => {
   const { width: canvasWidth, height: canvasHeight } = canvas;
 
-  const safeWidth = canvasWidth * 0.8;
-  const safeHeight = canvasHeight * 0.8;
+  const safeWidth = canvasWidth * 0.9;
+  const safeHeight = canvasHeight * 0.9;
 
   const halfWidth = canvasWidth / 2;
   const halfHeight = canvasHeight / 2;
 
   const r = min(halfWidth, halfHeight) * 0.05;
+  const lineWidth = r / 2;
+
   const step = r * 2;
-
   const cols = floor(safeWidth / step);
-  const rectWidth = cols * step;
-
   const rows = floor(safeHeight / step);
+  const rectWidth = cols * step;
   const rectHeight = rows * step;
-
-  const lineWidth = min(rectWidth, rectHeight) * 0.0125;
 
   return {
     ctx,
@@ -141,7 +139,7 @@ const grid = ({
   rectHeight,
   step,
 }: AppState) => {
-  ctx.strokeStyle = 'hsl(0, 0%, 20%)';
+  ctx.strokeStyle = 'hsla(0, 0%, 20%, 20%)';
   ctx.lineWidth = 1;
 
   ctx.setLineDash([]);
@@ -159,11 +157,12 @@ const grid = ({
 const draw = () => {
   const state = getState();
   bkgd(state);
-  pond(state);
 
   if (process.env.NODE_ENV === 'development') {
     grid(state);
   }
+
+  pond(state);
 };
 
 on(window, 'resize', resize);
