@@ -16,6 +16,5 @@ export interface AppState {
   rectWidth: number;
   rectHeight: number;
   lineWidth: number;
-  C: number;
-  dash: number;
+  map: string[][];
 }
