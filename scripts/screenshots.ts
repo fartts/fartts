@@ -4,7 +4,7 @@ import { join } from 'path';
 
 import puppeteer, { Browser } from 'puppeteer';
 
-const baseUrl = 'http://localhost:1234';
+const baseUrl = 'http://localhost:5000';
 
 const getExperimentUrls = async (browser: Browser) => {
   const page = await browser.newPage();
@@ -29,7 +29,7 @@ const getExperimentUrls = async (browser: Browser) => {
 
       const page = await browser.newPage();
       await page.goto(join(baseUrl, url));
-      await page.waitFor(1_000);
+      await page.waitForTimeout(1_000);
 
       await page.setViewport({
         width: 1_920,

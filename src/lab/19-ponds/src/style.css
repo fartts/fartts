@@ -1,0 +1,7 @@
+@import '../../src/styles/base.css';
+@import '../../src/styles/cover.css';
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
