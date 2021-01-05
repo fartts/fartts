@@ -1,10 +1,9 @@
-import { ceil, floor, min, ππ } from '../../../lib/core/math';
+import { ceil, floor, min } from '../../../lib/core/math';
 import { el, on } from './dom-utils';
 import {
   bottomLeft,
   bottomRight,
   gridRect,
-  roundRect,
   topLeft,
   topRight,
 } from './drawing-utils';
