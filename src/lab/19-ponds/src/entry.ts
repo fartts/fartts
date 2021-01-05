@@ -1,4 +1,5 @@
 import { ceil, floor, min } from '../../../lib/core/math';
+
 import { el, on } from './dom-utils';
 import {
   bottomLeft,
