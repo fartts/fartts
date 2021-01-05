@@ -1,4 +1,4 @@
-import { ceil, floor, min, π, ππ } from '../../../lib/core/math';
+import { ceil, floor, min } from '../../../lib/core/math';
 
 import { el, on } from './dom-utils';
 import {

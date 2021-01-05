@@ -15,7 +15,7 @@
     "start": "parcel src/lab/{index.html,README.md}",
     "lint": "yarn lint:rs && yarn lint:ts",
     "lint:rs": "cargo fmt --all -- --check && cargo clippy",
-    "lint:ts": "eslint '**/*.ts'",
+    "lint:ts": "eslint 'src/**/*.ts' --fix --max-warnings 0",
     "test": "cargo test && jest",
     "coverage": "open coverage/lcov-report/index.html",
     "lab": "node ./src/cli",
@@ -37,8 +37,8 @@
     }
   },
   "lint-staged": {
-    "*.{css,json,md,ts}": "prettier --write",
-    "*.{ts}": "eslint --fix --max-warnings 0"
+    "**/*.{css,json,md,ts}": "prettier --write",
+    "src/**/*.ts": "eslint --fix --max-warnings 0"
   },
   "dependencies": {
     "seedrandom": "3.0.5"
