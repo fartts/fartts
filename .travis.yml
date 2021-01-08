@@ -1,3 +1,12 @@
+os: linux
+dist: xenial
+arch: amd64
+
+addons:
+  apt:
+    packages:
+      - chromium-browser
+
 language: rust
 rust: stable
 
@@ -39,16 +48,11 @@ before_install:
 
   # get the right npm version
   - NPM_VERSION=`node -pe "require('./package.json').engines.npm"`
-  - if [ `npm --version` != "$NPM_VERSION" ]; then
-    npm install --global npm@${NPM_VERSION};
-    fi
+  - npm install --global npm@${NPM_VERSION};
 
   # get the right yarn version
   - YARN_VERSION=`node -pe "require('./package.json').engines.yarn"`
-  - if [ `yarn --version` != "$YARN_VERSION" ]; then
-    curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION;
-    export PATH=$HOME/.yarn/bin:$PATH;
-    fi
+  - npm install --global yarn@${YARN_VERSION};
 
   - yarn install
 
@@ -70,7 +74,6 @@ after_success:
 deploy:
   # deploy a git tag, release notes, bump package.json, update READMEs
   - provider: script
-    skip_cleanup: true
     script: npx semantic-release
     on:
       branch: master
@@ -78,10 +81,10 @@ deploy:
   # deploy the site
   - provider: pages
     repo: fartts/fartts.github.io
+    strategy: git
     target_branch: master
-    github_token: $GH_TOKEN
+    token: $GH_TOKEN
     allow_empty_commit: true
-    skip_cleanup: true
     keep_history: true
     local_dir: dist/
     on:
