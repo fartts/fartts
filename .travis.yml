@@ -37,15 +37,11 @@ before_install:
 
   # get the right npm version
   - NPM_VERSION=`node -pe "require('./package.json').engines.npm"`
-  - if [ `npm --version` != "$NPM_VERSION" ]; then
-    npm install --global npm@${NPM_VERSION};
-    fi
+  - npm install --global npm@${NPM_VERSION};
 
   # get the right yarn version
   - YARN_VERSION=`node -pe "require('./package.json').engines.yarn"`
-  - if [ `yarn --version` != "$YARN_VERSION" ]; then
-    npm install --global yarn@${YARN_VERSION};
-    fi
+  - npm install --global yarn@${YARN_VERSION};
 
   - yarn install
 
