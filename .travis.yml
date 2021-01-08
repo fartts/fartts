@@ -31,12 +31,6 @@ before_install:
   - rustup component list
   - rustup target add wasm32-unknown-unknown
 
-  # get wasm-pack, wasm-bindgen, install-update
-  - (test -x $HOME/.cargo/bin/wasm-pack || cargo install wasm-pack)
-  - (test -x $HOME/.cargo/bin/wasm-bindgen || cargo install wasm-bindgen-cli)
-  - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
-  - cargo install-update -a
-
   # get the right npm version
   - NPM_VERSION=`node -pe "require('./package.json').engines.npm"`
   - if [ `npm --version` != "$NPM_VERSION" ]; then
