@@ -1,6 +1,6 @@
 os: linux
 dist: xenial
-arch: arm64
+arch: amd64
 
 addons:
   apt:
