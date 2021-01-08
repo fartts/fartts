@@ -2,6 +2,11 @@ os: linux
 dist: xenial
 arch: arm64
 
+addons:
+  apt:
+    packages:
+      - chromium-browser
+
 language: rust
 rust: stable
 
