@@ -1,3 +1,7 @@
+os: linux
+dist: xenial
+arch: arm64
+
 language: rust
 rust: stable
 
@@ -64,7 +68,6 @@ after_success:
 deploy:
   # deploy a git tag, release notes, bump package.json, update READMEs
   - provider: script
-    skip_cleanup: true
     script: npx semantic-release
     on:
       branch: master
@@ -72,10 +75,10 @@ deploy:
   # deploy the site
   - provider: pages
     repo: fartts/fartts.github.io
+    strategy: git
     target_branch: master
-    github_token: $GH_TOKEN
+    token: $GH_TOKEN
     allow_empty_commit: true
-    skip_cleanup: true
     keep_history: true
     local_dir: dist/
     on:
