@@ -64,7 +64,7 @@
     "babel-jest": "26.6.3",
     "cheerio": "1.0.0-rc.5",
     "commitizen": "4.2.3",
-    "core-js": "3.8.2",
+    "core-js": "3.8.3",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.19.0",
     "glslify-bundle": "5.1.1",
