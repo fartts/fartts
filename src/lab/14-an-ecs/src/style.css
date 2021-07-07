@@ -1,9 +1,0 @@
-@import '../../src/styles/base.css';
-@import '../../src/styles/cover.css';
-
-body,
-main,
-canvas {
-  cursor: pointer;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
