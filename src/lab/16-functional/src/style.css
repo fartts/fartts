@@ -1,0 +1,28 @@
+@import '../../src/styles/base.css';
+@import '../../src/styles/cover.css';
+
+canvas {
+  background-color: #fff;
+}
+
+button {
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.35);
+  color: rgba(0, 0, 0, 0.35);
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.35);
+  border-radius: 0.5rem;
+
+  padding: 0.5rem 0.75rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+button:hover {
+  color: rgba(0, 0, 0, 0.85);
+  border-color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+}
