@@ -48,6 +48,7 @@ const getState = (): AppState => {
   const step = r * 2;
   const cols = floor(safeWidth / step);
   const rows = floor(safeHeight / step);
+  
   const rectWidth = cols * step;
   const rectHeight = rows * step;
 
